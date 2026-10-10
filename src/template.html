@@ -132,6 +132,7 @@ main { padding: 8px 16px 48px; }
 html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .sheet { overscroll-behavior: contain; }
 .evo .l { display: block; font-family: var(--font-display); font-weight: 600; line-height: 1.5; }
+.evo .l.one { white-space: nowrap; overflow: hidden; }
 .ico { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: .78em; line-height: 1.25; padding: .08em .5em; margin: 0 .1em; border-radius: .35em; color: #fff; vertical-align: .08em; white-space: nowrap; }
 .ico.tim { background: linear-gradient(#2c4fb4, #1b2a72); box-shadow: inset 0 0 0 1px #5d7fd6; }
 .ico.zon { background: linear-gradient(#9c2c86, #5f0f52); box-shadow: inset 0 0 0 1px #c25aab; }
@@ -140,9 +141,8 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .ico.grn { background: linear-gradient(#14ad96, #0a7a6a); }
 .ico.rul { background: #e4e4e4; color: #111; }
 .ico.ovf { background: linear-gradient(180deg, #f4f6f8 0%, #b9c0c8 45%, #8a939d 55%, #d5dade 100%); color: #1a1d22; box-shadow: inset 0 0 0 1px #6f7882; }
-.optc { display: inline-flex; align-items: center; gap: .5em; font-family: var(--font-display); font-weight: 700; color: var(--ink-2); font-size: .85em; }
-.optc .use { background: #d9dde3; color: #111; border-radius: .35em; padding: .05em .4em; }
-.optc b { background: #1b2a72; color: #fff; border-radius: 50%; min-width: 1.6em; height: 1.6em; display: inline-grid; place-items: center; }
+.optc { display: inline; }
+.ico.ocol { text-shadow: 0 0 2px rgba(0,0,0,.6); box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
 .ico.kw { background: linear-gradient(#d8661f, #a2400c); border-radius: 0; padding: .08em .75em; clip-path: polygon(.45em 0, calc(100% - .45em) 0, 100% 50%, calc(100% - .45em) 100%, .45em 100%, 0 50%); }
 .ico.trt { background: #fff; color: #000; }
 .stat.wide { grid-column: 1 / -1; }
@@ -612,7 +612,9 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   function fitOne(e) {
     e.style.fontSize = "";
     var fs = parseFloat(getComputedStyle(e).fontSize);
+    if (e.classList.contains("one")) e.style.whiteSpace = "";
     while (e.scrollWidth > e.clientWidth + 0.5 && fs > 8) { fs -= 0.5; e.style.fontSize = fs + "px"; }
+    if (e.classList.contains("one") && e.scrollWidth > e.clientWidth + 0.5) e.style.whiteSpace = "normal";
   }
   function fitAll() { var n = document.querySelectorAll(".fit"); for (var i = 0; i < n.length; i++) fitOne(n[i]); }
   window.addEventListener("resize", fitAll);
@@ -940,8 +942,9 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   function optFx(c) {
     var d = c.x && c.x.d; if (!d) return null;
     var f = fx("Effetto Option", d.l.join("\n")), p = f.querySelector("p"), h = el("span", "optc");
-    if (d.c) { h.appendChild(el("span", "use", "Use")); h.appendChild(el("b", "", d.c)); }
-    if (d.col) h.appendChild(el("span", "", d.col));
+    if (d.c) h.appendChild(el("span", "ico tim", "Use " + d.c));
+    if (d.col) { var cols = d.col.split("/"), cb = el("span", "ico ocol", d.col); cb.style.background = gradient(cols, "to right");
+      if (cols.every(function (x) { return x === "Yellow" || x === "White"; })) cb.style.color = "#111"; h.appendChild(cb); }
     p.insertBefore(document.createTextNode("\n"), p.firstChild); p.insertBefore(h, p.firstChild);
     return f;
   }
@@ -1047,7 +1050,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       (r.match(/\[([^\]]+)\]/g) || []).forEach(function (t) { tags.appendChild(el("span", "tag", t.slice(1, -1))); });
     });
     var stats = el("div", "stats");
-    [stat("Costo", c.play), stat("DP", c.dp), rarStat(c)].forEach(function (s) { if (s) stats.appendChild(s); });
+    [stat("Costo", c.ct === "Digimon/Option" ? "-" : c.play), stat("DP", c.dp), rarStat(c)].forEach(function (s) { if (s) stats.appendChild(s); });
     var ev = evoLines(c);
     if (ev.length) {
       var d = el("div", "stat wide evo"); d.appendChild(el("span", "", "Digievoluzione"));
@@ -1055,7 +1058,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     if (ex.alt.length) {
       var d2 = el("div", "stat wide evo"); d2.appendChild(el("span", "", "Altra Digievoluzione"));
-      d2.appendChild(rich(el("b", "l"), ex.alt.join(" • "))); stats.appendChild(d2);
+      d2.appendChild(rich(el("b", "l fit one"), ex.alt.join(" • "))); stats.appendChild(d2);
     }
     if (ex.spec.length) {
       var d3 = el("div", "stat wide evo"); d3.appendChild(el("span", "", "Digievoluzione speciale"));
