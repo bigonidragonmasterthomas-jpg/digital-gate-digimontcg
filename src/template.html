@@ -169,7 +169,8 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .qbtn.lock[disabled] { opacity: .6; cursor: default; }
 .qn.qban { color: #ff5a5f; font: 700 .72rem var(--font-display); text-transform: uppercase; letter-spacing: .04em; }
 .qbtn.qmax { font: 700 .6rem/1 var(--font-display); letter-spacing: 0; padding: 0; text-align: center; opacity: .35; }
-.tile .dbl { margin: 2px 0 4px; }
+.tile .dbl { text-align: center; margin: 6px 0 2px; }
+.dright { display: flex; flex-direction: column; align-items: center; gap: 6px; }
 .pref { border: 0; background: none; color: inherit; font: inherit; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 .dbadge.pair { white-space: normal; line-height: 1.6; }
 .dalt { color: var(--accent); }
@@ -1488,8 +1489,8 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       var cl = el("div", "cline"); cl.style.background = gradient(c.colors, "to right"); t.appendChild(cl);
       t.appendChild(el("div", "tname", c.name));
       listLines(c).forEach(function (x) { t.appendChild(x); });
-      if (bb) { var tb = el("div", "sub dbl"); tb.appendChild(bb); t.appendChild(tb); }
       t.appendChild(deckQty(d, c, function () { render(); }));
+      if (bb) { var tb = el("div", "dbl"); tb.appendChild(bb); t.appendChild(tb); }
       t.onclick = function () { st.open = c; drawSheet(); };
       t.onkeydown = function (e) { if (e.target === t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); st.open = c; drawSheet(); } };
       NAVLIST.push(c);
@@ -1500,9 +1501,10 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     r.appendChild(picBox("thumb", "t", c));
     var mid = el("div", "name"); mid.appendChild(document.createTextNode(c.name));
     listLines(c).forEach(function (x) { mid.appendChild(x); });
-    if (bb) { var bl = el("div", "sub"); bl.appendChild(bb); mid.appendChild(bl); }
     r.appendChild(mid);
-    r.appendChild(deckQty(d, c, function () { render(); }));
+    var rc = el("div", "dright"); rc.appendChild(deckQty(d, c, function () { render(); }));
+    if (bb) rc.appendChild(bb);
+    r.appendChild(rc);
     r.onclick = function () { st.open = c; drawSheet(); };
     r.onkeydown = function (e) { if (e.target === r && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); st.open = c; drawSheet(); } };
     NAVLIST.push(c);
