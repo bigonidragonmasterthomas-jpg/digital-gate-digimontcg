@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Costruisce www/index.html (sito e APK usano gli stessi file) da src/template.html + src/data.json."""
-import shutil, pathlib
+import shutil, pathlib, os
 root = pathlib.Path(__file__).resolve().parent.parent
 src, www = root / "src", root / "www"
 www.mkdir(exist_ok=True)
@@ -14,6 +14,9 @@ head = ('<!doctype html>\n<html lang="it">\n<head>\n<meta charset="utf-8">\n'
         '<link rel="apple-touch-icon" href="icon-192.png">\n<style>[hidden]{display:none!important}</style>\n')
 tail = ('\n<script>if ("serviceWorker" in navigator && /^https?:/.test(location.protocol)) '
         'navigator.serviceWorker.register("sw.js").catch(function(){});</script>\n</body>\n</html>\n')
+# numero di build (run di GitHub Actions): l'APK lo confronta con quello dell'ultima release per proporre l'aggiornamento
+build = os.environ.get("GITHUB_RUN_NUMBER", "0")
+head += '<script>window.APPBUILD=' + str(int(build)) + ';</script>\n'
 html = head + tpl.replace("/*DATA*/", data) + tail
 (www / "index.html").write_text(html, encoding="utf-8")
 for f in ("icon-192.png", "icon-512.png", "manifest.webmanifest", "sw.js"):
