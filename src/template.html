@@ -131,7 +131,14 @@ main { padding: 8px 16px 48px; }
 .hint { color: var(--ink-2); font-size: .8rem; margin-top: 24px; }
 html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .sheet { overscroll-behavior: contain; }
-.evo .l { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-display); font-weight: 600; }
+.evo .l { display: block; font-family: var(--font-display); font-weight: 600; line-height: 1.5; }
+.ico { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: .78em; line-height: 1.25; padding: .08em .5em; margin: 0 .1em; border-radius: .35em; color: #fff; vertical-align: .08em; white-space: nowrap; }
+.ico.tim { background: #2f6fdb; }
+.ico.opt { background: #d23a6c; }
+.ico.sec { background: #8a4bd8; }
+.ico.spc { background: #3b4352; border: 1px solid #6b7486; }
+.ico.kw { background: #c46a12; border-radius: 0; padding: .08em .75em; clip-path: polygon(.45em 0, calc(100% - .45em) 0, 100% 50%, calc(100% - .45em) 100%, .45em 100%, 0 50%); }
+.ico.trt { background: #fff; color: #000; }
 .stat.wide { grid-column: 1 / -1; }
 .alts { display: flex; flex-direction: column; align-items: center; gap: 14px; }
 .altsec { margin-top: 26px; }
@@ -141,7 +148,9 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .foil { font-weight: 700; background: linear-gradient(90deg, #ff5f6d, #ffc371, #f9f871, #47e891, #3fb7ff, #a66bff, #ff5f6d); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: foilshift 3s linear infinite; }
 @keyframes foilshift { to { background-position: 200% 0; } }
 .rarv { display: flex; align-items: center; gap: 5px; min-width: 0; margin-top: .3em; }
-.rarv .rn { min-width: 0; }
+.rarv .rn { min-width: 0; white-space: nowrap; overflow: hidden; }
+.rarst .rarv { font-size: .95rem; white-space: nowrap; overflow: hidden; }
+.rarst .rarv .rn { overflow: visible; flex: none; }
 .rarv .st1 { font-size: .85em; } .rarv .st2 { font-size: .8em; } .rarv .spb { font-size: .62em; }
 .hrar { display: inline-flex; margin-top: 0; font-weight: 700; vertical-align: baseline; }
 .hrar.r-C { color: #9aa4b6; }
@@ -898,9 +907,26 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     h.appendChild(more);
     out.appendChild(h);
   }
+  var TIMING = /^(On Play|When Digivolving|When Attacking|On Deletion|Your Turn|Opponent's Turn|All Turns|Main|Start of Your Main Phase|Start of Opponent's Main Phase|Start of Your Turn|Start of Opponent's Turn|End of Your Turn|End of Opponent's Turn|End of All Turns|End of Attack|When Linking|When Moving|Hand|Trash|Breeding|Counter)$/;
+  var SPECIAL = /^(Rule|Digivolve|DNA Digivolve|Burst Digivolve|App Fusion|Fusionize|DigiXros\s*-\d+|Assembly\s*-\d+)$/;
+  function rich(target, text) {
+    String(text).split(/(\[[^\]\n]+\]|＜[^＞\n]+＞)/).forEach(function (part, i) {
+      if (!part) return;
+      if (!(i % 2)) { target.appendChild(document.createTextNode(part)); return; }
+      var inner = part.slice(1, -1).replace(/\u00a0/g, " "), cls;
+      if (part.charAt(0) === "＜") cls = "kw";
+      else if (/^(Once|Twice) Per Turn$/.test(inner)) cls = "opt";
+      else if (inner === "Security") cls = "sec";
+      else if (TIMING.test(inner)) cls = "tim";
+      else if (SPECIAL.test(inner)) cls = "spc";
+      else cls = "trt";
+      var b = el("span", "ico " + cls, inner); b.title = part; target.appendChild(b);
+    });
+    return target;
+  }
   function fx(title, text) {
     if (!text) return null;
-    var d = el("div", "fx"); d.appendChild(el("h3", "", title)); d.appendChild(el("p", "", text)); return d;
+    var d = el("div", "fx"); d.appendChild(el("h3", "", title)); d.appendChild(rich(el("p", ""), text)); return d;
   }
   function stat(label, val) {
     if (!val) return null;
@@ -947,11 +973,11 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   function rarStat(c) {
     var r = (c.rar || "").trim(); if (!r) return null;
     var d = el("div", "stat rarst"); d.appendChild(el("span", "", "Rarità"));
-    var b = el("b", "rarv");
+    var b = el("b", "rarv fit");
     if (c.suf && c.mark === "SP") b.appendChild(el("span", "spb", "SP"));
     else if (c.suf && c.mark === 2) { var s2 = el("span", "st2"); s2.appendChild(el("i", "", "★")); s2.appendChild(el("i", "", "★")); b.appendChild(s2); }
     else if (c.suf && c.mark === 1) b.appendChild(el("span", "st1", "★"));
-    b.appendChild(el("span", "rn fit", RARN[r] || r));
+    b.appendChild(el("span", "rn", RARN[r] || r));
     d.appendChild(b); return d;
   }
   function drawSheet() {
@@ -997,11 +1023,11 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var ev = evoLines(c);
     if (ev.length) {
       var d = el("div", "stat wide evo"); d.appendChild(el("span", "", "Digievoluzione"));
-      ev.forEach(function (l) { d.appendChild(el("b", "l fit", l)); }); stats.appendChild(d);
+      d.appendChild(rich(el("b", "l"), ev.join(" • "))); stats.appendChild(d);
     }
     if (ex.alt.length) {
       var d2 = el("div", "stat wide evo"); d2.appendChild(el("span", "", "Altra Digievoluzione"));
-      ex.alt.forEach(function (l) { d2.appendChild(el("b", "l fit", l)); }); stats.appendChild(d2);
+      d2.appendChild(rich(el("b", "l"), ex.alt.join(" • "))); stats.appendChild(d2);
     }
     if (stats.children.length) sh.appendChild(stats);
     [fx("Effetto", c.eff), fx("Effetto ereditato", c.inh), fx("Effetto di sicurezza", c.sec), fx("Regole", ex.rule.join("\n")), fx("Altre regole", ex.other.join("\n"))].forEach(function (f) { if (f) sh.appendChild(f); });
