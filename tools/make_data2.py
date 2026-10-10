@@ -106,13 +106,25 @@ def prod_ids(note):
         else: pid=pre.lower()+str(num)
         ids.add(pid)
     return ids
-mem=collections.defaultdict(set)
+# Ogni prodotto contiene "versioni" (carta + arte): base = id uguale al numero, alternative = suffisso _P1, _P2...
+VERS=["Normal"]; verix={"Normal":0}
+def vlabel(k):
+    v=re.sub(r"\s+"," ",(k.get("version") or "").replace("\xa0"," ")).strip(" -") or "Normal"
+    if v not in verix: verix[v]=len(VERS); VERS.append(v)
+    return verix[v]
+ent=collections.defaultdict(dict)   # set id -> {(idx,suffix): versione}
+mem=collections.defaultdict(set)    # set id -> numeri carta presenti (qualsiasi versione)
 for k in src:
-    n=k["cardNumber"].strip()
-    if n not in home: continue
+    n=k["cardNumber"].strip(); vid=k["id"].strip()
+    if n not in home or "Errata" in vid: continue
+    suf=vid[len(n):]
     for part in re.split(r'\n|\u25b9',k.get("notes") or ""):
         for pid in prod_ids(part):
-            if pid in setids and pid!=home[n]: mem[pid].add(n)
+            if pid not in setids: continue
+            if suf=="" and pid!=home[n]: continue   # la versione base appartiene al suo set d'origine
+            ent[pid][(idx[n],suf)]=vlabel(k); mem[pid].add(n)
+for r in rows:   # ogni carta base sta sempre nel suo set
+    ent[r[16]].setdefault((idx[r[0]],""),0); mem[r[16]].add(r[0])
 OFFICIAL={ # liste ufficiali (cardlist en.digimoncard.com) delle ristampe nei Limited
  "lm01-05":"BT6-032 BT8-013 BT8-086 BT9-023 BT9-086 BT10-050 BT10-091 RB1-009 RB1-028 RB1-029 "
   "BT2-059 BT3-070 BT4-098 BT5-071 BT7-005 BT7-056 BT7-069 BT8-001 BT8-038 BT8-110 BT9-015 BT9-065 BT9-112 BT10-024 BT10-046 BT11-002 BT11-007 BT12-021 BT12-047 BT12-057 BT12-072 BT13-034 BT13-065 BT13-084 BT13-093 EX2-044 EX3-046 EX4-068 ST7-05 ST8-06 ST12-12 ST12-13 ST12-15 "
@@ -129,11 +141,16 @@ miss=[]
 for pid,txt in OFFICIAL.items():
     for n in txt.split():
         if n not in home: miss.append(n)
-        elif home[n]!=pid: mem[pid].add(n)
+        elif home[n]!=pid and n not in mem[pid]:
+            ent[pid][(idx[n],"")]=0; mem[pid].add(n)   # versione non nota: si usa l'arte base
 print("ufficiali non trovate nel database:",miss)
 for x in sets:
-    x["rp"]=sorted(idx[n] for n in mem.get(x["id"],()))
-print({x["code"]:len(x["rp"]) for x in sets if x["rp"]})
+    e=ent.get(x["id"],{})
+    def sk(t):
+        (i,suf),_=t
+        return (0 if rows[i][16]==x["id"] else 1, i, nat(suf))
+    x["v"]=[ [i,suf,vv] if (suf or vv) else i for (i,suf),vv in sorted(e.items(),key=sk)]
+print({x["code"]:len(x["v"]) for x in sets})
 upcoming=[
  {"code":"BT27","name":"Ignition of X","kind":"Booster","from":"2026-12-01","to":"2026-12-31","prec":"month","note":"Dicembre 2026 secondo le schede dei negozianti; un negozio indica spedizioni a gennaio."},
  {"code":"ST25","name":"Digimon Alysion · Rubeusdramon","kind":"Starter Deck","from":"2026-12-01","to":"2026-12-31","prec":"month","note":"Dicembre 2026, dal comunicato ufficiale di maggio 2026."},
@@ -143,7 +160,7 @@ upcoming=[
  {"code":"BT28","name":"Abyss of X","kind":"Booster","from":"2027-03-01","to":"2027-03-31","prec":"month","note":"Marzo 2027 secondo un resoconto della community; non ancora confermato in modo ufficiale."},
  {"code":"PB24","name":"Tamer's Evolution Card Set: Nexus of Digimon","kind":"Prodotto speciale","prec":"none","note":"Annunciato, data non ancora comunicata."},
  {"code":"PB26","name":"Tamer's Selection Box Ver.X Antibody","kind":"Prodotto speciale","prec":"none","note":"Annunciato, data non ancora comunicata."}]
-out={"sets":sets,"cards":rows,"upcoming":upcoming}
+out={"sets":sets,"cards":rows,"upcoming":upcoming,"versions":VERS}
 s=json.dumps(out,ensure_ascii=False,separators=(",",":")).replace("</","<\\/")
 open(SP+"data.json","w",encoding="utf-8").write(s)
 print(len(rows),"cards",len(sets),"sets",len(s)//1024,"KB")

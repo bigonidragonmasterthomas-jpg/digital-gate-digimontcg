@@ -6,9 +6,14 @@ from PIL import Image
 root = pathlib.Path(__file__).resolve().parent.parent
 out = root / "www" / "img"
 (out / "t").mkdir(parents=True, exist_ok=True); (out / "f").mkdir(parents=True, exist_ok=True)
-codes = [c[0] for c in json.load(open(root / "src" / "data.json", encoding="utf-8"))["cards"]]
+D = json.load(open(root / "src" / "data.json", encoding="utf-8"))
+codes = [c[0] for c in D["cards"]]
+# versioni alternative (es. BT11-089_P2) presenti nei prodotti
+codes += sorted({D["cards"][x[0]][0] + x[1] for st in D["sets"] for x in st.get("v", []) if isinstance(x, list) and x[1]})
 SRC = ["https://world.digimoncard.com/images/cardlist/card/{}.png", "https://en.digimoncard.com/images/cardlist/card/{}.png",
        "https://web-garage.takaotaku.de/{}.webp"]
+# per le versioni alternative la numerazione _Pn è quella di TakaOtaku: prima la sua fonte
+SRC_ALT = [SRC[2], SRC[0], SRC[1]]
 def get(url):
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 digimon-set-tracker"})
     return urllib.request.urlopen(req, timeout=30).read()
@@ -16,7 +21,7 @@ def one(code):
     t, f = out / "t" / (code + ".webp"), out / "f" / (code + ".webp")
     if t.exists() and f.exists(): return "cache"
     q = urllib.parse.quote(code)
-    for tpl in SRC:
+    for tpl in (SRC_ALT if "_P" in code else SRC):
         for _ in range(2):
             try:
                 im = Image.open(io.BytesIO(get(tpl.format(q)))).convert("RGB")

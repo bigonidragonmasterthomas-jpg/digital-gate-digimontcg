@@ -182,7 +182,7 @@ main { padding: 8px 16px 48px; }
     var b = el("div", cls), im = document.createElement("img");
     im.alt = ""; im.loading = "lazy"; im.decoding = "async"; im.referrerPolicy = "no-referrer";
     im.onerror = function () { b.classList.add("noimg"); };
-    im.src = IMG + kind + "/" + encodeURIComponent(c.code) + ".webp";
+    im.src = IMG + kind + "/" + encodeURIComponent(c.img || c.code) + ".webp";
     b.appendChild(im); return b;
   }
 
@@ -197,9 +197,18 @@ main { padding: 8px 16px 48px; }
   var CODEIDX = {};
   CARDS.forEach(function (c) { (CODEIDX[c.code] = CODEIDX[c.code] || []).push(c); });
 
-  var MEM = {};
-  SETS.forEach(function (x) { var m = {}; (x.rp || []).forEach(function (i) { m[i] = 1; }); MEM[x.id] = m; });
-  function inSet(c, id) { return c.set === id || (MEM[id] && MEM[id][c.i] === 1); }
+  var VERS = DATA.versions || ["Normal"];
+  function verLabel(v) {
+    if (!v || v === "Normal") return "";
+    if (/alternative art/i.test(v)) return "Arte alternativa";
+    if (/pre release/i.test(v)) return "Pre-release";
+    return v;
+  }
+  // Una "versione" = carta + arte uscita in quel prodotto. La versione base è la carta stessa (copie condivise).
+  function mkEntry(c, suf, vv) {
+    if (!suf) return c;
+    var e = Object.create(c); e.suf = suf; e.img = c.code + suf; e.k = c.k + "~" + suf; e.ver = VERS[vv] || ""; return e;
+  }
   var qty = {};
   try { qty = JSON.parse(localStorage.getItem("dgm-qty") || "{}") || {}; } catch (e) { qty = {}; }
   function save() { try { localStorage.setItem("dgm-qty", JSON.stringify(qty)); } catch (e) {} }
@@ -226,7 +235,7 @@ main { padding: 8px 16px 48px; }
   }
   function owned(c) { return qty[c.k] || 0; }
   var SETSTAT = {};
-  function recomputeStats() { SETSTAT = {}; SETS.forEach(function (s) { SETSTAT[s.id] = { n: 0, h: 0 }; }); CARDS.forEach(function (c) { var t = SETSTAT[c.set]; t.n++; if (owned(c)) t.h++; }); SETS.forEach(function (x) { (x.rp || []).forEach(function (i) { var t = SETSTAT[x.id]; t.n++; if (owned(CARDS[i])) t.h++; }); }); }
+  function recomputeStats() { SETSTAT = {}; SETS.forEach(function (s) { var t = { n: 0, h: 0 }; cardsOfSet(s.id).forEach(function (e) { t.n++; if (owned(e)) t.h++; }); SETSTAT[s.id] = t; }); }
 
   function fillSelect(id, first, items) {
     var s = document.getElementById(id); s.innerHTML = "";
@@ -295,9 +304,9 @@ main { padding: 8px 16px 48px; }
   var SETCARDS = {};
   function cardsOfSet(id) {
     if (!SETCARDS[id]) {
-      var a = CARDS.filter(function (c) { return c.set === id; });
-      ((SETBY[id] && SETBY[id].rp) || []).forEach(function (i) { a.push(CARDS[i]); });
-      SETCARDS[id] = a;
+      SETCARDS[id] = ((SETBY[id] && SETBY[id].v) || []).map(function (x) {
+        return typeof x === "number" ? CARDS[x] : mkEntry(CARDS[x[0]], x[1], x[2]);
+      });
     }
     return SETCARDS[id];
   }
@@ -404,7 +413,6 @@ main { padding: 8px 16px 48px; }
   }
 
   function cardMatches(c, q) {
-    if (st.setId && !inSet(c, st.setId)) return false;
     if (st.color && c.colors.indexOf(st.color) < 0) return false;
     if (st.ct && c.ct.indexOf(st.ct) < 0) return false;
     if (st.lv && c.lv !== st.lv) return false;
@@ -447,14 +455,11 @@ main { padding: 8px 16px 48px; }
       if (s.date && s.date.charAt(0) !== "0") { var dm = s.date.split("-"); var mn = MONTHS[+dm[1] - 1]; h.appendChild(el("div", "sub", "Uscita: " + mn.charAt(0).toUpperCase() + mn.slice(1) + " " + dm[0])); }
       out.appendChild(h);
     }
-    var list = CARDS.filter(function (c) { return cardMatches(c, q); });
-    if (st.setId) list = list.filter(function (c) { return c.set === st.setId; }).concat(list.filter(function (c) { return c.set !== st.setId; }));
+    var list = (st.setId ? cardsOfSet(st.setId) : CARDS).filter(function (c) { return cardMatches(c, q); });
     if (q) {
-      var sc = {};
-      list.forEach(function (c) { sc[c.i] = relevance(c, q); });
-      list.sort(function (a, b) {
-        return (sc[a.i] - sc[b.i]) || (st.setId ? (a.set === st.setId ? 0 : 1) - (b.set === st.setId ? 0 : 1) : 0) || (a.i - b.i);
-      });
+      list = list.map(function (c, j) { return { c: c, j: j, r: relevance(c, q) }; })
+        .sort(function (a, b) { return (a.r - b.r) || (a.j - b.j); })
+        .map(function (o) { return o.c; });
     }
     if (!list.length && st.setId && !SETSTAT[st.setId].n) { out.appendChild(el("p", "empty", "Questo prodotto non contiene carte: solo accessori (playmat, bustine, box).")); return; }
     if (!list.length) { out.appendChild(el("p", "empty", "Nessuna carta corrisponde ai filtri.")); return; }
@@ -470,7 +475,7 @@ main { padding: 8px 16px 48px; }
     gt.appendChild(vb); out.appendChild(gt);
     var ul = el("div", st.view === "grid" ? "grid" : "list");
     list.slice(0, st.shown).forEach(function (c) {
-      var rp = st.setId && c.set !== st.setId && !(c.set === "p" && SETBY[st.setId].type === "PB") ? " · Ristampa" + (SETBY[c.set] ? " da " + SETBY[c.set].code : "") : "";
+      var rp = (st.setId && c.set !== st.setId && !(c.set === "p" && SETBY[st.setId].type === "PB") ? " · Ristampa" + (SETBY[c.set] ? " da " + SETBY[c.set].code : "") : "") + (c.suf && verLabel(c.ver) ? " · " + verLabel(c.ver) : "");
       if (st.view === "grid") {
         var t = el("div", "tile"); t.tabIndex = 0; t.setAttribute("role", "button");
         t.appendChild(picBox("pic", "f", c));
@@ -478,8 +483,8 @@ main { padding: 8px 16px 48px; }
         t.appendChild(el("div", "tname", c.name));
         t.appendChild(el("div", "sub", c.code + " · " + metaLine(c) + rp));
         t.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
-        t.onclick = function () { st.open = c.i; drawSheet(); };
-        t.onkeydown = function (e) { if (e.target === t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); st.open = c.i; drawSheet(); } };
+        t.onclick = function () { st.open = c; drawSheet(); };
+        t.onkeydown = function (e) { if (e.target === t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); st.open = c; drawSheet(); } };
         ul.appendChild(t); return;
       }
       var r = el("div", "row card"); r.tabIndex = 0; r.setAttribute("role", "button");
@@ -489,7 +494,7 @@ main { padding: 8px 16px 48px; }
       mid.appendChild(el("div", "sub", c.code + " · " + metaLine(c) + rp));
       r.appendChild(mid);
       r.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
-      function open() { st.open = c.i; drawSheet(); }
+      function open() { st.open = c; drawSheet(); }
       r.onclick = open;
       r.onkeydown = function (e) { if (e.target === r && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); open(); } };
       ul.appendChild(r);
@@ -540,13 +545,13 @@ main { padding: 8px 16px 48px; }
   function drawSheet() {
     sheet.innerHTML = "";
     if (st.open == null) { sheet.hidden = true; return; }
-    var c = CARDS[st.open];
+    var c = st.open;
     sheet.hidden = false;
     var scrim = el("div", "scrim");
     scrim.onclick = function (e) { if (e.target === scrim) closeSheet(); };
     var sh = el("div", "sheet"); sh.setAttribute("role", "dialog"); sh.setAttribute("aria-modal", "true");
     var head = el("div", "sheet-head");
-    var t = el("div"); t.appendChild(el("div", "c", c.code + " · " + (SETBY[c.set] ? SETBY[c.set].name : ""))); t.appendChild(el("h2", "", c.name));
+    var t = el("div"); t.appendChild(el("div", "c", c.code + " · " + (SETBY[c.set] ? SETBY[c.set].name : "") + (c.suf && verLabel(c.ver) ? " · " + verLabel(c.ver) : ""))); t.appendChild(el("h2", "", c.name));
     head.appendChild(t);
     var x = el("button", "x", "✕"); x.type = "button"; x.setAttribute("aria-label", "Chiudi"); x.onclick = closeSheet;
     head.appendChild(x); sh.appendChild(head);
