@@ -397,7 +397,9 @@ main { padding: 8px 16px 48px; }
       var b = el("button", "back", "← Tutti i set"); b.type = "button";
       b.onclick = goSets;
       out.appendChild(b);
-      var h = el("div", "sethead"); h.appendChild(el("h2", "fit", s.code + " · " + s.name)); out.appendChild(h);
+      var h = el("div", "sethead"); h.appendChild(el("h2", "fit", s.code + " · " + s.name));
+      if (s.date && s.date.charAt(0) !== "0") { var dm = s.date.split("-"); var mn = MONTHS[+dm[1] - 1]; h.appendChild(el("div", "sub", "Uscita: " + mn.charAt(0).toUpperCase() + mn.slice(1) + " " + dm[0])); }
+      out.appendChild(h);
     }
     var list = CARDS.filter(function (c) { return cardMatches(c, q); });
     if (st.setId) list = list.filter(function (c) { return c.set === st.setId; }).concat(list.filter(function (c) { return c.set !== st.setId; }));

@@ -56,10 +56,27 @@ print("missing names",missing)
 order=["BT","EX","ST","LM","AL"]
 sets=[{"id":p.lower(),"code":p,"name":NAMES.get(p,p),"type":gtype(p),"n":cnt[p]} for p in cnt]
 AL_ORDER=["AD1","RB1","P"]
-sets.sort(key=lambda s:nat("LM00" if s["code"]=="LM01-05" else s["code"]),reverse=True)
-sets.sort(key=lambda s:(order.index(s["type"]),AL_ORDER.index(s["code"]) if s["type"]=="AL" else 0))
-rank={s["id"]:i for i,s in enumerate(sets)}
-rows.sort(key=lambda r:(rank[r[16]],nat(r[0])))
+# Date di uscita internazionali (inglese). "~" = stimata. P (promo) non ha una data: va in fondo.
+DATES={"BT1":"2021-02-12","BT2":"2021-02-12","BT3":"2021-03-12","BT4":"2021-06-11","BT5":"2021-08-06","BT6":"2021-10-15",
+ "BT7":"2022-03-04","BT8":"2022-05-13","BT9":"2022-07-29","BT10":"2022-10-14","BT11":"2023-02-17","BT12":"2023-04-28",
+ "BT13":"2023-07-21","BT14":"2023-11-17","BT15":"2024-02-16","BT16":"2024-05-24","BT17":"2024-08-09","BT18":"2024-11-01",
+ "BT19":"2024-11-01","BT20":"2025-02-01","BT21":"2025-04-25","BT22":"2025-07-25","BT23":"2025-10-24","BT24":"2026-01-23",
+ "BT25":"2026-05-22","BT26":"2026-09-04",
+ "EX1":"2021-12-10","EX2":"2022-06-24","EX3":"2022-11-11","EX4":"2023-06-23","EX5":"2024-01-19","EX6":"2024-06-28",
+ "EX7":"2024-09-13","EX8":"2025-01-01","EX9":"2025-06-26","EX10":"2025-09-19","EX11":"2026-02-14","EX12":"2026-07-04","EX13":"2026-10-02",
+ "ST1":"2021-01-29","ST2":"2021-01-29","ST3":"2021-01-29","ST4":"2021-06-11","ST5":"2021-06-11","ST6":"2021-06-11",
+ "ST7":"2021-10-15","ST8":"2021-10-15","ST9":"2022-05-13","ST10":"2022-05-13","ST12":"2022-10-14","ST13":"2022-10-14",
+ "ST14":"2023-03-24","ST15":"2023-10-13","ST16":"2023-10-13","ST17":"2024-03-08","ST18":"2024-09-13","ST19":"2024-09-13",
+ "ST20":"2025-04-18","ST21":"2025-04-18","ST22":"2025-12-05","ST23":"2026-05-15","ST24":"2026-05-15",
+ "RB1":"2023-09-29","AD1":"2026-01-01","LM01-05":"2024-12-13","LM06":"2025-10-01","LM07":"2026-03-01","LM08":"2026-07-01","P":"0000-00-00"}
+for x in sets: x["date"]=DATES.get(x["code"],"0000-00-00")
+missing_dates=[x["code"] for x in sets if x["code"] not in DATES]
+print("senza data:",missing_dates)
+# dentro ogni gruppo: dalla piu recente alla piu vecchia (a parita di data, numero piu alto prima)
+sets.sort(key=lambda s:(s["date"],nat(s["code"])),reverse=True)
+chron={s["id"]:i for i,s in enumerate(sets)}
+sets.sort(key=lambda s:order.index(s["type"]))
+rows.sort(key=lambda r:(chron[r[16]],nat(r[0])))
 
 # ---- ristampe: carte uscite in un prodotto ma appartenenti a un altro set ----
 home={r[0]:r[16] for r in rows}
