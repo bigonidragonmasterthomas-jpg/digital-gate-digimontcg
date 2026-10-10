@@ -72,6 +72,20 @@ main { padding: 8px 16px 48px; }
 .num { font-family: var(--font-display); font-weight: 600; font-size: .85rem; color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .num.done { color: var(--ok); }
 .swatch { align-self: stretch; width: 8px; border-radius: 0; }
+.vbtns { display: inline-flex; gap: 6px; }
+.vbtn { width: 36px; height: 32px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); display: grid; place-items: center; cursor: pointer; padding: 0; }
+.vbtn svg { width: 18px; height: 18px; }
+.vbtn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.group-title.withv { align-items: center; margin-top: 14px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 6px; cursor: pointer; min-width: 0; }
+.tile .pic { width: 100%; aspect-ratio: 5 / 7; border-radius: 7px; background: var(--surface-2); overflow: hidden; }
+.tile .pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tile .pic.noimg img { display: none; }
+.tile .cline { height: 5px; border-radius: 3px; }
+.tile .tname { font-weight: 600; line-height: 1.25; overflow-wrap: anywhere; }
+.tile .sub { margin-top: 0; }
+.tile .qty { margin-top: auto; justify-content: center; padding-top: 2px; }
 .qty { display: inline-flex; align-items: center; gap: 4px; }
 .qbtn { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--line); background: transparent; color: var(--ink); font-size: 1.1rem; line-height: 1; cursor: pointer; display: grid; place-items: center; }
 .qbtn.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
@@ -195,17 +209,18 @@ main { padding: 8px 16px 48px; }
     c.k = seen[base] > 1 ? base + "#" + seen[base] : base;
   });
 
-  var st = { qm: "", tab: "sets", type: "ALL", setId: null, q: "", color: "", ct: "", lv: "", shown: PAGE, open: null };
+  var VIEW0 = "list"; try { VIEW0 = localStorage.getItem("dgm-view") === "grid" ? "grid" : "list"; } catch (e) {}
+  var st = { view: VIEW0, qm: "", tab: "sets", type: "ALL", setId: null, q: "", color: "", ct: "", lv: "", shown: PAGE, open: null };
   var out = document.getElementById("out"), chips = document.getElementById("chips"), qi = document.getElementById("q");
   var sheet = document.getElementById("sheet");
 
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
   function colorVar(n) { return "var(--c-" + n.toLowerCase() + ")"; }
-  function gradient(cols) {
+  function gradient(cols, dir) {
     if (!cols.length) return "var(--line)";
     if (cols.length === 1) return colorVar(cols[0]);
     var p = 100 / cols.length, s = cols.map(function (c, i) { return colorVar(c) + " " + (i * p) + "% " + ((i + 1) * p) + "%"; });
-    return "linear-gradient(" + s.join(",") + ")";
+    return "linear-gradient(" + (dir ? dir + "," : "") + s.join(",") + ")";
   }
   function owned(c) { return qty[c.k] || 0; }
   var SETSTAT = {};
@@ -411,9 +426,30 @@ main { padding: 8px 16px 48px; }
       });
     }
     if (!list.length) { out.appendChild(el("p", "empty", "Nessuna carta corrisponde ai filtri.")); return; }
-    out.appendChild(el("div", "group-title", "")).appendChild(el("span", "", list.length + (list.length === 1 ? " carta" : " carte")));
-    var ul = el("div", "list");
+    var gt = el("div", "group-title withv"); gt.appendChild(el("span", "", list.length + (list.length === 1 ? " carta" : " carte")));
+    var vb = el("span", "vbtns");
+    [["list", "Vista a elenco", '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>'],
+     ["grid", "Vista a immagini", '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3.5" y="4" width="7" height="16" rx="1.5"/><rect x="13.5" y="4" width="7" height="16" rx="1.5"/></svg>']].forEach(function (v) {
+      var bt = el("button", "vbtn"); bt.type = "button"; bt.innerHTML = v[2]; bt.title = v[1];
+      bt.setAttribute("aria-label", v[1]); bt.setAttribute("aria-pressed", String(st.view === v[0]));
+      bt.onclick = function () { st.view = v[0]; try { localStorage.setItem("dgm-view", st.view); } catch (e) {} render(); };
+      vb.appendChild(bt);
+    });
+    gt.appendChild(vb); out.appendChild(gt);
+    var ul = el("div", st.view === "grid" ? "grid" : "list");
     list.slice(0, st.shown).forEach(function (c) {
+      var rp = st.setId && c.set !== st.setId ? " · Ristampa" + (SETBY[c.set] ? " da " + SETBY[c.set].code : "") : "";
+      if (st.view === "grid") {
+        var t = el("div", "tile"); t.tabIndex = 0; t.setAttribute("role", "button");
+        t.appendChild(picBox("pic", "f", c));
+        var cl = el("div", "cline"); cl.style.background = gradient(c.colors, "to right"); t.appendChild(cl);
+        t.appendChild(el("div", "tname", c.name));
+        t.appendChild(el("div", "sub", c.code + " · " + metaLine(c) + rp));
+        t.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
+        t.onclick = function () { st.open = c.i; drawSheet(); };
+        t.onkeydown = function (e) { if (e.target === t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); st.open = c.i; drawSheet(); } };
+        ul.appendChild(t); return;
+      }
       var r = el("div", "row card"); r.tabIndex = 0; r.setAttribute("role", "button");
       var sw = el("div", "swatch"); sw.style.background = gradient(c.colors); r.appendChild(sw);
       r.appendChild(picBox("thumb", "t", c));
@@ -482,7 +518,7 @@ main { padding: 8px 16px 48px; }
     head.appendChild(t);
     var x = el("button", "x", "✕"); x.type = "button"; x.setAttribute("aria-label", "Chiudi"); x.onclick = closeSheet;
     head.appendChild(x); sh.appendChild(head);
-    var band = el("div", "band"); band.style.background = gradient(c.colors); sh.appendChild(band);
+    var band = el("div", "band"); band.style.background = gradient(c.colors, "to right"); sh.appendChild(band);
     var art = el("div", "art"); art.appendChild(picBox("pic", "f", c)); sh.appendChild(art);
     var tags = el("div", "tags");
     [c.ct, c.lv, c.colors.map(function (k) { return COLORS[k] || k; }).join("/"), c.form, c.attr, c.sp].forEach(function (v) { if (v) tags.appendChild(el("span", "tag", v)); });
