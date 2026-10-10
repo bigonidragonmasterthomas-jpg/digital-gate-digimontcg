@@ -6,12 +6,13 @@ from PIL import Image, ImageFilter, ImageDraw
 root = pathlib.Path(__file__).resolve().parent.parent
 outdir = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else root / "www" / "banners"
 outdir.mkdir(parents=True, exist_ok=True)
-BASES = ["https://world.digimoncard.com/images/products/", "https://en.digimoncard.com/images/products/", "https://digimoncard.com/images/products/"]
-src = json.load(open(root / "tools" / "banners.json"))
+BASES = {"W": ["https://world.digimoncard.com/images/products/", "https://en.digimoncard.com/images/products/", "https://digimoncard.com/images/products/"],
+         "U": ["https://img.unacollezione.it/"]}
+src = {k: v for k, v in json.load(open(root / "tools" / "banners.json")).items() if not k.startswith("_")}
 info = {}
-for code, path in src.items():
-    im = None
-    for b in BASES:
+for code, spec in src.items():
+    im = None; pre, path = spec["url"].split("/", 1)
+    for b in BASES[pre]:
         try:
             data = urllib.request.urlopen(urllib.request.Request(b + path, headers={"User-Agent": "Mozilla/5.0"}), timeout=20).read()
             im = Image.open(io.BytesIO(data)); im.load(); break
@@ -23,6 +24,9 @@ for code, path in src.items():
         im = im.convert("RGBA"); bg = Image.new("RGB", im.size, (11, 17, 32)); bg.paste(im, mask=im.split()[-1]); im = bg
     else:
         im = im.convert("RGB")
+    if spec.get("crop"):
+        x0, y0, x1, y1 = spec["crop"]; W, H = im.size
+        im = im.crop((round(x0 * W), round(y0 * H), round(x1 * W), round(y1 * H)))
     w0, h0 = im.size
     if w0 < 1200:
         f = min(2.0, 1600 / w0)
