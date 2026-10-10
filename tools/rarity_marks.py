@@ -38,7 +38,7 @@ def find_tag(a):
             # il tag è isolato: attorno (cornice di 3 px) pochi pixel chiari
             ys, ye = max(0, sl[0].start - 3), sl[0].stop + 3; xs, xe = max(0, sl[1].start - 3), sl[1].stop + 3
             ring = bright[ys:ye, xs:xe].sum() - (lab[sl] == k).sum()
-            if dark >= 6 and ring <= 6 and (best is None or dark > best[3]): best = (sl[0].start + y0, sl[1].start + 360, h, dark)
+            if dark >= 6 and (best is None or dark > best[3]): best = (sl[0].start + y0, sl[1].start + 360, h, dark)
     return best
 def guess(a, t):
     y, x, h, _ = t
@@ -57,7 +57,7 @@ def work(i):
     if im is None: return i, None, None
     a = np.asarray(im).astype(int); t = find_tag(a)
     if t is None:
-        strip = im.crop((300, int(im.size[1] * 0.72), 420, int(im.size[1] * 0.95)))
+        strip = im.crop((290, int(im.size[1] * 0.60), 430, int(im.size[1] * 0.97)))
         return i, "?", strip
     y, x, h, _ = t
     strip = im.crop((318, max(0, y - 16), x + 30, y + h + 3))
