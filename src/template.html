@@ -33,12 +33,31 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-body); 
 button { font-family: inherit; }
 .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 16px 10px; }
 .wrap { max-width: 720px; margin: 0 auto; }
-.top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 h1 { min-width: 0; flex: 1 1 auto; font-family: var(--font-display); font-size: 1.4rem; margin: 0; font-weight: 700; }
 .count { font-family: var(--font-display); font-weight: 600; color: var(--ink-2); font-size: .85rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .count b { color: var(--accent); }
 .progress { height: 4px; background: var(--surface-2); border-radius: 2px; margin: 8px 0 10px; overflow: hidden; }
 .progress i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .25s; }
+.burger { flex: none; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); display: grid; place-content: center; gap: 5px; cursor: pointer; padding: 0; }
+.burger span { display: block; width: 20px; height: 2px; border-radius: 2px; background: var(--ink); transition: transform .2s, opacity .2s; }
+.burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.menu-scrim { position: fixed; inset: 0; z-index: 30; background: var(--scrim); opacity: 0; pointer-events: none; transition: opacity .2s; }
+.menu-scrim.open { opacity: 1; pointer-events: auto; }
+.menu { position: fixed; top: 0; right: 0; bottom: 0; z-index: 31; width: min(320px, 86vw); background: var(--bg); border-left: 1px solid var(--line); transform: translateX(100%); transition: transform .25s ease; display: flex; flex-direction: column; padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 20px; overflow-y: auto; }
+.menu.open { transform: none; }
+.menu .mh { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; font: 700 1.05rem var(--font-display); }
+.menu nav { display: flex; flex-direction: column; gap: 4px; }
+.menu nav button { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; border: 0; background: transparent; color: var(--ink); padding: 12px 10px; border-radius: 10px; font: 600 1rem var(--font-display); cursor: pointer; }
+.menu nav button svg { width: 20px; height: 20px; color: var(--ink-2); flex: none; }
+.menu nav button[aria-current="page"] { background: var(--surface-2); }
+.menu nav button[aria-current="page"] svg { color: var(--accent); }
+.menu .coll { margin-top: 16px; padding: 12px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); }
+.menu .coll .count { display: block; margin-bottom: 8px; }
+.menu .progress { margin: 0; }
+.menu .foot { margin-top: auto; padding-top: 18px; color: var(--ink-2); font-size: .74rem; }
 .tabs { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--surface-2); border-radius: 10px; padding: 3px; gap: 3px; margin-bottom: 10px; }
 .tab { border: 0; background: transparent; color: var(--ink-2); padding: 8px; border-radius: 8px; font: 600 .9rem var(--font-display); cursor: pointer; letter-spacing: .02em; }
 .tab[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
@@ -163,8 +182,8 @@ main { padding: 8px 16px 48px; }
 .bn .fb b { display: block; font-size: 2.1rem; letter-spacing: .04em; font-style: italic; }
 .bn .fb span { font-size: .8rem; opacity: .85; }
 .bn:not(.noimg) .fb { display: none; }
-.badge { position: absolute; top: 10px; left: 10px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 10px; background: rgba(11,17,32,.82); color: #e8edf7; font: 700 .78rem/1 var(--font-display); letter-spacing: .06em; text-transform: uppercase; backdrop-filter: blur(4px); box-shadow: 0 0 0 1px rgba(255,255,255,.12); }
-.badge svg { width: 14px; height: 14px; }
+.badge { position: absolute; top: 8px; left: 8px; display: inline-flex; align-items: center; gap: 3px; padding: 3px 6px 3px 5px; border-radius: 6px; background: rgba(11,17,32,.82); color: #e8edf7; font: 700 .6rem/1 var(--font-display); letter-spacing: .05em; text-transform: uppercase; backdrop-filter: blur(4px); box-shadow: 0 0 0 1px rgba(255,255,255,.12); }
+.badge svg { width: 10px; height: 10px; }
 .badge.new { background: rgba(88,40,140,.9); }
 .lang { position: absolute; right: 10px; bottom: 10px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: rgba(11,17,32,.85); color: #fff; font: 700 .66rem var(--font-display); box-shadow: 0 0 0 2px rgba(255,255,255,.18); }
 .hero .bn { aspect-ratio: 4 / 3; }
@@ -175,7 +194,8 @@ main { padding: 8px 16px 48px; }
 .hgrid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .hitem .lbl { margin-top: 7px; font-family: var(--font-display); font-style: italic; font-weight: 700; text-transform: uppercase; font-size: .78rem; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: .02em; }
 .hitem .lbl2 { color: var(--accent); font-size: .74rem; font-family: var(--font-display); font-weight: 600; margin-top: 1px; }
-.hgrid.three .badge { top: 6px; left: 6px; padding: 4px 7px; font-size: .64rem; }
+.hgrid.three .badge { top: 5px; left: 5px; padding: 2px 5px 2px 4px; font-size: .52rem; }
+.hgrid.three .badge svg { width: 8px; height: 8px; }
 .hgrid.three .lang { width: 26px; height: 26px; font-size: .56rem; right: 6px; bottom: 6px; }
 .more-link { display: block; margin: 22px auto 6px; border: 0; background: none; color: var(--ink-2); font: 600 .82rem var(--font-display); letter-spacing: .22em; text-transform: uppercase; cursor: pointer; }
 @media (min-width: 720px) { .hgrid.three { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
@@ -187,14 +207,93 @@ body.apk .hgrid.up { display: flex; align-items: flex-start; overflow-x: auto; s
 body.apk .hgrid.up::-webkit-scrollbar { display: none; }
 body.apk .hgrid.up .hitem { flex: 0 0 62%; scroll-snap-align: start; }
 body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* ---- Animazione di avvio: "Digital Gate" (ispirata al varco digitale e al codice digitale di Digimon) */
+#splash { position: fixed; inset: 0; z-index: 100; background: #04060d; display: grid; place-items: center; overflow: hidden; transition: opacity .45s ease; }
+#splash.out { opacity: 0; pointer-events: none; }
+#splash canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+#splash .gate { position: relative; width: min(62vw, 300px); aspect-ratio: 1; }
+#splash svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+#splash .hx { fill: none; stroke-linejoin: round; stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+#splash .hx1 { stroke: #ff7a3d; stroke-width: 3; animation: sp-draw .9s .15s ease-out forwards, sp-spin 6s linear infinite; transform-origin: 50% 50%; filter: drop-shadow(0 0 6px #ff7a3d); }
+#splash .hx2 { stroke: #39c6ff; stroke-width: 2; animation: sp-draw .9s .35s ease-out forwards, sp-spin 8s linear infinite reverse; transform-origin: 50% 50%; filter: drop-shadow(0 0 6px #39c6ff); }
+#splash .ring { fill: none; stroke: #ffffff33; stroke-width: 1; stroke-dasharray: 4 7; transform-origin: 50% 50%; animation: sp-spin 10s linear infinite; }
+#splash .core { fill: url(#spCore); transform-origin: 50% 50%; transform: scale(0); animation: sp-core .7s .7s cubic-bezier(.2,1.4,.4,1) forwards, sp-pulse 1.2s 1.4s ease-in-out infinite; }
+#splash .beam { stroke: #ffd2b8; stroke-width: 2; stroke-linecap: round; opacity: 0; stroke-dasharray: 60; stroke-dashoffset: 60; animation: sp-beam .5s ease-out forwards; }
+#splash .crest { fill: #fff; opacity: 0; transform-origin: 50% 50%; animation: sp-crest .5s 1.05s ease-out forwards; }
+#splash .title { position: absolute; left: 0; right: 0; bottom: 14%; text-align: center; color: #fff; font-family: var(--font-display); }
+#splash .title b { display: block; font-size: clamp(1.6rem, 7vw, 2.4rem); font-style: italic; letter-spacing: .06em; }
+#splash .title b span { display: inline-block; opacity: 0; transform: translateY(8px) skewX(-12deg); animation: sp-letter .28s ease-out forwards; text-shadow: 0 0 12px #ff7a3d99; }
+#splash .title small { display: block; margin-top: 6px; font-size: .72rem; letter-spacing: .5em; color: #39c6ff; opacity: 0; animation: sp-fade .4s 1.55s forwards; }
+#splash .flash { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, #fff 0, #ffe1cf 25%, transparent 60%); opacity: 0; transform: scale(.2); pointer-events: none; }
+#splash.open .flash { animation: sp-flash .55s ease-in forwards; }
+#splash.open .gate { animation: sp-zoom .55s ease-in forwards; }
+@keyframes sp-draw { to { stroke-dashoffset: 0; } }
+@keyframes sp-spin { to { transform: rotate(360deg); } }
+@keyframes sp-core { to { transform: scale(1); } }
+@keyframes sp-pulse { 50% { transform: scale(1.08); } }
+@keyframes sp-beam { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: .0; stroke-dashoffset: -60; } }
+@keyframes sp-crest { from { opacity: 0; transform: scale(.6) rotate(-20deg); } to { opacity: .95; transform: none; } }
+@keyframes sp-letter { to { opacity: 1; transform: none; } }
+@keyframes sp-fade { to { opacity: 1; } }
+@keyframes sp-flash { 0% { opacity: 0; transform: scale(.2); } 60% { opacity: 1; } 100% { opacity: 1; transform: scale(3); } }
+@keyframes sp-zoom { to { transform: scale(2.4); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { #splash * { animation-duration: .01s !important; animation-delay: 0s !important; } }
 @media (prefers-reduced-motion: reduce) { .progress i { transition: none; } }
 </style>
 
+<div id="splash" aria-hidden="true">
+  <canvas id="spCode"></canvas>
+  <div class="gate">
+    <svg viewBox="0 0 200 200">
+      <defs><radialGradient id="spCore"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#ffd9c2"/><stop offset=".7" stop-color="#ff7a3d" stop-opacity=".55"/><stop offset="1" stop-color="#ff7a3d" stop-opacity="0"/></radialGradient></defs>
+      <circle class="ring" cx="100" cy="100" r="96"/>
+      <polygon class="hx hx1" points="100,14 174.5,57 174.5,143 100,186 25.5,143 25.5,57"/>
+      <polygon class="hx hx2" points="100,34 157.2,67 157.2,133 100,166 42.8,133 42.8,67"/>
+      <g id="spBeams"></g>
+      <circle class="core" cx="100" cy="100" r="44"/>
+      <path class="crest" d="M100 74l7 15 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2z"/>
+    </svg>
+  </div>
+  <div class="title"><b id="spTitle"></b><small>DIGIMON TCG</small></div>
+  <div class="flash"></div>
+</div>
+<script>
+(function () {
+  var sp = document.getElementById("splash"), apk = !!window.Capacitor || /^capacitor:/.test(location.protocol);
+  var seen = false; try { seen = !apk && sessionStorage.getItem("dg-splash") === "1"; sessionStorage.setItem("dg-splash", "1"); } catch (e) {}
+  if (seen || /[?&]nosplash/.test(location.search)) { sp.remove(); return; }
+  var t = document.getElementById("spTitle"), word = "DIGITAL GATE";
+  for (var i = 0; i < word.length; i++) { var s = document.createElement("span"); s.textContent = word[i] === " " ? "\u00a0" : word[i]; s.style.animationDelay = (0.95 + i * 0.045) + "s"; t.appendChild(s); }
+  var g = document.getElementById("spBeams"), NS = "http://www.w3.org/2000/svg";
+  for (var k = 0; k < 12; k++) { var a = k / 12 * Math.PI * 2, l = document.createElementNS(NS, "line");
+    l.setAttribute("x1", 100 + Math.cos(a) * 50); l.setAttribute("y1", 100 + Math.sin(a) * 50); l.setAttribute("x2", 100 + Math.cos(a) * 110); l.setAttribute("y2", 100 + Math.sin(a) * 110);
+    l.setAttribute("class", "beam"); l.style.animationDelay = (0.75 + (k % 6) * 0.06) + "s"; g.appendChild(l); }
+  // pioggia di "codice digitale"
+  var c = document.getElementById("spCode"), x = c.getContext("2d"), dpr = Math.min(2, window.devicePixelRatio || 1), W, H, cols, drops, fs = 14;
+  var glyphs = "0123456789ABCDEF<>/\\=+*#ΔΣΞΦΨΩ";
+  function size() { W = c.width = innerWidth * dpr; H = c.height = innerHeight * dpr; cols = Math.ceil(W / (fs * dpr)); drops = []; for (var i = 0; i < cols; i++) drops.push(Math.random() * -40); }
+  size(); var run = true, t0 = performance.now();
+  function frame(now) {
+    if (!run) return;
+    x.fillStyle = "rgba(4,6,13,.22)"; x.fillRect(0, 0, W, H); x.font = (fs * dpr) + "px monospace";
+    for (var i = 0; i < cols; i++) {
+      var ch = glyphs[(Math.random() * glyphs.length) | 0], y = drops[i] * fs * dpr;
+      x.fillStyle = i % 7 === 0 ? "rgba(57,198,255,.55)" : "rgba(255,122,61,.38)"; x.fillText(ch, i * fs * dpr, y);
+      if (y > H && Math.random() > .96) drops[i] = 0; drops[i] += .55 + (i % 3) * .2;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+  var done = false;
+  function finish() { if (done) return; done = true; sp.classList.add("open"); setTimeout(function () { sp.classList.add("out"); }, 420); setTimeout(function () { run = false; sp.remove(); }, 900); }
+  setTimeout(finish, 2300); sp.addEventListener("click", finish);
+})();
+</script>
 <div class="bar">
   <div class="wrap">
-    <div class="top"><h1 class="fit">Digital Gate - Digimon TCG</h1><div class="count" id="count"></div></div>
-    <div class="progress" aria-hidden="true"><i id="bar"></i></div>
-    <div class="tabs" role="tablist">
+    <div class="top"><h1 class="fit">Digital Gate - Digimon TCG</h1>
+      <button class="burger" id="menuBtn" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button></div>
+    <div class="tabs" role="tablist" hidden>
       <button class="tab" role="tab" id="tab-home" type="button">Home</button>
       <button class="tab" role="tab" id="tab-sets" type="button">Set</button>
       <button class="tab" role="tab" id="tab-cards" type="button">Carte</button>
@@ -215,6 +314,13 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 <main><div class="wrap" id="out"></div>
 <p class="hint wrap" id="hint"></p></main>
 <div id="sheet" hidden></div>
+<div class="menu-scrim" id="menuScrim"></div>
+<aside class="menu" id="menu" aria-label="Menu di navigazione" aria-hidden="true">
+  <div class="mh"><span>Menu</span></div>
+  <nav id="menuNav"></nav>
+  <div class="coll"><span class="count" id="count"></span><div class="progress" aria-hidden="true"><i id="bar"></i></div></div>
+  <div class="foot">Digital Gate - Digimon TCG · catalogo non ufficiale. Immagini e marchi © Bandai, Akiyoshi Hongo, Toei Animation.</div>
+</aside>
 
 <script id="data" type="application/json">/*DATA*/</script>
 <script>
@@ -268,7 +374,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   });
 
   var VIEW0 = "list"; try { VIEW0 = localStorage.getItem("dgm-view") === "grid" ? "grid" : "list"; } catch (e) {}
-  var st = { tab0: 1, view: VIEW0, qm: "", tab: "home", type: "ALL", setId: null, q: "", color: "", ct: "", lv: "", shown: PAGE, open: null };
+  var st = { ownOnly: false, tab0: 1, view: VIEW0, qm: "", tab: "home", type: "ALL", setId: null, q: "", color: "", ct: "", lv: "", shown: PAGE, open: null };
   var out = document.getElementById("out"), chips = document.getElementById("chips"), qi = document.getElementById("q");
   var sheet = document.getElementById("sheet");
 
@@ -312,6 +418,47 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   document.getElementById("tab-sets").onclick = goSets;
   document.getElementById("tab-home").onclick = function () { st.tab = "home"; st.setId = null; window.scrollTo(0, 0); render(); };
   if (window.Capacitor || /^capacitor:/.test(location.protocol)) document.body.classList.add("apk");
+  // ---- Menu di navigazione
+  var IC = {
+    home: '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+    sets: '<rect x="3" y="4" width="18" height="4" rx="1"/><rect x="3" y="10" width="18" height="4" rx="1"/><rect x="3" y="16" width="18" height="4" rx="1"/>',
+    soon: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/>',
+    cards: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+    coll: '<rect x="4" y="3" width="12" height="16" rx="2"/><path d="M8 21h10a2 2 0 0 0 2-2V7"/>',
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>'
+  };
+  var MENU = [["home", "Home"], ["sets", "Prodotti"], ["soon", "Prossime uscite"], ["cards", "Ricerca carte"], ["coll", "La mia collezione"], ["info", "Informazioni"]];
+  var menuEl = document.getElementById("menu"), menuBtn = document.getElementById("menuBtn"), menuScrim = document.getElementById("menuScrim");
+  function menuOpen(o) {
+    menuEl.classList.toggle("open", o); menuScrim.classList.toggle("open", o);
+    menuEl.setAttribute("aria-hidden", String(!o)); menuBtn.setAttribute("aria-expanded", String(o));
+    if (o) drawMenu();
+  }
+  function curPage() { return st.tab === "home" ? "home" : st.tab === "info" ? "info" : st.tab === "sets" ? (st.type === "SOON" ? "soon" : "sets") : st.ownOnly ? "coll" : "cards"; }
+  function drawMenu() {
+    var nav = document.getElementById("menuNav"); nav.innerHTML = "";
+    MENU.forEach(function (m) {
+      var b = el("button"); b.type = "button";
+      b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + IC[m[0]] + "</svg>";
+      b.appendChild(document.createTextNode(m[1]));
+      if (curPage() === m[0]) b.setAttribute("aria-current", "page");
+      b.onclick = function () { menuOpen(false); go(m[0]); };
+      nav.appendChild(b);
+    });
+  }
+  function go(where) {
+    st.setId = null; st.back = null; st.shown = PAGE; st.ownOnly = false;
+    if (where === "home") st.tab = "home";
+    else if (where === "sets") { st.tab = "sets"; st.type = "ALL"; qi.value = ""; st.q = ""; }
+    else if (where === "soon") { st.tab = "sets"; st.type = "SOON"; qi.value = ""; st.q = ""; }
+    else if (where === "cards") st.tab = "cards";
+    else if (where === "coll") { st.tab = "cards"; st.ownOnly = true; }
+    else if (where === "info") st.tab = "info";
+    window.scrollTo(0, 0); render();
+  }
+  menuBtn.onclick = function () { menuOpen(!menuEl.classList.contains("open")); };
+  menuScrim.onclick = function () { menuOpen(false); };
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && menuEl.classList.contains("open")) menuOpen(false); });
   document.getElementById("tab-cards").onclick = function () { st.tab = "cards"; st.setId = null; st.shown = PAGE; render(); };
 
   var CHIPS = [["ALL", "Tutti"], ["SOON", "In arrivo"], ["BT", "Booster"], ["EX", "Extra"], ["ST", "Starter"], ["LM", "Limited"], ["PB", "Premium"], ["AL", "Altri"]];
@@ -463,6 +610,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
   function cardMatches(c, q) {
+    if (st.ownOnly && !owned(c)) return false;
     if (st.color && c.colors.indexOf(st.color) < 0) return false;
     if (st.ct && c.ct.indexOf(st.ct) < 0) return false;
     if (st.lv && c.lv !== st.lv) return false;
@@ -528,7 +676,8 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .map(function (o) { return o.c; });
     }
     if (!list.length && st.setId && !SETSTAT[st.setId].n) { out.appendChild(el("p", "empty", "Questo prodotto non contiene carte: solo accessori (playmat, bustine, box).")); return; }
-    if (!list.length) { out.appendChild(el("p", "empty", "Nessuna carta corrisponde ai filtri.")); return; }
+    if (st.ownOnly && !st.setId) { var ch = el("div", "sethead"); ch.appendChild(el("h2", "", "La mia collezione")); out.appendChild(ch); }
+    if (!list.length) { out.appendChild(el("p", "empty", st.ownOnly ? "Non hai ancora segnato carte: usa il + nelle liste per aggiungerle." : "Nessuna carta corrisponde ai filtri.")); return; }
     var gt = el("div", "group-title withv"); gt.appendChild(el("span", "", list.length + (list.length === 1 ? " carta" : " carte")));
     var vb = el("span", "vbtns");
     [["list", "Vista a elenco", '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>'],
@@ -656,18 +805,29 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     if (BANNERS[code]) { var im = document.createElement("img"); im.alt = ""; im.loading = "lazy"; im.decoding = "async"; im.src = IMGB + code + ".webp"; im.onerror = function () { b.classList.add("noimg"); }; b.appendChild(im); }
     var fb = el("div", "fb"); var inner = el("div"); inner.appendChild(el("b", "", code)); inner.appendChild(el("span", "", name)); fb.appendChild(inner); b.appendChild(fb);
     if (badgeHtml) { var bd = el("span", "badge" + (cls ? " " + cls : "")); bd.innerHTML = badgeHtml; b.appendChild(bd); }
-    b.appendChild(el("span", "lang", "EN"));
     return b;
   }
   function esc(t) { return String(t).replace(/[&<>]/g, function (ch) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[ch]; }); }
   function openSoon() { st.tab = "sets"; st.type = "SOON"; st.setId = null; qi.value = ""; st.q = ""; window.scrollTo(0, 0); render(); }
   function openSet(id) { st.back = { y: 0, q: "", type: st.type, qm: st.qm, home: true }; st.tab = "cards"; st.setId = id; st.shown = PAGE; qi.value = ""; st.q = ""; window.scrollTo(0, 0); render(); }
+  function renderInfo() {
+    var h = el("div", "home"); h.appendChild(el("h2", "", "Informazioni"));
+    [["Cos'è", "Digital Gate è un catalogo non ufficiale del Digimon Card Game in inglese: tutti i prodotti, le carte (con ristampe e alternative art), le prossime uscite e la tua collezione."],
+     ["Dati", "Carte dal database pubblico TakaOtaku (Digimon Card App) e dal sito ufficiale Bandai; date e materiali promozionali dal sito ufficiale Digimon Card Game. Possono esserci errori: segnalali e li correggo."],
+     ["Collezione", "Le copie che segni restano salvate su questo dispositivo, nel browser o nell'app."],
+     ["Marchi", "Digimon e Digimon Card Game sono marchi di Bandai. ©Akiyoshi Hongo, Toei Animation. Questo progetto non è affiliato a Bandai."]].forEach(function (x) {
+      var b = el("div", "cap"); b.style.marginBottom = "10px"; b.appendChild(el("div", "t", x[0])); b.appendChild(el("div", "s", x[1])); h.appendChild(b);
+    });
+    out.appendChild(h);
+  }
   function renderHome() {
     var h = el("div", "home");
     h.appendChild(el("h2", "", "Prossime uscite"));
+    var IMP = { BT: 0, EX: 1, ST: 2, LM: 3, PB: 4, AL: 5 };
     var ups = (DATA.upcoming || []).slice().sort(function (a, b) {
       var an = a.prec === "none", bn = b.prec === "none"; if (an !== bn) return an ? 1 : -1;
-      return (a.from || "") < (b.from || "") ? -1 : (a.from || "") > (b.from || "") ? 1 : numOf(a.code) - numOf(b.code);
+      return (a.from || "") < (b.from || "") ? -1 : (a.from || "") > (b.from || "") ? 1 :
+        (IMP[typeOf(a.code)] - IMP[typeOf(b.code)]) || (numOf(a.code) - numOf(b.code));
     });
     if (ups.length) {
       var u0 = ups[0], hero = el("div", "hero");
@@ -684,7 +844,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     h.appendChild(el("h3", "", "Altri set recenti"));
     var rec = SETS.filter(function (x) { return x.date && x.date.charAt(0) !== "0" && BANNERS[x.code]; })
-      .sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; }).slice(0, 12);
+      .sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : (IMP[a.type] - IMP[b.type]) || (numOf(b.code) - numOf(a.code)); }).slice(0, 12);
     var g2 = el("div", "hgrid three");
     rec.forEach(function (x) {
       var isNew = daysTo(x.date) >= -60;
@@ -741,7 +901,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   function render() {
     recomputeStatsIfNeeded();
-    var isHome = st.tab === "home", isSets = st.tab === "sets", isSoon = isSets && st.type === "SOON";
+    var isInfo = st.tab === "info", isHome = st.tab === "home" || isInfo, isSets = st.tab === "sets", isSoon = isSets && st.type === "SOON";
     ["home", "sets", "cards"].forEach(function (t) { document.getElementById("tab-" + t).setAttribute("aria-selected", st.tab === t ? "true" : "false"); });
     document.getElementById("filters").hidden = isSets || isHome;
     document.getElementById("qmodes").hidden = isSets || isHome;
@@ -757,7 +917,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     document.getElementById("bar").style.width = (uniq / CARDS.length * 100) + "%";
     out.innerHTML = "";
     document.getElementById("hint").hidden = isHome;
-    if (isHome) renderHome(); else if (isSoon) renderSoon(); else if (isSets) renderSets(); else renderCards();
+    if (isInfo) renderInfo(); else if (isHome) renderHome(); else if (isSoon) renderSoon(); else if (isSets) renderSets(); else renderCards();
     fitAll();
   }
   var statsReady = false;
