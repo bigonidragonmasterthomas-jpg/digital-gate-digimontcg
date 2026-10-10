@@ -14,7 +14,7 @@ PAGES = [W + p for p in ["/products/pack/ver27/", "/products/deck/st-25/", "/pro
   [J + p for p in ["/products/", "/products/pack/ex-14/", "/products/pack/ver28/", "/products/pack/ver27/"]]
 def get(u, binary=False):
     try:
-        b = urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"}), timeout=30).read()
+        b = urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"}), timeout=12).read()
         return b if binary else b.decode("utf-8", "replace")
     except Exception as e:
         return None
@@ -26,14 +26,11 @@ for p in PAGES:
     for s in dict.fromkeys(re.findall(r'(?:src|data-src|href)="([^"]+\.(?:png|jpg|jpeg|webp)[^"]*)"', h)):
         u = urllib.parse.urljoin(p, s)
         if "/images/products/" not in u: continue
-        b = get(u, True); sz = None
-        if b:
-            try: sz = Image.open(io.BytesIO(b)).size
-            except Exception: pass
-        imgs.append([u, sz])
+        imgs.append([u, None])
     txt = re.sub(r"<[^>]+>", " ", h); txt = re.sub(r"\s+", " ", txt)
     dates = re.findall(r"[^.]{0,80}(?:Release|release|発売|Date|date|Ship|ship)[^.]{0,120}", txt)[:8]
     title = re.search(r"<title>(.*?)</title>", h, re.S)
+    print(p, len(imgs), flush=True)
     res[p] = {"title": title.group(1).strip() if title else "", "dates": dates, "imgs": imgs}
 json.dump(res, open(out / "pages.json", "w"), indent=1, ensure_ascii=False)
 print("ok")
