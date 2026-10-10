@@ -43,6 +43,8 @@ h1 { min-width: 0; flex: 1 1 auto; font-family: var(--font-display); font-size: 
 .tab { border: 0; background: transparent; color: var(--ink-2); padding: 8px; border-radius: 8px; font: 600 .9rem var(--font-display); cursor: pointer; letter-spacing: .02em; }
 .tab[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
 .search, .sel { width: 100%; padding: 10px 13px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: 16px; }
+.qmodes { display: flex; gap: 8px; margin-top: 8px; }
+.qmodes .chip { flex: 1 1 0; min-width: 0; text-align: center; }
 .filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
 .sel { padding: 8px 8px; font-size: 14px; }
 .chips { display: flex; gap: 8px; overflow-x: auto; padding: 10px 0 2px; scrollbar-width: none; }
@@ -135,6 +137,10 @@ main { padding: 8px 16px 48px; }
       <button class="tab" role="tab" id="tab-cards" type="button">Carte</button>
     </div>
     <input id="q" class="search" type="search" placeholder="Cerca" autocomplete="off">
+    <div class="qmodes" id="qmodes" hidden>
+      <button type="button" class="chip" id="qm-name" aria-pressed="false">Solo nel nome</button>
+      <button type="button" class="chip" id="qm-text" aria-pressed="false">Solo nel testo</button>
+    </div>
     <div class="filters" id="filters" hidden>
       <select id="f-color" class="sel" aria-label="Colore"></select>
       <select id="f-type" class="sel" aria-label="Tipo di carta"></select>
@@ -168,7 +174,8 @@ main { padding: 8px 16px 48px; }
   SETS.forEach(function (s) { SETBY[s.id] = s; });
   var CARDS = DATA.cards.map(function (a) {
     var c = { code: a[0], name: a[1], lv: a[2], colors: a[3] ? a[3].split("/") : [], ct: a[4], form: a[5], attr: a[6], sp: a[7], dp: a[8], play: a[9], evo: a[10], eff: a[11], inh: a[12], sec: a[13], extra: a[14], rar: a[15], set: a[16] };
-    c.blob = [c.code, c.name, c.sp, c.form, c.eff, c.inh, c.sec, c.extra].join(" ").toLowerCase();
+    c.nb = " " + fold(c.code + " " + c.name) + " ";
+    c.tb = " " + fold([c.sp, c.form, c.attr, c.eff, c.inh, c.sec, c.extra].join(" ")) + " ";
     return c;
   });
   var CODEIDX = {};
@@ -188,7 +195,7 @@ main { padding: 8px 16px 48px; }
     c.k = seen[base] > 1 ? base + "#" + seen[base] : base;
   });
 
-  var st = { tab: "sets", type: "ALL", setId: null, q: "", color: "", ct: "", lv: "", shown: PAGE, open: null };
+  var st = { qm: "", tab: "sets", type: "ALL", setId: null, q: "", color: "", ct: "", lv: "", shown: PAGE, open: null };
   var out = document.getElementById("out"), chips = document.getElementById("chips"), qi = document.getElementById("q");
   var sheet = document.getElementById("sheet");
 
@@ -217,6 +224,9 @@ main { padding: 8px 16px 48px; }
       st[{ "f-color": "color", "f-type": "ct", "f-lv": "lv" }[id]] = e.target.value; st.shown = PAGE; render();
     });
   });
+  ["name", "text"].forEach(function (m) {
+    document.getElementById("qm-" + m).onclick = function () { st.qm = st.qm === m ? "" : m; st.shown = PAGE; render(); };
+  });
   qi.addEventListener("input", function () { st.q = qi.value; st.shown = PAGE; render(); });
   function goSets() {
     var r = st.setId && st.back ? st.back : null;
@@ -239,7 +249,15 @@ main { padding: 8px 16px 48px; }
     });
   }
 
-  function normQ(q) { return q.trim().toLowerCase().replace(/\b(bt|ex|st|rb|lm|ad)0+(\d)/g, "$1$2"); }
+  var FOLDMAP = { "ß": "ss", "æ": "ae", "œ": "oe", "ø": "o", "ł": "l", "đ": "d", "ð": "d", "þ": "th", "ı": "i" };
+  function fold(t) {
+    t = String(t || "").toLowerCase();
+    if (t.normalize) t = t.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return t.replace(/[ßæœøłđðþı]/g, function (ch) { return FOLDMAP[ch]; })
+      .replace(/['’‘`´ʼ]/g, "")
+      .replace(/[^a-z0-9\u00c0-\uffff]+/g, " ").trim();
+  }
+  function normQ(q) { return fold(q).replace(/\b(bt|ex|st|rb|lm|ad)0+(\d)/g, "$1$2"); }
 
   var MONTHS = ["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
   function parseDay(s) { var p = s.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
@@ -297,7 +315,7 @@ main { padding: 8px 16px 48px; }
     var all = upcomingSets().concat(SETS);
     var list = all.filter(function (s) {
       if (st.type !== "ALL" && s.type !== st.type) return false;
-      if (q && (s.code + " " + s.name).toLowerCase().replace(/\b(bt|ex|st|rb|lm|ad)0+(\d)/g, "$1$2").indexOf(q) < 0) return false;
+      if (q && normQ(s.code + " " + s.name).indexOf(q) < 0) return false;
       return true;
     });
     if (!list.length) { out.appendChild(el("p", "empty", "Nessun set corrisponde ai filtri.")); return; }
@@ -326,7 +344,11 @@ main { padding: 8px 16px 48px; }
     if (st.color && c.colors.indexOf(st.color) < 0) return false;
     if (st.ct && c.ct.indexOf(st.ct) < 0) return false;
     if (st.lv && c.lv !== st.lv) return false;
-    if (q) { var parts = q.split(/\s+/); for (var i = 0; i < parts.length; i++) if (c.blob.indexOf(parts[i]) < 0) return false; }
+    if (q) {
+      var hay = st.qm === "name" ? c.nb : st.qm === "text" ? c.tb : c.nb + c.tb;
+      var parts = q.split(" ");
+      for (var i = 0; i < parts.length; i++) if (hay.indexOf(parts[i]) < 0) return false;
+    }
     return true;
   }
 
@@ -456,6 +478,9 @@ main { padding: 8px 16px 48px; }
     var isSets = st.tab === "sets", isSoon = isSets && st.type === "SOON";
     ["sets", "cards"].forEach(function (t) { document.getElementById("tab-" + t).setAttribute("aria-selected", st.tab === t ? "true" : "false"); });
     document.getElementById("filters").hidden = isSets;
+    document.getElementById("qmodes").hidden = isSets;
+    document.getElementById("qm-name").setAttribute("aria-pressed", String(st.qm === "name"));
+    document.getElementById("qm-text").setAttribute("aria-pressed", String(st.qm === "text"));
     chips.hidden = !isSets;
     qi.hidden = isSoon;
     document.getElementById("hint").textContent = "Carte in inglese, da una raccolta pubblica aggiornata fino a BT26, EX13 e ST24, più promo e RB01. Quantità e collezione restano salvate in questo browser.";
