@@ -1,13 +1,10 @@
 import sys, pathlib, urllib.request
 out = pathlib.Path("analysis"); out.mkdir(exist_ok=True)
 U = {
- "io1.json": "https://digimoncard.io/api-public/search.php?card=BT26-050",
- "io2.json": "https://digimoncard.io/api-public/search?card=BT26-050",
- "world_list.html": "https://world.digimoncard.com/cardlist/?search=true&keyword=BT26-050",
- "world_cat.html": "https://world.digimoncard.com/cardlist/?search=true&category=522026",
- "en_list.html": "https://en.digimoncard.com/cardlist/?search=true&keyword=BT26-050",
- "world_root.html": "https://world.digimoncard.com/cardlist/",
- "wikimon.html": "https://wikimon.net/BT26-050",
+ "io_dual.json": "https://digimoncard.io/api-public/search?type=Dual",
+ "world_cards.html": "https://world.digimoncard.com/cards/?search=true&keyword=BT26-050",
+ "world_cards_all.html": "https://world.digimoncard.com/cards/?search=true",
+ "world_cards_bt26.html": "https://world.digimoncard.com/cards/?search=true&category=522026",
 }
 for n, u in U.items():
     try:
