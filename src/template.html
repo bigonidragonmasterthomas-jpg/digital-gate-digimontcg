@@ -165,6 +165,11 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .dbadge.ban { background: #c8102e; } .dbadge.lim { background: #d9661f; } .dbadge.pair { background: #8a4bd8; } .dbadge.free { background: #2e9e57; } .dbadge.okb { background: var(--ok); color: #06210f; }
 .row.deckrow { grid-template-columns: minmax(0, 1fr) auto; }
 .qbtn.off { opacity: .35; }
+.qbtn.lock { color: var(--ink-2); }
+.pref { border: 0; background: rgba(255,255,255,.22); color: #fff; font: inherit; padding: 0 5px; border-radius: 4px; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.dbadge.pair { white-space: normal; line-height: 1.6; }
+.dalt { color: var(--accent); }
+.alt .dlab { text-align: center; margin-top: 2px; }
 .dimport { display: grid; gap: 8px; margin-bottom: 10px; }
 .dta { width: 100%; box-sizing: border-box; font: .85rem/1.4 ui-monospace, monospace; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
 .dimport .dbtn { justify-self: start; }
@@ -1050,7 +1055,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   function drawSheet() {
     var wasOpen = !sheet.hidden;
     sheet.innerHTML = "";
-    if (st.open == null) { sheet.hidden = true; document.documentElement.classList.remove("lock"); return; }
+    if (st.open == null) { sheet.hidden = true; SHSTACK = []; collUnlocked = false; document.documentElement.classList.remove("lock"); return; }
     if (!wasOpen) pushOverlay("sheet");
     document.documentElement.classList.add("lock");
     var c = st.open;
@@ -1095,7 +1100,6 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     sh.appendChild(tags);
     var bbd = deckable(c) ? banBadge(c) : null;
     if (bbd && /ban|lim|pair/.test(bbd.className)) { var bw = el("div", "banline"); bw.appendChild(bbd);
-      if (PAIRS[c.code]) bw.appendChild(el("span", "", "Non può stare nello stesso mazzo di " + PAIRS[c.code].map(function (o) { return BYCODE[o].name + " (" + o + ")"; }).join(" o ") + "."));
       sh.appendChild(bw); }
     var stats = el("div", "stats");
     [stat("Costo", c.ct === "Digimon/Option" ? "-" : c.play), stat("DP", c.dp), rarStat(c)].forEach(function (s) { if (s) stats.appendChild(s); });
@@ -1120,14 +1124,22 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     [fx("Effetto", c.eff), fx("Effetto ereditato", c.inh), fx("Effetto di sicurezza", c.sec), optFx(c), fx("Regole", ex.rule.join("\n")),
      fx("Regole Link", ex.link.join("\n")), fx("Regole Assembly", ex.asm.join("\n")), fx("Regole DigiXros", ex.xros.join("\n")),
      fx("Regole Ace Overflow", ace.join("\n")), fx("Altre regole", ex.other.join("\n"))].forEach(function (f) { if (f) sh.appendChild(f); });
-    var own = el("div", "own"); own.appendChild(el("span", "", "Copie possedute"));
-    own.appendChild(qtyControl(c, function () { recomputeStats(); render(); drawSheet(); }));
-    sh.appendChild(own);
-    if (st.tab === "deck" && st.deckId && deckById(st.deckId) && deckable(c)) {
+    var inDk = st.tab === "deck" && st.deckId && deckById(st.deckId) && deckable(c) ? deckById(st.deckId) : null;
+    if (inDk) {
       var dk = el("div", "own"); dk.appendChild(el("span", "", "Copie nel mazzo"));
-      dk.appendChild(deckQty(deckById(st.deckId), c, function () { render(); drawSheet(); }));
+      dk.appendChild(deckQty(inDk, c, function () { render(); drawSheet(); }));
       sh.appendChild(dk);
     }
+    var own = el("div", "own"); own.appendChild(el("span", "", "Copie possedute"));
+    var oq = qtyControl(c, function () { recomputeStats(); render(); drawSheet(); });
+    if (inDk && !collUnlocked) {
+      oq.querySelectorAll(".qbtn").forEach(function (bt) {
+        bt.innerHTML = LOCK; bt.classList.remove("on"); bt.classList.add("lock"); bt.setAttribute("aria-label", "Sblocca la modifica della collezione");
+        bt.onclick = function (e) { e.stopPropagation(); collUnlocked = true; drawSheet(); };
+      });
+    }
+    own.appendChild(oq);
+    sh.appendChild(own);
     var alts = altsOf(c).filter(function (a) { return a.k !== c.k; });
     if (c.suf) alts.unshift(c.__proto__ && c.__proto__.code === c.code && !c.__proto__.suf ? c.__proto__ : null);
     alts = alts.filter(Boolean).filter(function (a) { return a.k !== c.k; });
@@ -1141,12 +1153,14 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         it.style.cursor = "pointer";
         it.onclick = function (e) {
           if (e.target.closest(".qty")) return;
-          st.exitSet = a.suf ? (a.from || a.set) : a.set; st.open = a; drawSheet();
+          if (!inDk) st.exitSet = a.suf ? (a.from || a.set) : a.set;
+          st.open = a; drawSheet();
           var nsh = sheet.querySelector(".sheet"); if (nsh) nsh.scrollTop = 0;
         };
         it.appendChild(picBox("pic", "f", a));
         it.appendChild(listLines(a)[1]);
-        it.appendChild(qtyControl(a, function () { recomputeStats(); render(); drawSheet(); }));
+        if (inDk) { var dl = el("div", "sub dlab", "Nel mazzo"); it.appendChild(dl); it.appendChild(deckQty(inDk, a, function () { render(); drawSheet(); })); }
+        else it.appendChild(qtyControl(a, function () { recomputeStats(); render(); drawSheet(); }));
         strip.appendChild(it);
       });
       at.appendChild(strip); sh.appendChild(at);
@@ -1154,6 +1168,12 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     scrim.appendChild(sh); sheet.appendChild(scrim);
     fitAll();
     sh.tabIndex = -1; sh.focus({ preventScroll: true });
+  }
+  var SHSTACK = [], collUnlocked = false;
+  var LOCK = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+  function openNested(c) {
+    if (st.open != null) { SHSTACK.push(st.open); history.pushState({ ov: "sheet", nest: SHSTACK.length }, ""); }
+    st.open = c; drawSheet(); var nsh = sheet.querySelector(".sheet"); if (nsh) nsh.scrollTop = 0;
   }
   function closeSheet() { if (history.state && history.state.ov === "sheet") history.back(); else { st.open = null; drawSheet(); afterSheet(); } }
   function afterSheet() {
@@ -1210,7 +1230,8 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   window.addEventListener("popstate", function (e) {
     var s2 = e.state || {};
     if (menuEl.classList.contains("open") && s2.ov !== "menu") { menuOpen(false, true); return; }
-    if (st.open != null && s2.ov !== "sheet") { st.open = null; drawSheet(); afterSheet(); return; }
+    if (st.open != null && s2.ov === "sheet" && SHSTACK.length > (s2.nest || 0)) { st.open = SHSTACK.pop(); drawSheet(); return; }
+    if (st.open != null && s2.ov !== "sheet") { SHSTACK = []; st.open = null; drawSheet(); afterSheet(); return; }
     if (s2.ov) return;
     restoring = true;
     st.tab = s2.tab || "home"; st.deckId = s2.deckId || null; st.setId = s2.setId || null; st.type = s2.type || "ALL"; st.ownOnly = !!s2.ownOnly;
@@ -1270,7 +1291,15 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   BAN.banned.forEach(function (x) { BANNED[x] = 1; });
   BAN.restricted.forEach(function (x) { RESTR[x] = 1; });
   BAN.pairs.forEach(function (p) { p[1].forEach(function (b) { (PAIRS[p[0]] = PAIRS[p[0]] || []).push(b); (PAIRS[b] = PAIRS[b] || []).push(p[0]); }); });
-  CARDS.forEach(function (c) { BYCODE[c.code] = c; });
+  var BYK = {};
+  CARDS.forEach(function (c) { if (!BYCODE[c.code]) BYCODE[c.code] = c; BYK[c.k] = c; });
+  function entryByKey(k) {
+    if (BYK[k]) return BYK[k];
+    var base = BYK[k.split("~")[0]]; if (!base) return null;
+    var a = altsOf(base).filter(function (e) { return e.k === k; })[0];
+    if (a) BYK[k] = a; return a || null;
+  }
+  function codeTotal(d, code) { var n = 0; Object.keys(d.cards).forEach(function (k) { var e = entryByKey(k); if (e && e.code === code) n += d.cards[k]; }); return n; }
   function maxCopies(c) { return BANNED[c.code] ? 0 : RESTR[c.code] ? 1 : /up to 50 copies/.test(c.extra || "") ? 50 : 4; }
   function isEgg(c) { return c.ct === "Digi-Egg"; }
   function deckable(c) { return /^(Digi-Egg|Digimon|Tamer|Option|Digimon\/Option)$/.test(c.ct); }
@@ -1278,16 +1307,17 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   var decks = []; try { decks = JSON.parse(localStorage.getItem("dgm-decks") || "[]") || []; } catch (e) { decks = []; }
   function saveDecks() { try { localStorage.setItem("dgm-decks", JSON.stringify(decks)); } catch (e) {} }
   function deckById(id) { for (var i = 0; i < decks.length; i++) if (decks[i].id === id) return decks[i]; return null; }
-  function inDeck(d, c) { return (d && d.cards[c.code]) || 0; }
+  function inDeck(d, c) { return (d && d.cards[c.k]) || 0; }
   function deckStats(d) {
-    var r = { main: 0, egg: 0, problems: [] };
-    Object.keys(d.cards).forEach(function (code) {
-      var c = BYCODE[code], n = d.cards[code]; if (!c) return;
+    var r = { main: 0, egg: 0, problems: [] }, per = {};
+    Object.keys(d.cards).forEach(function (k) { var e = entryByKey(k); if (e) per[e.code] = (per[e.code] || 0) + d.cards[k]; });
+    Object.keys(per).forEach(function (code) {
+      var c = BYCODE[code], n = per[code]; if (!c) return;
       if (isEgg(c)) r.egg += n; else r.main += n;
       var mx = maxCopies(c);
       if (!mx) r.problems.push(c.name + " (" + code + ") è bandita.");
       else if (n > mx) r.problems.push(c.name + " (" + code + "): massimo " + mx + (mx === 1 ? " copia" : " copie") + ", ne hai " + n + ".");
-      (PAIRS[code] || []).forEach(function (o) { if (code < o && d.cards[o]) r.problems.push(c.name + " (" + code + ") e " + BYCODE[o].name + " (" + o + ") non possono stare nello stesso mazzo."); });
+      (PAIRS[code] || []).forEach(function (o) { if (code < o && per[o]) r.problems.push(c.name + " (" + code + ") e " + BYCODE[o].name + " (" + o + ") non possono stare nello stesso mazzo."); });
     });
     if (r.main !== 50) r.problems.unshift("Il mazzo principale deve avere esattamente 50 carte: ora " + (r.main < 50 ? "ne mancano " + (50 - r.main) : "ce ne sono " + (r.main - 50) + " di troppo") + ".");
     if (r.egg > 5) r.problems.unshift("Il mazzo Digi-Egg può avere al massimo 5 carte: ora sono " + r.egg + ".");
@@ -1295,13 +1325,13 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   function addError(d, c) {
     if (!deckable(c)) return "Questa carta non può essere inserita in un mazzo.";
-    var mx = maxCopies(c), n = inDeck(d, c);
+    var mx = maxCopies(c), n = codeTotal(d, c.code);
     if (!mx) return c.name + " è bandita dalla lista ufficiale.";
     if (n >= mx) return mx === 1 ? c.name + " è limitata a 1 copia." : "Massimo " + mx + " copie per " + c.name + ".";
     var s = deckStats(d);
     if (isEgg(c) && s.egg >= 5) return "Il mazzo Digi-Egg è già a 5 carte.";
     if (!isEgg(c) && s.main >= 50) return "Il mazzo principale è già a 50 carte.";
-    var bad = (PAIRS[c.code] || []).filter(function (o) { return d.cards[o]; });
+    var bad = (PAIRS[c.code] || []).filter(function (o) { return codeTotal(d, o); });
     if (bad.length) return c.name + " non può stare nello stesso mazzo di " + BYCODE[bad[0]].name + " (" + bad[0] + ").";
     return "";
   }
@@ -1317,8 +1347,8 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var n = el("span", "qn", String(inDeck(d, c)));
     var err = addError(d, c);
     var p = el("button", "qbtn" + (err ? " off" : " on"), "+"); p.type = "button"; p.setAttribute("aria-label", "Aggiungi al mazzo");
-    m.onclick = function (e) { e.stopPropagation(); var k = inDeck(d, c); if (k > 0) { if (k === 1) delete d.cards[c.code]; else d.cards[c.code] = k - 1; d.upd = Date.now(); saveDecks(); onChange(); } };
-    p.onclick = function (e) { e.stopPropagation(); var er = addError(d, c); if (er) { toast(er); return; } d.cards[c.code] = inDeck(d, c) + 1; d.upd = Date.now(); saveDecks(); onChange(); };
+    m.onclick = function (e) { e.stopPropagation(); var k = inDeck(d, c); if (k > 0) { if (k === 1) delete d.cards[c.k]; else d.cards[c.k] = k - 1; d.upd = Date.now(); saveDecks(); onChange(); } };
+    p.onclick = function (e) { e.stopPropagation(); var er = addError(d, c); if (er) { toast(er); return; } d.cards[c.k] = inDeck(d, c) + 1; d.upd = Date.now(); saveDecks(); onChange(); };
     w.appendChild(m); w.appendChild(n); w.appendChild(p);
     return w;
   }
@@ -1326,16 +1356,25 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var mx = maxCopies(c);
     if (!mx) return el("span", "dbadge ban", "Bandita");
     if (mx === 1) return el("span", "dbadge lim", "Limitata a 1");
-    if (PAIRS[c.code]) return el("span", "dbadge pair", "Coppia vietata");
+    if (PAIRS[c.code]) {
+      var b = el("span", "dbadge pair", "Coppia vietata con ");
+      PAIRS[c.code].forEach(function (o, i) {
+        if (i) b.appendChild(document.createTextNode(" o "));
+        var a = el("button", "pref", o + " " + BYCODE[o].name); a.type = "button";
+        a.onclick = function (e) { e.stopPropagation(); openNested(BYCODE[o]); };
+        b.appendChild(a);
+      });
+      return b;
+    }
     if (mx === 50) return el("span", "dbadge free", "Fino a 50");
     return null;
   }
   function lvNum(c) { var m = (c.lv || "").match(/\d+/); return m ? +m[0] : 0; }
-  function deckSort(a, b) { return (lvNum(a) - lvNum(b)) || ((+a.play || 0) - (+b.play || 0)) || (a.code < b.code ? -1 : 1); }
+  function deckSort(a, b) { return (lvNum(a) - lvNum(b)) || ((+a.play || 0) - (+b.play || 0)) || (a.code < b.code ? -1 : a.code > b.code ? 1 : 0) || ((a.suf || "") < (b.suf || "") ? -1 : 1); }
   function deckGroups(d) {
     var g = [["Digi-Egg", []], ["Digimon", []], ["Tamer", []], ["Option", []]];
-    Object.keys(d.cards).forEach(function (code) {
-      var c = BYCODE[code]; if (!c) return;
+    Object.keys(d.cards).forEach(function (k) {
+      var c = entryByKey(k); if (!c) return;
       var i = isEgg(c) ? 0 : /^Digimon/.test(c.ct) ? 1 : c.ct === "Tamer" ? 2 : 3; g[i][1].push(c);
     });
     g.forEach(function (x) { x[1].sort(deckSort); });
@@ -1346,7 +1385,8 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     deckGroups(d).forEach(function (g) {
       if (!g[1].length) return;
       lines.push("// " + g[0]);
-      g[1].forEach(function (c) { lines.push(d.cards[c.code] + " " + c.name + " " + c.code); });
+      var seen = {};
+      g[1].forEach(function (c) { if (seen[c.code]) return; seen[c.code] = 1; lines.push(codeTotal(d, c.code) + " " + c.name + " " + c.code); });
     });
     return lines.join("\n");
   }
@@ -1359,7 +1399,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       codes.forEach(function (code) {
         code = code.replace(/^(BT|EX|ST|RB|AD)0+(\d)/, "$1$2");
         if (!BYCODE[code] || !deckable(BYCODE[code])) { unknown.push(code); return; }
-        cards[code] = (cards[code] || 0) + (cnt && codes.length === 1 ? +cnt[1] : 1);
+        var k = BYCODE[code].k; cards[k] = (cards[k] || 0) + (cnt && codes.length === 1 ? +cnt[1] : 1);
       });
     });
     return { cards: cards, unknown: unknown };
@@ -1420,7 +1460,9 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var sw = el("div", "swatch"); sw.style.background = gradient(c.colors); r.appendChild(sw);
     r.appendChild(picBox("thumb", "t", c));
     var mid = el("div", "name"); mid.appendChild(document.createTextNode(c.name));
-    var sub = el("div", "sub", [c.code, c.ct, c.lv, c.play ? "Costo " + c.play : ""].filter(Boolean).join(" · ")); mid.appendChild(sub);
+    var fs = c.suf ? SETBY[c.from || c.set] : null;
+    var sub = el("div", "sub", [c.code, c.ct, c.lv, c.play && c.ct !== "Digimon/Option" ? "Costo " + c.play : ""].filter(Boolean).join(" · ")); mid.appendChild(sub);
+    if (fs) mid.appendChild(el("div", "sub dalt", "Alternative Art · " + fs.code));
     var bb = banBadge(c); if (bb) { var bl = el("div", "sub"); bl.appendChild(bb); mid.appendChild(bl); }
     r.appendChild(mid);
     r.appendChild(deckQty(d, c, function () { render(); }));
@@ -1466,7 +1508,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var any = false;
     deckGroups(d).forEach(function (g) {
       if (!g[1].length) return; any = true;
-      var n = 0; g[1].forEach(function (c) { n += d.cards[c.code]; });
+      var n = 0; g[1].forEach(function (c) { n += d.cards[c.k]; });
       var gt = el("div", "group-title"); gt.appendChild(el("span", "", g[0] + " (" + n + ")")); out.appendChild(gt);
       var ul = el("div", "list"); g[1].forEach(function (c) { ul.appendChild(deckRow(d, c)); }); out.appendChild(ul);
     });
