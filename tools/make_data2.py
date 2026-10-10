@@ -32,6 +32,7 @@ def gtype(p):
     if p.startswith("ST"): return "ST"
     if p.startswith("LM"): return "LM"
     return "AL"
+OFF=json.load(open(SP+"../tools/official_extra.json",encoding="utf-8"))  # testo ufficiale: lato Option delle Digimon/Option e spiegazione Overflow
 rows=[]; cnt=collections.Counter(); missing=set()
 for n,k in best.items():
     p=n.split("-")[0]
@@ -52,6 +53,10 @@ for n,k in best.items():
     lv=cl(k.get("cardLv")); lv = lv if re.match(r"Lv\.\d",lv) else ""
     rows.append([n,k["name"]["english"].strip(),lv,cl(k["color"]),ct,cl(k["form"]),cl(k["attribute"]),cl(k["type"]),cl(k["dp"]),cl(k["playCost"]),
         "; ".join(evo),cl(k["effect"]),cl(k.get("digivolveEffect")),cl(k["securityEffect"]),"\n".join(extra),cl(k["rarity"]),p.lower()])
+    o=OFF.get(n,{}); x={}
+    if "dual" in o and o["dual"].get("lines") not in (None,["-"]): x["d"]={"c":o["dual"].get("cost",""),"col":o["dual"].get("color",""),"l":o["dual"]["lines"]}
+    if "ovf" in o: x["o"]=o["ovf"][1]
+    if x: rows[-1].append(x)
     cnt[p]+=1
 print("missing names",missing)
 order=["BT","EX","ST","LM","PB","AL"]

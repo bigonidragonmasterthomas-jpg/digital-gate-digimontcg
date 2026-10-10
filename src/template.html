@@ -139,6 +139,10 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .ico.spc { background: linear-gradient(#2d6694, #173a57); box-shadow: inset 0 0 0 1px #5f93bd; }
 .ico.grn { background: linear-gradient(#14ad96, #0a7a6a); }
 .ico.rul { background: #e4e4e4; color: #111; }
+.ico.ovf { background: linear-gradient(180deg, #f4f6f8 0%, #b9c0c8 45%, #8a939d 55%, #d5dade 100%); color: #1a1d22; box-shadow: inset 0 0 0 1px #6f7882; }
+.optc { display: inline-flex; align-items: center; gap: .5em; font-family: var(--font-display); font-weight: 700; color: var(--ink-2); font-size: .85em; }
+.optc .use { background: #d9dde3; color: #111; border-radius: .35em; padding: .05em .4em; }
+.optc b { background: #1b2a72; color: #fff; border-radius: 50%; min-width: 1.6em; height: 1.6em; display: inline-grid; place-items: center; }
 .ico.kw { background: linear-gradient(#d8661f, #a2400c); border-radius: 0; padding: .08em .75em; clip-path: polygon(.45em 0, calc(100% - .45em) 0, 100% 50%, calc(100% - .45em) 100%, .45em 100%, 0 50%); }
 .ico.trt { background: #fff; color: #000; }
 .stat.wide { grid-column: 1 / -1; }
@@ -383,9 +387,9 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   var SETS = DATA.sets, SETBY = {};
   SETS.forEach(function (s) { SETBY[s.id] = s; });
   var CARDS = DATA.cards.map(function (a) {
-    var c = { code: a[0], name: a[1], lv: a[2], colors: a[3] ? a[3].split("/") : [], ct: a[4], form: a[5], attr: a[6], sp: a[7], dp: a[8], play: a[9], evo: a[10], eff: a[11], inh: a[12], sec: a[13], extra: a[14], rar: a[15], set: a[16] };
+    var c = { code: a[0], name: a[1], lv: a[2], colors: a[3] ? a[3].split("/") : [], ct: a[4], form: a[5], attr: a[6], sp: a[7], dp: a[8], play: a[9], evo: a[10], eff: a[11], inh: a[12], sec: a[13], extra: a[14], rar: a[15], set: a[16], x: a[17] || null };
     c.nb = " " + fold(c.code + " " + c.name) + " ";
-    c.tb = " " + fold([c.sp, c.form, c.attr, c.eff, c.inh, c.sec, c.extra].join(" ")) + " ";
+    c.tb = " " + fold([c.sp, c.form, c.attr, c.eff, c.inh, c.sec, c.extra, c.x && c.x.d ? c.x.d.l.join(" ") : ""].join(" ")) + " ";
     return c;
   });
   var CODEIDX = {};
@@ -925,13 +929,21 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     return "trt";
   }
   function rich(target, text) {
-    String(text).split(/(\[[^\]\n]+\]|＜[^＞\n]+＞)/).forEach(function (part, i) {
+    String(text).split(/(\[[^\]\n]+\]|＜[^＞\n]+＞|⟦[^⟧\n]+⟧)/).forEach(function (part, i) {
       if (!part) return;
       if (!(i % 2)) { target.appendChild(document.createTextNode(part)); return; }
-      var inner = part.slice(1, -1).replace(/\u00a0/g, " "), cls = part.charAt(0) === "＜" ? "kw" : iconClass(inner);
+      var inner = part.slice(1, -1).replace(/\u00a0/g, " "), cls = part.charAt(0) === "⟦" ? "ovf" : part.charAt(0) === "＜" ? (/^Arts Digivolve/.test(inner) ? "grn" : "kw") : iconClass(inner);
       var b = el("span", "ico " + cls, inner); b.title = part; target.appendChild(b);
     });
     return target;
+  }
+  function optFx(c) {
+    var d = c.x && c.x.d; if (!d) return null;
+    var f = fx("Effetto Option", d.l.join("\n")), p = f.querySelector("p"), h = el("span", "optc");
+    if (d.c) { h.appendChild(el("span", "use", "Use")); h.appendChild(el("b", "", d.c)); }
+    if (d.col) h.appendChild(el("span", "", d.col));
+    p.insertBefore(document.createTextNode("\n"), p.firstChild); p.insertBefore(h, p.firstChild);
+    return f;
   }
   function fx(title, text) {
     if (!text) return null;
@@ -962,13 +974,17 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     return (c.evo || "").split(";").map(function (t) { return t.trim(); }).filter(Boolean);
   }
   function splitExtra(c) {
-    var r = { alt: [], spec: [], rule: [], other: [] };
+    var r = { alt: [], spec: [], rule: [], other: [], link: [], asm: [], xros: [], ace: [] };
     (c.extra || "").split("\n").forEach(function (line) {
       if (!line.trim()) return;
       line = line.replace(/\u00a0/g, " ").replace(/^Link:\s*/, "[Link] ");
       var body = line.replace(/^[^:\[]+:\s*(?=\[)/, ""), tg = body.match(/^\[([^\]]+)\]/);
       if (/\[Rule\]/.test(line)) r.rule.push(line.replace(/^.*?\[Rule\]\s*/, ""));
       else if (tg && EVOTAG.test(tg[1])) body.split(/\s*(?=\[(?:Digivolve|DNA Digivolve|Burst Digivolve|App Fusion|Fusionize)\])/).forEach(function (x) { x = x.trim(); if (x) (/^\[Digivolve\]/.test(x) ? r.alt : r.spec).push(x); });
+      else if (/^\[Link\]/.test(body)) r.link.push(body);
+      else if (/^Assembly:/.test(line)) r.asm.push(body);
+      else if (/^Digi-Xros:/.test(line)) r.xros.push(body);
+      else if (/^Effetto ACE:/.test(line)) r.ace.push(line.replace(/^Effetto ACE:\s*/, ""));
       else if (tg && iconClass(tg[1]) !== "trt") r.other.push(body);
       else r.other.push(line);
     });
@@ -1046,7 +1062,13 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       d3.appendChild(rich(el("b", "l"), ex.spec.join(" • "))); stats.appendChild(d3);
     }
     if (stats.children.length) sh.appendChild(stats);
-    [fx("Effetto", c.eff), fx("Effetto ereditato", c.inh), fx("Effetto di sicurezza", c.sec), fx("Regole", ex.rule.join("\n")), fx("Altre regole", ex.other.join("\n"))].forEach(function (f) { if (f) sh.appendChild(f); });
+    var ace = ex.ace.map(function (l) {
+      var m = l.match(/Overflow\s*＜(-\d+)＞/);
+      return m ? "⟦Overflow " + m[1] + "⟧ " + ((c.x && c.x.o) || "(As this card moves from the battle area or under a card to another area, lose " + m[1].slice(1) + " memory.)") : l;
+    });
+    [fx("Effetto", c.eff), fx("Effetto ereditato", c.inh), fx("Effetto di sicurezza", c.sec), optFx(c), fx("Regole", ex.rule.join("\n")),
+     fx("Regole Link", ex.link.join("\n")), fx("Regole Assembly", ex.asm.join("\n")), fx("Regole DigiXros", ex.xros.join("\n")),
+     fx("Regole Ace Overflow", ace.join("\n")), fx("Altre regole", ex.other.join("\n"))].forEach(function (f) { if (f) sh.appendChild(f); });
     var own = el("div", "own"); own.appendChild(el("span", "", "Copie possedute"));
     own.appendChild(qtyControl(c, function () { recomputeStats(); render(); drawSheet(); }));
     sh.appendChild(own);

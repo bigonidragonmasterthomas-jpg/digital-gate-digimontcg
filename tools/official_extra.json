@@ -277,6 +277,103 @@
 ]
 }
 },
+"BT26-031": {
+"dual": {
+"color": "Yellow",
+"cost": "4",
+"lines": [
+"＜Use Req. ([Glowing Dawn] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] 1 of your opponent's Digimon gets -8000 DP until their turn ends. By trashing your top security card, it further gets -5000 DP.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"BT26-032": {
+"dual": {
+"color": "Green",
+"cost": "5",
+"lines": [
+"＜Use Req. ([TS] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] You may suspend 2 of your opponent's Digimon or Tamers. Then, 3 of their Digimon or Tamers can't unsuspend until their turn ends.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"BT26-033": {
+"dual": {
+"color": "Yellow/Red",
+"cost": "2",
+"lines": [
+"For each of your security cards, add 1 to this card's use cost.",
+"＜Use Req. ([TS] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] Delete all of your opponent's Digimon with the lowest DP. Then, ＜Recovery +1 (Deck)＞.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"BT26-050": {
+"dual": {
+"color": "Green",
+"cost": "6",
+"lines": [
+"＜Use Req. ([DATA SQUAD] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] Suspend 2 of your opponent's Digimon or Tamers. Then, until their turn ends, none of their suspended Digimon or Tamers can digivolve or unsuspend.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"BT26-056": {
+"dual": {
+"color": "Black",
+"cost": "3",
+"lines": [
+"＜Use Req. ([TS] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] Trash 1 card in your hand. Then, ＜De-Digivolve 3＞ 1 of your opponent's Digimon.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"BT26-057": {
+"dual": {
+"color": "Black",
+"cost": "4",
+"lines": [
+"＜Use Req. ([Glowing Dawn] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] ＜De-Digivolve 1＞ 1 of your opponent's Digimon. Then, give 1 of their Digimon \"[Start of Your Main Phase] This Digimon attacks.\" until their turn ends.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"BT26-075": {
+"dual": {
+"color": "Purple",
+"cost": "4",
+"lines": [
+"＜Use Req. ([Glowing Dawn] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] Delete 1 of your opponent's Digimon with the lowest level.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"BT26-080": {
+"dual": {
+"color": "Purple",
+"cost": "5",
+"lines": [
+"＜Use Req. ([TS] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] You may unsuspend 1 Digimon. Then, delete all of your opponent's unsuspended Digimon with the lowest DP.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
 "EX10-010": {
 "ovf": [
 "-4",
@@ -336,16 +433,24 @@
 },
 "EX13-065": {
 "dual": {
+"color": "White",
+"cost": "5",
 "lines": [
-"-"
-]
+"[Main] You may play 1 play cost 4 or lower card with [Sistermon] in its name from your hand or trash without paying the cost. Then, to 1 of your opponent's Digimon, give -3000 DP for the turn for each of your Digimon.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
 }
 },
 "EX13-066": {
 "dual": {
+"color": "White",
+"cost": "5",
 "lines": [
-"-"
-]
+"[Main] You may play 1 play cost 4 or lower card with [Sistermon] in its name from your hand or trash without paying the cost. Then, to 1 of your opponent's Digimon, ＜De-Digivolve 1＞ for each of your Digimon.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
 }
 },
 "EX5-013": {
