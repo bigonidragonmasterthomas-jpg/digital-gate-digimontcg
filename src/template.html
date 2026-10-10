@@ -7,7 +7,7 @@
 :root {
   --bg: #f1f4f9; --surface: #ffffff; --surface-2: #e7ecf4; --line: #d3dbe8;
   --ink: #0f1a2e; --ink-2: #51607a; --accent: #e0531a; --accent-ink: #ffffff;
-  --blue: #1f4fd8; --ok: #17803d; --scrim: rgba(10,16,30,.55);
+  --blue: #1f4fd8; --blue-ink: #ffffff; --ok: #17803d; --scrim: rgba(10,16,30,.55);
   --c-red: #d6403a; --c-blue: #2f6fe0; --c-yellow: #e2b21a; --c-green: #2e9e57; --c-black: #2a2d36; --c-purple: #8a4fd0; --c-white: #c4cad6;
   --font-display: "Chakra Petch", "Arial Narrow", system-ui, sans-serif;
   --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -16,7 +16,7 @@
   :root:not([data-theme="light"]) {
     --bg: #0b1120; --surface: #131b2e; --surface-2: #1c2640; --line: #26324f;
     --ink: #e8edf7; --ink-2: #93a1bd; --accent: #ff7a3d; --accent-ink: #1a0b03;
-    --blue: #7fa2ff; --ok: #4ade80; --scrim: rgba(0,0,0,.65);
+    --blue: #7fa2ff; --blue-ink: #0b1120; --ok: #4ade80; --scrim: rgba(0,0,0,.65);
     --c-red: #ef5b55; --c-blue: #5b92f5; --c-yellow: #f0c43a; --c-green: #46bd73; --c-black: #6b7388; --c-purple: #a878e8; --c-white: #e3e7ef;
     color-scheme: dark;
   }
@@ -24,7 +24,7 @@
 :root[data-theme="dark"] {
   --bg: #0b1120; --surface: #131b2e; --surface-2: #1c2640; --line: #26324f;
   --ink: #e8edf7; --ink-2: #93a1bd; --accent: #ff7a3d; --accent-ink: #1a0b03;
-  --blue: #7fa2ff; --ok: #4ade80; --scrim: rgba(0,0,0,.65);
+  --blue: #7fa2ff; --blue-ink: #0b1120; --ok: #4ade80; --scrim: rgba(0,0,0,.65);
   --c-red: #ef5b55; --c-blue: #5b92f5; --c-yellow: #f0c43a; --c-green: #46bd73; --c-black: #6b7388; --c-purple: #a878e8; --c-white: #e3e7ef;
   color-scheme: dark;
 }
@@ -146,6 +146,9 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .ico.ocol.oc-white { background: #9aa3b3 !important; }
 .ico.oc-yellow { background: #d9a400 !important; }
 .tags .ico { font-size: .8rem; margin: 0; padding: 3px 10px; line-height: 1.35; }
+.tagrows { margin-bottom: 12px; display: grid; gap: 6px; }
+.tagrows .tags { margin-bottom: 0; }
+.ico.tagb { background: var(--blue); color: var(--blue-ink); }
 .ico.kw { background: linear-gradient(#d8661f, #a2400c); border-radius: 0; padding: .08em .75em; clip-path: polygon(.45em 0, calc(100% - .45em) 0, 100% 50%, calc(100% - .45em) 100%, .45em 100%, 0 50%); }
 .ico.trt { background: #fff; color: #000; }
 .stat.wide { grid-column: 1 / -1; }
@@ -1044,17 +1047,21 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var art = el("div", "art"); art.appendChild(picBox("pic", "f", c));
     var band = el("div", "band artband"); band.style.background = gradient(c.colors, "to right"); art.appendChild(band);
     sh.appendChild(art);
-    var tags = el("div", "tags");
+    var tags = el("div", "tagrows");
     var ex = splitExtra(c), rForm = [], rAttr = [], rTrait = [];
     ex.rule.forEach(function (r) {
       if (!/trait/i.test(r)) return;
       r = r.replace(/Name:[^\[]*\[[^\]]+\]/g, "");
       r.replace(/\[([^\]]+)\](\s+(Attribute|Form))?/g, function (m, t, x, k) { (k === "Attribute" ? rAttr : k === "Form" ? rForm : rTrait).push(t); return m; });
     });
-    if (c.ct) tags.appendChild(el("span", "ico tim", c.ct));
-    if (c.lv) tags.appendChild(el("span", "ico tim", c.lv));
-    c.colors.forEach(function (x) { tags.appendChild(colIco(x)); });
-    [c.form].concat(rForm, [c.attr], rAttr, (c.sp || "").split("/"), rTrait).forEach(function (v) { v = (v || "").trim(); if (v) tags.appendChild(el("span", "tag", v)); });
+    function trow(items, first) {
+      var r = el("div", "tags");
+      if (first) first.forEach(function (n) { r.appendChild(n); });
+      items.forEach(function (v) { v = (v || "").trim(); if (v) r.appendChild(el("span", "ico tagb", v)); });
+      if (r.children.length) tags.appendChild(r);
+    }
+    trow([c.ct, c.lv]); var row1 = tags.lastChild; if (row1) c.colors.forEach(function (x) { row1.appendChild(colIco(x)); });
+    trow([c.form].concat(rForm)); trow([c.attr].concat(rAttr)); trow((c.sp || "").split("/").concat(rTrait));
     sh.appendChild(tags);
     var stats = el("div", "stats");
     [stat("Costo", c.ct === "Digimon/Option" ? "-" : c.play), stat("DP", c.dp), rarStat(c)].forEach(function (s) { if (s) stats.appendChild(s); });
