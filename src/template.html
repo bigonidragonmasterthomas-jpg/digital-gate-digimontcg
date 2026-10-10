@@ -133,11 +133,13 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .sheet { overscroll-behavior: contain; }
 .evo .l { display: block; font-family: var(--font-display); font-weight: 600; line-height: 1.5; }
 .ico { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: .78em; line-height: 1.25; padding: .08em .5em; margin: 0 .1em; border-radius: .35em; color: #fff; vertical-align: .08em; white-space: nowrap; }
-.ico.tim { background: #2f6fdb; }
-.ico.opt { background: #d23a6c; }
-.ico.sec { background: #8a4bd8; }
-.ico.spc { background: #3b4352; border: 1px solid #6b7486; }
-.ico.kw { background: #c46a12; border-radius: 0; padding: .08em .75em; clip-path: polygon(.45em 0, calc(100% - .45em) 0, 100% 50%, calc(100% - .45em) 100%, .45em 100%, 0 50%); }
+.ico.tim { background: linear-gradient(#2c4fb4, #1b2a72); box-shadow: inset 0 0 0 1px #5d7fd6; }
+.ico.zon { background: linear-gradient(#9c2c86, #5f0f52); box-shadow: inset 0 0 0 1px #c25aab; }
+.ico.opt { background: linear-gradient(#d8161c, #9a0006); box-shadow: inset 0 0 0 1px #f0585c; }
+.ico.spc { background: linear-gradient(#2d6694, #173a57); box-shadow: inset 0 0 0 1px #5f93bd; }
+.ico.grn { background: linear-gradient(#14ad96, #0a7a6a); }
+.ico.rul { background: #e4e4e4; color: #111; }
+.ico.kw { background: linear-gradient(#d8661f, #a2400c); border-radius: 0; padding: .08em .75em; clip-path: polygon(.45em 0, calc(100% - .45em) 0, 100% 50%, calc(100% - .45em) 100%, .45em 100%, 0 50%); }
 .ico.trt { background: #fff; color: #000; }
 .stat.wide { grid-column: 1 / -1; }
 .alts { display: flex; flex-direction: column; align-items: center; gap: 14px; }
@@ -907,8 +909,10 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     h.appendChild(more);
     out.appendChild(h);
   }
-  var TIMING = /^(On Play|When Digivolving|When Attacking|On Deletion|Your Turn|Opponent's Turn|All Turns|Main|Start of Your Main Phase|Start of Opponent's Main Phase|Start of Your Turn|Start of Opponent's Turn|End of Your Turn|End of Opponent's Turn|End of All Turns|End of Attack|When Linking|When Moving|Hand|Trash|Breeding|Counter)$/;
-  var SPECIAL = /^(Rule|Digivolve|DNA Digivolve|Burst Digivolve|App Fusion|Fusionize|DigiXros\s*-\d+|Assembly\s*-\d+)$/;
+  var TIMING = /^(On Play|When Digivolving|When Attacking|On Deletion|Your Turn|Opponent's Turn|All Turns|Main|Start of Your Main Phase|Start of Opponent's Main Phase|Start of Your Turn|Start of Opponent's Turn|End of Your Turn|End of Opponent's Turn|End of All Turns|End of Attack|When Linking|When Moving|Counter|Security)$/;
+  var ZONE = /^(Hand|Trash|Breeding)$/;
+  var SPECIAL = /^(Digivolve|DNA Digivolve|Burst Digivolve|App Fusion|Fusionize)$/;
+  var GREEN = /^(DigiXros\s*-\d+|Assembly\s*-\d+|Link|Arts Digivolve)$/;
   function rich(target, text) {
     String(text).split(/(\[[^\]\n]+\]|＜[^＞\n]+＞)/).forEach(function (part, i) {
       if (!part) return;
@@ -916,9 +920,11 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       var inner = part.slice(1, -1).replace(/\u00a0/g, " "), cls;
       if (part.charAt(0) === "＜") cls = "kw";
       else if (/^(Once|Twice) Per Turn$/.test(inner)) cls = "opt";
-      else if (inner === "Security") cls = "sec";
       else if (TIMING.test(inner)) cls = "tim";
+      else if (ZONE.test(inner)) cls = "zon";
       else if (SPECIAL.test(inner)) cls = "spc";
+      else if (GREEN.test(inner)) cls = "grn";
+      else if (inner === "Rule") cls = "rul";
       else cls = "trt";
       var b = el("span", "ico " + cls, inner); b.title = part; target.appendChild(b);
     });
