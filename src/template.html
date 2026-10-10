@@ -943,8 +943,8 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var d = c.x && c.x.d; if (!d) return null;
     var f = fx("Effetto Option", d.l.join("\n")), p = f.querySelector("p"), h = el("span", "optc");
     if (d.c) h.appendChild(el("span", "ico tim", "Use " + d.c));
-    if (d.col) { var cols = d.col.split("/"), cb = el("span", "ico ocol", d.col); cb.style.background = gradient(cols, "to right");
-      if (cols.every(function (x) { return x === "Yellow" || x === "White"; })) cb.style.color = "#111"; h.appendChild(cb); }
+    if (d.col) d.col.split("/").forEach(function (x) { var cb = el("span", "ico ocol", x); cb.style.background = colorVar(x);
+      if (x === "Yellow" || x === "White") cb.style.color = "#111"; h.appendChild(cb); });
     p.insertBefore(document.createTextNode("\n"), p.firstChild); p.insertBefore(h, p.firstChild);
     return f;
   }
