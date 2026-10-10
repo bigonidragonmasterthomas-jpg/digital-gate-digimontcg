@@ -1,10 +1,9 @@
 import sys, pathlib, urllib.request
 out = pathlib.Path("analysis"); out.mkdir(exist_ok=True)
 U = {
- "io_dual.json": "https://digimoncard.io/api-public/search?type=Dual",
- "world_cards.html": "https://world.digimoncard.com/cards/?search=true&keyword=BT26-050",
- "world_cards_all.html": "https://world.digimoncard.com/cards/?search=true",
- "world_cards_bt26.html": "https://world.digimoncard.com/cards/?search=true&category=522026",
+ "ban_world.html": "https://world.digimoncard.com/rule/restriction_card/",
+ "ban_en.html": "https://en.digimoncard.com/rule/restriction_card/",
+ "rule_world.html": "https://world.digimoncard.com/rule/",
 }
 for n, u in U.items():
     try:
