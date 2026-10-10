@@ -248,7 +248,7 @@ main { padding: 8px 16px 48px; }
   function goSets() {
     var r = st.setId && st.back ? st.back : null;
     st.tab = "sets"; st.setId = null; st.shown = PAGE;
-    if (r) { st.q = r.q; qi.value = r.q; st.type = r.type; }
+    if (r) { st.q = r.q; qi.value = r.q; st.type = r.type; st.qm = r.qm || ""; }
     render();
     if (r) { var y = r.y; requestAnimationFrame(function () { window.scrollTo(0, y); requestAnimationFrame(function () { window.scrollTo(0, y); }); }); }
   }
@@ -291,6 +291,21 @@ main { padding: 8px 16px 48px; }
       if (c.nb.indexOf(q) >= 0) return 6;
     }
     return 7;
+  }
+  var SETCARDS = {};
+  function cardsOfSet(id) {
+    if (!SETCARDS[id]) {
+      var a = CARDS.filter(function (c) { return c.set === id; });
+      ((SETBY[id] && SETBY[id].rp) || []).forEach(function (i) { a.push(CARDS[i]); });
+      SETCARDS[id] = a;
+    }
+    return SETCARDS[id];
+  }
+  function nameMatch(c, q) {
+    if (!c.nf) c.nf = fold(c.name);
+    var parts = q.split(" ");
+    for (var i = 0; i < parts.length; i++) if (c.nf.indexOf(parts[i]) < 0) return false;
+    return true;
   }
   function normQ(q) { return fold(q).replace(/\b(bt|ex|st|rb|lm|ad)0+(\d)/g, "$1$2"); }
 
@@ -348,10 +363,14 @@ main { padding: 8px 16px 48px; }
   function renderSets() {
     var q = normQ(st.q);
     var all = upcomingSets().concat(SETS);
+    var hits = {};
     var list = all.filter(function (s) {
       if (st.type !== "ALL" && s.type !== st.type) return false;
-      if (q && normQ(s.code + " " + s.name).indexOf(q) < 0) return false;
-      return true;
+      if (!q || normQ(s.code + " " + s.name).indexOf(q) >= 0) return true;
+      if (s.up) return false;
+      var n = cardsOfSet(s.id).filter(function (c) { return nameMatch(c, q); }).length;
+      if (n) { hits[s.id] = n; return true; }
+      return false;
     });
     if (!list.length) { out.appendChild(el("p", "empty", "Nessun set corrisponde ai filtri.")); return; }
     Object.keys(TYPES).forEach(function (t) {
@@ -364,10 +383,20 @@ main { padding: 8px 16px 48px; }
         if (s.up) { ul.appendChild(upcRow(s.up, false)); return; }
         var r = el("button", "row set"); r.type = "button";
         r.appendChild(el("div", "code fit", s.code));
-        r.appendChild(el("div", "name fit", s.name));
+        if (hits[s.id]) {
+          var nm = el("div", "name"); nm.appendChild(el("div", "ttl fit", s.name));
+          nm.appendChild(el("div", "sub", hits[s.id] + (hits[s.id] === 1 ? " carta trovata" : " carte trovate")));
+          r.appendChild(nm);
+        } else r.appendChild(el("div", "name fit", s.name));
         var stt = SETSTAT[s.id];
         r.appendChild(el("div", "num" + (stt.h === stt.n ? " done" : ""), stt.h + "/" + stt.n));
-        r.onclick = function () { st.back = { y: window.pageYOffset || document.documentElement.scrollTop || 0, q: st.q, type: st.type }; st.tab = "cards"; st.setId = s.id; st.shown = PAGE; qi.value = ""; st.q = ""; window.scrollTo(0, 0); render(); };
+        r.onclick = function () {
+          st.back = { y: window.pageYOffset || document.documentElement.scrollTop || 0, q: st.q, type: st.type, qm: st.qm };
+          var keep = !!hits[s.id];
+          st.tab = "cards"; st.setId = s.id; st.shown = PAGE;
+          if (keep) { st.qm = "name"; } else { qi.value = ""; st.q = ""; }
+          window.scrollTo(0, 0); render();
+        };
         ul.appendChild(r);
       });
       out.appendChild(ul);
