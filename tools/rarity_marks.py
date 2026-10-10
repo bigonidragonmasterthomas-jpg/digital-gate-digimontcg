@@ -35,7 +35,10 @@ def find_tag(a):
         h = sl[0].stop - sl[0].start; w = sl[1].stop - sl[1].start
         if 7 <= h <= 15 and 15 <= w <= 32:
             sub = reg[sl]; dark = int((sub.max(axis=2) < 110).sum())
-            if dark >= 6 and (best is None or dark > best[3]): best = (sl[0].start + y0, sl[1].start + 360, h, dark)
+            # il tag è isolato: attorno (cornice di 3 px) pochi pixel chiari
+            ys, ye = max(0, sl[0].start - 3), sl[0].stop + 3; xs, xe = max(0, sl[1].start - 3), sl[1].stop + 3
+            ring = bright[ys:ye, xs:xe].sum() - (lab[sl] == k).sum()
+            if dark >= 6 and ring <= 6 and (best is None or dark > best[3]): best = (sl[0].start + y0, sl[1].start + 360, h, dark)
     return best
 def guess(a, t):
     y, x, h, _ = t
@@ -74,7 +77,7 @@ for n in range(0, len(strips), PER):
     for k, (i, g, s) in enumerate(chunk):
         s3 = s.resize((min(CW - 4, s.size[0] * 3), min(CH - 18, s.size[1] * 3)), Image.LANCZOS)
         X, Y = (k % 6) * CW, (k // 6) * CH
-        W.paste(s3, (X + 2, Y + 16)); d.text((X + 3, Y + 2), "%d %s [%s]" % (n + k, i, g or "-"), fill="black")
+        W.paste(s3, (X + 2, Y + 16)); d.text((X + 3, Y + 2), "%d %s [%s]" % (n + k, i, (g or "-").replace("\u2605", "*")), fill="black")
     W.save(out / ("sheet_%02d.png" % (n // PER)))
 print(len(ids), "versioni;", sum(1 for v in res.values() if v is None), "senza immagine;", sum(1 for v in res.values() if v == "?"), "senza riga")
 from collections import Counter; print(Counter(res.values()))
