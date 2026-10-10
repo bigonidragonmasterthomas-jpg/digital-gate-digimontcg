@@ -1,0 +1,718 @@
+{
+"AD1-005": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"BT14-014": {
+"ovf": [
+"-3",
+"(As this card moves from the battle area or under a card to another area, lose 3 memory.)"
+]
+},
+"BT14-026": {
+"ovf": [
+"-3",
+"(As this card moves from the battle area or under a card to another area, lose 3 memory.)"
+]
+},
+"BT14-037": {
+"ovf": [
+"-3",
+"(As this card moves from the battle area or under a card to another area, lose 3 memory.)"
+]
+},
+"BT14-049": {
+"ovf": [
+"-3",
+"(As this card moves from the battle area or under a card to another area, lose 3 memory.)"
+]
+},
+"BT15-014": {
+"ovf": [
+"-3",
+"(As this card moves from the battle area or under a card to another area, lose 3 memory.)"
+]
+},
+"BT15-026": {
+"ovf": [
+"-3",
+"(As this card moves from the battle area or under a card to another area, lose 3 memory.)"
+]
+},
+"BT15-038": {
+"ovf": [
+"-3",
+"(As this card moves from the field or under a card to an area other than those, lose 3 memory.)"
+]
+},
+"BT15-049": {
+"ovf": [
+"-3",
+"(As this card moves from the battle area or under a card to another area, lose 3 memory.)"
+]
+},
+"BT15-076": {
+"ovf": [
+"-3",
+"(As this card moves from the battle area or under a card to another area, lose 3 memory.)"
+]
+},
+"BT16-013": {
+"ovf": [
+"-4",
+"(As this card moves from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"BT16-026": {
+"ovf": [
+"-4",
+"(As this card moves from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"BT16-027": {
+"ovf": [
+"-4",
+"(As this card moves from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"BT16-046": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"BT17-018": {
+"ovf": [
+"-5",
+"(As this card moves from the battle area or under a card to another area, lose 5 memory.)"
+]
+},
+"BT17-041": {
+"ovf": [
+"-5",
+"(As this card moves from the battle area or under a card to another area, lose 5 memory.)"
+]
+},
+"BT17-077": {
+"ovf": [
+"-5",
+"(As this card moves from the battle area or under a card to another area, lose 5 memory.)"
+]
+},
+"BT17-078": {
+"ovf": [
+"-5",
+"(As this card moves from the battle area or under a card to another area, lose 5 memory.)"
+]
+},
+"BT18-040": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"BT18-071": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"BT18-083": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"BT18-102": {
+"ovf": [
+"-5",
+"(As this card moves from the field or under a card to an area other than those, lose 5 memory.)"
+]
+},
+"BT19-011": {
+"ovf": [
+"-3",
+"(As this card moves from the field or under a card to an area other than those, lose 3 memory.)"
+]
+},
+"BT19-037": {
+"ovf": [
+"-3",
+"(As this card moves from the field or under a card to an area other than those, lose 3 memory.)"
+]
+},
+"BT19-050": {
+"ovf": [
+"-3",
+"(As this card moves from the field or under a card to an area other than those, lose 3 memory.)"
+]
+},
+"BT19-064": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"BT19-074": {
+"ovf": [
+"-5",
+"(As this card moves from the field or under a card to an area other than those, lose 5 memory.)"
+]
+},
+"BT20-021": {
+"ovf": [
+"-5",
+"(As this card moves from the field or under a card to an area other than those, lose 5 memory.)"
+]
+},
+"BT20-045": {
+"ovf": [
+"-5",
+"(As this card moves from the field or under a card to an area other than those, lose 5 memory.)"
+]
+},
+"BT20-060": {
+"ovf": [
+"-5",
+"(As this card moves from the field or under a card to an area other than those, lose 5 memory.)"
+]
+},
+"BT20-076": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"BT20-077": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"BT20-081": {
+"ovf": [
+"-5",
+"(As this card moves from the field or under a card to an area other than those, lose 5 memory.)"
+]
+},
+"BT20-101": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"BT21-051": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"BT22-025": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"BT22-052": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"BT22-066": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"BT23-045": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"BT25-043": {
+"dual": {
+"color": "Yellow",
+"cost": "6",
+"lines": [
+"＜Use Req. ([Glowing Dawn] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] 1 of your opponent's Digimon gets -8000 DP for the turn. Then, by trashing your top security card, all of your opponent's Digimon get -5000 DP for the turn.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+]
+}
+},
+"BT25-057": {
+"dual": {
+"color": "Green",
+"cost": "4",
+"lines": [
+"＜Use Req. ([Glowing Dawn] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] 1 of your Digimon gains ＜Rush＞, ＜Security A. +1＞ and +5000 DP until your opponent's turn ends. Then, it may attack.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+]
+}
+},
+"BT25-085": {
+"dual": {
+"color": "Purple",
+"cost": "6",
+"lines": [
+"＜Use Req. ([Three Musketeers] in text)＞ (Specified cards let you ignore color requirements.)",
+"[Main] Delete 1 of your opponent's highest level Digimon. Then, you may place 1 [Three Musketeers] trait card from your hand or trash as any of your Digimon's bottom digivolution card.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+]
+}
+},
+"BT25-104": {
+"dual": {
+"color": "Red/Yellow",
+"cost": "6",
+"lines": [
+"＜Use Req. ([DATA SQUAD] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] 1 of your opponent's Digimon gets -15000 DP for the turn. Then, you may play 1 Tamer card from your hand without paying the cost.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+]
+}
+},
+"BT26-031": {
+"dual": {
+"color": "Yellow",
+"cost": "4",
+"lines": [
+"＜Use Req. ([Glowing Dawn] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] 1 of your opponent's Digimon gets -8000 DP until their turn ends. By trashing your top security card, it further gets -5000 DP.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"BT26-032": {
+"dual": {
+"color": "Green",
+"cost": "5",
+"lines": [
+"＜Use Req. ([TS] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] You may suspend 2 of your opponent's Digimon or Tamers. Then, 3 of their Digimon or Tamers can't unsuspend until their turn ends.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"BT26-033": {
+"dual": {
+"color": "Yellow/Red",
+"cost": "2",
+"lines": [
+"For each of your security cards, add 1 to this card's use cost.",
+"＜Use Req. ([TS] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] Delete all of your opponent's Digimon with the lowest DP. Then, ＜Recovery +1 (Deck)＞.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"BT26-050": {
+"dual": {
+"color": "Green",
+"cost": "6",
+"lines": [
+"＜Use Req. ([DATA SQUAD] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] Suspend 2 of your opponent's Digimon or Tamers. Then, until their turn ends, none of their suspended Digimon or Tamers can digivolve or unsuspend.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"BT26-056": {
+"dual": {
+"color": "Black",
+"cost": "3",
+"lines": [
+"＜Use Req. ([TS] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] Trash 1 card in your hand. Then, ＜De-Digivolve 3＞ 1 of your opponent's Digimon.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"BT26-057": {
+"dual": {
+"color": "Black",
+"cost": "4",
+"lines": [
+"＜Use Req. ([Glowing Dawn] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] ＜De-Digivolve 1＞ 1 of your opponent's Digimon. Then, give 1 of their Digimon \"[Start of Your Main Phase] This Digimon attacks.\" until their turn ends.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"BT26-075": {
+"dual": {
+"color": "Purple",
+"cost": "4",
+"lines": [
+"＜Use Req. ([Glowing Dawn] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] Delete 1 of your opponent's Digimon with the lowest level.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"BT26-080": {
+"dual": {
+"color": "Purple",
+"cost": "5",
+"lines": [
+"＜Use Req. ([TS] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] You may unsuspend 1 Digimon. Then, delete all of your opponent's unsuspended Digimon with the lowest DP.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"EX10-010": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"EX10-023": {
+"ovf": [
+"-5",
+"(As this card moves from the field or under a card to an area other than those, lose 5 memory.)"
+]
+},
+"EX10-074": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"EX12-018": {
+"dual": {
+"color": "Red",
+"cost": "5",
+"lines": [
+"＜Use Req. ([VB] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] Delete 1 of your opponent's highest DP Digimon. Then, 1 of your Digimon may attack.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+]
+}
+},
+"EX12-033": {
+"dual": {
+"color": "Blue",
+"cost": "5",
+"lines": [
+"＜Use Req. ([DS] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] Trash any 4 cards under your opponent's Digimon or Tamers. Then, you may return 1 of your opponent's Digimon or Tamers without cards under it to the hand.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+]
+}
+},
+"EX12-052": {
+"dual": {
+"color": "Green",
+"cost": "5",
+"lines": [
+"＜Use Req. ([NSp] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] 1 of your Digimon may unsuspend. Then, suspend 2 of your opponent's Digimon. 2 of their Digimon or Tamers can't unsuspend until their turn ends.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+]
+}
+},
+"EX12-059": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"EX13-065": {
+"dual": {
+"color": "White",
+"cost": "5",
+"lines": [
+"[Main] You may play 1 play cost 4 or lower card with [Sistermon] in its name from your hand or trash without paying the cost. Then, to 1 of your opponent's Digimon, give -3000 DP for the turn for each of your Digimon.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"EX13-066": {
+"dual": {
+"color": "White",
+"cost": "5",
+"lines": [
+"[Main] You may play 1 play cost 4 or lower card with [Sistermon] in its name from your hand or trash without paying the cost. Then, to 1 of your opponent's Digimon, ＜De-Digivolve 1＞ for each of your Digimon.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+],
+"src": "img"
+}
+},
+"EX5-013": {
+"ovf": [
+"-4",
+"(When this card would move from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"EX5-024": {
+"ovf": [
+"-4",
+"(When this card would move from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"EX5-041": {
+"ovf": [
+"-4",
+"(When this card would move from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"EX5-053": {
+"ovf": [
+"-4",
+"(When this card would move from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"EX6-011": {
+"ovf": [
+"-5",
+"(As this card moves from the battle area or under a card to another area, lose 5 memory.)"
+]
+},
+"EX6-027": {
+"ovf": [
+"-4",
+"(As this card moves from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"EX6-028": {
+"ovf": [
+"-4",
+"(As this card moves from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"EX6-029": {
+"ovf": [
+"-4",
+"(As this card moves from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"EX6-035": {
+"ovf": [
+"-4",
+"(As this card moves from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"EX7-029": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"EX7-059": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"EX8-026": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"EX8-044": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"EX8-062": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"EX9-013": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"EX9-020": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"EX9-056": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"EX9-065": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"LM-001": {
+"ovf": [
+"-4",
+"(As this card moves from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"LM-005": {
+"ovf": [
+"-4",
+"(As this card moves from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"LM-013": {
+"ovf": [
+"-4",
+"(As this card moves from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"LM-017": {
+"ovf": [
+"-3",
+"(As this card moves from the battle area or under a card to another area, lose 3 memory.)"
+]
+},
+"LM-021": {
+"ovf": [
+"-5",
+"(When this card would move from the battle area or under a card to another area, lose 5 memory.)"
+]
+},
+"LM-022": {
+"ovf": [
+"-5",
+"(When this card would move from the battle area or under a card to another area, lose 5 memory.)"
+]
+},
+"LM-023": {
+"ovf": [
+"-4",
+"(When this card would move from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"LM-024": {
+"ovf": [
+"-4",
+"(When this card would move from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"LM-025": {
+"ovf": [
+"-3",
+"(When this card would move from the battle area or under a card to another area, lose 3 memory.)"
+]
+},
+"LM-026": {
+"ovf": [
+"-4",
+"(When this card would move from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"LM-043": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"LM-044": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"P-109": {
+"ovf": [
+"-4",
+"(As this card moves from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"P-113": {
+"ovf": [
+"-4",
+"(When this card would move from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"P-114": {
+"ovf": [
+"-4",
+"(When this card would move from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"P-191": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"ST15-12": {
+"ovf": [
+"-4",
+"(When this card would move from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"ST16-12": {
+"ovf": [
+"-4",
+"(When this card would move from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"ST17-08": {
+"ovf": [
+"-4",
+"(As this card moves from the battle area or under a card to another area, lose 4 memory.)"
+]
+},
+"ST20-11": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"ST21-11": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"ST22-05": {
+"ovf": [
+"-4",
+"(As this card moves from the field or under a card to an area other than those, lose 4 memory.)"
+]
+},
+"ST23-09": {
+"dual": {
+"color": "Green",
+"cost": "5",
+"lines": [
+"＜Use Req. ([BEATBREAK] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] Suspend 1 of your opponent's Digimon. Then, return 1 of your opponent's suspended Digimon with the highest DP to the bottom of the deck.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+]
+}
+},
+"ST24-07": {
+"dual": {
+"color": "Yellow/Red",
+"cost": "5",
+"lines": [
+"＜Use Req. ([DATA SQUAD] trait)＞ (Specified cards let you ignore color requirements.)",
+"[Main] 1 of your opponent's Digimon gets -6000 DP for the turn. Then, delete 1 of your opponent's Digimon with 7000 DP or less.",
+"＜Arts Digivolve＞ (Instead of trashing after use, your cards may digivolve into this card without paying the cost.)"
+]
+}
+}
+}
