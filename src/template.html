@@ -168,7 +168,8 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .qbtn.lock { color: var(--ink-2); }
 .qbtn.lock[disabled] { opacity: .6; cursor: default; }
 .qn.qban { color: #ff5a5f; font: 700 .72rem var(--font-display); text-transform: uppercase; letter-spacing: .04em; }
-.qbtn.qmax { font: 700 .62rem var(--font-display); letter-spacing: .02em; color: var(--ink-2); }
+.qbtn.qmax { font: 700 .6rem/1 var(--font-display); letter-spacing: 0; padding: 0; text-align: center; opacity: .35; }
+.tile .dbl { margin: 2px 0 4px; }
 .pref { border: 0; background: none; color: inherit; font: inherit; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 .dbadge.pair { white-space: normal; line-height: 1.6; }
 .dalt { color: var(--accent); }
@@ -778,15 +779,15 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     if (st.ownOnly && !st.setId) { var ch = el("div", "sethead"); ch.appendChild(el("h2", "", "La mia collezione")); out.appendChild(ch); }
     if (!list.length) { out.appendChild(el("p", "empty", st.ownOnly ? "Non hai ancora segnato carte: usa il + nelle liste per aggiungerle." : "Nessuna carta corrisponde ai filtri.")); return; }
     var gt = el("div", "group-title withv"); gt.appendChild(el("span", "", list.length + (list.length === 1 ? " carta" : " carte")));
-    var vb = el("span", "vbtns");
+    gt.appendChild(viewToggle()); out.appendChild(gt);
+    if (0) { var vb = el("span", "vbtns");
     [["list", "Vista a elenco", '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>'],
      ["grid", "Vista a immagini", '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3.5" y="4" width="7" height="16" rx="1.5"/><rect x="13.5" y="4" width="7" height="16" rx="1.5"/></svg>']].forEach(function (v) {
       var bt = el("button", "vbtn"); bt.type = "button"; bt.innerHTML = v[2]; bt.title = v[1];
       bt.setAttribute("aria-label", v[1]); bt.setAttribute("aria-pressed", String(st.view === v[0]));
       bt.onclick = function () { st.view = v[0]; try { localStorage.setItem("dgm-view", st.view); } catch (e) {} render(); };
       vb.appendChild(bt);
-    });
-    gt.appendChild(vb); out.appendChild(gt);
+    }); }
     var lim = st.setId ? list.length : st.shown;
     var groups;
     if (st.setId) {
@@ -829,6 +830,17 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     return (ctRank(a) - ctRank(b)) || ((SETRANK[a.set] || 0) - (SETRANK[b.set] || 0)) || (a.i - b.i) || ((a.suf || "") < (b.suf || "") ? -1 : (a.suf || "") > (b.suf || "") ? 1 : 0);
   }
   var NAVLIST = [];
+  function viewToggle() {
+    var vb = el("span", "vbtns");
+    [["list", "Vista a elenco", '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>'],
+     ["grid", "Vista a immagini", '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3.5" y="4" width="7" height="16" rx="1.5"/><rect x="13.5" y="4" width="7" height="16" rx="1.5"/></svg>']].forEach(function (v) {
+      var bt = el("button", "vbtn"); bt.type = "button"; bt.innerHTML = v[2]; bt.title = v[1];
+      bt.setAttribute("aria-label", v[1]); bt.setAttribute("aria-pressed", String(st.view === v[0]));
+      bt.onclick = function () { st.view = v[0]; try { localStorage.setItem("dgm-view", st.view); } catch (e) {} render(); };
+      vb.appendChild(bt);
+    });
+    return vb;
+  }
   function drawItems(ul, items) {
     NAVLIST = NAVLIST.concat(items);
     items.forEach(function (c) {
@@ -1364,7 +1376,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   function banBadge(c, d) {
     var mx = maxCopies(c);
     if (!mx) return el("span", "dbadge ban", "Bandita");
-    if (mx === 1) return el("span", "dbadge lim", "Limitata a 1");
+    if (mx === 1) return el("span", "dbadge lim", "Limitata");
     if (PAIRS[c.code] && d) {
       var hit = PAIRS[c.code].filter(function (o) { return codeTotal(d, o); });
       return hit.length && codeTotal(d, c.code) ? el("span", "dbadge pair", "Coppia vietata") : null;
@@ -1469,14 +1481,26 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     out.appendChild(banNote());
   }
   function deckRow(d, c) {
+    var bb = banBadge(c, d);
+    if (st.view === "grid") {
+      var t = el("div", "tile"); t.tabIndex = 0; t.setAttribute("role", "button");
+      t.appendChild(picBox("pic", "f", c));
+      var cl = el("div", "cline"); cl.style.background = gradient(c.colors, "to right"); t.appendChild(cl);
+      t.appendChild(el("div", "tname", c.name));
+      listLines(c).forEach(function (x) { t.appendChild(x); });
+      if (bb) { var tb = el("div", "sub dbl"); tb.appendChild(bb); t.appendChild(tb); }
+      t.appendChild(deckQty(d, c, function () { render(); }));
+      t.onclick = function () { st.open = c; drawSheet(); };
+      t.onkeydown = function (e) { if (e.target === t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); st.open = c; drawSheet(); } };
+      NAVLIST.push(c);
+      return t;
+    }
     var r = el("div", "row card"); r.tabIndex = 0; r.setAttribute("role", "button");
     var sw = el("div", "swatch"); sw.style.background = gradient(c.colors); r.appendChild(sw);
     r.appendChild(picBox("thumb", "t", c));
     var mid = el("div", "name"); mid.appendChild(document.createTextNode(c.name));
-    var fs = c.suf ? SETBY[c.from || c.set] : null;
-    var sub = el("div", "sub", [c.code, c.ct, c.lv, c.play && c.ct !== "Digimon/Option" ? "Costo " + c.play : ""].filter(Boolean).join(" · ")); mid.appendChild(sub);
-    if (fs) mid.appendChild(el("div", "sub dalt", "Alternative Art · " + fs.code));
-    var bb = banBadge(c, d); if (bb) { var bl = el("div", "sub"); bl.appendChild(bb); mid.appendChild(bl); }
+    listLines(c).forEach(function (x) { mid.appendChild(x); });
+    if (bb) { var bl = el("div", "sub"); bl.appendChild(bb); mid.appendChild(bl); }
     r.appendChild(mid);
     r.appendChild(deckQty(d, c, function () { render(); }));
     r.onclick = function () { st.open = c; drawSheet(); };
@@ -1520,19 +1544,21 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     [ex, im, cl, del].forEach(function (x) { acts.appendChild(x); }); out.appendChild(acts); out.appendChild(slot);
     var any = false;
     deckGroups(d).forEach(function (g) {
-      if (!g[1].length) return; any = true;
+      if (!g[1].length) return; if (!any) any = 1;
       var n = 0; g[1].forEach(function (c) { n += d.cards[c.k]; });
-      var gt = el("div", "group-title"); gt.appendChild(el("span", "", g[0] + " (" + n + ")")); out.appendChild(gt);
-      var ul = el("div", "list"); g[1].forEach(function (c) { ul.appendChild(deckRow(d, c)); }); out.appendChild(ul);
+      var gt = el("div", "group-title" + (any === 1 ? " withv" : "")); gt.appendChild(el("span", "", g[0] + " (" + n + ")"));
+      if (any === 1) { gt.appendChild(viewToggle()); any = 2; }
+      out.appendChild(gt);
+      var ul = el("div", st.view === "grid" ? "grid" : "list"); g[1].forEach(function (c) { ul.appendChild(deckRow(d, c)); }); out.appendChild(ul);
     });
     if (!any) out.appendChild(el("p", "empty dempty", "Il mazzo è vuoto: cerca le carte con la barra in alto e aggiungile con +."));
     var q = normQ(st.q), filt = q || st.color || st.ct || st.lv;
-    var gt2 = el("div", "group-title"); gt2.appendChild(el("span", "", "Aggiungi carte")); out.appendChild(gt2);
+    var gt2 = el("div", "group-title withv"); gt2.appendChild(el("span", "", "Aggiungi carte")); if (!any) gt2.appendChild(viewToggle()); out.appendChild(gt2);
     if (!filt) { out.appendChild(el("p", "hint dnote", "Usa la ricerca e i filtri in alto per trovare le carte da aggiungere.")); out.appendChild(banNote()); return; }
     var list = CARDS.filter(function (c) { return deckable(c) && cardMatches(c, q); });
     if (q) list = list.map(function (c, j) { return { c: c, j: j, r: relevance(c, q) }; }).sort(function (a, b2) { return (a.r - b2.r) || (a.j - b2.j); }).map(function (o) { return o.c; });
     if (!list.length) out.appendChild(el("p", "empty", "Nessuna carta corrisponde alla ricerca."));
-    var ul2 = el("div", "list"); list.slice(0, st.shown).forEach(function (c) { ul2.appendChild(deckRow(d, c)); }); out.appendChild(ul2);
+    var ul2 = el("div", st.view === "grid" ? "grid" : "list"); list.slice(0, st.shown).forEach(function (c) { ul2.appendChild(deckRow(d, c)); }); out.appendChild(ul2);
     if (list.length > st.shown) { var mo = el("button", "more", "Mostra altre (" + (list.length - st.shown) + ")"); mo.type = "button"; mo.onclick = function () { st.shown += PAGE; render(); }; out.appendChild(mo); }
     out.appendChild(banNote());
   }
