@@ -504,12 +504,16 @@ main { padding: 8px 16px 48px; }
     var lim = st.setId ? list.length : st.shown;
     var groups;
     if (st.setId) {
-      var isPB = SETBY[st.setId].type === "PB";
-      var own = function (c) { return c.set === st.setId || (isPB && c.set === "p"); };
-      groups = [["", list.filter(function (c) { return own(c) && !c.suf; })],
-                ["Alternative Art", list.filter(function (c) { return own(c) && c.suf; })],
-                ["Ristampe", list.filter(function (c) { return !own(c) && !c.suf; })],
-                ["Ristampe · Alternative Art", list.filter(function (c) { return !own(c) && c.suf; })]];
+      var sid = st.setId, isPB = SETBY[sid].type === "PB";
+      var own = function (c) { return c.set === sid; };
+      // AD1: le ristampe foil senza stella hanno l'arte originale (ristampe), quelle con ★/SP sono alternative art (bordo dorato)
+      var alt = function (c) { return !!c.suf && (sid !== "ad1" || own(c) || !!c.mark); };
+      // PB: tutto il contenuto è ristampa in alternative art
+      groups = isPB ? [["Ristampe · Alternative Art", list]] :
+               [["Regular", list.filter(function (c) { return own(c) && !alt(c); })],
+                ["Alternative Art", list.filter(function (c) { return own(c) && alt(c); })],
+                ["Ristampe", list.filter(function (c) { return !own(c) && !alt(c); })],
+                ["Ristampe · Alternative Art", list.filter(function (c) { return !own(c) && alt(c); })]];
     } else groups = [["", list.slice(0, lim)]];
     groups.forEach(function (g) {
       if (!g[1].length) return;
