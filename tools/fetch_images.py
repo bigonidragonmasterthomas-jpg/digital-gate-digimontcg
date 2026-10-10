@@ -30,5 +30,7 @@ res = {}
 with cf.ThreadPoolExecutor(12) as ex:
     for code, r in zip(codes, ex.map(one, codes)): res[code] = r
 from collections import Counter
-print(Counter(res.values()))
+cnt = Counter(res.values()); print(cnt)
+miss = [c for c, r in res.items() if r == "manca"]
+print("::notice title=Immagini::%d carte, %d con immagine, %d senza. Esempi mancanti: %s" % (len(res), len(res) - len(miss), len(miss), " ".join(miss[:25])))
 print("senza immagine:", [c for c, r in res.items() if r == "manca"][:40])
