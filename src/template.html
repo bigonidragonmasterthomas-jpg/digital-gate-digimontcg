@@ -31,7 +31,7 @@
 * { box-sizing: border-box; }
 body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.45; }
 button { font-family: inherit; }
-.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 16px 10px; }
+.bar { transition: transform .22s ease; will-change: transform; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 16px 10px; }
 .wrap { max-width: 720px; margin: 0 auto; }
 .top { margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 h1 { min-width: 0; flex: 1 1 auto; font-family: var(--font-display); font-size: 1.4rem; margin: 0; font-weight: 700; }
@@ -129,6 +129,11 @@ main { padding: 8px 16px 48px; }
 .more { display: block; margin: 16px auto 0; padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 500 .9rem var(--font-body); cursor: pointer; }
 .empty { text-align: center; color: var(--ink-2); padding: 48px 0; }
 .hint { color: var(--ink-2); font-size: .8rem; margin-top: 24px; }
+.bar.hide { transform: translateY(calc(-100% - 2px)); }
+.sheet { touch-action: pan-y; }
+.sheet.dragging { transition: none !important; }
+.sheet .swipe-hint { display: flex; justify-content: center; padding-top: 8px; }
+.sheet .swipe-hint i { width: 38px; height: 4px; border-radius: 2px; background: var(--line); }
 .scrim { position: fixed; inset: 0; background: var(--scrim); z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
 .sheet { background: var(--bg); width: 100%; max-width: 720px; max-height: 88%; overflow-y: auto; border-radius: 16px 16px 0 0; padding: 0 16px calc(20px + env(safe-area-inset-bottom, 0px)); }
 .sheet-head { position: sticky; top: 0; background: var(--bg); display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 16px 0 10px; }
@@ -429,7 +434,12 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   };
   var MENU = [["home", "Home"], ["sets", "Prodotti"], ["soon", "Prossime uscite"], ["cards", "Ricerca carte"], ["coll", "La mia collezione"], ["info", "Informazioni"]];
   var menuEl = document.getElementById("menu"), menuBtn = document.getElementById("menuBtn"), menuScrim = document.getElementById("menuScrim");
-  function menuOpen(o) {
+  function menuOpen(o, fromHistory) {
+    var was = menuEl.classList.contains("open");
+    if (!fromHistory) {
+      if (o && !was) pushOverlay("menu");
+      else if (!o && was && history.state && history.state.ov === "menu") { history.back(); return; }
+    }
     menuEl.classList.toggle("open", o); menuScrim.classList.toggle("open", o);
     menuEl.setAttribute("aria-hidden", String(!o)); menuBtn.setAttribute("aria-expanded", String(o));
     if (o) drawMenu();
@@ -442,7 +452,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + IC[m[0]] + "</svg>";
       b.appendChild(document.createTextNode(m[1]));
       if (curPage() === m[0]) b.setAttribute("aria-current", "page");
-      b.onclick = function () { menuOpen(false); go(m[0]); };
+      b.onclick = function () { var ov = history.state && history.state.ov === "menu"; menuOpen(false, true); if (ov) replaceNext = true; go(m[0]); if (replaceNext) { replaceNext = false; history.replaceState(snap(), ""); } };
       nav.appendChild(b);
     });
   }
@@ -729,7 +739,9 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   function setOrder(a, b) {
     return (ctRank(a) - ctRank(b)) || ((SETRANK[a.set] || 0) - (SETRANK[b.set] || 0)) || (a.i - b.i) || ((a.suf || "") < (b.suf || "") ? -1 : (a.suf || "") > (b.suf || "") ? 1 : 0);
   }
+  var NAVLIST = [];
   function drawItems(ul, items) {
+    NAVLIST = NAVLIST.concat(items);
     items.forEach(function (c) {
       if (st.view === "grid") {
         var t = el("div", "tile"); t.tabIndex = 0; t.setAttribute("role", "button");
@@ -867,13 +879,17 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var d = el("div", "stat"); d.appendChild(el("span", "", label)); d.appendChild(el("b", "", val)); return d;
   }
   function drawSheet() {
+    var wasOpen = !sheet.hidden;
     sheet.innerHTML = "";
     if (st.open == null) { sheet.hidden = true; return; }
+    if (!wasOpen) pushOverlay("sheet");
     var c = st.open;
     sheet.hidden = false;
     var scrim = el("div", "scrim");
     scrim.onclick = function (e) { if (e.target === scrim) closeSheet(); };
     var sh = el("div", "sheet"); sh.setAttribute("role", "dialog"); sh.setAttribute("aria-modal", "true");
+    var hint = el("div", "swipe-hint"); hint.appendChild(el("i")); sh.appendChild(hint);
+    sheetGestures(sh, c);
     var head = el("div", "sheet-head");
     var t = el("div"); t.appendChild(el("div", "c", c.code + " · " + (SETBY[c.set] ? SETBY[c.set].name : "") + (c.suf && verLabel(c.ver) ? " · " + verLabel(c.ver) : ""))); t.appendChild(el("h2", "", c.name));
     head.appendChild(t);
@@ -896,7 +912,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     scrim.appendChild(sh); sheet.appendChild(scrim);
     x.focus();
   }
-  function closeSheet() { st.open = null; drawSheet(); }
+  function closeSheet() { if (history.state && history.state.ov === "sheet") history.back(); else { st.open = null; drawSheet(); } }
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && st.open != null) closeSheet(); });
 
   function render() {
@@ -918,11 +934,84 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var uniq = 0; CARDS.forEach(function (c) { if (owned(c)) uniq++; });
     document.getElementById("count").innerHTML = "<b>" + uniq + "</b> / " + CARDS.length + " carte";
     document.getElementById("bar").style.width = (uniq / CARDS.length * 100) + "%";
-    out.innerHTML = "";
+    out.innerHTML = ""; NAVLIST = [];
     document.getElementById("hint").hidden = isHome;
+    trackNav();
     if (isInfo) renderInfo(); else if (isHome) renderHome(); else if (isSoon) renderSoon(); else if (isSets) renderSets(); else renderCards();
     fitAll();
   }
+  // ---- Cronologia: il tasto/gesto "indietro" del telefono torna alla schermata precedente
+  var restoring = false, lastKey = null, replaceNext = false;
+  function navKey() { return [st.tab, st.setId, st.type, st.ownOnly].join("|"); }
+  function snap() { return { tab: st.tab, setId: st.setId, type: st.type, ownOnly: st.ownOnly, q: st.q, qm: st.qm, back: st.back || null, y: window.pageYOffset || 0 }; }
+  function trackNav() {
+    var k = navKey();
+    if (lastKey === null) { history.replaceState(snap(), ""); lastKey = k; return; }
+    if (k === lastKey || restoring) { lastKey = k; return; }
+    lastKey = k;
+    if (replaceNext) { replaceNext = false; history.replaceState(snap(), ""); } else history.pushState(snap(), "");
+  }
+  function pushOverlay(kind) { history.pushState({ ov: kind, base: history.state }, ""); }
+  window.addEventListener("scroll", function () {
+    if (history.state && !history.state.ov) { var h = history.state; h.y = window.pageYOffset || 0; try { history.replaceState(h, ""); } catch (e) {} }
+  }, { passive: true });
+  window.addEventListener("popstate", function (e) {
+    var s2 = e.state || {};
+    if (menuEl.classList.contains("open") && s2.ov !== "menu") { menuOpen(false, true); return; }
+    if (st.open != null && s2.ov !== "sheet") { st.open = null; drawSheet(); return; }
+    if (s2.ov) return;
+    restoring = true;
+    st.tab = s2.tab || "home"; st.setId = s2.setId || null; st.type = s2.type || "ALL"; st.ownOnly = !!s2.ownOnly;
+    st.q = s2.q || ""; qi.value = st.q; st.qm = s2.qm || ""; st.back = s2.back || null; st.shown = PAGE;
+    render(); restoring = false;
+    var y = s2.y || 0; requestAnimationFrame(function () { window.scrollTo(0, y); requestAnimationFrame(function () { window.scrollTo(0, y); }); });
+    showBar(true);
+  });
+
+  // ---- Barra superiore che si nasconde scorrendo verso il basso e ricompare risalendo
+  var barEl = document.querySelector(".bar"), lastY = window.pageYOffset || 0, upAcc = 0, downAcc = 0;
+  function showBar(v) { barEl.classList.toggle("hide", !v); }
+  window.addEventListener("scroll", function () {
+    var y = window.pageYOffset || 0, dy = y - lastY; lastY = y;
+    if (y < 60) { showBar(true); upAcc = downAcc = 0; return; }
+    if (dy > 0) { downAcc += dy; upAcc = 0; if (downAcc > 30) { showBar(false); if (document.activeElement === qi) qi.blur(); } }
+    else if (dy < 0) { upAcc -= dy; downAcc = 0; if (upAcc > 220) showBar(true); }
+  }, { passive: true });
+  qi.addEventListener("focus", function () { showBar(true); });
+
+  // ---- Gesti touch
+  function swipe(elm, cb, opts) {
+    var x0, y0, t0, tracking = false;
+    elm.addEventListener("touchstart", function (e) { if (e.touches.length !== 1) return; x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now(); tracking = true; if (opts && opts.start) opts.start(e, x0, y0); }, { passive: true });
+    elm.addEventListener("touchmove", function (e) { if (!tracking || !opts || !opts.move) return; opts.move(e.touches[0].clientX - x0, e.touches[0].clientY - y0, x0, y0); }, { passive: true });
+    elm.addEventListener("touchend", function (e) {
+      if (!tracking) return; tracking = false;
+      var t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0, dt = Date.now() - t0;
+      cb(dx, dy, dt, x0, y0);
+    }, { passive: true });
+  }
+  // menu: scorri da destra verso sinistra dal bordo destro per aprirlo, verso destra per chiuderlo
+  swipe(document, function (dx, dy, dt, x0) {
+    if (st.open != null) return;
+    if (!menuEl.classList.contains("open") && x0 > window.innerWidth - 28 && dx < -60 && Math.abs(dy) < 60) menuOpen(true);
+  });
+  swipe(menuEl, function (dx, dy) { if (dx > 60 && Math.abs(dy) < 60) menuOpen(false); });
+  // scheda carta: giù per chiudere, sinistra/destra per la carta successiva/precedente
+  function sheetGestures(sh, c) {
+    var startTop = 0;
+    swipe(sh, function (dx, dy, dt) {
+      sh.classList.remove("dragging"); sh.style.transform = "";
+      if (dy > 110 && startTop <= 0 && Math.abs(dx) < 80) { closeSheet(); return; }
+      if (Math.abs(dx) > 70 && Math.abs(dy) < 50) {
+        var i = NAVLIST.indexOf(c), n = dx < 0 ? NAVLIST[i + 1] : NAVLIST[i - 1];
+        if (i >= 0 && n) { st.open = n; drawSheet(); var nsh = sheet.querySelector(".sheet"); if (nsh) { nsh.animate([{ transform: "translateX(" + (dx < 0 ? 40 : -40) + "px)", opacity: .4 }, { transform: "none", opacity: 1 }], { duration: 180, easing: "ease-out" }); } }
+      }
+    }, {
+      start: function () { startTop = sh.scrollTop; },
+      move: function (dx, dy) { if (startTop <= 0 && dy > 0 && Math.abs(dy) > Math.abs(dx)) { sh.classList.add("dragging"); sh.style.transform = "translateY(" + Math.min(dy, 300) + "px)"; } }
+    });
+  }
+
   var statsReady = false;
   function recomputeStatsIfNeeded() { if (!statsReady) { recomputeStats(); statsReady = true; } }
   render();
