@@ -173,7 +173,7 @@ main { padding: 8px 16px 48px; }
 <script>
 (function () {
   var DATA = JSON.parse(document.getElementById("data").textContent);
-  var TYPES = { BT: "Booster", EX: "Extra Booster", ST: "Starter Deck", LM: "Limited", AL: "Altri" };
+  var TYPES = { BT: "Booster", EX: "Extra Booster", ST: "Starter Deck", LM: "Limited", PB: "Premium Bandai", AL: "Altri" };
   var COLORS = { Red: "Rosso", Blue: "Blu", Yellow: "Giallo", Green: "Verde", Black: "Nero", Purple: "Viola", White: "Bianco" };
   var CARDTYPES = ["Digimon", "Digi-Egg", "Tamer", "Option"];
   var PAGE = 80;
@@ -255,7 +255,7 @@ main { padding: 8px 16px 48px; }
   document.getElementById("tab-sets").onclick = goSets;
   document.getElementById("tab-cards").onclick = function () { st.tab = "cards"; st.setId = null; st.shown = PAGE; render(); };
 
-  var CHIPS = [["ALL", "Tutti"], ["SOON", "In arrivo"], ["BT", "Booster"], ["EX", "Extra"], ["ST", "Starter"], ["LM", "Limited"], ["AL", "Altri"]];
+  var CHIPS = [["ALL", "Tutti"], ["SOON", "In arrivo"], ["BT", "Booster"], ["EX", "Extra"], ["ST", "Starter"], ["LM", "Limited"], ["PB", "Premium"], ["AL", "Altri"]];
   function drawChips() {
     chips.innerHTML = "";
     CHIPS.forEach(function (c) {
@@ -324,7 +324,7 @@ main { padding: 8px 16px 48px; }
     if (m === 0) return { big: "", unit: "Questo mese", month: month, now: true };
     return { big: String(m), unit: m === 1 ? "mese" : "mesi", month: month };
   }
-  function typeOf(c) { return /^BT/.test(c) ? "BT" : /^EX/.test(c) ? "EX" : /^ST/.test(c) ? "ST" : /^LM/.test(c) ? "LM" : "AL"; }
+  function typeOf(c) { return /^BT/.test(c) ? "BT" : /^EX/.test(c) ? "EX" : /^ST/.test(c) ? "ST" : /^LM/.test(c) ? "LM" : /^PB/.test(c) ? "PB" : "AL"; }
   function numOf(c) { var m = c.match(/(\d+)/); return m ? +m[1] : 0; }
   function upcomingSets() {
     return (DATA.upcoming || []).map(function (u) { return { id: "up-" + u.code, code: u.code, name: u.name, type: typeOf(u.code), up: u, n: 0 }; })
@@ -389,7 +389,7 @@ main { padding: 8px 16px 48px; }
           r.appendChild(nm);
         } else r.appendChild(el("div", "name fit", s.name));
         var stt = SETSTAT[s.id];
-        r.appendChild(el("div", "num" + (stt.h === stt.n ? " done" : ""), stt.h + "/" + stt.n));
+        r.appendChild(stt.n ? el("div", "num" + (stt.h === stt.n ? " done" : ""), stt.h + "/" + stt.n) : el("div", "num", "—"));
         r.onclick = function () {
           st.back = { y: window.pageYOffset || document.documentElement.scrollTop || 0, q: st.q, type: st.type, qm: st.qm };
           var keep = !!hits[s.id];
@@ -456,6 +456,7 @@ main { padding: 8px 16px 48px; }
         return (sc[a.i] - sc[b.i]) || (st.setId ? (a.set === st.setId ? 0 : 1) - (b.set === st.setId ? 0 : 1) : 0) || (a.i - b.i);
       });
     }
+    if (!list.length && st.setId && !SETSTAT[st.setId].n) { out.appendChild(el("p", "empty", "Questo prodotto non contiene carte: solo accessori (playmat, bustine, box).")); return; }
     if (!list.length) { out.appendChild(el("p", "empty", "Nessuna carta corrisponde ai filtri.")); return; }
     var gt = el("div", "group-title withv"); gt.appendChild(el("span", "", list.length + (list.length === 1 ? " carta" : " carte")));
     var vb = el("span", "vbtns");
@@ -469,7 +470,7 @@ main { padding: 8px 16px 48px; }
     gt.appendChild(vb); out.appendChild(gt);
     var ul = el("div", st.view === "grid" ? "grid" : "list");
     list.slice(0, st.shown).forEach(function (c) {
-      var rp = st.setId && c.set !== st.setId ? " · Ristampa" + (SETBY[c.set] ? " da " + SETBY[c.set].code : "") : "";
+      var rp = st.setId && c.set !== st.setId && !(c.set === "p" && SETBY[st.setId].type === "PB") ? " · Ristampa" + (SETBY[c.set] ? " da " + SETBY[c.set].code : "") : "";
       if (st.view === "grid") {
         var t = el("div", "tile"); t.tabIndex = 0; t.setAttribute("role", "button");
         t.appendChild(picBox("pic", "f", c));
@@ -485,7 +486,7 @@ main { padding: 8px 16px 48px; }
       var sw = el("div", "swatch"); sw.style.background = gradient(c.colors); r.appendChild(sw);
       r.appendChild(picBox("thumb", "t", c));
       var mid = el("div", "name"); mid.appendChild(document.createTextNode(c.name));
-      mid.appendChild(el("div", "sub", c.code + " · " + metaLine(c) + (st.setId && c.set !== st.setId ? " · Ristampa" + (SETBY[c.set] ? " da " + SETBY[c.set].code : "") : "")));
+      mid.appendChild(el("div", "sub", c.code + " · " + metaLine(c) + rp));
       r.appendChild(mid);
       r.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
       function open() { st.open = c.i; drawSheet(); }
