@@ -88,6 +88,17 @@ main { padding: 8px 16px 48px; }
 .tile .tname { font-weight: 600; line-height: 1.25; overflow-wrap: anywhere; }
 .tile .sub { margin-top: 0; }
 .tile .qty { margin-top: auto; justify-content: center; padding-top: 2px; }
+.sub2 { margin-top: 0; }
+.rar { display: inline-flex; align-items: center; gap: 4px; vertical-align: top; line-height: inherit; }
+.st1 { font-size: .8em; }
+.st2 { display: inline-flex; align-items: center; font-size: .74em; }
+.st2 i { font-style: normal; line-height: 1; display: inline-block; }
+.st2 i:first-child { transform: translateY(-0.32em); }
+.st2 i:last-child { transform: translateY(0.28em); margin-left: -0.05em; }
+.spb { display: inline-block; font: inherit; font-size: .78em; font-weight: 600; line-height: 1; padding: 2px 3px 1px; border-radius: 3px; position: relative; top: -1.5px; background: var(--ink-2); color: var(--sp-ink, #0b1120); }
+:root:not([data-theme="dark"]) .spb { --sp-ink: #ffffff; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .spb { --sp-ink: #0b1120; } }
+.subhead { font-family: var(--font-display); font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin: 18px 0 8px; }
 .qty { display: inline-flex; align-items: center; gap: 4px; }
 .qbtn { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--line); background: transparent; color: var(--ink); font-size: 1.1rem; line-height: 1; cursor: pointer; display: grid; place-items: center; }
 .qbtn.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
@@ -200,7 +211,7 @@ main { padding: 8px 16px 48px; }
   var VERS = DATA.versions || ["Normal"];
   function verLabel(v) {
     if (!v || v === "Normal") return "";
-    if (/alternative art/i.test(v)) return "Arte alternativa";
+    if (/alternative art/i.test(v)) return "Alternative Art";
     if (/pre release/i.test(v)) return "Pre-release";
     return v;
   }
@@ -435,15 +446,21 @@ main { padding: 8px 16px 48px; }
     return w;
   }
 
-  // Riga breve per gli elenchi: tipo, livello e rarità (con le stelle delle versioni alternative)
-  function listMeta(c) {
-    var bits = [];
-    if (c.ct) bits.push(c.ct);
-    if (c.lv) bits.push(c.lv);
+  // Righe brevi per gli elenchi: 1) tipo · livello  2) numero · rarità (con ★, ★★ o SP come stampati sulla carta)
+  function listLines(c) {
+    var a = el("div", "sub", [c.ct, c.lv].filter(Boolean).join(" · "));
+    var b = el("div", "sub sub2"); b.appendChild(document.createTextNode(c.code));
     var r = (c.rar || "").trim();
-    if (c.suf && c.mark) r = (c.mark === "SP" ? "SP" : new Array(c.mark + 1).join("★")) + (r ? " " + r : "");
-    if (r) bits.push(r);
-    return bits.join(" · ");
+    if (r || (c.suf && c.mark)) {
+      b.appendChild(document.createTextNode(" · "));
+      var rr = el("span", "rar");
+      if (c.suf && c.mark === "SP") rr.appendChild(el("span", "spb", "SP"));
+      else if (c.suf && c.mark === 2) { var s2 = el("span", "st2"); s2.appendChild(el("i", "", "★")); s2.appendChild(el("i", "", "★")); rr.appendChild(s2); }
+      else if (c.suf && c.mark === 1) rr.appendChild(el("span", "st1", "★"));
+      if (r) rr.appendChild(el("span", "rr", r));
+      b.appendChild(rr);
+    }
+    return [a, b];
   }
   function metaLine(c) {
     var bits = [];
@@ -483,16 +500,37 @@ main { padding: 8px 16px 48px; }
       vb.appendChild(bt);
     });
     gt.appendChild(vb); out.appendChild(gt);
-    var ul = el("div", st.view === "grid" ? "grid" : "list");
     var lim = st.setId ? list.length : st.shown;
-    list.slice(0, lim).forEach(function (c) {
-      var rp = st.setId && c.set !== st.setId && !(c.set === "p" && SETBY[st.setId].type === "PB") ? " · Ristampa" + (SETBY[c.set] ? " da " + SETBY[c.set].code : "") : "";
+    var groups;
+    if (st.setId) {
+      var isPB = SETBY[st.setId].type === "PB";
+      var own = function (c) { return c.set === st.setId || (isPB && c.set === "p"); };
+      groups = [["", list.filter(function (c) { return own(c) && !c.suf; })],
+                ["Alternative Art", list.filter(function (c) { return own(c) && c.suf; })],
+                ["Ristampe", list.filter(function (c) { return !own(c) && !c.suf; })],
+                ["Ristampe · Alternative Art", list.filter(function (c) { return !own(c) && c.suf; })]];
+    } else groups = [["", list.slice(0, lim)]];
+    groups.forEach(function (g) {
+      if (!g[1].length) return;
+      if (g[0]) out.appendChild(el("div", "subhead", g[0] + " (" + g[1].length + ")"));
+      var ul = el("div", st.view === "grid" ? "grid" : "list");
+      drawItems(ul, g[1]);
+      out.appendChild(ul);
+    });
+    if (list.length > lim) {
+      var m = el("button", "more", "Mostra altre " + Math.min(PAGE, list.length - st.shown)); m.type = "button";
+      m.onclick = function () { st.shown += PAGE; render(); };
+      out.appendChild(m);
+    }
+  }
+  function drawItems(ul, items) {
+    items.forEach(function (c) {
       if (st.view === "grid") {
         var t = el("div", "tile"); t.tabIndex = 0; t.setAttribute("role", "button");
         t.appendChild(picBox("pic", "f", c));
         var cl = el("div", "cline"); cl.style.background = gradient(c.colors, "to right"); t.appendChild(cl);
         t.appendChild(el("div", "tname", c.name));
-        t.appendChild(el("div", "sub", c.code + " · " + listMeta(c) + rp));
+        listLines(c).forEach(function (x) { t.appendChild(x); });
         t.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
         t.onclick = function () { st.open = c; drawSheet(); };
         t.onkeydown = function (e) { if (e.target === t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); st.open = c; drawSheet(); } };
@@ -502,7 +540,7 @@ main { padding: 8px 16px 48px; }
       var sw = el("div", "swatch"); sw.style.background = gradient(c.colors); r.appendChild(sw);
       r.appendChild(picBox("thumb", "t", c));
       var mid = el("div", "name"); mid.appendChild(document.createTextNode(c.name));
-      mid.appendChild(el("div", "sub", c.code + " · " + listMeta(c) + rp));
+      listLines(c).forEach(function (x) { mid.appendChild(x); });
       r.appendChild(mid);
       r.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
       function open() { st.open = c; drawSheet(); }
@@ -510,12 +548,6 @@ main { padding: 8px 16px 48px; }
       r.onkeydown = function (e) { if (e.target === r && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); open(); } };
       ul.appendChild(r);
     });
-    out.appendChild(ul);
-    if (list.length > lim) {
-      var m = el("button", "more", "Mostra altre " + Math.min(PAGE, list.length - st.shown)); m.type = "button";
-      m.onclick = function () { st.shown += PAGE; render(); };
-      out.appendChild(m);
-    }
   }
 
   function renderSoon() {
