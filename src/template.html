@@ -142,7 +142,10 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .ico.rul { background: #e4e4e4; color: #111; }
 .ico.ovf { background: linear-gradient(180deg, #f4f6f8 0%, #b9c0c8 45%, #8a939d 55%, #d5dade 100%); color: #1a1d22; box-shadow: inset 0 0 0 1px #6f7882; }
 .optc { display: inline; }
-.ico.ocol { text-shadow: 0 0 2px rgba(0,0,0,.6); box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
+.ico.ocol { color: #fff; }
+.ico.ocol.oc-white { background: #9aa3b3 !important; }
+.ico.oc-yellow { background: #d9a400 !important; }
+.tags .ico { font-size: .8rem; margin: 0; padding: 3px 10px; line-height: 1.35; }
 .ico.kw { background: linear-gradient(#d8661f, #a2400c); border-radius: 0; padding: .08em .75em; clip-path: polygon(.45em 0, calc(100% - .45em) 0, 100% 50%, calc(100% - .45em) 100%, .45em 100%, 0 50%); }
 .ico.trt { background: #fff; color: #000; }
 .stat.wide { grid-column: 1 / -1; }
@@ -939,12 +942,12 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     });
     return target;
   }
+  function colIco(x) { var cb = el("span", "ico ocol oc-" + x.toLowerCase(), x); cb.style.background = colorVar(x); return cb; }
   function optFx(c) {
     var d = c.x && c.x.d; if (!d) return null;
     var f = fx("Effetto Option", d.l.join("\n")), p = f.querySelector("p"), h = el("span", "optc");
     if (d.c) h.appendChild(el("span", "ico tim", "Use " + d.c));
-    if (d.col) d.col.split("/").forEach(function (x) { var cb = el("span", "ico ocol", x); cb.style.background = colorVar(x);
-      if (x === "Yellow" || x === "White") cb.style.color = "#111"; h.appendChild(cb); });
+    if (d.col) d.col.split("/").forEach(function (x) { h.appendChild(colIco(x)); });
     p.insertBefore(document.createTextNode("\n"), p.firstChild); p.insertBefore(h, p.firstChild);
     return f;
   }
@@ -1042,13 +1045,17 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var band = el("div", "band artband"); band.style.background = gradient(c.colors, "to right"); art.appendChild(band);
     sh.appendChild(art);
     var tags = el("div", "tags");
-    [c.ct, c.lv, c.colors.join("/"), c.form, c.attr, c.sp].forEach(function (v) { if (v) tags.appendChild(el("span", "tag", v)); });
-    sh.appendChild(tags);
-    var ex = splitExtra(c);
+    var ex = splitExtra(c), rForm = [], rAttr = [], rTrait = [];
     ex.rule.forEach(function (r) {
       if (!/trait/i.test(r)) return;
-      (r.match(/\[([^\]]+)\]/g) || []).forEach(function (t) { tags.appendChild(el("span", "tag", t.slice(1, -1))); });
+      r = r.replace(/Name:[^\[]*\[[^\]]+\]/g, "");
+      r.replace(/\[([^\]]+)\](\s+(Attribute|Form))?/g, function (m, t, x, k) { (k === "Attribute" ? rAttr : k === "Form" ? rForm : rTrait).push(t); return m; });
     });
+    if (c.ct) tags.appendChild(el("span", "ico tim", c.ct));
+    if (c.lv) tags.appendChild(el("span", "ico tim", c.lv));
+    c.colors.forEach(function (x) { tags.appendChild(colIco(x)); });
+    [c.form].concat(rForm, [c.attr], rAttr, (c.sp || "").split("/"), rTrait).forEach(function (v) { v = (v || "").trim(); if (v) tags.appendChild(el("span", "tag", v)); });
+    sh.appendChild(tags);
     var stats = el("div", "stats");
     [stat("Costo", c.ct === "Digimon/Option" ? "-" : c.play), stat("DP", c.dp), rarStat(c)].forEach(function (s) { if (s) stats.appendChild(s); });
     var ev = evoLines(c);
