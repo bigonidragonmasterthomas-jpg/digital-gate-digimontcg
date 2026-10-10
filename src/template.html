@@ -913,19 +913,22 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   var ZONE = /^(Hand|Trash|Breeding)$/;
   var SPECIAL = /^(Digivolve|DNA Digivolve|Burst Digivolve|App Fusion|Fusionize)$/;
   var GREEN = /^(DigiXros\s*-\d+|Assembly\s*-\d+|Link|Arts Digivolve)$/;
+  var EVOTAG = /^(Digivolve|DNA Digivolve|Burst Digivolve|App Fusion|Fusionize)$/;
+  function iconClass(inner) {
+    inner = inner.replace(/\u00a0/g, " ");
+    if (/^(Once|Twice) Per Turn$/.test(inner)) return "opt";
+    if (TIMING.test(inner)) return "tim";
+    if (ZONE.test(inner)) return "zon";
+    if (SPECIAL.test(inner)) return "spc";
+    if (GREEN.test(inner)) return "grn";
+    if (inner === "Rule") return "rul";
+    return "trt";
+  }
   function rich(target, text) {
     String(text).split(/(\[[^\]\n]+\]|＜[^＞\n]+＞)/).forEach(function (part, i) {
       if (!part) return;
       if (!(i % 2)) { target.appendChild(document.createTextNode(part)); return; }
-      var inner = part.slice(1, -1).replace(/\u00a0/g, " "), cls;
-      if (part.charAt(0) === "＜") cls = "kw";
-      else if (/^(Once|Twice) Per Turn$/.test(inner)) cls = "opt";
-      else if (TIMING.test(inner)) cls = "tim";
-      else if (ZONE.test(inner)) cls = "zon";
-      else if (SPECIAL.test(inner)) cls = "spc";
-      else if (GREEN.test(inner)) cls = "grn";
-      else if (inner === "Rule") cls = "rul";
-      else cls = "trt";
+      var inner = part.slice(1, -1).replace(/\u00a0/g, " "), cls = part.charAt(0) === "＜" ? "kw" : iconClass(inner);
       var b = el("span", "ico " + cls, inner); b.title = part; target.appendChild(b);
     });
     return target;
@@ -962,9 +965,12 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var r = { alt: [], rule: [], other: [] };
     (c.extra || "").split("\n").forEach(function (line) {
       if (!line.trim()) return;
-      if (/\[Digivolve\]/.test(line) && !/DNA/.test(line.split(":")[0])) r.alt.push(line.replace(/^[^\[]*?:\s*(?=\[Digivolve\])/, "").replace(/\[Digivolve\]\s*/, "").replace(/\u00a0/g, " "));
-      else if (/\[Rule\]/.test(line)) r.rule.push(line.replace(/^.*?\[Rule\]\s*/, ""));
-      else r.other.push(line.replace(/^Link:\s*/, "[Link] "));
+      line = line.replace(/\u00a0/g, " ").replace(/^Link:\s*/, "[Link] ");
+      var body = line.replace(/^[^:\[]+:\s*(?=\[)/, ""), tg = body.match(/^\[([^\]]+)\]/);
+      if (/\[Rule\]/.test(line)) r.rule.push(line.replace(/^.*?\[Rule\]\s*/, ""));
+      else if (tg && EVOTAG.test(tg[1])) body.split(/\s*(?=\[(?:Digivolve|DNA Digivolve|Burst Digivolve|App Fusion|Fusionize)\])/).forEach(function (x) { if (x.trim()) r.alt.push(x.trim()); });
+      else if (tg && iconClass(tg[1]) !== "trt") r.other.push(body);
+      else r.other.push(line);
     });
     return r;
   }
