@@ -129,11 +129,13 @@ main { padding: 8px 16px 48px; }
 .more { display: block; margin: 16px auto 0; padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 500 .9rem var(--font-body); cursor: pointer; }
 .empty { text-align: center; color: var(--ink-2); padding: 48px 0; }
 .hint { color: var(--ink-2); font-size: .8rem; margin-top: 24px; }
-html.lock, html.lock body { overflow: hidden; }
+html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
+.sheet { overscroll-behavior: contain; }
 .evo .l { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-display); font-weight: 600; }
 .stat.wide { grid-column: 1 / -1; }
-.alts { display: flex; gap: 12px; overflow-x: auto; padding: 2px 2px 8px; scroll-snap-type: x mandatory; touch-action: pan-x pan-y; }
-.alt { flex: 0 0 62%; max-width: 240px; scroll-snap-align: start; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+.alts { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.altsec { margin-top: 26px; }
+.alt { width: min(300px, 86%); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
 .alt .from { font: 600 .74rem var(--font-display); color: var(--accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .alt .from.none { color: var(--ink-2); }
 .alt .pic { width: 100%; aspect-ratio: 5 / 7; border-radius: 7px; background: var(--surface-2); overflow: hidden; }
@@ -908,11 +910,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     return Object.keys(m).sort(function (a, b) { return SETRANK[m[b].from] - SETRANK[m[a].from] || (a < b ? -1 : 1); }).map(function (k) { return m[k]; });
   }
   function evoLines(c) {
-    return (c.evo || "").split(";").map(function (t) {
-      var m = t.trim().match(/^(Lv\.\S+)\s+(.+?):\s*(\S+)$/);
-      if (!m) return t.trim();
-      return "Da " + m[1] + " " + m[2].split("/").map(function (k) { return COLORS[k] || k; }).join("/") + " · costo " + m[3];
-    }).filter(Boolean);
+    return (c.evo || "").split(";").map(function (t) { return t.trim(); }).filter(Boolean);
   }
   function splitExtra(c) {
     var r = { alt: [], rule: [], other: [] };
@@ -935,6 +933,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var scrim = el("div", "scrim");
     scrim.onclick = function (e) { if (e.target === scrim) closeSheet(); };
     var sh = el("div", "sheet"); sh.setAttribute("role", "dialog"); sh.setAttribute("aria-modal", "true");
+    var hint = el("div", "swipe-hint"); hint.appendChild(el("i")); sh.appendChild(hint);
     sheetGestures(sh, c);
     var head = el("div", "sheet-head");
     var t = el("div"); t.appendChild(el("div", "c", c.code + " · " + (SETBY[c.set] ? SETBY[c.set].name : "") + (c.suf && verLabel(c.ver) ? " · " + verLabel(c.ver) : ""))); t.appendChild(el("h2", "", c.name));
@@ -946,16 +945,23 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var band = el("div", "band artband"); band.style.background = gradient(c.colors, "to right"); art.appendChild(band);
     sh.appendChild(art);
     var tags = el("div", "tags");
-    [c.ct, c.lv, c.colors.map(function (k) { return COLORS[k] || k; }).join("/"), c.form, c.attr, c.sp].forEach(function (v) { if (v) tags.appendChild(el("span", "tag", v)); });
+    [c.ct, c.lv, c.colors.join("/"), c.form, c.attr, c.sp].forEach(function (v) { if (v) tags.appendChild(el("span", "tag", v)); });
     sh.appendChild(tags);
     var ex = splitExtra(c);
-    if (ex.alt.length) sh.appendChild(fx("Altra Digievoluzione", ex.alt.join("\n")));
+    ex.rule.forEach(function (r) {
+      if (!/trait/i.test(r)) return;
+      (r.match(/\[([^\]]+)\]/g) || []).forEach(function (t) { tags.appendChild(el("span", "tag", t.slice(1, -1))); });
+    });
     var stats = el("div", "stats");
     [stat("Costo", c.play), stat("DP", c.dp), stat("Rarità", c.rar)].forEach(function (s) { if (s) stats.appendChild(s); });
     var ev = evoLines(c);
     if (ev.length) {
       var d = el("div", "stat wide evo"); d.appendChild(el("span", "", "Digievoluzione"));
       ev.forEach(function (l) { d.appendChild(el("b", "l fit", l)); }); stats.appendChild(d);
+    }
+    if (ex.alt.length) {
+      var d2 = el("div", "stat wide evo"); d2.appendChild(el("span", "", "Altra Digievoluzione"));
+      ex.alt.forEach(function (l) { d2.appendChild(el("b", "l fit", l)); }); stats.appendChild(d2);
     }
     if (stats.children.length) sh.appendChild(stats);
     [fx("Effetto", c.eff), fx("Effetto ereditato", c.inh), fx("Effetto di sicurezza", c.sec), fx("Regole", ex.rule.join("\n")), fx("Altre regole", ex.other.join("\n"))].forEach(function (f) { if (f) sh.appendChild(f); });
@@ -966,7 +972,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     if (c.suf) alts.unshift(c.__proto__ && c.__proto__.code === c.code && !c.__proto__.suf ? c.__proto__ : null);
     alts = alts.filter(Boolean).filter(function (a) { return a.k !== c.k; });
     if (alts.length) {
-      var at = el("div", "fx"); at.appendChild(el("h3", "", c.suf ? "Altre versioni" : "Alternative Art"));
+      var at = el("div", "fx altsec"); at.appendChild(el("h3", "", c.suf ? "Altre versioni" : "Alternative Art"));
       var strip = el("div", "alts");
       alts.forEach(function (a) {
         var it = el("div", "alt");
@@ -1072,13 +1078,14 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var startTop = 0;
     swipe(sh, function (dx, dy, dt) {
       sh.classList.remove("dragging"); sh.style.transform = "";
+      if (dy > 110 && startTop <= 0 && Math.abs(dx) < 80) { closeSheet(); return; }
       if (Math.abs(dx) > 70 && Math.abs(dy) < 50) {
         var i = NAVLIST.indexOf(c), n = dx < 0 ? NAVLIST[i + 1] : NAVLIST[i - 1];
         if (i >= 0 && n) { st.open = n; drawSheet(); var nsh = sheet.querySelector(".sheet"); if (nsh) { nsh.animate([{ transform: "translateX(" + (dx < 0 ? 40 : -40) + "px)", opacity: .4 }, { transform: "none", opacity: 1 }], { duration: 180, easing: "ease-out" }); } }
       }
     }, {
       start: function () { startTop = sh.scrollTop; },
-      move: function () {}
+      move: function (dx, dy) { if (startTop <= 0 && dy > 0 && Math.abs(dy) > Math.abs(dx)) { sh.classList.add("dragging"); sh.style.transform = "translateY(" + Math.min(dy, 300) + "px)"; } }
     });
   }
 
