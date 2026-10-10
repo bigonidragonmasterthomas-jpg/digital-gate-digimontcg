@@ -507,14 +507,21 @@ main { padding: 8px 16px 48px; }
       var sid = st.setId, isPB = SETBY[sid].type === "PB";
       var own = function (c) { return c.set === sid; };
       // AD1: le ristampe foil senza stella hanno l'arte originale (ristampe), quelle con ★/SP sono alternative art (bordo dorato)
-      var alt = function (c) { return !!c.suf && (sid !== "ad1" || own(c) || c.cls === "g"); };
-      var newArt = function (c) { return sid === "ad1" && !own(c) && c.cls === "n"; };
+      var alt = function (c) { return !!c.suf; };
       // PB: tutto il contenuto è ristampa in alternative art
-      groups = isPB ? [["Ristampe · Alternative Art", list]] :
-               [["Regular", list.filter(function (c) { return own(c) && !alt(c); })],
-                ["Alternative Art", list.filter(function (c) { return (own(c) && alt(c)) || newArt(c); })],
-                ["Ristampe", list.filter(function (c) { return !own(c) && !alt(c) && !newArt(c); })],
-                ["Ristampe · Alternative Art", list.filter(function (c) { return !own(c) && alt(c); })]];
+      if (isPB) groups = [["Ristampe · Alternative Art", list]];
+      else if (sid === "ad1") {
+        // AD1: ristampe con arte nuova (n) e ristampe con bordo dorato (g), verificate sulle immagini
+        groups = [["Regular", list.filter(function (c) { return own(c) && !alt(c); })],
+                  ["Alternative Art", list.filter(function (c) { return own(c) && alt(c); })],
+                  ["Ristampe", list.filter(function (c) { return !own(c) && c.cls !== "n" && c.cls !== "g"; })],
+                  ["Ristampe · Alternative Art", list.filter(function (c) { return !own(c) && c.cls === "n"; })],
+                  ["Ristampe · Gold Border", list.filter(function (c) { return !own(c) && c.cls === "g"; })]];
+      } else
+        groups = [["Regular", list.filter(function (c) { return own(c) && !alt(c); })],
+                  ["Alternative Art", list.filter(function (c) { return own(c) && alt(c); })],
+                  ["Ristampe", list.filter(function (c) { return !own(c) && !alt(c); })],
+                  ["Ristampe · Alternative Art", list.filter(function (c) { return !own(c) && alt(c); })]];
     } else groups = [["", list.slice(0, lim)]];
     groups.forEach(function (g) {
       if (!g[1].length) return;
