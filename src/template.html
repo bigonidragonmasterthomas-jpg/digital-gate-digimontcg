@@ -33,7 +33,7 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-body); 
 button { font-family: inherit; }
 .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 16px 10px; }
 .wrap { max-width: 720px; margin: 0 auto; }
-.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.top { margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 h1 { min-width: 0; flex: 1 1 auto; font-family: var(--font-display); font-size: 1.4rem; margin: 0; font-weight: 700; }
 .count { font-family: var(--font-display); font-weight: 600; color: var(--ink-2); font-size: .85rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .count b { color: var(--accent); }
@@ -326,7 +326,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   var DATA = JSON.parse(document.getElementById("data").textContent);
   var TYPES = { BT: "Booster", EX: "Extra Booster", ST: "Starter Deck", LM: "Limited", PB: "Premium Bandai", AL: "Altri" };
   var COLORS = { Red: "Rosso", Blue: "Blu", Yellow: "Giallo", Green: "Verde", Black: "Nero", Purple: "Viola", White: "Bianco" };
-  var CARDTYPES = ["Digimon", "Digi-Egg", "Tamer", "Option"];
+  var CARDTYPES = ["Digimon", "Digi-Egg", "Tamer", "Option", "Digimon/Option"];
   var PAGE = 80;
   var IMG = "https://knightofgemini.github.io/digital-gate-digimontcg/img/";
   function picBox(cls, kind, c) {
@@ -388,16 +388,18 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   var SETSTAT = {};
   function recomputeStats() { SETSTAT = {}; SETS.forEach(function (s) { var t = { n: 0, h: 0 }; cardsOfSet(s.id).forEach(function (e) { t.n++; if (owned(e)) t.h++; }); SETSTAT[s.id] = t; }); }
 
-  function fillSelect(id, first, items) {
+  function fillSelect(id, label, first, items) {
     var s = document.getElementById(id); s.innerHTML = "";
+    var ph = el("option", "", label); ph.value = ""; ph.hidden = true; ph.selected = true; s.appendChild(ph);
     var o = el("option", "", first); o.value = ""; s.appendChild(o);
     items.forEach(function (it) { var o2 = el("option", "", it[1]); o2.value = it[0]; s.appendChild(o2); });
   }
-  fillSelect("f-color", "Tutti i colori", Object.keys(COLORS).map(function (k) { return [k, COLORS[k]]; }));
-  fillSelect("f-type", "Ogni tipo", CARDTYPES.map(function (k) { return [k, k]; }));
-  fillSelect("f-lv", "Ogni livello", [2, 3, 4, 5, 6, 7].map(function (n) { return ["Lv." + n, "Lv." + n]; }));
+  fillSelect("f-color", "Colore", "Qualsiasi colore", Object.keys(COLORS).map(function (k) { return [k, COLORS[k]]; }));
+  fillSelect("f-type", "Tipo", "Qualsiasi tipo", CARDTYPES.map(function (k) { return [k, k]; }));
+  fillSelect("f-lv", "Livello", "Qualsiasi livello", [2, 3, 4, 5, 6, 7].map(function (n) { return ["Lv." + n, "Lv." + n]; }));
   ["f-color", "f-type", "f-lv"].forEach(function (id) {
     document.getElementById(id).addEventListener("change", function (e) {
+      if (!e.target.value) e.target.selectedIndex = 0;
       st[{ "f-color": "color", "f-type": "ct", "f-lv": "lv" }[id]] = e.target.value; st.shown = PAGE; render();
     });
   });
@@ -908,7 +910,10 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     chips.hidden = !isSets;
     qi.hidden = isSoon || isHome;
     document.getElementById("hint").textContent = "Carte in inglese, da una raccolta pubblica aggiornata fino a BT26, EX13 e ST24, più promo e RB01. Quantità e collezione restano salvate in questo browser.";
-    qi.placeholder = isSets ? "Cerca set o codice, es. BT10" : "Cerca per nome, codice o testo, es. Agumon";
+    qi.placeholder = isSets ? "Cerca per set, codice o Digimon, es. BT10 o Omnimon" :
+      st.qm === "name" ? "Cerca per nome, es. Omnimon" :
+      st.qm === "text" ? "Cerca nel testo un nome, keyword o parola, es. Omnimon, Barrier o draw" :
+      "Cerca per nome, codice o testo, es. Agumon";
     if (isSets) drawChips();
     var uniq = 0; CARDS.forEach(function (c) { if (owned(c)) uniq++; });
     document.getElementById("count").innerHTML = "<b>" + uniq + "</b> / " + CARDS.length + " carte";
