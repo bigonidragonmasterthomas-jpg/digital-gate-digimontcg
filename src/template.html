@@ -205,9 +205,9 @@ main { padding: 8px 16px 48px; }
     return v;
   }
   // Una "versione" = carta + arte uscita in quel prodotto. La versione base è la carta stessa (copie condivise).
-  function mkEntry(c, suf, vv) {
+  function mkEntry(c, suf, vv, mark) {
     if (!suf) return c;
-    var e = Object.create(c); e.suf = suf; e.img = c.code + suf; e.k = c.k + "~" + suf; e.ver = VERS[vv] || ""; return e;
+    var e = Object.create(c); e.suf = suf; e.img = c.code + suf; e.k = c.k + "~" + suf; e.ver = VERS[vv] || ""; e.mark = mark || 0; return e;
   }
   var qty = {};
   try { qty = JSON.parse(localStorage.getItem("dgm-qty") || "{}") || {}; } catch (e) { qty = {}; }
@@ -305,7 +305,7 @@ main { padding: 8px 16px 48px; }
   function cardsOfSet(id) {
     if (!SETCARDS[id]) {
       SETCARDS[id] = ((SETBY[id] && SETBY[id].v) || []).map(function (x) {
-        return typeof x === "number" ? CARDS[x] : mkEntry(CARDS[x[0]], x[1], x[2]);
+        return typeof x === "number" ? CARDS[x] : mkEntry(CARDS[x[0]], x[1], x[2], x[3]);
       });
     }
     return SETCARDS[id];
@@ -441,7 +441,7 @@ main { padding: 8px 16px 48px; }
     if (c.ct) bits.push(c.ct);
     if (c.lv) bits.push(c.lv);
     var r = (c.rar || "").trim();
-    if (c.suf) r = (r ? r + " " : "") + (c.stars ? new Array(c.stars + 1).join("★") : "★");
+    if (c.suf && c.mark) r = (c.mark === "SP" ? "SP" : new Array(c.mark + 1).join("★")) + (r ? " " + r : "");
     if (r) bits.push(r);
     return bits.join(" · ");
   }

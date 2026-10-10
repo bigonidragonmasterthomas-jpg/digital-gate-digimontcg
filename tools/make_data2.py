@@ -89,6 +89,8 @@ chron={s["id"]:i for i,s in enumerate(sets)}
 sets.sort(key=lambda s:order.index(s["type"]))
 rows.sort(key=lambda r:(chron[r[16]],nat(r[0])))
 
+# simboli stampati accanto alla rarità sulle versioni alternative (1 = ★, 2 = ★★, "SP"), verificati sulle immagini
+MARKS=json.load(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)),"alt_marks.json")))
 # ---- ristampe: carte uscite in un prodotto ma appartenenti a un altro set ----
 home={r[0]:r[16] for r in rows}
 idx={r[0]:i for i,r in enumerate(rows)}
@@ -149,7 +151,11 @@ for x in sets:
     def sk(t):
         (i,suf),_=t
         return (1 if suf else 0, 0 if rows[i][16]==x["id"] else 1, i, nat(suf))   # arti alternative in fondo
-    x["v"]=[ [i,suf,vv] if (suf or vv) else i for (i,suf),vv in sorted(e.items(),key=sk)]
+    x["v"]=[]
+    for (i,suf),vv in sorted(e.items(),key=sk):
+        if not (suf or vv): x["v"].append(i); continue
+        m=MARKS.get(rows[i][0]+suf,0) if suf else 0
+        x["v"].append([i,suf,vv,m] if m else [i,suf,vv])
 print({x["code"]:len(x["v"]) for x in sets})
 upcoming=[
  {"code":"BT27","name":"Ignition of X","kind":"Booster","from":"2026-12-01","to":"2026-12-31","prec":"month","note":"Dicembre 2026 secondo le schede dei negozianti; un negozio indica spedizioni a gennaio."},
