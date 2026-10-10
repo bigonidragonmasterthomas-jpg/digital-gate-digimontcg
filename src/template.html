@@ -217,9 +217,9 @@ main { padding: 8px 16px 48px; }
     return v;
   }
   // Una "versione" = carta + arte uscita in quel prodotto. La versione base è la carta stessa (copie condivise).
-  function mkEntry(c, suf, vv, mark) {
+  function mkEntry(c, suf, vv, mark, cls) {
     if (!suf) return c;
-    var e = Object.create(c); e.suf = suf; e.img = c.code + suf; e.k = c.k + "~" + suf; e.ver = VERS[vv] || ""; e.mark = mark || 0; return e;
+    var e = Object.create(c); e.suf = suf; e.img = c.code + suf; e.k = c.k + "~" + suf; e.ver = VERS[vv] || ""; e.mark = mark || 0; e.cls = cls || ""; return e;
   }
   var qty = {};
   try { qty = JSON.parse(localStorage.getItem("dgm-qty") || "{}") || {}; } catch (e) { qty = {}; }
@@ -317,7 +317,7 @@ main { padding: 8px 16px 48px; }
   function cardsOfSet(id) {
     if (!SETCARDS[id]) {
       SETCARDS[id] = ((SETBY[id] && SETBY[id].v) || []).map(function (x) {
-        return typeof x === "number" ? CARDS[x] : mkEntry(CARDS[x[0]], x[1], x[2], x[3]);
+        return typeof x === "number" ? CARDS[x] : mkEntry(CARDS[x[0]], x[1], x[2], x[3], x[4]);
       });
     }
     return SETCARDS[id];
@@ -507,12 +507,13 @@ main { padding: 8px 16px 48px; }
       var sid = st.setId, isPB = SETBY[sid].type === "PB";
       var own = function (c) { return c.set === sid; };
       // AD1: le ristampe foil senza stella hanno l'arte originale (ristampe), quelle con ★/SP sono alternative art (bordo dorato)
-      var alt = function (c) { return !!c.suf && (sid !== "ad1" || own(c) || !!c.mark); };
+      var alt = function (c) { return !!c.suf && (sid !== "ad1" || own(c) || c.cls === "g"); };
+      var newArt = function (c) { return sid === "ad1" && !own(c) && c.cls === "n"; };
       // PB: tutto il contenuto è ristampa in alternative art
       groups = isPB ? [["Ristampe · Alternative Art", list]] :
                [["Regular", list.filter(function (c) { return own(c) && !alt(c); })],
-                ["Alternative Art", list.filter(function (c) { return own(c) && alt(c); })],
-                ["Ristampe", list.filter(function (c) { return !own(c) && !alt(c); })],
+                ["Alternative Art", list.filter(function (c) { return (own(c) && alt(c)) || newArt(c); })],
+                ["Ristampe", list.filter(function (c) { return !own(c) && !alt(c) && !newArt(c); })],
                 ["Ristampe · Alternative Art", list.filter(function (c) { return !own(c) && alt(c); })]];
     } else groups = [["", list.slice(0, lim)]];
     groups.forEach(function (g) {

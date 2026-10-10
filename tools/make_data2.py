@@ -91,6 +91,8 @@ rows.sort(key=lambda r:(chron[r[16]],nat(r[0])))
 
 # simboli stampati accanto alla rarità sulle versioni alternative (1 = ★, 2 = ★★, "SP"), verificati sulle immagini
 MARKS=json.load(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)),"alt_marks.json")))
+# AD1: per le ristampe, "gold" = stessa arte con cornice dorata, "new" = arte nuova (verificato sulle immagini)
+AD1C=json.load(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)),"ad1_class.json")))
 # ---- ristampe: carte uscite in un prodotto ma appartenenti a un altro set ----
 home={r[0]:r[16] for r in rows}
 idx={r[0]:i for i,r in enumerate(rows)}
@@ -155,7 +157,8 @@ for x in sets:
     for (i,suf),vv in sorted(e.items(),key=sk):
         if not (suf or vv): x["v"].append(i); continue
         m=MARKS.get(rows[i][0]+suf,0) if suf else 0
-        x["v"].append([i,suf,vv,m] if m else [i,suf,vv])
+        k={"gold":"g","new":"n"}.get(AD1C.get(rows[i][0]+suf),"") if x["id"]=="ad1" and suf and rows[i][16]!="ad1" else ""
+        x["v"].append([i,suf,vv,m,k] if k else ([i,suf,vv,m] if m else [i,suf,vv]))
 print({x["code"]:len(x["v"]) for x in sets})
 upcoming=[
  {"code":"BT27","name":"Ignition of X","kind":"Booster","from":"2026-12-01","to":"2026-12-31","prec":"month","note":"Dicembre 2026 secondo le schede dei negozianti; un negozio indica spedizioni a gennaio."},
