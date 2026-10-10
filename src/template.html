@@ -55,7 +55,14 @@ main { padding: 8px 16px 48px; }
 .list { display: flex; flex-direction: column; gap: 6px; }
 .row { display: grid; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; cursor: pointer; text-align: left; width: 100%; color: inherit; font: inherit; }
 .row.set { grid-template-columns: 62px minmax(0, 1fr) auto; }
-.row.card { grid-template-columns: 8px minmax(0, 1fr) auto; padding-left: 0; overflow: hidden; }
+.row.card { grid-template-columns: 8px 46px minmax(0, 1fr) auto; padding-left: 0; overflow: hidden; }
+.thumb { width: 46px; height: 64px; border-radius: 4px; background: var(--surface-2); overflow: hidden; display: flex; align-items: center; justify-content: center; margin-left: 2px; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb.noimg img { display: none; }
+.art { display: flex; justify-content: center; margin: 4px 0 12px; }
+.art .pic { width: min(300px, 78%); aspect-ratio: 5 / 7; border-radius: 10px; background: var(--surface-2); overflow: hidden; box-shadow: 0 6px 22px rgba(0,0,0,.28); }
+.art .pic img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.art .pic.noimg { display: none; }
 .row[disabled] { opacity: .55; cursor: default; }
 .code { font-family: var(--font-display); font-weight: 700; font-size: .92rem; text-align: center; background: var(--surface-2); border-radius: 6px; padding: 6px 4px; font-variant-numeric: tabular-nums; }
 .name { min-width: 0; overflow-wrap: anywhere; font-weight: 500; }
@@ -148,6 +155,14 @@ main { padding: 8px 16px 48px; }
   var COLORS = { Red: "Rosso", Blue: "Blu", Yellow: "Giallo", Green: "Verde", Black: "Nero", Purple: "Viola", White: "Bianco" };
   var CARDTYPES = ["Digimon", "Digi-Egg", "Tamer", "Option"];
   var PAGE = 80;
+  var IMG = "https://knightofgemini.github.io/digital-gate-digimontcg/img/";
+  function picBox(cls, kind, c) {
+    var b = el("div", cls), im = document.createElement("img");
+    im.alt = ""; im.loading = "lazy"; im.decoding = "async"; im.referrerPolicy = "no-referrer";
+    im.onerror = function () { b.classList.add("noimg"); };
+    im.src = IMG + kind + "/" + encodeURIComponent(c.code) + ".webp";
+    b.appendChild(im); return b;
+  }
 
   var SETS = DATA.sets, SETBY = {};
   SETS.forEach(function (s) { SETBY[s.id] = s; });
@@ -352,6 +367,7 @@ main { padding: 8px 16px 48px; }
     list.slice(0, st.shown).forEach(function (c) {
       var r = el("div", "row card"); r.tabIndex = 0; r.setAttribute("role", "button");
       var sw = el("div", "swatch"); sw.style.background = gradient(c.colors); r.appendChild(sw);
+      r.appendChild(picBox("thumb", "t", c));
       var mid = el("div", "name"); mid.appendChild(document.createTextNode(c.name));
       mid.appendChild(el("div", "sub", c.code + " · " + metaLine(c) + (st.setId && c.set !== st.setId ? " · Ristampa" + (SETBY[c.set] ? " da " + SETBY[c.set].code : "") : "")));
       r.appendChild(mid);
@@ -418,6 +434,7 @@ main { padding: 8px 16px 48px; }
     var x = el("button", "x", "✕"); x.type = "button"; x.setAttribute("aria-label", "Chiudi"); x.onclick = closeSheet;
     head.appendChild(x); sh.appendChild(head);
     var band = el("div", "band"); band.style.background = gradient(c.colors); sh.appendChild(band);
+    var art = el("div", "art"); art.appendChild(picBox("pic", "f", c)); sh.appendChild(art);
     var tags = el("div", "tags");
     [c.ct, c.lv, c.colors.map(function (k) { return COLORS[k] || k; }).join("/"), c.form, c.attr, c.sp].forEach(function (v) { if (v) tags.appendChild(el("span", "tag", v)); });
     sh.appendChild(tags);
