@@ -521,7 +521,7 @@ main { padding: 8px 16px 48px; }
                   ["Alternative Art", list.filter(function (c) { return own(c) && alt(c); })],
                   ["Ristampe", list.filter(function (c) { return !own(c) && !alt(c); })],
                   ["Ristampe · Alternative Art", list.filter(function (c) { return !own(c) && alt(c); })]];
-      if (!q) groups.forEach(function (g) { g[1] = g[1].slice().sort(setOrder); });
+      if (!q && sid === "ad1") groups.forEach(function (g) { g[1] = g[1].slice().sort(setOrder); });
     } else groups = [["", list.slice(0, lim)]];
     groups.forEach(function (g) {
       if (!g[1].length) return;
