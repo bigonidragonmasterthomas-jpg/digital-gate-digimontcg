@@ -182,6 +182,11 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .dnote a { color: var(--blue); }
 .dempty { padding: 28px 0; }
 .banline { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: .82rem; color: var(--ink-2); margin: -4px 0 12px; }
+.upd-scrim { position: fixed; inset: 0; background: var(--scrim); display: grid; place-items: center; z-index: 300; padding: 16px; }
+.upd { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; max-width: 360px; width: 100%; box-shadow: 0 10px 40px rgba(0,0,0,.4); }
+.upd h3 { margin: 0 0 8px; font-family: var(--font-display); font-size: 1.1rem; }
+.upd p { margin: 0 0 6px; color: var(--ink-2); font-size: .9rem; }
+.upd .dacts { justify-content: flex-end; margin-bottom: 0; }
 .toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom)); transform: translate(-50%, 20px); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: .88rem; max-width: calc(100vw - 32px); box-shadow: 0 6px 24px rgba(0,0,0,.3); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 200; }
 .toast.on { opacity: 1; transform: translate(-50%, 0); }
 .tagrows { margin-bottom: 12px; display: grid; gap: 6px; }
@@ -1565,6 +1570,29 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     out.appendChild(banNote());
   }
 
+  // ---- APK: all'avvio controlla se nella release "latest" c'è una build più recente e propone di installarla
+  var APK_URL = "https://github.com/knightofgemini/digital-gate-digimontcg/releases/download/latest/DigimonSetTracker.apk";
+  function checkUpdate() {
+    if (!document.body.classList.contains("apk") || !window.fetch) return;
+    var mine = +window.APPBUILD || 0; if (!mine) return;
+    fetch("https://api.github.com/repos/knightofgemini/digital-gate-digimontcg/releases/tags/latest", { cache: "no-store", headers: { Accept: "application/vnd.github+json" } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        if (!j) return;
+        var m = String((j.name || "") + " " + (j.body || "")).match(/build[:\s]+(\d+)/i), latest = m ? +m[1] : 0;
+        var asset = (j.assets || []).filter(function (a) { return /\.apk$/i.test(a.name); })[0];
+        if (!latest || latest <= mine || !asset || asset.state !== "uploaded") return;
+        var sc = el("div", "upd-scrim"), box = el("div", "upd"); box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true");
+        box.appendChild(el("h3", "", "Nuova versione disponibile"));
+        box.appendChild(el("p", "", "È uscita una versione più recente dell'app (build " + latest + ", tu hai la " + mine + "). Vuoi scaricarla e installarla adesso?"));
+        var row = el("div", "dacts"), later = el("button", "dbtn", "Più tardi"), inst = el("button", "dbtn on", "Installa");
+        later.type = inst.type = "button";
+        later.onclick = function () { sc.remove(); };
+        inst.onclick = function () { sc.remove(); var u = asset.browser_download_url || APK_URL; var w = window.open(u, "_system"); if (!w) location.href = u; };
+        row.appendChild(later); row.appendChild(inst); box.appendChild(row); sc.appendChild(box); document.body.appendChild(sc);
+      }).catch(function () {});
+  }
+  setTimeout(checkUpdate, 1500);
   var statsReady = false;
   function recomputeStatsIfNeeded() { if (!statsReady) { recomputeStats(); statsReady = true; } }
   render();
