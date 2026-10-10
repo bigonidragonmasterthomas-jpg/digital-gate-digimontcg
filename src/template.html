@@ -1,4 +1,4 @@
-<title>Digimon Set Tracker</title>
+<title>Digital Gate - Digimon TCG</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -39,7 +39,7 @@ h1 { min-width: 0; flex: 1 1 auto; font-family: var(--font-display); font-size: 
 .count b { color: var(--accent); }
 .progress { height: 4px; background: var(--surface-2); border-radius: 2px; margin: 8px 0 10px; overflow: hidden; }
 .progress i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .25s; }
-.tabs { display: grid; grid-template-columns: repeat(2, 1fr); background: var(--surface-2); border-radius: 10px; padding: 3px; gap: 3px; margin-bottom: 10px; }
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--surface-2); border-radius: 10px; padding: 3px; gap: 3px; margin-bottom: 10px; }
 .tab { border: 0; background: transparent; color: var(--ink-2); padding: 8px; border-radius: 8px; font: 600 .9rem var(--font-display); cursor: pointer; letter-spacing: .02em; }
 .tab[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
 .search, .sel { width: 100%; padding: 10px 13px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-size: 16px; }
@@ -153,14 +153,49 @@ main { padding: 8px 16px 48px; }
   .row.upc, .soon { grid-template-columns: 50px minmax(0, 1fr); gap: 6px 8px; }
   .code { font-size: .8rem; padding: 5px 2px; }
 }
+/* Home */
+.home h2 { font-family: var(--font-display); font-style: italic; font-weight: 700; text-transform: uppercase; font-size: 1.7rem; letter-spacing: -.01em; margin: 14px 0 14px; }
+.home h3 { font-family: var(--font-display); font-size: .78rem; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); margin: 26px 0 12px; font-weight: 600; }
+.bn { position: relative; display: block; width: 100%; border: 0; padding: 0; background: var(--surface-2); border-radius: 12px; overflow: hidden; cursor: pointer; aspect-ratio: 4 / 3; color: inherit; font: inherit; text-align: left; box-shadow: 0 0 0 1px var(--line); }
+.bn img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 22%; display: block; }
+.bn.noimg img { display: none; }
+.bn .fb { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 12px; background: radial-gradient(120% 90% at 30% 20%, #ff7a3d55, transparent 60%), linear-gradient(135deg, #1c2a52, #0b1120); color: #fff; font-family: var(--font-display); }
+.bn .fb b { display: block; font-size: 2.1rem; letter-spacing: .04em; font-style: italic; }
+.bn .fb span { font-size: .8rem; opacity: .85; }
+.bn:not(.noimg) .fb { display: none; }
+.badge { position: absolute; top: 10px; left: 10px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 10px; background: rgba(11,17,32,.82); color: #e8edf7; font: 700 .78rem/1 var(--font-display); letter-spacing: .06em; text-transform: uppercase; backdrop-filter: blur(4px); box-shadow: 0 0 0 1px rgba(255,255,255,.12); }
+.badge svg { width: 14px; height: 14px; }
+.badge.new { background: rgba(88,40,140,.9); }
+.lang { position: absolute; right: 10px; bottom: 10px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: rgba(11,17,32,.85); color: #fff; font: 700 .66rem var(--font-display); box-shadow: 0 0 0 2px rgba(255,255,255,.18); }
+.hero .bn { aspect-ratio: 4 / 3; }
+.hero .cap { margin-top: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.cap .t { font-family: var(--font-display); font-style: italic; font-weight: 700; text-transform: uppercase; font-size: 1.05rem; }
+.cap .s { color: var(--ink-2); font-size: .82rem; margin-top: 2px; }
+.hgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+.hgrid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.hitem .lbl { margin-top: 7px; font-family: var(--font-display); font-style: italic; font-weight: 700; text-transform: uppercase; font-size: .78rem; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: .02em; }
+.hitem .lbl2 { color: var(--accent); font-size: .74rem; font-family: var(--font-display); font-weight: 600; margin-top: 1px; }
+.hgrid.three .badge { top: 6px; left: 6px; padding: 4px 7px; font-size: .64rem; }
+.hgrid.three .lang { width: 26px; height: 26px; font-size: .56rem; right: 6px; bottom: 6px; }
+.more-link { display: block; margin: 22px auto 6px; border: 0; background: none; color: var(--ink-2); font: 600 .82rem var(--font-display); letter-spacing: .22em; text-transform: uppercase; cursor: pointer; }
+@media (min-width: 720px) { .hgrid.three { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+/* APK: versione adattata, più compatta, prossime uscite in carosello */
+body.apk .home h2 { font-size: 1.35rem; margin: 6px 0 10px; }
+body.apk .hero .bn { aspect-ratio: 16 / 10; }
+body.apk .hero .cap { padding: 10px 12px; }
+body.apk .hgrid.up { display: flex; align-items: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; gap: 10px; margin: 12px -16px 0; padding: 0 16px 4px; scrollbar-width: none; }
+body.apk .hgrid.up::-webkit-scrollbar { display: none; }
+body.apk .hgrid.up .hitem { flex: 0 0 62%; scroll-snap-align: start; }
+body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (prefers-reduced-motion: reduce) { .progress i { transition: none; } }
 </style>
 
 <div class="bar">
   <div class="wrap">
-    <div class="top"><h1 class="fit">Digimon Set Tracker</h1><div class="count" id="count"></div></div>
+    <div class="top"><h1 class="fit">Digital Gate - Digimon TCG</h1><div class="count" id="count"></div></div>
     <div class="progress" aria-hidden="true"><i id="bar"></i></div>
     <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-home" type="button">Home</button>
       <button class="tab" role="tab" id="tab-sets" type="button">Set</button>
       <button class="tab" role="tab" id="tab-cards" type="button">Carte</button>
     </div>
@@ -233,7 +268,7 @@ main { padding: 8px 16px 48px; }
   });
 
   var VIEW0 = "list"; try { VIEW0 = localStorage.getItem("dgm-view") === "grid" ? "grid" : "list"; } catch (e) {}
-  var st = { view: VIEW0, qm: "", tab: "sets", type: "ALL", setId: null, q: "", color: "", ct: "", lv: "", shown: PAGE, open: null };
+  var st = { tab0: 1, view: VIEW0, qm: "", tab: "home", type: "ALL", setId: null, q: "", color: "", ct: "", lv: "", shown: PAGE, open: null };
   var out = document.getElementById("out"), chips = document.getElementById("chips"), qi = document.getElementById("q");
   var sheet = document.getElementById("sheet");
 
@@ -268,12 +303,15 @@ main { padding: 8px 16px 48px; }
   qi.addEventListener("input", function () { st.q = qi.value; st.shown = PAGE; render(); });
   function goSets() {
     var r = st.setId && st.back ? st.back : null;
+    if (r && r.home) { st.tab = "home"; st.setId = null; st.back = null; render(); window.scrollTo(0, 0); return; }
     st.tab = "sets"; st.setId = null; st.shown = PAGE;
     if (r) { st.q = r.q; qi.value = r.q; st.type = r.type; st.qm = r.qm || ""; }
     render();
     if (r) { var y = r.y; requestAnimationFrame(function () { window.scrollTo(0, y); requestAnimationFrame(function () { window.scrollTo(0, y); }); }); }
   }
   document.getElementById("tab-sets").onclick = goSets;
+  document.getElementById("tab-home").onclick = function () { st.tab = "home"; st.setId = null; window.scrollTo(0, 0); render(); };
+  if (window.Capacitor || /^capacitor:/.test(location.protocol)) document.body.classList.add("apk");
   document.getElementById("tab-cards").onclick = function () { st.tab = "cards"; st.setId = null; st.shown = PAGE; render(); };
 
   var CHIPS = [["ALL", "Tutti"], ["SOON", "In arrivo"], ["BT", "Booster"], ["EX", "Extra"], ["ST", "Starter"], ["LM", "Limited"], ["PB", "Premium"], ["AL", "Altri"]];
@@ -476,7 +514,7 @@ main { padding: 8px 16px 48px; }
     var q = normQ(st.q);
     if (st.setId) {
       var s = SETBY[st.setId];
-      var b = el("button", "back", "← Tutti i set"); b.type = "button";
+      var b = el("button", "back", st.back && st.back.home ? "← Home" : "← Tutti i set"); b.type = "button";
       b.onclick = goSets;
       out.appendChild(b);
       var h = el("div", "sethead"); h.appendChild(el("h2", "fit", s.code + " · " + s.name));
@@ -596,6 +634,70 @@ main { padding: 8px 16px 48px; }
       var ul2 = el("div", "list"); tbd.forEach(function (u) { ul2.appendChild(card(u)); }); out.appendChild(ul2);
     }
   }
+  // ---- Home: prossime uscite (artwork ufficiali) e set usciti di recente
+  var BANNERS = {}; (DATA.banners || []).forEach(function (c) { BANNERS[c] = 1; });
+  var IMGB = IMG.replace(/img\/$/, "banners/");
+  var CLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg>';
+  var SPARK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg>';
+  function daysTo(dstr) { var t = new Date(); t.setHours(0, 0, 0, 0); return Math.round((parseDay(dstr) - t) / 86400000); }
+  function upBadge(u) {
+    if (u.prec === "none") return "Data da definire";
+    if (u.prec === "day") { var dd = daysTo(u.from); if (dd <= 60) return dd <= 0 ? "Oggi" : dd + (dd === 1 ? " giorno" : " gg"); }
+    var cd = cdText(u); return cd.big ? cd.big + " " + cd.unit : cd.unit;
+  }
+  function upWhen(u) {
+    if (u.prec === "none") return "Data da annunciare";
+    var d = parseDay(u.from);
+    var t = (u.prec === "day" ? d.getDate() + " " : "") + MONTHS[d.getMonth()] + " " + d.getFullYear();
+    return t.charAt(0).toUpperCase() + t.slice(1);
+  }
+  function banner(code, name, badgeHtml, cls) {
+    var b = el("button", "bn" + (BANNERS[code] ? "" : " noimg")); b.type = "button";
+    if (BANNERS[code]) { var im = document.createElement("img"); im.alt = ""; im.loading = "lazy"; im.decoding = "async"; im.src = IMGB + code + ".webp"; im.onerror = function () { b.classList.add("noimg"); }; b.appendChild(im); }
+    var fb = el("div", "fb"); var inner = el("div"); inner.appendChild(el("b", "", code)); inner.appendChild(el("span", "", name)); fb.appendChild(inner); b.appendChild(fb);
+    if (badgeHtml) { var bd = el("span", "badge" + (cls ? " " + cls : "")); bd.innerHTML = badgeHtml; b.appendChild(bd); }
+    b.appendChild(el("span", "lang", "EN"));
+    return b;
+  }
+  function esc(t) { return String(t).replace(/[&<>]/g, function (ch) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[ch]; }); }
+  function openSoon() { st.tab = "sets"; st.type = "SOON"; st.setId = null; qi.value = ""; st.q = ""; window.scrollTo(0, 0); render(); }
+  function openSet(id) { st.back = { y: 0, q: "", type: st.type, qm: st.qm, home: true }; st.tab = "cards"; st.setId = id; st.shown = PAGE; qi.value = ""; st.q = ""; window.scrollTo(0, 0); render(); }
+  function renderHome() {
+    var h = el("div", "home");
+    h.appendChild(el("h2", "", "Prossime uscite"));
+    var ups = (DATA.upcoming || []).slice().sort(function (a, b) {
+      var an = a.prec === "none", bn = b.prec === "none"; if (an !== bn) return an ? 1 : -1;
+      return (a.from || "") < (b.from || "") ? -1 : (a.from || "") > (b.from || "") ? 1 : numOf(a.code) - numOf(b.code);
+    });
+    if (ups.length) {
+      var u0 = ups[0], hero = el("div", "hero");
+      var hb = banner(u0.code, u0.name, CLOCK + "<span>" + esc(upBadge(u0)) + "</span>"); hb.onclick = openSoon; hero.appendChild(hb);
+      var cap = el("div", "cap"); cap.appendChild(el("div", "t fit", "Digimon TCG - " + u0.name + " [" + u0.code + "]")); cap.appendChild(el("div", "s", u0.kind + " · " + upWhen(u0))); hero.appendChild(cap);
+      h.appendChild(hero);
+      var g = el("div", "hgrid up");
+      ups.slice(1).forEach(function (u) {
+        var it = el("div", "hitem"); var bb = banner(u.code, u.name, CLOCK + "<span>" + esc(upBadge(u)) + "</span>"); bb.onclick = openSoon; it.appendChild(bb);
+        it.appendChild(el("div", "lbl", u.code + " - " + u.name)); it.appendChild(el("div", "lbl2", upWhen(u)));
+        g.appendChild(it);
+      });
+      h.appendChild(g);
+    }
+    h.appendChild(el("h3", "", "Altri set recenti"));
+    var rec = SETS.filter(function (x) { return x.date && x.date.charAt(0) !== "0" && BANNERS[x.code]; })
+      .sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; }).slice(0, 12);
+    var g2 = el("div", "hgrid three");
+    rec.forEach(function (x) {
+      var isNew = daysTo(x.date) >= -60;
+      var it = el("div", "hitem"); var bb = banner(x.code, x.name, isNew ? SPARK + "<span>Nuovo</span>" : "", "new"); bb.onclick = function () { openSet(x.id); }; it.appendChild(bb);
+      it.appendChild(el("div", "lbl", x.code + " - " + x.name));
+      var dm = x.date.split("-"), mn = MONTHS[+dm[1] - 1]; it.appendChild(el("div", "lbl2", mn.charAt(0).toUpperCase() + mn.slice(1) + " " + dm[0]));
+      g2.appendChild(it);
+    });
+    h.appendChild(g2);
+    var more = el("button", "more-link", "Vedi tutti i set  →"); more.type = "button"; more.onclick = function () { st.tab = "sets"; st.type = "ALL"; st.setId = null; window.scrollTo(0, 0); render(); };
+    h.appendChild(more);
+    out.appendChild(h);
+  }
   function fx(title, text) {
     if (!text) return null;
     var d = el("div", "fx"); d.appendChild(el("h3", "", title)); d.appendChild(el("p", "", text)); return d;
@@ -639,14 +741,14 @@ main { padding: 8px 16px 48px; }
 
   function render() {
     recomputeStatsIfNeeded();
-    var isSets = st.tab === "sets", isSoon = isSets && st.type === "SOON";
-    ["sets", "cards"].forEach(function (t) { document.getElementById("tab-" + t).setAttribute("aria-selected", st.tab === t ? "true" : "false"); });
-    document.getElementById("filters").hidden = isSets;
-    document.getElementById("qmodes").hidden = isSets;
+    var isHome = st.tab === "home", isSets = st.tab === "sets", isSoon = isSets && st.type === "SOON";
+    ["home", "sets", "cards"].forEach(function (t) { document.getElementById("tab-" + t).setAttribute("aria-selected", st.tab === t ? "true" : "false"); });
+    document.getElementById("filters").hidden = isSets || isHome;
+    document.getElementById("qmodes").hidden = isSets || isHome;
     document.getElementById("qm-name").setAttribute("aria-pressed", String(st.qm === "name"));
     document.getElementById("qm-text").setAttribute("aria-pressed", String(st.qm === "text"));
     chips.hidden = !isSets;
-    qi.hidden = isSoon;
+    qi.hidden = isSoon || isHome;
     document.getElementById("hint").textContent = "Carte in inglese, da una raccolta pubblica aggiornata fino a BT26, EX13 e ST24, più promo e RB01. Quantità e collezione restano salvate in questo browser.";
     qi.placeholder = isSets ? "Cerca set o codice, es. BT10" : "Cerca per nome, codice o testo, es. Agumon";
     if (isSets) drawChips();
@@ -654,7 +756,8 @@ main { padding: 8px 16px 48px; }
     document.getElementById("count").innerHTML = "<b>" + uniq + "</b> / " + CARDS.length + " carte";
     document.getElementById("bar").style.width = (uniq / CARDS.length * 100) + "%";
     out.innerHTML = "";
-    if (isSoon) renderSoon(); else if (isSets) renderSets(); else renderCards();
+    document.getElementById("hint").hidden = isHome;
+    if (isHome) renderHome(); else if (isSoon) renderSoon(); else if (isSets) renderSets(); else renderCards();
     fitAll();
   }
   var statsReady = false;

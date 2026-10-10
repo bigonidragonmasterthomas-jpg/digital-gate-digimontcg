@@ -23,6 +23,7 @@ jobs:
       - run: pip install pillow
       - run: python3 tools/build.py
       - run: python3 tools/fetch_images.py
+      - run: python3 tools/fetch_banners.py
       - uses: actions/configure-pages@v5
         continue-on-error: true
       - uses: actions/upload-pages-artifact@v3

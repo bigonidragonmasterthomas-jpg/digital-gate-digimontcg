@@ -79,7 +79,7 @@ DATES={"BT1":"2021-02-12","BT2":"2021-02-12","BT3":"2021-03-12","BT4":"2021-06-1
  "ST7":"2021-10-15","ST8":"2021-10-15","ST9":"2022-05-13","ST10":"2022-05-13","ST12":"2022-10-14","ST13":"2022-10-14",
  "ST14":"2023-03-24","ST15":"2023-10-13","ST16":"2023-10-13","ST17":"2024-03-08","ST18":"2024-09-13","ST19":"2024-09-13",
  "ST20":"2025-04-18","ST21":"2025-04-18","ST22":"2025-12-05","ST23":"2026-05-15","ST24":"2026-05-15",
- "RB1":"2023-09-29","AD1":"2026-01-01","LM01-05":"2024-12-13","LM06":"2025-10-01","LM07":"2026-03-01","LM08":"2026-07-01","P":"0000-00-00"}
+ "RB1":"2023-09-29","AD1":"2026-03-27","LM01-05":"2024-12-13","LM06":"2025-10-01","LM07":"2026-03-01","LM08":"2026-08-04","P":"0000-00-00"}
 for x in sets: x["date"]=x.get("date") or DATES.get(x["code"],"0000-00-00")
 missing_dates=[x["code"] for x in sets if x["date"]=="0000-00-00" and x["code"]!="P"]
 print("senza data:",missing_dates)
@@ -161,15 +161,19 @@ for x in sets:
         x["v"].append([i,suf,vv,m,k] if k else ([i,suf,vv,m] if m else [i,suf,vv]))
 print({x["code"]:len(x["v"]) for x in sets})
 upcoming=[
- {"code":"BT27","name":"Ignition of X","kind":"Booster","from":"2026-12-01","to":"2026-12-31","prec":"month","note":"Dicembre 2026 secondo le schede dei negozianti; un negozio indica spedizioni a gennaio."},
- {"code":"ST25","name":"Digimon Alysion · Rubeusdramon","kind":"Starter Deck","from":"2026-12-01","to":"2026-12-31","prec":"month","note":"Dicembre 2026, dal comunicato ufficiale di maggio 2026."},
- {"code":"ST26","name":"Digimon Alysion · Yukinamon","kind":"Starter Deck","from":"2026-12-01","to":"2026-12-31","prec":"month","note":"Dicembre 2026, dal comunicato ufficiale di maggio 2026."},
- {"code":"LM09","name":"Distancia Cero","kind":"Limited Card Pack","from":"2026-11-01","to":"2026-11-30","prec":"month","note":"Premium Bandai: spedizioni USA dal 2 novembre 2026, uscita nelle altre regioni il 27 novembre 2026. 33 tipi di carte (6 nuove, 27 ristampe alternate art). Le carte nuove saranno legali nei tornei ufficiali dall'11 dicembre 2026."},
+ {"code":"LM09","name":"Distancia Cero","kind":"Limited Card Pack","from":"2026-11-02","to":"2026-11-30","prec":"month","note":"Premium Bandai: spedizioni USA dal 2 novembre 2026, uscita nelle altre regioni il 27 novembre 2026. 33 tipi di carte (6 nuove, 27 ristampe alternate art). Le carte nuove saranno legali nei tornei ufficiali dall'11 dicembre 2026."},
+ {"code":"ST25","name":"Digimon Alysion · Rubeusdramon","kind":"Starter Deck","from":"2026-12-04","to":"2026-12-04","prec":"day","note":"In negozio dal 4 dicembre 2026 (sito ufficiale)."},
+ {"code":"ST26","name":"Digimon Alysion · Yukinamon","kind":"Starter Deck","from":"2026-12-04","to":"2026-12-04","prec":"day","note":"In negozio dal 4 dicembre 2026 (sito ufficiale)."},
+ {"code":"BT27","name":"Ignition of X","kind":"Booster","from":"2026-12-11","to":"2026-12-11","prec":"day","note":"Pre-release dal 4 dicembre, in negozio dall'11 dicembre 2026 (sito ufficiale)."},
  {"code":"EX14","name":"Malevolent VII","kind":"Extra Booster","from":"2027-01-01","to":"2027-01-31","prec":"month","note":"Gennaio 2027, annunciato sul sito ufficiale."},
+ {"code":"PB25","name":"Digimon Story Time Stranger Set","kind":"Premium Bandai","from":"2027-02-01","to":"2027-02-28","prec":"month","note":"Febbraio 2027 (Premium Bandai, sito ufficiale)."},
+ {"code":"PB26","name":"Tamer's Selection Box Ver.X Antibody","kind":"Premium Bandai","from":"2027-03-01","to":"2027-03-31","prec":"month","note":"Marzo 2027 (Premium Bandai, sito ufficiale)."},
  {"code":"BT28","name":"Abyss of X","kind":"Booster","from":"2027-03-01","to":"2027-03-31","prec":"month","note":"Marzo 2027 secondo un resoconto della community; non ancora confermato in modo ufficiale."},
- {"code":"PB24","name":"Tamer's Evolution Card Set: Nexus of Digimon","kind":"Prodotto speciale","prec":"none","note":"Annunciato, data non ancora comunicata."},
- {"code":"PB26","name":"Tamer's Selection Box Ver.X Antibody","kind":"Prodotto speciale","prec":"none","note":"Annunciato, data non ancora comunicata."}]
-out={"sets":sets,"cards":rows,"upcoming":upcoming,"versions":VERS}
+ {"code":"PB27","name":"Premium Battle Set Ver. Royal Knights","kind":"Premium Bandai","from":"2027-06-01","to":"2027-06-30","prec":"month","note":"Giugno 2027 (Premium Bandai, sito ufficiale)."},
+ {"code":"PB28","name":"Premium Battle Set Ver. Seven Great Demon Lords","kind":"Premium Bandai","from":"2027-06-01","to":"2027-06-30","prec":"month","note":"Giugno 2027 (Premium Bandai, sito ufficiale)."},
+ {"code":"PB24","name":"Tamer's Evolution Card Set: Nexus of Digimon","kind":"Premium Bandai","prec":"none","note":"Annunciato, data non ancora comunicata."}]
+BAN=json.load(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)),"banners.json")))
+out={"sets":sets,"cards":rows,"upcoming":upcoming,"versions":VERS,"banners":sorted(BAN)}
 s=json.dumps(out,ensure_ascii=False,separators=(",",":")).replace("</","<\\/")
 open(SP+"data.json","w",encoding="utf-8").write(s)
 print(len(rows),"cards",len(sets),"sets",len(s)//1024,"KB")
