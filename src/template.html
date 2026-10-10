@@ -73,7 +73,7 @@ main { padding: 8px 16px 48px; }
 .sub { color: var(--ink-2); font-size: .8rem; font-weight: 400; margin-top: 1px; overflow-wrap: anywhere; }
 .num { font-family: var(--font-display); font-weight: 600; font-size: .85rem; color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .num.done { color: var(--ok); }
-.swatch { align-self: stretch; width: 8px; border-radius: 0; }
+.swatch { align-self: stretch; width: 8px; border-radius: 0; margin: -10px 0; }
 .vbtns { display: inline-flex; gap: 6px; }
 .vbtn { width: 36px; height: 32px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); display: grid; place-items: center; cursor: pointer; padding: 0; }
 .vbtn svg { width: 18px; height: 18px; }
@@ -435,6 +435,16 @@ main { padding: 8px 16px 48px; }
     return w;
   }
 
+  // Riga breve per gli elenchi: tipo, livello e rarità (con le stelle delle versioni alternative)
+  function listMeta(c) {
+    var bits = [];
+    if (c.ct) bits.push(c.ct);
+    if (c.lv) bits.push(c.lv);
+    var r = (c.rar || "").trim();
+    if (c.suf) r = (r ? r + " " : "") + (c.stars ? new Array(c.stars + 1).join("★") : "★");
+    if (r) bits.push(r);
+    return bits.join(" · ");
+  }
   function metaLine(c) {
     var bits = [];
     if (c.ct) bits.push(c.ct);
@@ -474,14 +484,15 @@ main { padding: 8px 16px 48px; }
     });
     gt.appendChild(vb); out.appendChild(gt);
     var ul = el("div", st.view === "grid" ? "grid" : "list");
-    list.slice(0, st.shown).forEach(function (c) {
-      var rp = (st.setId && c.set !== st.setId && !(c.set === "p" && SETBY[st.setId].type === "PB") ? " · Ristampa" + (SETBY[c.set] ? " da " + SETBY[c.set].code : "") : "") + (c.suf && verLabel(c.ver) ? " · " + verLabel(c.ver) : "");
+    var lim = st.setId ? list.length : st.shown;
+    list.slice(0, lim).forEach(function (c) {
+      var rp = st.setId && c.set !== st.setId && !(c.set === "p" && SETBY[st.setId].type === "PB") ? " · Ristampa" + (SETBY[c.set] ? " da " + SETBY[c.set].code : "") : "";
       if (st.view === "grid") {
         var t = el("div", "tile"); t.tabIndex = 0; t.setAttribute("role", "button");
         t.appendChild(picBox("pic", "f", c));
         var cl = el("div", "cline"); cl.style.background = gradient(c.colors, "to right"); t.appendChild(cl);
         t.appendChild(el("div", "tname", c.name));
-        t.appendChild(el("div", "sub", c.code + " · " + metaLine(c) + rp));
+        t.appendChild(el("div", "sub", c.code + " · " + listMeta(c) + rp));
         t.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
         t.onclick = function () { st.open = c; drawSheet(); };
         t.onkeydown = function (e) { if (e.target === t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); st.open = c; drawSheet(); } };
@@ -491,7 +502,7 @@ main { padding: 8px 16px 48px; }
       var sw = el("div", "swatch"); sw.style.background = gradient(c.colors); r.appendChild(sw);
       r.appendChild(picBox("thumb", "t", c));
       var mid = el("div", "name"); mid.appendChild(document.createTextNode(c.name));
-      mid.appendChild(el("div", "sub", c.code + " · " + metaLine(c) + rp));
+      mid.appendChild(el("div", "sub", c.code + " · " + listMeta(c) + rp));
       r.appendChild(mid);
       r.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
       function open() { st.open = c; drawSheet(); }
@@ -500,7 +511,7 @@ main { padding: 8px 16px 48px; }
       ul.appendChild(r);
     });
     out.appendChild(ul);
-    if (list.length > st.shown) {
+    if (list.length > lim) {
       var m = el("button", "more", "Mostra altre " + Math.min(PAGE, list.length - st.shown)); m.type = "button";
       m.onclick = function () { st.shown += PAGE; render(); };
       out.appendChild(m);

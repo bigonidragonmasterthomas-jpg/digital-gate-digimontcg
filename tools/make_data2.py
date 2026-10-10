@@ -148,7 +148,7 @@ for x in sets:
     e=ent.get(x["id"],{})
     def sk(t):
         (i,suf),_=t
-        return (0 if rows[i][16]==x["id"] else 1, i, nat(suf))
+        return (1 if suf else 0, 0 if rows[i][16]==x["id"] else 1, i, nat(suf))   # arti alternative in fondo
     x["v"]=[ [i,suf,vv] if (suf or vv) else i for (i,suf),vv in sorted(e.items(),key=sk)]
 print({x["code"]:len(x["v"]) for x in sets})
 upcoming=[
