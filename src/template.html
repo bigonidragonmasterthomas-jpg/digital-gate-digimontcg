@@ -506,8 +506,7 @@ main { padding: 8px 16px 48px; }
     if (st.setId) {
       var sid = st.setId, isPB = SETBY[sid].type === "PB";
       var own = function (c) { return c.set === sid; };
-      // AD1: le ristampe foil senza stella hanno l'arte originale (ristampe), quelle con ★/SP sono alternative art (bordo dorato)
-      var alt = function (c) { return !!c.suf; };
+            var alt = function (c) { return !!c.suf; };
       // PB: tutto il contenuto è ristampa in alternative art
       if (isPB) groups = [["Ristampe · Alternative Art", list]];
       else if (sid === "ad1") {
@@ -522,6 +521,7 @@ main { padding: 8px 16px 48px; }
                   ["Alternative Art", list.filter(function (c) { return own(c) && alt(c); })],
                   ["Ristampe", list.filter(function (c) { return !own(c) && !alt(c); })],
                   ["Ristampe · Alternative Art", list.filter(function (c) { return !own(c) && alt(c); })]];
+      if (!q) groups.forEach(function (g) { g[1] = g[1].slice().sort(setOrder); });
     } else groups = [["", list.slice(0, lim)]];
     groups.forEach(function (g) {
       if (!g[1].length) return;
@@ -535,6 +535,12 @@ main { padding: 8px 16px 48px; }
       m.onclick = function () { st.shown += PAGE; render(); };
       out.appendChild(m);
     }
+  }
+  // Ordine nelle liste dei prodotti: Digi-Egg, Digimon, Tamer, Option; poi categoria e data del set (come nella lista prodotti); poi numero carta
+  var SETRANK = {}; SETS.forEach(function (x, i) { SETRANK[x.id] = i; });
+  function ctRank(c) { var t = c.ct || ""; return /^Digi-Egg/.test(t) ? 0 : /^Digimon/.test(t) ? 1 : /^Tamer/.test(t) ? 2 : /^Option/.test(t) ? 3 : 4; }
+  function setOrder(a, b) {
+    return (ctRank(a) - ctRank(b)) || ((SETRANK[a.set] || 0) - (SETRANK[b.set] || 0)) || (a.i - b.i) || ((a.suf || "") < (b.suf || "") ? -1 : (a.suf || "") > (b.suf || "") ? 1 : 0);
   }
   function drawItems(ul, items) {
     items.forEach(function (c) {
