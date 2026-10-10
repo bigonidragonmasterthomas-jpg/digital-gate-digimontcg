@@ -257,6 +257,24 @@ main { padding: 8px 16px 48px; }
       .replace(/['’‘`´ʼ]/g, "")
       .replace(/[^a-z0-9\u00c0-\uffff]+/g, " ").trim();
   }
+  // Rilevanza (più basso = più in alto): nome identico, nome che inizia con la ricerca, parola intera nel nome,
+  // parola che inizia con la ricerca, ricerca dentro una parola (es. Pagumon), solo codice, solo testo.
+  function relevance(c, q) {
+    if (!c.nf) c.nf = fold(c.name);
+    var n = c.nf;
+    if (st.qm !== "text") {
+      if (n === q) return 0;
+      if (n.indexOf(q + " ") === 0) return 1;
+      if ((" " + n + " ").indexOf(" " + q + " ") >= 0) return 2;
+      if (n.indexOf(q) === 0 || (" " + n).indexOf(" " + q) >= 0) return 3;
+      if (n.indexOf(q) >= 0) return 4;
+      var parts = q.split(" "), all = true;
+      for (var i = 0; i < parts.length; i++) if (n.indexOf(parts[i]) < 0) { all = false; break; }
+      if (all) return 5;
+      if (c.nb.indexOf(q) >= 0) return 6;
+    }
+    return 7;
+  }
   function normQ(q) { return fold(q).replace(/\b(bt|ex|st|rb|lm|ad)0+(\d)/g, "$1$2"); }
 
   var MONTHS = ["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
@@ -383,6 +401,13 @@ main { padding: 8px 16px 48px; }
     }
     var list = CARDS.filter(function (c) { return cardMatches(c, q); });
     if (st.setId) list = list.filter(function (c) { return c.set === st.setId; }).concat(list.filter(function (c) { return c.set !== st.setId; }));
+    if (q) {
+      var sc = {};
+      list.forEach(function (c) { sc[c.i] = relevance(c, q); });
+      list.sort(function (a, b) {
+        return (sc[a.i] - sc[b.i]) || (st.setId ? (a.set === st.setId ? 0 : 1) - (b.set === st.setId ? 0 : 1) : 0) || (a.i - b.i);
+      });
+    }
     if (!list.length) { out.appendChild(el("p", "empty", "Nessuna carta corrisponde ai filtri.")); return; }
     out.appendChild(el("div", "group-title", "")).appendChild(el("span", "", list.length + (list.length === 1 ? " carta" : " carte")));
     var ul = el("div", "list");
