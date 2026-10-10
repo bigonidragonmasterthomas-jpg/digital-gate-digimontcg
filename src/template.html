@@ -145,6 +145,35 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .ico.ocol { color: #fff; }
 .ico.ocol.oc-white { color: #111; }
 .tags .ico { font-size: .8rem; margin: 0; padding: 3px 10px; line-height: 1.35; }
+.dacts { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.dbtn { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 600 .85rem var(--font-body); cursor: pointer; }
+.dbtn.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.dbtn.warn { color: var(--c-red); }
+.dname { width: 100%; font: 700 1.15rem var(--font-display); color: var(--ink); background: transparent; border: 0; border-bottom: 1.5px dashed var(--line); padding: 6px 0; margin: 2px 0 10px; }
+.dname:focus { outline: none; border-bottom-color: var(--accent); }
+.dstat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.dmeter span { display: block; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.dmeter b { font: 700 1.2rem var(--font-display); }
+.dmeter b.okt { color: var(--ok); }
+.dmeter .progress { margin-top: 6px; }
+.dprob { grid-column: 1 / -1; font-size: .85rem; border-radius: 8px; padding: 8px 10px; }
+.dprob.good { background: color-mix(in srgb, var(--ok) 14%, transparent); color: var(--ok); font-weight: 600; }
+.dprob.bad { background: color-mix(in srgb, var(--c-red) 12%, transparent); }
+.dprob ul { margin: 0; padding-left: 18px; }
+.dprob li + li { margin-top: 3px; }
+.dbadge { display: inline-block; font: 700 .7rem var(--font-display); letter-spacing: .04em; padding: 2px 8px; border-radius: 6px; color: #fff; white-space: nowrap; }
+.dbadge.ban { background: #c8102e; } .dbadge.lim { background: #d9661f; } .dbadge.pair { background: #8a4bd8; } .dbadge.free { background: #2e9e57; } .dbadge.okb { background: var(--ok); color: #06210f; }
+.row.deckrow { grid-template-columns: minmax(0, 1fr) auto; }
+.qbtn.off { opacity: .35; }
+.dimport { display: grid; gap: 8px; margin-bottom: 10px; }
+.dta { width: 100%; box-sizing: border-box; font: .85rem/1.4 ui-monospace, monospace; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+.dimport .dbtn { justify-self: start; }
+.dnote { margin-top: 18px; }
+.dnote a { color: var(--blue); }
+.dempty { padding: 28px 0; }
+.banline { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: .82rem; color: var(--ink-2); margin: -4px 0 12px; }
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom)); transform: translate(-50%, 20px); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: .88rem; max-width: calc(100vw - 32px); box-shadow: 0 6px 24px rgba(0,0,0,.3); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 200; }
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
 .tagrows { margin-bottom: 12px; display: grid; gap: 6px; }
 .tagrows .tags { margin-bottom: 0; }
 .ico.tagb { background: var(--surface-2); color: var(--ink); }
@@ -477,9 +506,10 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     soon: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/>',
     cards: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
     coll: '<rect x="4" y="3" width="12" height="16" rx="2"/><path d="M8 21h10a2 2 0 0 0 2-2V7"/>',
-    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>'
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
+    deck: '<rect x="7" y="3" width="13" height="17" rx="2"/><path d="M4 7v12a2 2 0 0 0 2 2h9"/><path d="M11 9h5M11 13h5"/>'
   };
-  var MENU = [["home", "Home"], ["sets", "Prodotti"], ["soon", "Prossime uscite"], ["cards", "Ricerca carte"], ["coll", "La mia collezione"], ["info", "Informazioni"]];
+  var MENU = [["home", "Home"], ["sets", "Prodotti"], ["soon", "Prossime uscite"], ["cards", "Ricerca carte"], ["coll", "La mia collezione"], ["deck", "Deckbuilding"], ["info", "Informazioni"]];
   var menuEl = document.getElementById("menu"), menuBtn = document.getElementById("menuBtn"), menuScrim = document.getElementById("menuScrim");
   function menuOpen(o, fromHistory) {
     var was = menuEl.classList.contains("open");
@@ -492,7 +522,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     menuEl.setAttribute("aria-hidden", String(!o)); menuBtn.setAttribute("aria-expanded", String(o));
     if (o) drawMenu();
   }
-  function curPage() { return st.tab === "home" ? "home" : st.tab === "info" ? "info" : st.tab === "sets" ? (st.type === "SOON" ? "soon" : "sets") : st.ownOnly ? "coll" : "cards"; }
+  function curPage() { return st.tab === "home" ? "home" : st.tab === "info" ? "info" : st.tab === "deck" ? "deck" : st.tab === "sets" ? (st.type === "SOON" ? "soon" : "sets") : st.ownOnly ? "coll" : "cards"; }
   function drawMenu() {
     var nav = document.getElementById("menuNav"); nav.innerHTML = "";
     MENU.forEach(function (m) {
@@ -512,6 +542,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     else if (where === "cards") st.tab = "cards";
     else if (where === "coll") { st.tab = "cards"; st.ownOnly = true; }
     else if (where === "info") st.tab = "info";
+    else if (where === "deck") { st.tab = "deck"; st.deckId = null; qi.value = ""; st.q = ""; }
     window.scrollTo(0, 0); render();
   }
   menuBtn.onclick = function () { menuOpen(!menuEl.classList.contains("open")); };
@@ -1062,6 +1093,10 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     trow([c.ct, c.lv]); var row1 = tags.lastChild; if (row1) c.colors.forEach(function (x) { row1.appendChild(colIco(x)); });
     trow([c.form].concat(rForm)); trow([c.attr].concat(rAttr)); trow((c.sp || "").split("/").concat(rTrait));
     sh.appendChild(tags);
+    var bbd = deckable(c) ? banBadge(c) : null;
+    if (bbd && /ban|lim|pair/.test(bbd.className)) { var bw = el("div", "banline"); bw.appendChild(bbd);
+      if (PAIRS[c.code]) bw.appendChild(el("span", "", "Non può stare nello stesso mazzo di " + PAIRS[c.code].map(function (o) { return BYCODE[o].name + " (" + o + ")"; }).join(" o ") + "."));
+      sh.appendChild(bw); }
     var stats = el("div", "stats");
     [stat("Costo", c.ct === "Digimon/Option" ? "-" : c.play), stat("DP", c.dp), rarStat(c)].forEach(function (s) { if (s) stats.appendChild(s); });
     var ev = evoLines(c);
@@ -1088,6 +1123,11 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var own = el("div", "own"); own.appendChild(el("span", "", "Copie possedute"));
     own.appendChild(qtyControl(c, function () { recomputeStats(); render(); drawSheet(); }));
     sh.appendChild(own);
+    if (st.tab === "deck" && st.deckId && deckById(st.deckId) && deckable(c)) {
+      var dk = el("div", "own"); dk.appendChild(el("span", "", "Copie nel mazzo"));
+      dk.appendChild(deckQty(deckById(st.deckId), c, function () { render(); drawSheet(); }));
+      sh.appendChild(dk);
+    }
     var alts = altsOf(c).filter(function (a) { return a.k !== c.k; });
     if (c.suf) alts.unshift(c.__proto__ && c.__proto__.code === c.code && !c.__proto__.suf ? c.__proto__ : null);
     alts = alts.filter(Boolean).filter(function (a) { return a.k !== c.k; });
@@ -1127,7 +1167,8 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   function render() {
     recomputeStatsIfNeeded();
-    var isInfo = st.tab === "info", isHome = st.tab === "home" || isInfo, isSets = st.tab === "sets", isSoon = isSets && st.type === "SOON";
+    var isDeck = st.tab === "deck", isDeckList = isDeck && !st.deckId;
+    var isInfo = st.tab === "info", isHome = st.tab === "home" || isInfo || isDeckList, isSets = st.tab === "sets", isSoon = isSets && st.type === "SOON";
     ["home", "sets", "cards"].forEach(function (t) { document.getElementById("tab-" + t).setAttribute("aria-selected", st.tab === t ? "true" : "false"); });
     document.getElementById("filters").hidden = isSets || isHome;
     document.getElementById("qmodes").hidden = isSets || isHome;
@@ -1136,7 +1177,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     chips.hidden = !isSets;
     qi.hidden = isSoon || isHome;
     document.getElementById("hint").textContent = "Carte in inglese, da una raccolta pubblica aggiornata fino a BT26, EX13 e ST24, più promo e RB01. Quantità e collezione restano salvate in questo browser.";
-    qi.placeholder = isSets ? "Cerca per set, codice o Digimon, es. BT10 o Omnimon" :
+    qi.placeholder = isDeck ? "Cerca una carta da aggiungere, es. Agumon o BT1-010" : isSets ? "Cerca per set, codice o Digimon, es. BT10 o Omnimon" :
       st.qm === "name" ? "Cerca per nome, es. Omnimon" :
       st.qm === "text" ? "Cerca nel testo un nome, keyword o parola, es. Omnimon, Barrier o draw" :
       "Cerca per nome, codice o testo, es. Agumon";
@@ -1147,13 +1188,14 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     out.innerHTML = ""; NAVLIST = [];
     document.getElementById("hint").hidden = isHome;
     trackNav();
-    if (isInfo) renderInfo(); else if (isHome) renderHome(); else if (isSoon) renderSoon(); else if (isSets) renderSets(); else renderCards();
+    if (isDeck) { document.getElementById("hint").hidden = true; if (st.deckId) renderDeck(); else renderDeckList(); }
+    else if (isInfo) renderInfo(); else if (isHome) renderHome(); else if (isSoon) renderSoon(); else if (isSets) renderSets(); else renderCards();
     fitAll();
   }
   // ---- Cronologia: il tasto/gesto "indietro" del telefono torna alla schermata precedente
   var restoring = false, lastKey = null, replaceNext = false;
-  function navKey() { return [st.tab, st.setId, st.type, st.ownOnly].join("|"); }
-  function snap() { return { tab: st.tab, setId: st.setId, type: st.type, ownOnly: st.ownOnly, q: st.q, qm: st.qm, back: st.back || null, y: window.pageYOffset || 0 }; }
+  function navKey() { return [st.tab, st.setId, st.type, st.ownOnly, st.deckId].join("|"); }
+  function snap() { return { tab: st.tab, deckId: st.deckId || null, setId: st.setId, type: st.type, ownOnly: st.ownOnly, q: st.q, qm: st.qm, back: st.back || null, y: window.pageYOffset || 0 }; }
   function trackNav() {
     var k = navKey();
     if (lastKey === null) { history.replaceState(snap(), ""); lastKey = k; return; }
@@ -1171,7 +1213,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     if (st.open != null && s2.ov !== "sheet") { st.open = null; drawSheet(); afterSheet(); return; }
     if (s2.ov) return;
     restoring = true;
-    st.tab = s2.tab || "home"; st.setId = s2.setId || null; st.type = s2.type || "ALL"; st.ownOnly = !!s2.ownOnly;
+    st.tab = s2.tab || "home"; st.deckId = s2.deckId || null; st.setId = s2.setId || null; st.type = s2.type || "ALL"; st.ownOnly = !!s2.ownOnly;
     st.q = s2.q || ""; qi.value = st.q; st.qm = s2.qm || ""; st.back = s2.back || null; st.shown = PAGE;
     render(); restoring = false;
     var y = s2.y || 0; requestAnimationFrame(function () { window.scrollTo(0, y); requestAnimationFrame(function () { window.scrollTo(0, y); }); });
@@ -1220,6 +1262,224 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       start: function () { startTop = sh.scrollTop; },
       move: function (dx, dy) { if (startTop <= 0 && dy > 0 && Math.abs(dy) > Math.abs(dx)) { sh.classList.add("dragging"); sh.style.transform = "translateY(" + Math.min(dy, 300) + "px)"; } }
     });
+  }
+
+  // ---- Deckbuilding: regole ufficiali (50 carte nel mazzo, 0-5 Digi-Egg, max 4 copie per numero) + lista ban/restrizioni
+  var BAN = DATA.ban || { banned: [], restricted: [], pairs: [] };
+  var BANNED = {}, RESTR = {}, PAIRS = {}, BYCODE = {};
+  BAN.banned.forEach(function (x) { BANNED[x] = 1; });
+  BAN.restricted.forEach(function (x) { RESTR[x] = 1; });
+  BAN.pairs.forEach(function (p) { p[1].forEach(function (b) { (PAIRS[p[0]] = PAIRS[p[0]] || []).push(b); (PAIRS[b] = PAIRS[b] || []).push(p[0]); }); });
+  CARDS.forEach(function (c) { BYCODE[c.code] = c; });
+  function maxCopies(c) { return BANNED[c.code] ? 0 : RESTR[c.code] ? 1 : /up to 50 copies/.test(c.extra || "") ? 50 : 4; }
+  function isEgg(c) { return c.ct === "Digi-Egg"; }
+  function deckable(c) { return /^(Digi-Egg|Digimon|Tamer|Option|Digimon\/Option)$/.test(c.ct); }
+  function fmtDate(s) { var p = s.split("-"); return +p[2] + " " + MONTHS[+p[1] - 1] + " " + p[0]; }
+  var decks = []; try { decks = JSON.parse(localStorage.getItem("dgm-decks") || "[]") || []; } catch (e) { decks = []; }
+  function saveDecks() { try { localStorage.setItem("dgm-decks", JSON.stringify(decks)); } catch (e) {} }
+  function deckById(id) { for (var i = 0; i < decks.length; i++) if (decks[i].id === id) return decks[i]; return null; }
+  function inDeck(d, c) { return (d && d.cards[c.code]) || 0; }
+  function deckStats(d) {
+    var r = { main: 0, egg: 0, problems: [] };
+    Object.keys(d.cards).forEach(function (code) {
+      var c = BYCODE[code], n = d.cards[code]; if (!c) return;
+      if (isEgg(c)) r.egg += n; else r.main += n;
+      var mx = maxCopies(c);
+      if (!mx) r.problems.push(c.name + " (" + code + ") è bandita.");
+      else if (n > mx) r.problems.push(c.name + " (" + code + "): massimo " + mx + (mx === 1 ? " copia" : " copie") + ", ne hai " + n + ".");
+      (PAIRS[code] || []).forEach(function (o) { if (code < o && d.cards[o]) r.problems.push(c.name + " (" + code + ") e " + BYCODE[o].name + " (" + o + ") non possono stare nello stesso mazzo."); });
+    });
+    if (r.main !== 50) r.problems.unshift("Il mazzo principale deve avere esattamente 50 carte: ora " + (r.main < 50 ? "ne mancano " + (50 - r.main) : "ce ne sono " + (r.main - 50) + " di troppo") + ".");
+    if (r.egg > 5) r.problems.unshift("Il mazzo Digi-Egg può avere al massimo 5 carte: ora sono " + r.egg + ".");
+    return r;
+  }
+  function addError(d, c) {
+    if (!deckable(c)) return "Questa carta non può essere inserita in un mazzo.";
+    var mx = maxCopies(c), n = inDeck(d, c);
+    if (!mx) return c.name + " è bandita dalla lista ufficiale.";
+    if (n >= mx) return mx === 1 ? c.name + " è limitata a 1 copia." : "Massimo " + mx + " copie per " + c.name + ".";
+    var s = deckStats(d);
+    if (isEgg(c) && s.egg >= 5) return "Il mazzo Digi-Egg è già a 5 carte.";
+    if (!isEgg(c) && s.main >= 50) return "Il mazzo principale è già a 50 carte.";
+    var bad = (PAIRS[c.code] || []).filter(function (o) { return d.cards[o]; });
+    if (bad.length) return c.name + " non può stare nello stesso mazzo di " + BYCODE[bad[0]].name + " (" + bad[0] + ").";
+    return "";
+  }
+  var toastEl = null, toastT = 0;
+  function toast(msg) {
+    if (!toastEl) { toastEl = el("div", "toast"); toastEl.setAttribute("role", "status"); document.body.appendChild(toastEl); }
+    toastEl.textContent = msg; toastEl.classList.add("on"); clearTimeout(toastT);
+    toastT = setTimeout(function () { toastEl.classList.remove("on"); }, 2600);
+  }
+  function deckQty(d, c, onChange) {
+    var w = el("span", "qty");
+    var m = el("button", "qbtn", "−"); m.type = "button"; m.setAttribute("aria-label", "Togli dal mazzo");
+    var n = el("span", "qn", String(inDeck(d, c)));
+    var err = addError(d, c);
+    var p = el("button", "qbtn" + (err ? " off" : " on"), "+"); p.type = "button"; p.setAttribute("aria-label", "Aggiungi al mazzo");
+    m.onclick = function (e) { e.stopPropagation(); var k = inDeck(d, c); if (k > 0) { if (k === 1) delete d.cards[c.code]; else d.cards[c.code] = k - 1; d.upd = Date.now(); saveDecks(); onChange(); } };
+    p.onclick = function (e) { e.stopPropagation(); var er = addError(d, c); if (er) { toast(er); return; } d.cards[c.code] = inDeck(d, c) + 1; d.upd = Date.now(); saveDecks(); onChange(); };
+    w.appendChild(m); w.appendChild(n); w.appendChild(p);
+    return w;
+  }
+  function banBadge(c) {
+    var mx = maxCopies(c);
+    if (!mx) return el("span", "dbadge ban", "Bandita");
+    if (mx === 1) return el("span", "dbadge lim", "Limitata a 1");
+    if (PAIRS[c.code]) return el("span", "dbadge pair", "Coppia vietata");
+    if (mx === 50) return el("span", "dbadge free", "Fino a 50");
+    return null;
+  }
+  function lvNum(c) { var m = (c.lv || "").match(/\d+/); return m ? +m[0] : 0; }
+  function deckSort(a, b) { return (lvNum(a) - lvNum(b)) || ((+a.play || 0) - (+b.play || 0)) || (a.code < b.code ? -1 : 1); }
+  function deckGroups(d) {
+    var g = [["Digi-Egg", []], ["Digimon", []], ["Tamer", []], ["Option", []]];
+    Object.keys(d.cards).forEach(function (code) {
+      var c = BYCODE[code]; if (!c) return;
+      var i = isEgg(c) ? 0 : /^Digimon/.test(c.ct) ? 1 : c.ct === "Tamer" ? 2 : 3; g[i][1].push(c);
+    });
+    g.forEach(function (x) { x[1].sort(deckSort); });
+    return g;
+  }
+  function deckText(d) {
+    var lines = ["// " + d.name];
+    deckGroups(d).forEach(function (g) {
+      if (!g[1].length) return;
+      lines.push("// " + g[0]);
+      g[1].forEach(function (c) { lines.push(d.cards[c.code] + " " + c.name + " " + c.code); });
+    });
+    return lines.join("\n");
+  }
+  function parseDeck(txt) {
+    var cards = {}, unknown = [];
+    String(txt).split(/\n/).forEach(function (line) {
+      if (/^\s*\/\//.test(line)) return;
+      var codes = line.toUpperCase().match(/\b(?:BT|EX|ST|RB|LM|AD|P)\d*-\d{2,3}\b/g); if (!codes) return;
+      var cnt = line.match(/^\s*(\d+)\s*x?\s/i);
+      codes.forEach(function (code) {
+        code = code.replace(/^(BT|EX|ST|RB|AD)0+(\d)/, "$1$2");
+        if (!BYCODE[code] || !deckable(BYCODE[code])) { unknown.push(code); return; }
+        cards[code] = (cards[code] || 0) + (cnt && codes.length === 1 ? +cnt[1] : 1);
+      });
+    });
+    return { cards: cards, unknown: unknown };
+  }
+  function newDeck(name, cards) {
+    var d = { id: "d" + Date.now().toString(36) + Math.floor(Math.random() * 1e4), name: name, cards: cards || {}, upd: Date.now() };
+    decks.unshift(d); saveDecks(); return d;
+  }
+  function openDeck(id) { st.tab = "deck"; st.deckId = id; st.shown = 30; qi.value = ""; st.q = ""; window.scrollTo(0, 0); render(); }
+  function banNote() {
+    var p = el("p", "hint dnote");
+    p.appendChild(document.createTextNode("Regole ufficiali: mazzo principale di esattamente 50 carte, mazzo Digi-Egg da 0 a 5 carte, al massimo 4 copie per numero di carta (anche con illustrazioni diverse). Lista ban e restrizioni in vigore dal " + fmtDate(BAN.effective) + ": " + BAN.banned.length + " carte bandite, " + BAN.restricted.length + " limitate a 1 copia, " + BAN.pairs.length + " coppie vietate. "));
+    var a = el("a", "", "Fonte ufficiale"); a.href = BAN.source; a.target = "_blank"; a.rel = "noopener"; p.appendChild(a);
+    return p;
+  }
+  function importPanel(onDone, label) {
+    var box = el("div", "dimport");
+    var ta = el("textarea", "dta"); ta.rows = 8; ta.placeholder = "Incolla qui la lista, una carta per riga, es.\n4 Agumon BT1-010\n4 BT14-002";
+    var go2 = el("button", "dbtn on", label); go2.type = "button";
+    go2.onclick = function () {
+      var r = parseDeck(ta.value);
+      if (!Object.keys(r.cards).length) { toast("Nessun codice carta riconosciuto."); return; }
+      onDone(r.cards);
+      if (r.unknown.length) toast("Codici non riconosciuti: " + r.unknown.slice(0, 5).join(", ") + (r.unknown.length > 5 ? "…" : ""));
+    };
+    box.appendChild(ta); box.appendChild(go2);
+    return box;
+  }
+  function renderDeckList() {
+    var h = el("div", "sethead"); h.appendChild(el("h2", "", "I miei mazzi")); out.appendChild(h);
+    var acts = el("div", "dacts");
+    var nb = el("button", "dbtn on", "+ Nuovo mazzo"); nb.type = "button";
+    nb.onclick = function () { var d = newDeck("Nuovo mazzo " + (decks.length + 1)); openDeck(d.id); };
+    var ib = el("button", "dbtn", "Importa da testo"); ib.type = "button";
+    acts.appendChild(nb); acts.appendChild(ib); out.appendChild(acts);
+    var slot = el("div"); out.appendChild(slot);
+    ib.onclick = function () { slot.innerHTML = ""; slot.appendChild(importPanel(function (cards) { var d = newDeck("Mazzo importato", cards); openDeck(d.id); }, "Crea mazzo")); slot.querySelector("textarea").focus(); };
+    if (!decks.length) out.appendChild(el("p", "empty", "Non hai ancora mazzi: creane uno nuovo o importalo da una lista."));
+    else {
+      var ul = el("div", "list");
+      decks.slice().sort(function (a, b) { return b.upd - a.upd; }).forEach(function (d) {
+        var s = deckStats(d), ok = !s.problems.length;
+        var r = el("button", "row set deckrow"); r.type = "button";
+        var nm = el("div", "name"); nm.appendChild(el("div", "ttl fit", d.name));
+        nm.appendChild(el("div", "sub", "Principale " + s.main + "/50 · Digi-Egg " + s.egg + "/5"));
+        r.appendChild(nm);
+        var inc = !ok && s.problems.length === 1 && s.main < 50;
+        r.appendChild(el("span", "dbadge " + (ok ? "okb" : inc ? "lim" : "ban"), ok ? "Valido" : inc ? "Incompleto" : "Non valido"));
+        r.onclick = function () { openDeck(d.id); };
+        ul.appendChild(r);
+      });
+      out.appendChild(ul);
+    }
+    out.appendChild(banNote());
+  }
+  function deckRow(d, c) {
+    var r = el("div", "row card"); r.tabIndex = 0; r.setAttribute("role", "button");
+    var sw = el("div", "swatch"); sw.style.background = gradient(c.colors); r.appendChild(sw);
+    r.appendChild(picBox("thumb", "t", c));
+    var mid = el("div", "name"); mid.appendChild(document.createTextNode(c.name));
+    var sub = el("div", "sub", [c.code, c.ct, c.lv, c.play ? "Costo " + c.play : ""].filter(Boolean).join(" · ")); mid.appendChild(sub);
+    var bb = banBadge(c); if (bb) { var bl = el("div", "sub"); bl.appendChild(bb); mid.appendChild(bl); }
+    r.appendChild(mid);
+    r.appendChild(deckQty(d, c, function () { render(); }));
+    r.onclick = function () { st.open = c; drawSheet(); };
+    r.onkeydown = function (e) { if (e.target === r && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); st.open = c; drawSheet(); } };
+    NAVLIST.push(c);
+    return r;
+  }
+  function renderDeck() {
+    var d = deckById(st.deckId);
+    if (!d) { st.deckId = null; renderDeckList(); return; }
+    var b = el("button", "back", "← I miei mazzi"); b.type = "button"; b.onclick = function () { st.deckId = null; qi.value = ""; st.q = ""; window.scrollTo(0, 0); render(); };
+    out.appendChild(b);
+    var ni = el("input", "dname"); ni.value = d.name; ni.setAttribute("aria-label", "Nome del mazzo"); ni.maxLength = 60;
+    ni.onchange = function () { d.name = ni.value.trim() || d.name; ni.value = d.name; d.upd = Date.now(); saveDecks(); };
+    out.appendChild(ni);
+    var s = deckStats(d), panel = el("div", "dstat");
+    [["Mazzo principale", s.main, 50, s.main === 50], ["Mazzo Digi-Egg", s.egg, 5, s.egg <= 5]].forEach(function (x) {
+      var m = el("div", "dmeter"); m.appendChild(el("span", "", x[0]));
+      m.appendChild(el("b", x[3] ? "okt" : "", x[1] + " / " + x[2]));
+      var bar = el("div", "progress"), i = el("i"); i.style.width = Math.min(100, x[1] / x[2] * 100) + "%"; if (x[1] > x[2]) i.style.background = "var(--c-red)"; bar.appendChild(i); m.appendChild(bar);
+      panel.appendChild(m);
+    });
+    var pr = el("div", "dprob " + (s.problems.length ? "bad" : "good"));
+    if (!s.problems.length) pr.textContent = "✓ Mazzo valido secondo le regole e la lista ban in vigore dal " + fmtDate(BAN.effective) + ".";
+    else { var ul0 = el("ul"); s.problems.forEach(function (t) { ul0.appendChild(el("li", "", t)); }); pr.appendChild(ul0); }
+    panel.appendChild(pr); out.appendChild(panel);
+    var acts = el("div", "dacts"), slot = el("div");
+    var ex = el("button", "dbtn", "Esporta lista"); ex.type = "button";
+    ex.onclick = function () {
+      var t = deckText(d);
+      var done = function () { toast("Lista copiata negli appunti."); };
+      var fallback = function () { slot.innerHTML = ""; var ta = el("textarea", "dta"); ta.rows = 10; ta.value = t; ta.readOnly = true; slot.appendChild(ta); ta.focus(); ta.select(); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, fallback); else fallback();
+    };
+    var im = el("button", "dbtn", "Importa"); im.type = "button";
+    im.onclick = function () { slot.innerHTML = ""; slot.appendChild(importPanel(function (cards) { d.cards = cards; d.upd = Date.now(); saveDecks(); render(); }, "Sostituisci il contenuto")); };
+    var cl = el("button", "dbtn", "Svuota"); cl.type = "button";
+    cl.onclick = function () { if (confirm("Togliere tutte le carte da \"" + d.name + "\"?")) { d.cards = {}; d.upd = Date.now(); saveDecks(); render(); } };
+    var del = el("button", "dbtn warn", "Elimina mazzo"); del.type = "button";
+    del.onclick = function () { if (confirm("Eliminare il mazzo \"" + d.name + "\"?")) { decks = decks.filter(function (x) { return x !== d; }); saveDecks(); st.deckId = null; render(); } };
+    [ex, im, cl, del].forEach(function (x) { acts.appendChild(x); }); out.appendChild(acts); out.appendChild(slot);
+    var any = false;
+    deckGroups(d).forEach(function (g) {
+      if (!g[1].length) return; any = true;
+      var n = 0; g[1].forEach(function (c) { n += d.cards[c.code]; });
+      var gt = el("div", "group-title"); gt.appendChild(el("span", "", g[0] + " (" + n + ")")); out.appendChild(gt);
+      var ul = el("div", "list"); g[1].forEach(function (c) { ul.appendChild(deckRow(d, c)); }); out.appendChild(ul);
+    });
+    if (!any) out.appendChild(el("p", "empty dempty", "Il mazzo è vuoto: cerca le carte con la barra in alto e aggiungile con +."));
+    var q = normQ(st.q), filt = q || st.color || st.ct || st.lv;
+    var gt2 = el("div", "group-title"); gt2.appendChild(el("span", "", "Aggiungi carte")); out.appendChild(gt2);
+    if (!filt) { out.appendChild(el("p", "hint dnote", "Usa la ricerca e i filtri in alto per trovare le carte da aggiungere.")); out.appendChild(banNote()); return; }
+    var list = CARDS.filter(function (c) { return deckable(c) && cardMatches(c, q); });
+    if (q) list = list.map(function (c, j) { return { c: c, j: j, r: relevance(c, q) }; }).sort(function (a, b2) { return (a.r - b2.r) || (a.j - b2.j); }).map(function (o) { return o.c; });
+    if (!list.length) out.appendChild(el("p", "empty", "Nessuna carta corrisponde alla ricerca."));
+    var ul2 = el("div", "list"); list.slice(0, st.shown).forEach(function (c) { ul2.appendChild(deckRow(d, c)); }); out.appendChild(ul2);
+    if (list.length > st.shown) { var mo = el("button", "more", "Mostra altre (" + (list.length - st.shown) + ")"); mo.type = "button"; mo.onclick = function () { st.shown += PAGE; render(); }; out.appendChild(mo); }
+    out.appendChild(banNote());
   }
 
   var statsReady = false;
