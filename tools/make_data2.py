@@ -173,7 +173,7 @@ upcoming=[
  {"code":"PB28","name":"Premium Battle Set Ver. Seven Great Demon Lords","kind":"Premium Bandai","from":"2027-06-01","to":"2027-06-30","prec":"month","note":"Giugno 2027 (Premium Bandai, sito ufficiale)."},
  {"code":"PB24","name":"Tamer's Evolution Card Set: Nexus of Digimon","kind":"Premium Bandai","prec":"none","note":"Annunciato, data non ancora comunicata."}]
 BAN=json.load(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)),"banners.json")))
-out={"sets":sets,"cards":rows,"upcoming":upcoming,"versions":VERS,"banners":sorted(BAN)}
+out={"sets":sets,"cards":rows,"upcoming":upcoming,"versions":VERS,"banners":sorted(k for k in BAN if not k.startswith("_"))}
 s=json.dumps(out,ensure_ascii=False,separators=(",",":")).replace("</","<\\/")
 open(SP+"data.json","w",encoding="utf-8").write(s)
 print(len(rows),"cards",len(sets),"sets",len(s)//1024,"KB")

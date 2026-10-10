@@ -175,8 +175,8 @@ main { padding: 8px 16px 48px; }
 /* Home */
 .home h2 { font-family: var(--font-display); font-style: italic; font-weight: 700; text-transform: uppercase; font-size: 1.7rem; letter-spacing: -.01em; margin: 14px 0 14px; }
 .home h3 { font-family: var(--font-display); font-size: .78rem; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); margin: 26px 0 12px; font-weight: 600; }
-.bn { position: relative; display: block; width: 100%; border: 0; padding: 0; background: var(--surface-2); border-radius: 12px; overflow: hidden; cursor: pointer; aspect-ratio: 4 / 3; color: inherit; font: inherit; text-align: left; box-shadow: 0 0 0 1px var(--line); }
-.bn img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 22%; display: block; }
+.bn { position: relative; display: block; width: 100%; border: 0; padding: 0; background: var(--surface-2); border-radius: 12px; overflow: hidden; cursor: pointer; aspect-ratio: 16 / 9; color: inherit; font: inherit; text-align: left; box-shadow: 0 0 0 1px var(--line); }
+.bn img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; display: block; }
 .bn.noimg img { display: none; }
 .bn .fb { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 12px; background: radial-gradient(120% 90% at 30% 20%, #ff7a3d55, transparent 60%), linear-gradient(135deg, #1c2a52, #0b1120); color: #fff; font-family: var(--font-display); }
 .bn .fb b { display: block; font-size: 2.1rem; letter-spacing: .04em; font-style: italic; }
@@ -185,8 +185,7 @@ main { padding: 8px 16px 48px; }
 .badge { position: absolute; top: 8px; left: 8px; display: inline-flex; align-items: center; gap: 3px; padding: 3px 6px 3px 5px; border-radius: 6px; background: rgba(11,17,32,.82); color: #e8edf7; font: 700 .6rem/1 var(--font-display); letter-spacing: .05em; text-transform: uppercase; backdrop-filter: blur(4px); box-shadow: 0 0 0 1px rgba(255,255,255,.12); }
 .badge svg { width: 10px; height: 10px; }
 .badge.new { background: rgba(88,40,140,.9); }
-.lang { position: absolute; right: 10px; bottom: 10px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: rgba(11,17,32,.85); color: #fff; font: 700 .66rem var(--font-display); box-shadow: 0 0 0 2px rgba(255,255,255,.18); }
-.hero .bn { aspect-ratio: 4 / 3; }
+.hero .bn { aspect-ratio: 16 / 10; }
 .hero .cap { margin-top: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
 .cap .t { font-family: var(--font-display); font-style: italic; font-weight: 700; text-transform: uppercase; font-size: 1.05rem; }
 .cap .s { color: var(--ink-2); font-size: .82rem; margin-top: 2px; }
@@ -196,7 +195,6 @@ main { padding: 8px 16px 48px; }
 .hitem .lbl2 { color: var(--accent); font-size: .74rem; font-family: var(--font-display); font-weight: 600; margin-top: 1px; }
 .hgrid.three .badge { top: 5px; left: 5px; padding: 2px 5px 2px 4px; font-size: .52rem; }
 .hgrid.three .badge svg { width: 8px; height: 8px; }
-.hgrid.three .lang { width: 26px; height: 26px; font-size: .56rem; right: 6px; bottom: 6px; }
 .more-link { display: block; margin: 22px auto 6px; border: 0; background: none; color: var(--ink-2); font: 600 .82rem var(--font-display); letter-spacing: .22em; text-transform: uppercase; cursor: pointer; }
 @media (min-width: 720px) { .hgrid.three { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 /* APK: versione adattata, più compatta, prossime uscite in carosello */
