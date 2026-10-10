@@ -1,0 +1,22 @@
+name: Analisi immagini
+on:
+  workflow_dispatch:
+    inputs:
+      ids: { description: "id carte", required: true }
+      script: { description: "script", required: true, default: "tools/probe_images.py" }
+permissions: { contents: write }
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pillow numpy
+      - run: python3 ${{ inputs.script }} ${{ inputs.ids }} | tee analysis-log.txt
+      - run: |
+          mkdir -p analysis && mv analysis-log.txt analysis/
+          git config user.name "github-actions"; git config user.email "actions@github.com"
+          git checkout --orphan analysis-out
+          git rm -rf --cached . >/dev/null
+          git add -f analysis
+          git commit -qm "analisi"
+          git push -f origin analysis-out
