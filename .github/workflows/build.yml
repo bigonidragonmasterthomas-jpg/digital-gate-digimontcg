@@ -1,0 +1,54 @@
+name: Sito e APK
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: build
+  cancel-in-progress: true
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/build.py
+      - uses: actions/configure-pages@v5
+        continue-on-error: true
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: www }
+      - uses: actions/upload-artifact@v4
+        with: { name: www, path: www }
+  deploy:
+    needs: web
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: "${{ steps.d.outputs.page_url }}" }
+    steps:
+      - id: d
+        uses: actions/deploy-pages@v4
+  apk:
+    needs: web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { name: www, path: www }
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 17 }
+      - run: npm install
+      - run: npx cap add android
+      - run: npx capacitor-assets generate --android
+      - run: npx cap sync android
+      - run: chmod +x android/gradlew && ./gradlew assembleDebug
+        working-directory: android
+      - run: cp android/app/build/outputs/apk/debug/app-debug.apk DigimonSetTracker.apk
+      - name: Pubblica APK nella release "latest"
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest DigimonSetTracker.apk --title "APK più recente" --notes "Scarica DigimonSetTracker.apk e installalo sul telefono." --target "${{ github.sha }}"
