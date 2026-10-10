@@ -166,6 +166,9 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .row.deckrow { grid-template-columns: minmax(0, 1fr) auto; }
 .qbtn.off { opacity: .35; }
 .qbtn.lock { color: var(--ink-2); }
+.qbtn.lock[disabled] { opacity: .6; cursor: default; }
+.qn.qban { color: #ff5a5f; font: 700 .72rem var(--font-display); text-transform: uppercase; letter-spacing: .04em; }
+.qbtn.qmax { font: 700 .62rem var(--font-display); letter-spacing: .02em; color: var(--ink-2); }
 .pref { border: 0; background: rgba(255,255,255,.22); color: #fff; font: inherit; padding: 0 5px; border-radius: 4px; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 .dbadge.pair { white-space: normal; line-height: 1.6; }
 .dalt { color: var(--accent); }
@@ -1347,15 +1350,25 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var n = el("span", "qn", String(inDeck(d, c)));
     var err = addError(d, c);
     var p = el("button", "qbtn" + (err ? " off" : " on"), "+"); p.type = "button"; p.setAttribute("aria-label", "Aggiungi al mazzo");
+    if (!maxCopies(c)) {
+      n.textContent = inDeck(d, c) ? "Bandita (" + inDeck(d, c) + ")" : "Bandita"; n.className = "qn qban";
+      (inDeck(d, c) ? [p] : [m, p]).forEach(function (bt) { bt.innerHTML = LOCK; bt.className = "qbtn lock"; bt.disabled = true; bt.setAttribute("aria-label", "Carta bandita"); });
+      w.appendChild(m); w.appendChild(n); w.appendChild(p); return w;
+    }
+    if (maxCopies(c) === 1 && codeTotal(d, c.code) >= 1) { p.textContent = "MAX"; p.className = "qbtn qmax"; }
     m.onclick = function (e) { e.stopPropagation(); var k = inDeck(d, c); if (k > 0) { if (k === 1) delete d.cards[c.k]; else d.cards[c.k] = k - 1; d.upd = Date.now(); saveDecks(); onChange(); } };
     p.onclick = function (e) { e.stopPropagation(); var er = addError(d, c); if (er) { toast(er); return; } d.cards[c.k] = inDeck(d, c) + 1; d.upd = Date.now(); saveDecks(); onChange(); };
     w.appendChild(m); w.appendChild(n); w.appendChild(p);
     return w;
   }
-  function banBadge(c) {
+  function banBadge(c, d) {
     var mx = maxCopies(c);
     if (!mx) return el("span", "dbadge ban", "Bandita");
     if (mx === 1) return el("span", "dbadge lim", "Limitata a 1");
+    if (PAIRS[c.code] && d) {
+      var hit = PAIRS[c.code].filter(function (o) { return codeTotal(d, o); });
+      return hit.length && codeTotal(d, c.code) ? el("span", "dbadge pair", "Coppia vietata") : null;
+    }
     if (PAIRS[c.code]) {
       var b = el("span", "dbadge pair", "Coppia vietata con ");
       PAIRS[c.code].forEach(function (o, i) {
@@ -1463,7 +1476,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var fs = c.suf ? SETBY[c.from || c.set] : null;
     var sub = el("div", "sub", [c.code, c.ct, c.lv, c.play && c.ct !== "Digimon/Option" ? "Costo " + c.play : ""].filter(Boolean).join(" · ")); mid.appendChild(sub);
     if (fs) mid.appendChild(el("div", "sub dalt", "Alternative Art · " + fs.code));
-    var bb = banBadge(c); if (bb) { var bl = el("div", "sub"); bl.appendChild(bb); mid.appendChild(bl); }
+    var bb = banBadge(c, d); if (bb) { var bl = el("div", "sub"); bl.appendChild(bb); mid.appendChild(bl); }
     r.appendChild(mid);
     r.appendChild(deckQty(d, c, function () { render(); }));
     r.onclick = function () { st.open = c; drawSheet(); };
