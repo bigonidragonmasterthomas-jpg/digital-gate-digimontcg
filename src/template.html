@@ -964,7 +964,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       if (!line.trim()) return;
       if (/\[Digivolve\]/.test(line) && !/DNA/.test(line.split(":")[0])) r.alt.push(line.replace(/^[^\[]*?:\s*(?=\[Digivolve\])/, "").replace(/\[Digivolve\]\s*/, "").replace(/\u00a0/g, " "));
       else if (/\[Rule\]/.test(line)) r.rule.push(line.replace(/^.*?\[Rule\]\s*/, ""));
-      else r.other.push(line);
+      else r.other.push(line.replace(/^Link:\s*/, "[Link] "));
     });
     return r;
   }
