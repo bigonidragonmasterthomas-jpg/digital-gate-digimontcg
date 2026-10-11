@@ -63,4 +63,8 @@ jobs:
         env: { GH_TOKEN: "${{ github.token }}" }
         run: |
           gh release delete latest --yes --cleanup-tag || true
-          gh release create latest DigimonSetTracker.apk --title "APK più recente · build ${{ github.run_number }}" --notes "Scarica DigimonSetTracker.apk e installalo sul telefono. build: ${{ github.run_number }}" --target "${{ github.sha }}"
+          sleep 5
+          gh release create latest DigimonSetTracker.apk --title "APK più recente · build ${{ github.run_number }}" --notes "Scarica DigimonSetTracker.apk e installalo sul telefono. build: ${{ github.run_number }}" --target "${{ github.sha }}" --latest
+          sleep 5
+          gh release edit latest --draft=false || true
+          gh release view latest --json isDraft,name
