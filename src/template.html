@@ -227,7 +227,7 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .sheet .swipe-hint i { width: 38px; height: 4px; border-radius: 2px; background: var(--line); }
 .scrim { position: fixed; inset: 0; background: var(--scrim); z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
 .sheet { background: var(--bg); width: 100%; max-width: 720px; max-height: 88%; overflow-y: auto; border-radius: 16px 16px 0 0; padding: 0 16px calc(20px + env(safe-area-inset-bottom, 0px)); }
-.sheet-head { position: sticky; top: 0; background: var(--bg); display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 16px 0 10px; }
+.sheet-head { position: sticky; top: 0; z-index: 5; background: var(--bg); display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 16px 0 10px; }
 .sheet-head h2 { font-family: var(--font-display); font-size: 1.3rem; margin: 0; overflow-wrap: anywhere; }
 .sheet-head .c { font-family: var(--font-display); color: var(--ink-2); font-size: .85rem; }
 .x { flex: none; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font-size: 1.1rem; cursor: pointer; }
@@ -545,7 +545,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + IC[m[0]] + "</svg>";
       b.appendChild(document.createTextNode(m[1]));
       if (curPage() === m[0]) b.setAttribute("aria-current", "page");
-      b.onclick = function () { var ov = history.state && history.state.ov === "menu"; menuOpen(false, true); if (ov) replaceNext = true; go(m[0]); if (replaceNext) { replaceNext = false; history.replaceState(snap(), ""); } };
+      b.onclick = function () { var ov = history.state && history.state.ov === "menu"; menuOpen(false, true); if (ov) replaceNext = true; go(m[0]); if (replaceNext) { replaceNext = false; var rs = snap(); rs.d = ovDepth(); history.replaceState(rs, ""); } };
       nav.appendChild(b);
     });
   }
@@ -1242,8 +1242,10 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     if (lastKey === null) { history.replaceState(snap(), ""); lastKey = k; return; }
     if (k === lastKey || restoring) { lastKey = k; return; }
     lastKey = k;
-    if (replaceNext) { replaceNext = false; history.replaceState(snap(), ""); } else history.pushState(snap(), "");
+    var dd = (history.state && history.state.d) || 0;
+    if (replaceNext) { replaceNext = false; var rs = snap(); rs.d = ovDepth(); history.replaceState(rs, ""); } else { var ps = snap(); ps.d = dd + 1; history.pushState(ps, ""); }
   }
+  function ovDepth() { var h = history.state || {}; return h.ov ? ((h.base && h.base.d) || 0) + 1 : (h.d || 0); }
   function pushOverlay(kind) { history.pushState({ ov: kind, base: history.state }, ""); }
   window.addEventListener("scroll", function () {
     if (history.state && !history.state.ov) { var h = history.state; h.y = window.pageYOffset || 0; try { history.replaceState(h, ""); } catch (e) {} }
@@ -1593,6 +1595,23 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       }).catch(function () {});
   }
   setTimeout(checkUpdate, 1500);
+  // ---- APK: il gesto/tasto "indietro" di Android torna alla schermata precedente invece di chiudere l'app.
+  // Nella scheda della singola carta il gesto non fa nulla (lì si usano gli swipe della scheda).
+  (function () {
+    var AppP = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App;
+    if (!AppP || !AppP.addListener) return;
+    AppP.addListener("backButton", function () {
+      var upd = document.querySelector(".upd-scrim"); if (upd) { upd.remove(); return; }
+      if (menuEl.classList.contains("open")) { menuOpen(false); return; }
+      if (st.open != null) return;
+      var atHome = st.tab === "home" && !st.setId;
+      if (history.state && history.state.d > 0) { history.back(); return; }
+      if (st.tab === "deck" && st.deckId) { st.deckId = null; render(); return; }
+      if (st.tab === "cards" && st.setId) { goSets(); return; }
+      if (!atHome) { go("home"); return; }
+      if (AppP.minimizeApp) AppP.minimizeApp(); else if (AppP.exitApp) AppP.exitApp();
+    });
+  })();
   var statsReady = false;
   function recomputeStatsIfNeeded() { if (!statsReady) { recomputeStats(); statsReady = true; } }
   render();
