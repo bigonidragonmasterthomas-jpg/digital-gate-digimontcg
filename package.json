@@ -1,4 +1,17 @@
-{"name":"digimon-set-tracker","version":"1.0.0","private":true,
- "scripts":{"build":"python3 tools/build.py"},
- "dependencies":{"@capacitor/android":"^6.2.0","@capacitor/core":"^6.2.0"},
- "devDependencies":{"@capacitor/assets":"^3.0.5","@capacitor/cli":"^6.2.0"}}
+{
+ "name": "digimon-set-tracker",
+ "version": "1.0.0",
+ "private": true,
+ "scripts": {
+  "build": "python3 tools/build.py"
+ },
+ "dependencies": {
+  "@capacitor/android": "^6.2.0",
+  "@capacitor/core": "^6.2.0",
+  "@capacitor/app": "^6.0.0"
+ },
+ "devDependencies": {
+  "@capacitor/assets": "^3.0.5",
+  "@capacitor/cli": "^6.2.0"
+ }
+}
