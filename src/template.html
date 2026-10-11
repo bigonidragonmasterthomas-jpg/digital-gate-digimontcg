@@ -1574,6 +1574,12 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   // ---- APK: all'avvio controlla se nella release "latest" c'è una build più recente e propone di installarla
   var APK_URL = "https://github.com/knightofgemini/digital-gate-digimontcg/releases/download/latest/DigimonSetTracker.apk";
+  // apre il link nel browser del telefono (Chrome ecc.), fuori dall'app, così il download dell'APK parte normalmente
+  function openExternal(u) {
+    var P = window.Capacitor && window.Capacitor.Plugins, L = P && P.AppLauncher;
+    if (L && L.openUrl) { L.openUrl({ url: u }).catch(function () { window.open(u, "_system"); }); return; }
+    var w = window.open(u, "_system"); if (!w) location.href = u;
+  }
   function checkUpdate() {
     if (!document.body.classList.contains("apk") || !window.fetch) return;
     var mine = +window.APPBUILD || 0; if (!mine) return;
@@ -1590,7 +1596,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         var row = el("div", "dacts"), later = el("button", "dbtn", "Più tardi"), inst = el("button", "dbtn on", "Installa");
         later.type = inst.type = "button";
         later.onclick = function () { sc.remove(); };
-        inst.onclick = function () { sc.remove(); var u = asset.browser_download_url || APK_URL; var w = window.open(u, "_system"); if (!w) location.href = u; };
+        inst.onclick = function () { sc.remove(); openExternal(asset.browser_download_url || APK_URL); };
         row.appendChild(later); row.appendChild(inst); box.appendChild(row); sc.appendChild(box); document.body.appendChild(sc);
       }).catch(function () {});
   }
