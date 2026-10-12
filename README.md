@@ -2,7 +2,7 @@
 
 Immagini scaricate automaticamente dal sito ufficiale Bandai (world.digimoncard.com; dove manca, en.digimoncard.com o digimoncard.com). Il copyright di artwork e loghi è di Bandai / Toei Animation: usale solo per scopi personali o con il loro permesso.
 
-I **loghi trasparenti** (`logo.*`) vengono da unacollezione.it, perché il sito Bandai non li pubblica come file separati; quelli con fonte `utente` in `index.json` sono stati forniti a mano (cartella `src/logos/` del progetto) e hanno la precedenza. Elenco completo con fonti e dimensioni in `index.json`, foglio riassuntivo in `anteprima.jpg`.
+Il sito Bandai non pubblica i **loghi trasparenti** (`logo.*`) come file separati: quelli con fonte `utente` in `index.json` sono stati forniti a mano (cartella `src/logos/` del progetto) e hanno la precedenza; quelli con fonte `unacollezione` sono copie salvate in passato da unacollezione.it, che non viene più consultato. Elenco completo con fonti e dimensioni in `index.json`, foglio riassuntivo in `anteprima.jpg`.
 
 
 ## Booster
