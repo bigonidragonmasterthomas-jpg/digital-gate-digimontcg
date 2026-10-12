@@ -23,17 +23,6 @@ jobs:
         run: |
           mkdir -p out
           python3 tools/fetch_set_assets.py out | tee out/log.txt
-      - uses: actions/cache@v4
-        with:
-          path: ~/.cache/realesrgan_anime6b.pth
-          key: realesrgan-anime6b
-      - name: Ingrandisci con AI le bustine piccole (Real-ESRGAN)
-        run: |
-          pip install -q --index-url https://download.pytorch.org/whl/cpu torch torchvision
-          pip install -q spandrel numpy
-          git fetch -q --depth 1 origin set-assets && git worktree add -q --detach prev FETCH_HEAD || true
-          PREV=prev python3 tools/upscale_packs.py out
-          git worktree remove --force prev || true
       - name: Salva nel branch set-assets
         shell: bash
         run: |

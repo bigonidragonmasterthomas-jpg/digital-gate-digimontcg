@@ -12,7 +12,6 @@ Per ogni espansione crea CARTELLA_OUT/CODICE/ con i file che il sito pubblica:
   banner.*             banner promozionale (800x600) – soprattutto i set fino al 2023
   promo.*              immagine promozionale dei prodotti Limited / Premium Bandai
   confezione.*         bustina o confezione del prodotto (riporta sempre il logo)
-  confezione-hd.webp   la stessa ingrandita con AI (tools/upscale_packs.py) quando l'originale è piccolo
   logo.*               logo separato, solo quando il sito lo pubblica come file a sé
 e in CARTELLA_OUT: index.json (elenco completo con le fonti), README.md (galleria) e anteprima.jpg (foglio provini).
 """
