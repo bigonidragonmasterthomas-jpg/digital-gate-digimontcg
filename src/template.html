@@ -129,6 +129,8 @@ main { padding: 8px 16px 48px; }
 .qn { min-width: 22px; text-align: center; font-family: var(--font-display); font-weight: 700; font-variant-numeric: tabular-nums; }
 .back { border: 0; background: transparent; color: var(--blue); font: 600 .9rem var(--font-body); cursor: pointer; padding: 10px 0 4px; }
 .sethead { margin: 4px 0 6px; }
+.ptitle { font-family: var(--font-display); font-style: italic; font-weight: 700; text-transform: uppercase; font-size: 1.7rem; letter-spacing: -.01em; line-height: 1.15; margin: 14px 0 12px; }
+body.apk .ptitle { font-size: 1.35rem; margin: 6px 0 10px; }
 .sethead h2 { font-family: var(--font-display); font-size: 1.15rem; margin: 0; }
 .prod { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 4px 12px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin: 8px 0 4px; }
 .prod.nopk { grid-template-columns: minmax(0, 1fr); }
@@ -700,7 +702,10 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   if (window.ResizeObserver) new ResizeObserver(fitAll).observe(document.body);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
 
+  // Titolo della sezione in cima a ogni pagina (stessi nomi del menu)
+  function pageTitle(t) { out.appendChild(el("h2", "ptitle", t)); }
   function renderSets() {
+    pageTitle("Prodotti");
     var q = normQ(st.q);
     var all = upcomingSets().concat(SETS);
     var hits = {};
@@ -873,7 +878,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       if (hasDate && !pb) { var dm = s.date.split("-"); var mn = MONTHS[+dm[1] - 1]; h.appendChild(el("div", "sub", "Uscita: " + mn.charAt(0).toUpperCase() + mn.slice(1) + " " + dm[0])); }
       out.appendChild(h);
       if (pb) out.appendChild(pb);
-    }
+    } else pageTitle(st.ownOnly ? "La mia collezione" : "Ricerca carte");
     var list = (st.setId ? cardsOfSet(st.setId) : CARDS).filter(function (c) { return cardMatches(c, q); });
     if (q) {
       list = list.map(function (c, j) { return { c: c, j: j, r: relevance(c, q) }; })
@@ -881,7 +886,6 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .map(function (o) { return o.c; });
     }
     if (!list.length && st.setId && !SETSTAT[st.setId].n) { out.appendChild(el("p", "empty", "Questo prodotto non contiene carte: solo accessori (playmat, bustine, box).")); return; }
-    if (st.ownOnly && !st.setId) { var ch = el("div", "sethead"); ch.appendChild(el("h2", "", "La mia collezione")); out.appendChild(ch); }
     if (!list.length) { out.appendChild(el("p", "empty", st.ownOnly ? "Non hai ancora segnato carte: usa il + nelle liste per aggiungerle." : "Nessuna carta corrisponde ai filtri.")); return; }
     var gt = el("div", "group-title withv"); gt.appendChild(el("span", "", list.length + (list.length === 1 ? " carta" : " carte")));
     gt.appendChild(viewToggle()); out.appendChild(gt);
@@ -975,9 +979,10 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
   function renderSoon() {
+    pageTitle("Prossime uscite");
     var items = (DATA.upcoming || []).slice();
     var note = el("p", "hint", "Le date possono riferirsi all'uscita giapponese; quella inglese può arrivare più tardi e cambiare. Quando è noto solo il mese, il conto è al mese di uscita. Ordine dal più recente al meno recente.");
-    note.style.marginTop = "6px"; out.appendChild(note);
+    note.style.marginTop = "0"; out.appendChild(note);
     var dated = items.filter(function (u) { return u.prec !== "none"; }).sort(function (a, b) { return a.from < b.from ? 1 : -1; });
     var tbd = items.filter(function (u) { return u.prec === "none"; });
     function card(u) {
@@ -1030,7 +1035,8 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   function openSoon() { st.tab = "sets"; st.type = "SOON"; st.setId = null; qi.value = ""; st.q = ""; window.scrollTo(0, 0); render(); }
   function openSet(id) { st.back = { y: 0, q: "", type: st.type, qm: st.qm, home: true }; st.tab = "cards"; st.setId = id; st.shown = PAGE; qi.value = ""; st.q = ""; window.scrollTo(0, 0); render(); }
   function renderInfo() {
-    var h = el("div", "home"); h.appendChild(el("h2", "", "Informazioni"));
+    pageTitle("Informazioni");
+    var h = el("div", "home");
     [["Cos'è", "Digital Gate è un catalogo non ufficiale del Digimon Card Game in inglese: tutti i prodotti, le carte (con ristampe e alternative art), le prossime uscite e la tua collezione."],
      ["Dati", "Carte dal database pubblico TakaOtaku (Digimon Card App) e dal sito ufficiale Bandai; date e materiali promozionali dal sito ufficiale Digimon Card Game. Possono esserci errori: segnalali e li correggo."],
      ["Collezione", "Le copie che segni restano salvate su questo dispositivo, nel browser o nell'app."],
@@ -1041,7 +1047,8 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   function renderHome() {
     var h = el("div", "home");
-    h.appendChild(el("h2", "", "Prossime uscite"));
+    pageTitle("Home");
+    var hs = el("h3", "", "Prossime uscite"); hs.style.marginTop = "6px"; h.appendChild(hs);
     var IMP = { BT: 0, EX: 1, ST: 2, LM: 3, PB: 4, AL: 5 };
     var ups = (DATA.upcoming || []).slice().sort(function (a, b) {
       var an = a.prec === "none", bn = b.prec === "none"; if (an !== bn) return an ? 1 : -1;
@@ -1571,7 +1578,8 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     return box;
   }
   function renderDeckList() {
-    var h = el("div", "sethead"); h.appendChild(el("h2", "", "I miei mazzi")); out.appendChild(h);
+    pageTitle("Deckbuilding");
+    var h = el("div", "group-title"); h.appendChild(el("span", "", "I miei mazzi")); h.style.marginTop = "4px"; out.appendChild(h);
     var acts = el("div", "dacts");
     var nb = el("button", "dbtn on", "+ Nuovo mazzo"); nb.type = "button";
     nb.onclick = function () { var d = newDeck("Nuovo mazzo " + (decks.length + 1)); openDeck(d.id); };
