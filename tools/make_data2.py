@@ -32,9 +32,25 @@ def gtype(p):
     if p.startswith("ST"): return "ST"
     if p.startswith("LM"): return "LM"
     return "AL"
-OFF=json.load(open(SP+"../tools/official_extra.json",encoding="utf-8"))  # testo ufficiale: lato Option delle Digimon/Option e spiegazione Overflow
+OFF=json.load(open(SP+"../tools/official_extra.json",encoding="utf-8"))
+FIX=json.load(open(SP+"../tools/card_fixes.json",encoding="utf-8"))  # correzioni manuali verificate sulle carte ufficiali
+def fix_card(n,r):
+    f=FIX.get(n)
+    if not f: return
+    m={"lv":2,"colors":3,"form":5,"attr":6,"trait":7,"dp":8,"cost":9,"rar":15}
+    for k,i in m.items():
+        if k in f: r[i]=f[k]
+    ev=[e.strip() for e in r[10].split(";") if e.strip()]
+    if "evo_set" in f: ev=[e.strip() for e in f["evo_set"].split(";")]
+    if "evo_add" in f and f["evo_add"] not in ev: ev.append(f["evo_add"])
+    if "evolv" in f:
+        a,b=f["evolv"].split("->"); ev=[e.replace(a+" ",b+" ",1) for e in ev]
+    if "evocost" in f: ev=[re.sub(r"\d+$",f["evocost"],e) for e in ev]
+    if "evo_costs" in f: ev=[re.sub(r"\d+$",f["evo_costs"].get(e.split(" ")[0],re.search(r"\d+$",e).group(0)),e) for e in ev]
+    r[10]="; ".join(ev)  # testo ufficiale: lato Option delle Digimon/Option e spiegazione Overflow
 rows=[]; cnt=collections.Counter(); missing=set()
 for n,k in best.items():
+    if n in FIX.get("_remove",[]): continue
     p=n.split("-")[0]
     if p=="LM":
         num=int(n.split("-")[1])
@@ -53,6 +69,7 @@ for n,k in best.items():
     lv=cl(k.get("cardLv")); lv = lv if re.match(r"Lv\.\d",lv) else ""
     rows.append([n,k["name"]["english"].strip(),lv,cl(k["color"]),ct,cl(k["form"]),cl(k["attribute"]),cl(k["type"]),cl(k["dp"]),cl(k["playCost"]),
         "; ".join(evo),cl(k["effect"]),cl(k.get("digivolveEffect")),cl(k["securityEffect"]),"\n".join(extra),cl(k["rarity"]),p.lower()])
+    fix_card(n,rows[-1])
     o=OFF.get(n,{}); x={}
     if "dual" in o and o["dual"].get("lines") not in (None,["-"]): x["d"]={"c":o["dual"].get("cost",""),"col":o["dual"].get("color",""),"l":o["dual"]["lines"]}
     if "ovf" in o: x["o"]=o["ovf"][1]
