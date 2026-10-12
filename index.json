@@ -25,14 +25,6 @@
     "w": 240,
     "h": 405,
     "kb": 56
-   },
-   "confezione-hd": {
-    "file": "BT27/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver27/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 207
    }
   }
  },
@@ -351,14 +343,6 @@
     "w": 1000,
     "h": 333,
     "kb": 47
-   },
-   "confezione-hd": {
-    "file": "BT21/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver21/point/05/pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 208
    }
   }
  },
@@ -413,14 +397,6 @@
     "w": 1000,
     "h": 333,
     "kb": 46
-   },
-   "confezione-hd": {
-    "file": "BT19-20/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver19-20/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 828,
-    "h": 1400,
-    "kb": 267
    }
   }
  },
@@ -475,14 +451,6 @@
     "w": 1000,
     "h": 333,
     "kb": 69
-   },
-   "confezione-hd": {
-    "file": "BT18-19/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver18-19/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 828,
-    "h": 1400,
-    "kb": 273
    }
   }
  },
@@ -536,14 +504,6 @@
     "w": 1000,
     "h": 333,
     "kb": 56
-   },
-   "confezione-hd": {
-    "file": "BT17/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver17/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 828,
-    "h": 1400,
-    "kb": 232
    }
   }
  },
@@ -581,14 +541,6 @@
     "w": 1000,
     "h": 333,
     "kb": 48
-   },
-   "confezione-hd": {
-    "file": "BT16/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver16/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 246
    }
   }
  },
@@ -626,14 +578,6 @@
     "w": 1000,
     "h": 333,
     "kb": 66
-   },
-   "confezione-hd": {
-    "file": "BT15/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver15/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 243
    }
   }
  },
@@ -671,14 +615,6 @@
     "w": 1000,
     "h": 333,
     "kb": 54
-   },
-   "confezione-hd": {
-    "file": "BT14/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver14/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 245
    }
   }
  },
@@ -716,14 +652,6 @@
     "w": 1000,
     "h": 333,
     "kb": 48
-   },
-   "confezione-hd": {
-    "file": "BT13/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver13/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 217
    }
   }
  },
@@ -761,14 +689,6 @@
     "w": 1000,
     "h": 333,
     "kb": 56
-   },
-   "confezione-hd": {
-    "file": "BT12/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver12/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 242
    }
   }
  },
@@ -806,14 +726,6 @@
     "w": 1000,
     "h": 333,
     "kb": 48
-   },
-   "confezione-hd": {
-    "file": "BT11/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver11/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 207
    }
   }
  },
@@ -851,14 +763,6 @@
     "w": 1000,
     "h": 333,
     "kb": 62
-   },
-   "confezione-hd": {
-    "file": "BT10/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver10/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 211
    }
   }
  },
@@ -896,14 +800,6 @@
     "w": 1000,
     "h": 333,
     "kb": 48
-   },
-   "confezione-hd": {
-    "file": "BT9/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver9/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 203
    }
   }
  },
@@ -941,14 +837,6 @@
     "w": 1000,
     "h": 333,
     "kb": 57
-   },
-   "confezione-hd": {
-    "file": "BT8/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver8/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 210
    }
   }
  },
@@ -986,14 +874,6 @@
     "w": 1000,
     "h": 333,
     "kb": 45
-   },
-   "confezione-hd": {
-    "file": "BT7/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver7/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 199
    }
   }
  },
@@ -1031,14 +911,6 @@
     "w": 1000,
     "h": 333,
     "kb": 64
-   },
-   "confezione-hd": {
-    "file": "BT6/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver6/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 248
    }
   }
  },
@@ -1076,14 +948,6 @@
     "w": 1000,
     "h": 333,
     "kb": 61
-   },
-   "confezione-hd": {
-    "file": "BT5/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver5/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 222
    }
   }
  },
@@ -1121,14 +985,6 @@
     "w": 1000,
     "h": 333,
     "kb": 61
-   },
-   "confezione-hd": {
-    "file": "BT4/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver4/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 275
    }
   }
  },
@@ -1167,14 +1023,6 @@
     "w": 1000,
     "h": 333,
     "kb": 52
-   },
-   "confezione-hd": {
-    "file": "BT1-3_v1.0/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver2/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 245
    }
   }
  },
@@ -1213,14 +1061,6 @@
     "w": 1000,
     "h": 333,
     "kb": 52
-   },
-   "confezione-hd": {
-    "file": "BT1-3_v1.5/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ver3/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 832,
-    "h": 1400,
-    "kb": 276
    }
   }
  },
@@ -1380,14 +1220,6 @@
     "w": 1000,
     "h": 333,
     "kb": 41
-   },
-   "confezione-hd": {
-    "file": "EX11/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-11/point/05/pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 222
    }
   }
  },
@@ -1441,14 +1273,6 @@
     "w": 1000,
     "h": 333,
     "kb": 50
-   },
-   "confezione-hd": {
-    "file": "EX10/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-10/point/04/pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 153
    }
   }
  },
@@ -1502,14 +1326,6 @@
     "w": 1000,
     "h": 333,
     "kb": 46
-   },
-   "confezione-hd": {
-    "file": "EX9/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-09/point/05/pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 200
    }
   }
  },
@@ -1563,14 +1379,6 @@
     "w": 1000,
     "h": 333,
     "kb": 46
-   },
-   "confezione-hd": {
-    "file": "EX8/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-08/point/05/pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 183
    }
   }
  },
@@ -1624,14 +1432,6 @@
     "w": 1000,
     "h": 333,
     "kb": 89
-   },
-   "confezione-hd": {
-    "file": "EX7/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-07/point/07/pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 171
    }
   }
  },
@@ -1685,14 +1485,6 @@
     "w": 1000,
     "h": 333,
     "kb": 66
-   },
-   "confezione-hd": {
-    "file": "EX6/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-06/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 223
    }
   }
  },
@@ -1730,14 +1522,6 @@
     "w": 1000,
     "h": 333,
     "kb": 50
-   },
-   "confezione-hd": {
-    "file": "EX5/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-05/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 262
    }
   }
  },
@@ -1775,14 +1559,6 @@
     "w": 1000,
     "h": 333,
     "kb": 48
-   },
-   "confezione-hd": {
-    "file": "EX4/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-04/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 210
    }
   }
  },
@@ -1820,14 +1596,6 @@
     "w": 1000,
     "h": 333,
     "kb": 40
-   },
-   "confezione-hd": {
-    "file": "EX3/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-03/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 210
    }
   }
  },
@@ -1865,14 +1633,6 @@
     "w": 1000,
     "h": 333,
     "kb": 41
-   },
-   "confezione-hd": {
-    "file": "EX2/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-02/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 215
    }
   }
  },
@@ -1910,14 +1670,6 @@
     "w": 1000,
     "h": 333,
     "kb": 43
-   },
-   "confezione-hd": {
-    "file": "EX1/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-01/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 240
    }
   }
  },
@@ -1947,14 +1699,6 @@
     "w": 240,
     "h": 405,
     "kb": 47
-   },
-   "confezione-hd": {
-    "file": "ST26/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-26/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 235
    }
   }
  },
@@ -1984,14 +1728,6 @@
     "w": 240,
     "h": 405,
     "kb": 45
-   },
-   "confezione-hd": {
-    "file": "ST25/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-25/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 216
    }
   }
  },
@@ -2045,14 +1781,6 @@
     "w": 1000,
     "h": 333,
     "kb": 73
-   },
-   "confezione-hd": {
-    "file": "ST24/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-24/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 686,
-    "h": 1400,
-    "kb": 245
    }
   }
  },
@@ -2106,14 +1834,6 @@
     "w": 1000,
     "h": 333,
     "kb": 71
-   },
-   "confezione-hd": {
-    "file": "ST23/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-23/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 686,
-    "h": 1400,
-    "kb": 226
    }
   }
  },
@@ -2167,14 +1887,6 @@
     "w": 1459,
     "h": 333,
     "kb": 40
-   },
-   "confezione-hd": {
-    "file": "ST22/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-22/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 842,
-    "h": 1400,
-    "kb": 297
    }
   }
  },
@@ -2228,14 +1940,6 @@
     "w": 1459,
     "h": 333,
     "kb": 47
-   },
-   "confezione-hd": {
-    "file": "ST21/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-21/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 235
    }
   }
  },
@@ -2289,14 +1993,6 @@
     "w": 1459,
     "h": 333,
     "kb": 43
-   },
-   "confezione-hd": {
-    "file": "ST20/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-20/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 243
    }
   }
  },
@@ -2350,14 +2046,6 @@
     "w": 1459,
     "h": 333,
     "kb": 46
-   },
-   "confezione-hd": {
-    "file": "ST19/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-19/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 686,
-    "h": 1400,
-    "kb": 219
    }
   }
  },
@@ -2411,14 +2099,6 @@
     "w": 1459,
     "h": 333,
     "kb": 43
-   },
-   "confezione-hd": {
-    "file": "ST18/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-18/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 686,
-    "h": 1400,
-    "kb": 201
    }
   }
  },
@@ -2456,14 +2136,6 @@
     "w": 1459,
     "h": 333,
     "kb": 38
-   },
-   "confezione-hd": {
-    "file": "ST17/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-17/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 686,
-    "h": 1400,
-    "kb": 168
    }
   }
  },
@@ -2501,14 +2173,6 @@
     "w": 1459,
     "h": 333,
     "kb": 59
-   },
-   "confezione-hd": {
-    "file": "ST16/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-16/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 231
    }
   }
  },
@@ -2546,14 +2210,6 @@
     "w": 1459,
     "h": 333,
     "kb": 42
-   },
-   "confezione-hd": {
-    "file": "ST15/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-15/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 235
    }
   }
  },
@@ -2591,14 +2247,6 @@
     "w": 1459,
     "h": 333,
     "kb": 19
-   },
-   "confezione-hd": {
-    "file": "ST14/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-14/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 239
    }
   }
  },
@@ -2636,14 +2284,6 @@
     "w": 1459,
     "h": 333,
     "kb": 41
-   },
-   "confezione-hd": {
-    "file": "ST13/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-13/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 261
    }
   }
  },
@@ -2681,14 +2321,6 @@
     "w": 1459,
     "h": 333,
     "kb": 34
-   },
-   "confezione-hd": {
-    "file": "ST12/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-12/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 253
    }
   }
  },
@@ -2718,14 +2350,6 @@
     "w": 196,
     "h": 275,
     "kb": 29
-   },
-   "confezione-hd": {
-    "file": "ST11/confezione-hd.webp",
-    "url": "https://en.digimoncard.com/images/products/deck/st-11/img_pkg.png",
-    "fonte": "en + Real-ESRGAN",
-    "w": 784,
-    "h": 1100,
-    "kb": 128
    }
   }
  },
@@ -2763,14 +2387,6 @@
     "w": 1459,
     "h": 333,
     "kb": 48
-   },
-   "confezione-hd": {
-    "file": "ST10/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-10/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 266
    }
   }
  },
@@ -2808,14 +2424,6 @@
     "w": 1459,
     "h": 333,
     "kb": 50
-   },
-   "confezione-hd": {
-    "file": "ST9/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-9/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 237
    }
   }
  },
@@ -2853,14 +2461,6 @@
     "w": 1459,
     "h": 333,
     "kb": 48
-   },
-   "confezione-hd": {
-    "file": "ST8/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-8/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 253
    }
   }
  },
@@ -2898,14 +2498,6 @@
     "w": 1459,
     "h": 333,
     "kb": 47
-   },
-   "confezione-hd": {
-    "file": "ST7/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-7/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 248
    }
   }
  },
@@ -2943,14 +2535,6 @@
     "w": 1459,
     "h": 333,
     "kb": 44
-   },
-   "confezione-hd": {
-    "file": "ST6/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-6/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 229
    }
   }
  },
@@ -2988,14 +2572,6 @@
     "w": 1459,
     "h": 333,
     "kb": 40
-   },
-   "confezione-hd": {
-    "file": "ST5/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-5/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 228
    }
   }
  },
@@ -3033,14 +2609,6 @@
     "w": 1106,
     "h": 333,
     "kb": 31
-   },
-   "confezione-hd": {
-    "file": "ST4/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-4/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 229
    }
   }
  },
@@ -3078,14 +2646,6 @@
     "w": 1459,
     "h": 333,
     "kb": 51
-   },
-   "confezione-hd": {
-    "file": "ST3/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-3/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 191
    }
   }
  },
@@ -3123,14 +2683,6 @@
     "w": 1121,
     "h": 333,
     "kb": 34
-   },
-   "confezione-hd": {
-    "file": "ST2/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-2/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 199
    }
   }
  },
@@ -3168,14 +2720,6 @@
     "w": 1145,
     "h": 333,
     "kb": 29
-   },
-   "confezione-hd": {
-    "file": "ST1/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/deck/st-1/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 216
    }
   }
  },
@@ -3213,14 +2757,6 @@
     "w": 1000,
     "h": 333,
     "kb": 49
-   },
-   "confezione-hd": {
-    "file": "RB1/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/rb-01/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 1400,
-    "kb": 197
    }
   }
  },
@@ -3274,14 +2810,6 @@
     "w": 1000,
     "h": 333,
     "kb": 42
-   },
-   "confezione-hd": {
-    "file": "AD1/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/pack/ad-01/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 691,
-    "h": 1400,
-    "kb": 217
    }
   }
  },
@@ -3311,14 +2839,6 @@
     "w": 240,
     "h": 405,
     "kb": 83
-   },
-   "confezione-hd": {
-    "file": "LM09/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/limited-lm-09/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 276
    }
   }
  },
@@ -3356,14 +2876,6 @@
     "w": 1000,
     "h": 333,
     "kb": 46
-   },
-   "confezione-hd": {
-    "file": "LM08/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/limited-lm-08/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 216
    }
   }
  },
@@ -3401,14 +2913,6 @@
     "w": 1000,
     "h": 333,
     "kb": 53
-   },
-   "confezione-hd": {
-    "file": "LM07/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/limited-lm-07/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 830,
-    "h": 1400,
-    "kb": 209
    }
   }
  },
@@ -3446,14 +2950,6 @@
     "w": 1000,
     "h": 333,
     "kb": 51
-   },
-   "confezione-hd": {
-    "file": "LM06/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/limited-pack-billion-bullet/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 828,
-    "h": 1400,
-    "kb": 183
    }
   }
  },
@@ -3475,14 +2971,6 @@
     "w": 240,
     "h": 490,
     "kb": 242
-   },
-   "confezione-hd": {
-    "file": "LM05/confezione-hd.webp",
-    "url": "https://en.digimoncard.com/images/products/goods/limited_lm-05/img_pkg.png",
-    "fonte": "en + Real-ESRGAN",
-    "w": 686,
-    "h": 1400,
-    "kb": 199
    }
   }
  },
@@ -3504,14 +2992,6 @@
     "w": 240,
     "h": 490,
     "kb": 221
-   },
-   "confezione-hd": {
-    "file": "LM04/confezione-hd.webp",
-    "url": "https://en.digimoncard.com/images/products/goods/limited_lm-04/img_pkg.png",
-    "fonte": "en + Real-ESRGAN",
-    "w": 686,
-    "h": 1400,
-    "kb": 174
    }
   }
  },
@@ -3533,14 +3013,6 @@
     "w": 240,
     "h": 490,
     "kb": 96
-   },
-   "confezione-hd": {
-    "file": "LM03/confezione-hd.webp",
-    "url": "https://en.digimoncard.com/images/products/goods/limited_lm-03/img_pkg.png",
-    "fonte": "en + Real-ESRGAN",
-    "w": 686,
-    "h": 1400,
-    "kb": 235
    }
   }
  },
@@ -3562,14 +3034,6 @@
     "w": 240,
     "h": 490,
     "kb": 227
-   },
-   "confezione-hd": {
-    "file": "LM02/confezione-hd.webp",
-    "url": "https://en.digimoncard.com/images/products/goods/limited_lm-02/img_pkg.png",
-    "fonte": "en + Real-ESRGAN",
-    "w": 686,
-    "h": 1400,
-    "kb": 191
    }
   }
  },
@@ -3591,14 +3055,6 @@
     "w": 240,
     "h": 487,
     "kb": 235
-   },
-   "confezione-hd": {
-    "file": "LM01/confezione-hd.webp",
-    "url": "https://en.digimoncard.com/images/products/goods/limited_pack/img_pkg.png",
-    "fonte": "en + Real-ESRGAN",
-    "w": 690,
-    "h": 1400,
-    "kb": 164
    }
   }
  },
@@ -3636,14 +3092,6 @@
     "w": 1000,
     "h": 333,
     "kb": 53
-   },
-   "confezione-hd": {
-    "file": "LM01-05/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/special-limited-set/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 828,
-    "h": 1400,
-    "kb": 191
    }
   }
  },
@@ -3673,14 +3121,6 @@
     "w": 336,
     "h": 280,
     "kb": 62
-   },
-   "confezione-hd": {
-    "file": "PB28/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/seven-great-demon-lords/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 1344,
-    "h": 1120,
-    "kb": 342
    }
   }
  },
@@ -3710,14 +3150,6 @@
     "w": 336,
     "h": 280,
     "kb": 68
-   },
-   "confezione-hd": {
-    "file": "PB27/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/royal-knights/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 1344,
-    "h": 1120,
-    "kb": 364
    }
   }
  },
@@ -3747,14 +3179,6 @@
     "w": 336,
     "h": 280,
     "kb": 60
-   },
-   "confezione-hd": {
-    "file": "PB26/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/selection-box-verx-antibody/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 1344,
-    "h": 1120,
-    "kb": 292
    }
   }
  },
@@ -3784,14 +3208,6 @@
     "w": 336,
     "h": 280,
     "kb": 240
-   },
-   "confezione-hd": {
-    "file": "PB25/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/story-time-stranger-set/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 1344,
-    "h": 1120,
-    "kb": 368
    }
   }
  },
@@ -3821,14 +3237,6 @@
     "w": 196,
     "h": 148,
     "kb": 33
-   },
-   "confezione-hd": {
-    "file": "PB24/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/nexus-of-digimon/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 592,
-    "kb": 59
    }
   }
  },
@@ -3858,14 +3266,6 @@
     "w": 196,
     "h": 148,
     "kb": 23
-   },
-   "confezione-hd": {
-    "file": "PB23/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/premium-heroines-set-02/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 592,
-    "kb": 146
    }
   }
  },
@@ -3895,14 +3295,6 @@
     "w": 336,
     "h": 280,
     "kb": 65
-   },
-   "confezione-hd": {
-    "file": "PB22/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/liberator-debuggers-set/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 1344,
-    "h": 1120,
-    "kb": 389
    }
   }
  },
@@ -3956,14 +3348,6 @@
     "w": 472,
     "h": 300,
     "kb": 66
-   },
-   "confezione-hd": {
-    "file": "PB21/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/tamers-evolution-box/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 592,
-    "kb": 128
    }
   }
  },
@@ -3993,14 +3377,6 @@
     "w": 196,
     "h": 147,
     "kb": 24
-   },
-   "confezione-hd": {
-    "file": "PB20/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/animation_series_25th/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 588,
-    "kb": 179
    }
   }
  },
@@ -4030,14 +3406,6 @@
     "w": 196,
     "h": 163,
     "kb": 25
-   },
-   "confezione-hd": {
-    "file": "PB19/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/omnimon-binder-set/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 652,
-    "kb": 142
    }
   }
  },
@@ -4067,14 +3435,6 @@
     "w": 240,
     "h": 200,
     "kb": 34
-   },
-   "confezione-hd": {
-    "file": "PB18/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/premium-heroines-set/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 960,
-    "h": 800,
-    "kb": 195
    }
   }
  },
@@ -4104,14 +3464,6 @@
     "w": 196,
     "h": 168,
     "kb": 28
-   },
-   "confezione-hd": {
-    "file": "PB17/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/the_beginning_set/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 672,
-    "kb": 187
    }
   }
  },
@@ -4141,14 +3493,6 @@
     "w": 240,
     "h": 200,
     "kb": 37
-   },
-   "confezione-hd": {
-    "file": "PB16/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_PB16/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 960,
-    "h": 800,
-    "kb": 204
    }
   }
  },
@@ -4178,14 +3522,6 @@
     "w": 196,
     "h": 163,
     "kb": 25
-   },
-   "confezione-hd": {
-    "file": "PB15/confezione-hd.webp",
-    "url": "https://digimoncard.com/images/products/goods/3rd_anniversary_set/img_pkg.png",
-    "fonte": "jp + Real-ESRGAN",
-    "w": 784,
-    "h": 652,
-    "kb": 170
    }
   }
  },
@@ -4223,14 +3559,6 @@
     "w": 240,
     "h": 200,
     "kb": 33
-   },
-   "confezione-hd": {
-    "file": "PB14/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_PB14/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 960,
-    "h": 800,
-    "kb": 195
    }
   }
  },
@@ -4260,14 +3588,6 @@
     "w": 240,
     "h": 200,
     "kb": 31
-   },
-   "confezione-hd": {
-    "file": "PB13/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/royal_knights_binderset/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 960,
-    "h": 800,
-    "kb": 202
    }
   }
  },
@@ -4297,14 +3617,6 @@
     "w": 196,
     "h": 131,
     "kb": 20
-   },
-   "confezione-hd": {
-    "file": "PB12E/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/2nd-anniversary-set/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 524,
-    "kb": 125
    }
   }
  },
@@ -4334,14 +3646,6 @@
     "w": 196,
     "h": 131,
     "kb": 17
-   },
-   "confezione-hd": {
-    "file": "PB11/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_05/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 524,
-    "kb": 100
    }
   }
  },
@@ -4371,14 +3675,6 @@
     "w": 196,
     "h": 147,
     "kb": 18
-   },
-   "confezione-hd": {
-    "file": "PB10/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_04/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 588,
-    "kb": 102
    }
   }
  },
@@ -4408,14 +3704,6 @@
     "w": 196,
     "h": 147,
     "kb": 18
-   },
-   "confezione-hd": {
-    "file": "PB9/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/playmat_floral-fun/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 588,
-    "kb": 124
    }
   }
  },
@@ -4445,14 +3733,6 @@
     "w": 196,
     "h": 147,
     "kb": 18
-   },
-   "confezione-hd": {
-    "file": "PB8/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/playmat_digimon-tamers/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 588,
-    "kb": 110
    }
   }
  },
@@ -4482,14 +3762,6 @@
     "w": 196,
     "h": 147,
     "kb": 17
-   },
-   "confezione-hd": {
-    "file": "PB7/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_ex/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 588,
-    "kb": 115
    }
   }
  },
@@ -4519,14 +3791,6 @@
     "w": 196,
     "h": 147,
     "kb": 20
-   },
-   "confezione-hd": {
-    "file": "PB6/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/tamer-evolution-box2/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 588,
-    "kb": 125
    }
   }
  },
@@ -4556,14 +3820,6 @@
     "w": 196,
     "h": 147,
     "kb": 19
-   },
-   "confezione-hd": {
-    "file": "PB5/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_03/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 588,
-    "kb": 155
    }
   }
  },
@@ -4593,14 +3849,6 @@
     "w": 196,
     "h": 147,
     "kb": 19
-   },
-   "confezione-hd": {
-    "file": "PB4/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_02/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 588,
-    "kb": 102
    }
   }
  },
@@ -4659,14 +3907,6 @@
     "w": 196,
     "h": 147,
     "kb": 20
-   },
-   "confezione-hd": {
-    "file": "PB2/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 588,
-    "kb": 137
    }
   }
  },
@@ -4696,14 +3936,6 @@
     "w": 196,
     "h": 147,
     "kb": 19
-   },
-   "confezione-hd": {
-    "file": "PB1/confezione-hd.webp",
-    "url": "https://world.digimoncard.com/images/products/goods/evolution-box/img_pkg.png",
-    "fonte": "world + Real-ESRGAN",
-    "w": 784,
-    "h": 588,
-    "kb": 116
    }
   }
  }
