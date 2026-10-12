@@ -3,7 +3,7 @@
 import subprocess, sys, pathlib, shutil, functools
 sys.stderr = sys.stdout
 subprocess.run = functools.partial(subprocess.run, stderr=subprocess.STDOUT)
-subprocess.run([sys.executable, "-m", "pip", "install", "-q", "--index-url", "https://download.pytorch.org/whl/cpu", "torch"], check=True)
+subprocess.run([sys.executable, "-m", "pip", "install", "-q", "--index-url", "https://download.pytorch.org/whl/cpu", "torch", "torchvision"], check=True)
 subprocess.run([sys.executable, "-m", "pip", "install", "-q", "spandrel", "numpy", "pillow"], check=True)
 from PIL import Image, ImageDraw
 root = pathlib.Path(__file__).resolve().parent.parent
