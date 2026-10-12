@@ -2815,11 +2815,11 @@
    },
    "logo": {
     "file": "PB21/logo.png",
-    "url": "https://world.digimoncard.com/images/products/goods/tamers-evolution-box/pc/title.png",
+    "url": "https://world.digimoncard.com/images/products/goods/tamers-evolution-box/logo.png",
     "fonte": "world",
-    "w": 761,
-    "h": 168,
-    "kb": 9
+    "w": 472,
+    "h": 300,
+    "kb": 66
    }
   }
  },
