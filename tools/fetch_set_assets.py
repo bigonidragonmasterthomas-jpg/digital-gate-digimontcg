@@ -221,6 +221,53 @@ def process(prod):
     return prod
 
 
+def una_logos():
+    """Loghi trasparenti dei set Digimon da unacollezione.it (gli stessi della vista elenco di "Tutti i set").
+    Restituisce {codice canonico: url}."""
+    h = get("https://unacollezione.it/tutti-i-set") or ""
+    main = re.findall(r'src="(/assets/index-[^"]+\.js)"', h)
+    js = get("https://unacollezione.it" + main[0]) if main else ""
+    key = re.search(r"eyJ[A-Za-z0-9_\-]{20,}\.[A-Za-z0-9_\-]{20,}\.[A-Za-z0-9_\-]{10,}", js or "")
+    if not key:
+        print("unacollezione: chiave pubblica non trovata, salto i loghi")
+        return {}
+    req = urllib.request.Request("https://api.unacollezione.it/rest/v1/AllSets?select=setCode,imgset&subcategory=eq.digimon",
+                                 headers={**UA, "apikey": key.group(0), "Authorization": "Bearer " + key.group(0)})
+    try:
+        rows = json.loads(urllib.request.urlopen(req, timeout=30).read())
+    except Exception as e:
+        print("unacollezione: elenco non disponibile", e)
+        return {}
+    out = {}
+    for r in rows:
+        code, url = (r.get("setCode") or "").strip(), (r.get("imgset") or "").strip()
+        if not code or not url:
+            continue
+        key2 = "LM01-05" if code == "LM01-05" else canonical(code)
+        if key2:
+            out[key2] = url
+    print("unacollezione: %d loghi" % len(out))
+    return out
+
+
+def add_una_logos(done):
+    logos = una_logos()
+    for p in done:
+        if "logo" in p["files"]:
+            continue
+        url = logos.get(p["key"]) or logos.get(p["key"].split("_v")[0])
+        if not url:
+            continue
+        data, im = fetch_image(url)
+        if data is None or im.mode not in ("RGBA", "LA", "P"):
+            continue
+        ext = url.rsplit(".", 1)[1].lower()
+        (OUT / p["key"]).mkdir(parents=True, exist_ok=True)
+        (OUT / p["key"] / ("logo." + ext)).write_bytes(data)
+        p["files"]["logo"] = {"file": "%s/logo.%s" % (p["key"], ext), "url": url, "fonte": "unacollezione",
+                              "w": im.size[0], "h": im.size[1], "kb": round(len(data) / 1024)}
+
+
 def contact_sheet(products, path):
     """Foglio provini: per ogni espansione l'artwork principale e la confezione."""
     cw, ch, cols = 400, 210, 4
@@ -268,6 +315,7 @@ def main():
     with cf.ThreadPoolExecutor(8) as ex:
         done = list(ex.map(process, products.values()))
     done.sort(key=order_key)
+    add_una_logos(done)
     index = []
     for p in done:
         index.append({"codice": p["key"], "codici_app": app_codes(p["key"]), "nome": p["name"], "uscita": p["release"],
@@ -279,19 +327,20 @@ def main():
           "Immagini scaricate automaticamente dal sito ufficiale Bandai (world.digimoncard.com; dove manca, en.digimoncard.com "
           "o digimoncard.com). Il copyright di artwork e loghi è di Bandai / Toei Animation: usale solo per scopi personali "
           "o con il loro permesso.", "",
-          "Il sito non pubblica quasi mai i loghi come file separati: il logo si trova nel **key visual** (set recenti) e sempre "
-          "sulla **confezione**. Elenco completo con fonti e dimensioni in `index.json`, foglio riassuntivo in `anteprima.jpg`.", ""]
+          "I **loghi trasparenti** (`logo.*`) vengono da unacollezione.it, perché il sito Bandai non li pubblica come file separati. "
+          "Elenco completo con fonti e dimensioni in `index.json`, foglio riassuntivo in `anteprima.jpg`.", ""]
     fam = None
     for p in index:
         f = p["file"]
         if p["codice"][:2] != fam:
             fam = p["codice"][:2]
-            md += ["", "## " + TYPE_NAMES.get(fam, fam), "", "| Set | Artwork | Confezione |", "|---|---|---|"]
+            md += ["", "## " + TYPE_NAMES.get(fam, fam), "", "| Set | Logo | Artwork | Confezione |", "|---|---|---|---|"]
         main = next((f[k] for k in ("keyvisual", "banner", "promo", "keyvisual-verticale") if k in f), None)
         art = '<img src="%s" width="320">' % main["file"] if main else "—"
         pkg = '<img src="%s" width="70">' % f["confezione"]["file"] if "confezione" in f else "—"
         extra = ", ".join("[%s](%s)" % (k, v["file"]) for k, v in f.items())
-        md.append("| **%s**<br>%s<br>%s<br>%s | %s | %s |" % (p["codice"], p["nome"], p["uscita"], extra, art, pkg))
+        logo = '<img src="%s" width="200">' % f["logo"]["file"] if "logo" in f else "—"
+        md.append("| **%s**<br>%s<br>%s<br>%s | %s | %s | %s |" % (p["codice"], p["nome"], p["uscita"], extra, logo, art, pkg))
     (OUT / "README.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     # riepilogo
     from collections import Counter
