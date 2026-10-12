@@ -1,0 +1,50 @@
+name: Loghi e artwork set
+# Scarica dal sito ufficiale Bandai loghi e artwork promozionali di tutte le espansioni
+# e li salva nel branch "set-assets" (con galleria README.md, index.json e anteprima.jpg).
+# Si avvia a mano (Actions → "Loghi e artwork set" → Run workflow) e ogni lunedì per prendere i set nuovi.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "41 4 * * 1"
+permissions:
+  contents: write
+concurrency:
+  group: set-assets
+  cancel-in-progress: false
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pillow
+      - name: Scarica loghi e artwork
+        shell: bash
+        run: |
+          mkdir -p out
+          python3 tools/fetch_set_assets.py out | tee out/log.txt
+      - name: Salva nel branch set-assets
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          if git fetch -q --depth 1 origin set-assets; then
+            git worktree add -q -B set-assets br FETCH_HEAD
+          else
+            git worktree add -q --detach br
+            git -C br checkout -q --orphan set-assets
+          fi
+          git -C br rm -rqf --ignore-unmatch .
+          cp -r out/. br/
+          rm -f br/log.txt
+          git -C br add -A
+          if git -C br diff --cached --quiet; then
+            echo "Nessuna novità rispetto all'ultima esecuzione"
+          else
+            git -C br commit -qm "Loghi e artwork aggiornati (run ${{ github.run_number }})"
+            git -C br push -q origin set-assets
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: loghi-e-artwork
+          path: out
+          retention-days: 30
