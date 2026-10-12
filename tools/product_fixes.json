@@ -1,3 +1,4 @@
 {
- "_": "Correzioni a mano alle caratteristiche dei prodotti (tools/fetch_products.py). Chiave = codice set dell'app; i campi indicati sostituiscono quelli letti dal sito, null li toglie."
+ "_": "Correzioni a mano alle caratteristiche dei prodotti (tools/fetch_products.py). Chiave = codice set dell'app; i campi indicati sostituiscono quelli letti dal sito, null li toglie.",
+ "ST11": {"cont": ["Start Deck (1 set of 54 cards)", "2 memory gauges", "4 promotion cards", "1 card case"]}
 }

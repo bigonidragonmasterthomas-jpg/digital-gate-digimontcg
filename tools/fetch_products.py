@@ -23,6 +23,7 @@ def to_lines(h):
     h = re.sub(r"<!--.*?-->", "", h, flags=re.S)
     h = re.sub(r"<(script|style)\b.*?</\1>", "", h, flags=re.S | re.I)
     h = re.sub(r"<br\s*/?>", SOFT, h, flags=re.I)
+    h = re.sub(r"<li\b[^>]*class=\"[^\"]*asterisk[^\"]*\"[^>]*>", "\n*", h, flags=re.I)
     h = re.sub(r"</?(dt|dd|dl|li|ul|ol|p|div|tr|td|th|table|h\d|section|header|footer|nav)\b[^>]*>", "\n", h, flags=re.I)
     h = html.unescape(re.sub(r"<[^>]+>", "", h)).replace("　", " ").replace("\xa0", " ")
     out = []
@@ -33,14 +34,15 @@ def to_lines(h):
     return out
 
 LABELS = [("pre", re.compile(r"^pre-?release date\b", re.I)),
-          ("rel", re.compile(r"^(release date|scheduled shipping date)\b", re.I)),
-          ("unit", re.compile(r"^1 ?(pack|deck|set|box)\b", re.I)),
+          ("rel", re.compile(r"^release date(\s*\(for [^)]*\))?\s*:?$", re.I)),
+          ("ship", re.compile(r"^scheduled shipping date(\s*\(for [^)]*\))?\s*:?$", re.I)),
+          ("unit", re.compile(r"^1 ?(pack|deck|set|box)( of \d+ cards)?$", re.I)),
           ("price", re.compile(r"^(msrp\b|manufacturer.s suggested retail price)", re.I)),
           ("types", re.compile(r"^card types?\s*:?$", re.I)),
           ("rar", re.compile(r"^rarity\s*:?$", re.I)),
           ("cont", re.compile(r"^contents?\s*:?$", re.I)),
           ("skip", re.compile(r"^(product name|tournament legal date)\b", re.I))]
-STOP = re.compile(r"^([*※]|card list$|questionnaire$|return to products|please check|pre-order|booster packs?$|official social|view more$|contents open$|point ?\d)", re.I)
+STOP = re.compile(r"^([*※]|apology$|premium bandai|photos and actual|product specifications|prices? (is|are) |this product (is|contains|features) |card list$|questionnaire$|return to products|please check|pre-order|booster packs?$|official social|view more$|contents open$|point ?\d)", re.I)
 
 def fields(lines):
     """Ogni etichetta raccoglie le righe che la seguono; vale l'ultimo blocco della pagina (la scheda in fondo)."""
@@ -97,7 +99,10 @@ def contents(ls):
 def parse(page):
     f = fields(to_lines(page)); p = {}
     whole = flat(to_lines(page))
-    if "rel" in f: p["rel"] = dates(f["rel"], LABELS[1][1])
+    rel = []
+    for k in ("ship", "rel"):
+        if k in f: rel += dates(f[k], re.compile(r"^(release|scheduled shipping) date", re.I))
+    if rel: p["rel"] = rel
     if not p.get("rel"):
         m = re.search(r"Release Date\s*:\s*([A-Za-z]+\.?,?\s*(?:\d{1,2},?\s*)?\d{4})", whole, re.I)
         if m: p["rel"] = dates(["x", m.group(1)], re.compile("^x"))
@@ -117,7 +122,7 @@ def parse(page):
         p["price"] = pr
     if "types" in f and len(f["types"]) > 1: p["types"] = flat(f["types"][1:])
     if "rar" in f:
-        r = [[re.sub(r"\s+", " ", a).strip(" ・,"), int(b)] for a, b in re.findall(r"([A-Za-z][A-Za-z0-9 .\-]*?)\s*:\s*(\d+)\s*types?", flat(f["rar"][1:]))]
+        r = [[re.sub(r"\s+", " ", a).strip(" ・,"), int(b)] for a, b in re.findall(r"([A-Za-z0-9][A-Za-z0-9 .\-]*?)\s*:\s*(\d+)\s*types?", flat(f["rar"][1:]))]
         for x in r:
             if x[0] == "Ultimate Rate": x[0] = "Ultimate Rare"
         if r: p["rar"] = r
