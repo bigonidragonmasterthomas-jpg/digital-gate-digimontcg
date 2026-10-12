@@ -1581,6 +1581,22 @@
   "pagina": "https://world.digimoncard.com/products/deck/st-21/",
   "sito": "world",
   "file": {
+   "keyvisual": {
+    "file": "ST21/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st20-21/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 542
+   },
+   "keyvisual-verticale": {
+    "file": "ST21/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st20-21/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 366
+   },
    "banner": {
     "file": "ST21/banner.jpg",
     "url": "https://world.digimoncard.com/images/products/deck/st-21/bnr.jpg",
@@ -1610,6 +1626,22 @@
   "pagina": "https://world.digimoncard.com/products/deck/st-20/",
   "sito": "world",
   "file": {
+   "keyvisual": {
+    "file": "ST20/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st20-21/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 542
+   },
+   "keyvisual-verticale": {
+    "file": "ST20/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st20-21/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 366
+   },
    "banner": {
     "file": "ST20/banner.jpg",
     "url": "https://world.digimoncard.com/images/products/deck/st-20/bnr.jpg",
@@ -1639,6 +1671,22 @@
   "pagina": "https://world.digimoncard.com/products/deck/st-19/",
   "sito": "world",
   "file": {
+   "keyvisual": {
+    "file": "ST19/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st18-19/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 948
+   },
+   "keyvisual-verticale": {
+    "file": "ST19/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st18-19/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 543
+   },
    "banner": {
     "file": "ST19/banner.jpg",
     "url": "https://world.digimoncard.com/images/products/deck/st-19/bnr.jpg",
@@ -1668,6 +1716,22 @@
   "pagina": "https://world.digimoncard.com/products/deck/st-18/",
   "sito": "world",
   "file": {
+   "keyvisual": {
+    "file": "ST18/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st18-19/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 948
+   },
+   "keyvisual-verticale": {
+    "file": "ST18/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st18-19/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 543
+   },
    "banner": {
     "file": "ST18/banner.jpg",
     "url": "https://world.digimoncard.com/images/products/deck/st-18/bnr.jpg",
