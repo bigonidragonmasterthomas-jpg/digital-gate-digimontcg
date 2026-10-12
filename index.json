@@ -81,11 +81,11 @@
    },
    "logo": {
     "file": "BT26/logo.webp",
-    "url": "https://img.unacollezione.it/IMGLOGO/digimon_timeless_bonds_imglogo.webp",
-    "fonte": "unacollezione",
-    "w": 1000,
-    "h": 333,
-    "kb": 51
+    "url": "src/logos/BT26.webp",
+    "fonte": "utente",
+    "w": 2000,
+    "h": 667,
+    "kb": 177
    }
   }
  },
@@ -187,11 +187,11 @@
    },
    "logo": {
     "file": "BT24/logo.webp",
-    "url": "https://img.unacollezione.it/IMGLOGO/digimon_time_stranger_imglogo.webp",
-    "fonte": "unacollezione",
-    "w": 1000,
-    "h": 333,
-    "kb": 56
+    "url": "src/logos/BT24.webp",
+    "fonte": "utente",
+    "w": 2000,
+    "h": 667,
+    "kb": 173
    }
   }
  },
