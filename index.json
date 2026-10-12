@@ -25,6 +25,14 @@
     "w": 240,
     "h": 405,
     "kb": 56
+   },
+   "logo": {
+    "file": "BT27/logo.webp",
+    "url": "src/logos/BT27.webp",
+    "fonte": "utente",
+    "w": 2000,
+    "h": 695,
+    "kb": 139
    }
   }
  },
@@ -126,11 +134,11 @@
    },
    "logo": {
     "file": "BT25/logo.webp",
-    "url": "https://img.unacollezione.it/IMGLOGO/digimon_dual_revolution_imglogo.webp",
-    "fonte": "unacollezione",
-    "w": 1000,
-    "h": 333,
-    "kb": 46
+    "url": "src/logos/BT25.webp",
+    "fonte": "utente",
+    "w": 2000,
+    "h": 667,
+    "kb": 142
    }
   }
  },
@@ -684,11 +692,11 @@
    },
    "logo": {
     "file": "BT12/logo.webp",
-    "url": "https://img.unacollezione.it/IMGLOGO/digimon_across_time_imglogo.webp",
-    "fonte": "unacollezione",
-    "w": 1000,
-    "h": 333,
-    "kb": 56
+    "url": "src/logos/BT12.webp",
+    "fonte": "utente",
+    "w": 2000,
+    "h": 668,
+    "kb": 202
    }
   }
  },
@@ -758,11 +766,11 @@
    },
    "logo": {
     "file": "BT10/logo.webp",
-    "url": "https://img.unacollezione.it/IMGLOGO/digimon_xros_encounter_imglogo.webp",
-    "fonte": "unacollezione",
-    "w": 1000,
-    "h": 333,
-    "kb": 62
+    "url": "src/logos/BT10.webp",
+    "fonte": "utente",
+    "w": 2000,
+    "h": 669,
+    "kb": 182
    }
   }
  },
@@ -1109,11 +1117,11 @@
    },
    "logo": {
     "file": "EX13/logo.webp",
-    "url": "https://img.unacollezione.it/IMGLOGO/digimon_chivalrous_xiii_imglogo.webp",
-    "fonte": "unacollezione",
-    "w": 1000,
-    "h": 333,
-    "kb": 48
+    "url": "src/logos/EX13.webp",
+    "fonte": "utente",
+    "w": 2000,
+    "h": 668,
+    "kb": 172
    }
   }
  },
@@ -1162,11 +1170,11 @@
    },
    "logo": {
     "file": "EX12/logo.webp",
-    "url": "https://img.unacollezione.it/IMGLOGO/digimon_digital_world_shambala_imglogo.webp",
-    "fonte": "unacollezione",
-    "w": 1000,
-    "h": 333,
-    "kb": 78
+    "url": "src/logos/EX12.webp",
+    "fonte": "utente",
+    "w": 2000,
+    "h": 667,
+    "kb": 168
    }
   }
  },
@@ -1215,11 +1223,11 @@
    },
    "logo": {
     "file": "EX11/logo.webp",
-    "url": "https://img.unacollezione.it/IMGLOGO/digimon_dawn_of_liberator_imglogo.webp",
-    "fonte": "unacollezione",
-    "w": 1000,
-    "h": 333,
-    "kb": 41
+    "url": "src/logos/EX11.webp",
+    "fonte": "utente",
+    "w": 2000,
+    "h": 667,
+    "kb": 140
    }
   }
  },
@@ -1554,11 +1562,11 @@
    },
    "logo": {
     "file": "EX4/logo.webp",
-    "url": "https://img.unacollezione.it/IMGLOGO/digimon_alternative_being_booster_imglogo.webp",
-    "fonte": "unacollezione",
-    "w": 1000,
-    "h": 333,
-    "kb": 48
+    "url": "src/logos/EX4.webp",
+    "fonte": "utente",
+    "w": 2000,
+    "h": 668,
+    "kb": 93
    }
   }
  },
@@ -2805,11 +2813,11 @@
    },
    "logo": {
     "file": "AD1/logo.webp",
-    "url": "https://img.unacollezione.it/IMGLOGO/digimon_digimon_generation_imglogo.webp",
-    "fonte": "unacollezione",
-    "w": 1000,
-    "h": 333,
-    "kb": 42
+    "url": "src/logos/AD1.webp",
+    "fonte": "utente",
+    "w": 2000,
+    "h": 667,
+    "kb": 147
    }
   }
  },

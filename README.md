@@ -2,14 +2,14 @@
 
 Immagini scaricate automaticamente dal sito ufficiale Bandai (world.digimoncard.com; dove manca, en.digimoncard.com o digimoncard.com). Il copyright di artwork e loghi è di Bandai / Toei Animation: usale solo per scopi personali o con il loro permesso.
 
-I **loghi trasparenti** (`logo.*`) vengono da unacollezione.it, perché il sito Bandai non li pubblica come file separati. Elenco completo con fonti e dimensioni in `index.json`, foglio riassuntivo in `anteprima.jpg`.
+I **loghi trasparenti** (`logo.*`) vengono da unacollezione.it, perché il sito Bandai non li pubblica come file separati; quelli con fonte `utente` in `index.json` sono stati forniti a mano (cartella `src/logos/` del progetto) e hanno la precedenza. Elenco completo con fonti e dimensioni in `index.json`, foglio riassuntivo in `anteprima.jpg`.
 
 
 ## Booster
 
 | Set | Logo | Artwork | Confezione |
 |---|---|---|---|
-| **BT27**<br>IGNITION OF X [BT-27]<br>December 11, 2026<br>[banner](BT27/banner.jpg), [confezione](BT27/confezione.png) | — | <img src="BT27/banner.jpg" width="320"> | <img src="BT27/confezione.png" width="70"> |
+| **BT27**<br>IGNITION OF X [BT-27]<br>December 11, 2026<br>[banner](BT27/banner.jpg), [confezione](BT27/confezione.png), [logo](BT27/logo.webp) | <img src="BT27/logo.webp" width="200"> | <img src="BT27/banner.jpg" width="320"> | <img src="BT27/confezione.png" width="70"> |
 | **BT26**<br>TIMELESS BONDS [BT-26]<br>September 4, 2026<br>[keyvisual](BT26/keyvisual.webp), [keyvisual-verticale](BT26/keyvisual-verticale.webp), [banner](BT26/banner.jpg), [confezione](BT26/confezione.webp), [logo](BT26/logo.webp) | <img src="BT26/logo.webp" width="200"> | <img src="BT26/keyvisual.webp" width="320"> | <img src="BT26/confezione.webp" width="70"> |
 | **BT25**<br>DUAL REVOLUTION [BT-25]<br>May 22, 2026<br>[keyvisual](BT25/keyvisual.jpg), [keyvisual-verticale](BT25/keyvisual-verticale.jpg), [banner](BT25/banner.jpg), [confezione](BT25/confezione.png), [logo](BT25/logo.webp) | <img src="BT25/logo.webp" width="200"> | <img src="BT25/keyvisual.jpg" width="320"> | <img src="BT25/confezione.png" width="70"> |
 | **BT24**<br>TIME STRANGER [BT-24]<br>January 23, 2026<br>[keyvisual](BT24/keyvisual.jpg), [keyvisual-verticale](BT24/keyvisual-verticale.jpg), [banner](BT24/banner.jpg), [confezione](BT24/confezione.png), [logo](BT24/logo.webp) | <img src="BT24/logo.webp" width="200"> | <img src="BT24/keyvisual.jpg" width="320"> | <img src="BT24/confezione.png" width="70"> |
