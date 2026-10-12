@@ -64,12 +64,12 @@
     "kb": 286
    },
    "confezione": {
-    "file": "BT26/confezione.png",
-    "url": "https://world.digimoncard.com/images/products/pack/ver26/img_pkg.png",
+    "file": "BT26/confezione.webp",
+    "url": "https://world.digimoncard.com/images/products/pack/ver26/point/05/pkg.webp",
     "fonte": "world",
-    "w": 240,
-    "h": 405,
-    "kb": 60
+    "w": 430,
+    "h": 725,
+    "kb": 54
    },
    "logo": {
     "file": "BT26/logo.webp",
@@ -118,11 +118,11 @@
    },
    "confezione": {
     "file": "BT25/confezione.png",
-    "url": "https://world.digimoncard.com/images/products/pack/ver25/img_pkg.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver25/point/06/pkg.png",
     "fonte": "world",
-    "w": 240,
-    "h": 405,
-    "kb": 57
+    "w": 430,
+    "h": 725,
+    "kb": 198
    },
    "logo": {
     "file": "BT25/logo.webp",
@@ -171,11 +171,11 @@
    },
    "confezione": {
     "file": "BT24/confezione.png",
-    "url": "https://world.digimoncard.com/images/products/pack/ver24/img_pkg.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver24/point/04/pkg.png",
     "fonte": "world",
-    "w": 240,
-    "h": 405,
-    "kb": 52
+    "w": 430,
+    "h": 725,
+    "kb": 171
    },
    "logo": {
     "file": "BT24/logo.webp",
@@ -224,11 +224,11 @@
    },
    "confezione": {
     "file": "BT23/confezione.png",
-    "url": "https://world.digimoncard.com/images/products/pack/ver23/img_pkg.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver23/point/05/pkg.png",
     "fonte": "world",
-    "w": 240,
-    "h": 405,
-    "kb": 54
+    "w": 430,
+    "h": 725,
+    "kb": 446
    },
    "logo": {
     "file": "BT23/logo.webp",
@@ -277,11 +277,11 @@
    },
    "confezione": {
     "file": "BT22/confezione.png",
-    "url": "https://world.digimoncard.com/images/products/pack/ver22/img_pkg.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver22/point/05/pkg.png",
     "fonte": "world",
-    "w": 240,
-    "h": 404,
-    "kb": 55
+    "w": 430,
+    "h": 725,
+    "kb": 190
    },
    "logo": {
     "file": "BT22/logo.webp",
@@ -330,11 +330,11 @@
    },
    "confezione": {
     "file": "BT21/confezione.png",
-    "url": "https://world.digimoncard.com/images/products/pack/ver21/img_pkg.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver21/point/05/pkg.png",
     "fonte": "world",
-    "w": 240,
-    "h": 405,
-    "kb": 247
+    "w": 300,
+    "h": 506,
+    "kb": 115
    },
    "logo": {
     "file": "BT21/logo.webp",
@@ -1100,12 +1100,12 @@
     "kb": 368
    },
    "confezione": {
-    "file": "EX13/confezione.png",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-13/img_pkg.png",
+    "file": "EX13/confezione.webp",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-13/point/04/pkg.webp",
     "fonte": "world",
-    "w": 240,
-    "h": 405,
-    "kb": 60
+    "w": 430,
+    "h": 725,
+    "kb": 157
    },
    "logo": {
     "file": "EX13/logo.webp",
@@ -1154,11 +1154,11 @@
    },
    "confezione": {
     "file": "EX12/confezione.png",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-12/img_pkg.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-12/point/04/pkg.png",
     "fonte": "world",
-    "w": 240,
-    "h": 405,
-    "kb": 62
+    "w": 430,
+    "h": 725,
+    "kb": 189
    },
    "logo": {
     "file": "EX12/logo.webp",
@@ -1207,11 +1207,11 @@
    },
    "confezione": {
     "file": "EX11/confezione.png",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-11/img_pkg.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-11/point/05/pkg.png",
     "fonte": "world",
     "w": 240,
     "h": 405,
-    "kb": 53
+    "kb": 186
    },
    "logo": {
     "file": "EX11/logo.webp",
@@ -1260,11 +1260,11 @@
    },
    "confezione": {
     "file": "EX10/confezione.png",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-10/img_pkg.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-10/point/04/pkg.png",
     "fonte": "world",
     "w": 240,
     "h": 405,
-    "kb": 218
+    "kb": 69
    },
    "logo": {
     "file": "EX10/logo.webp",
@@ -1313,11 +1313,11 @@
    },
    "confezione": {
     "file": "EX9/confezione.png",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-09/img_pkg.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-09/point/05/pkg.png",
     "fonte": "world",
-    "w": 191,
-    "h": 322,
-    "kb": 42
+    "w": 300,
+    "h": 506,
+    "kb": 111
    },
    "logo": {
     "file": "EX9/logo.webp",
@@ -1366,11 +1366,11 @@
    },
    "confezione": {
     "file": "EX8/confezione.png",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-08/img_pkg.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-08/point/05/pkg.png",
     "fonte": "world",
-    "w": 242,
-    "h": 406,
-    "kb": 61
+    "w": 300,
+    "h": 506,
+    "kb": 107
    },
    "logo": {
     "file": "EX8/logo.webp",
@@ -1419,11 +1419,11 @@
    },
    "confezione": {
     "file": "EX7/confezione.png",
-    "url": "https://world.digimoncard.com/images/products/pack/ex-07/img_pkg.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-07/point/07/pkg.png",
     "fonte": "world",
-    "w": 240,
-    "h": 405,
-    "kb": 62
+    "w": 300,
+    "h": 506,
+    "kb": 100
    },
    "logo": {
     "file": "EX7/logo.webp",
