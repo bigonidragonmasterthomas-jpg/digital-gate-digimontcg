@@ -47,7 +47,10 @@ def fix_card(n,r):
         a,b=f["evolv"].split("->"); ev=[e.replace(a+" ",b+" ",1) for e in ev]
     if "evocost" in f: ev=[re.sub(r"\d+$",f["evocost"],e) for e in ev]
     if "evo_costs" in f: ev=[re.sub(r"\d+$",f["evo_costs"].get(e.split(" ")[0],re.search(r"\d+$",e).group(0)),e) for e in ev]
-    r[10]="; ".join(ev)  # testo ufficiale: lato Option delle Digimon/Option e spiegazione Overflow
+    r[10]="; ".join(ev)
+    for i,old,new in f.get("text",[]):  # errata ufficiali Bandai
+        if old in (r[i] or ""): r[i]=r[i].replace(old,new)
+        else: print("errata non applicata",n,old[:40])  # testo ufficiale: lato Option delle Digimon/Option e spiegazione Overflow
 rows=[]; cnt=collections.Counter(); missing=set()
 for n,k in best.items():
     if n in FIX.get("_remove",[]): continue

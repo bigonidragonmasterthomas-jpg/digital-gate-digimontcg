@@ -36,6 +36,15 @@
  "BT12-082": {
   "rar": "R"
  },
+ "BT13-089": {
+  "text": [
+   [
+    11,
+    "at the end of your opponent's next turn",
+    "at the next end of your opponent's turn"
+   ]
+  ]
+ },
  "BT14-054": {
   "attr": "Data",
   "rar": "U"
@@ -66,6 +75,15 @@
  },
  "BT19-030": {
   "evo_add": "Lv.2 Yellow: 0"
+ },
+ "BT19-091": {
+  "text": [
+   [
+    11,
+    "you can ignore this card's color requirements",
+    "you may ignore this card's color requirements"
+   ]
+  ]
  },
  "BT19-100": {
   "trait": "D-Reaper"
@@ -135,6 +153,15 @@
  },
  "BT23-064": {
   "evo_add": "Lv.3 Purple: 2"
+ },
+ "BT23-078": {
+  "text": [
+   [
+    1,
+    "Goro Matayoshi",
+    "Gorou Matayoshi"
+   ]
+  ]
  },
  "BT24-008": {
   "rar": "U"
@@ -236,6 +263,15 @@
  "EX2-020": {
   "evo_add": "Lv.2 Yellow: 0"
  },
+ "EX2-028": {
+  "text": [
+   [
+    11,
+    "place this Digimon under 1 of your other Digimon as its bottom digivolution card",
+    "place this Digimon as 1 of your other Digimon's bottom digivolution card"
+   ]
+  ]
+ },
  "EX2-030": {
   "evo_add": "Lv.2 Black: 0"
  },
@@ -247,6 +283,15 @@
   "form": "Ultimate",
   "trait": "Rock Dragon"
  },
+ "EX3-069": {
+  "text": [
+   [
+    11,
+    "at the end of your opponent's turn",
+    "at the next end of your opponent's turn"
+   ]
+  ]
+ },
  "EX4-014": {
   "evo_add": "Lv.2 Blue: 0"
  },
@@ -255,6 +300,33 @@
  },
  "EX4-053": {
   "rar": "R"
+ },
+ "EX4-058": {
+  "text": [
+   [
+    11,
+    "at the end of your opponent's turn",
+    "at the next end of your opponent's turn"
+   ]
+  ]
+ },
+ "EX4-063": {
+  "text": [
+   [
+    11,
+    "at the end of your opponent's turn",
+    "at the next end of your opponent's turn"
+   ]
+  ]
+ },
+ "EX4-071": {
+  "text": [
+   [
+    11,
+    "at the end of your opponent's turn",
+    "at the next end of your opponent's turn"
+   ]
+  ]
  },
  "EX6-010": {
   "trait": "Holy Sword/Legend-Arms"
@@ -277,6 +349,15 @@
  "EX9-061": {
   "rar": "U"
  },
+ "LM-013": {
+  "text": [
+   [
+    11,
+    "At the end of your opponent's turn",
+    "At the next end of your opponent's turn"
+   ]
+  ]
+ },
  "P-004": {
   "evo_add": "Lv.2 Blue: 0"
  },
@@ -291,6 +372,15 @@
  },
  "P-163": {
   "evo_add": "Lv.3 Green: 2"
+ },
+ "ST10-06": {
+  "text": [
+   [
+    11,
+    "you may search your security stack for 1 level 5 or lower Digimon card and play it without paying its memory cost",
+    "search your security stack, and you may play 1 level 5 or lower Digimon card among it without paying its cost"
+   ]
+  ]
  },
  "ST13-07": {
   "evo_add": "Lv.2 Black: 0"
