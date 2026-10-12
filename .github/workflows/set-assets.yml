@@ -2,8 +2,11 @@ name: Loghi e artwork set
 # Scarica dal sito ufficiale Bandai loghi e artwork promozionali di tutte le espansioni
 # e li salva nel branch "set-assets" (con galleria README.md, index.json e anteprima.jpg).
 # Si avvia a mano (Actions → "Loghi e artwork set" → Run workflow) e ogni lunedì per prendere i set nuovi.
+# Scarica solo il materiale nuovo: parte dalla raccolta già salvata e non riscarica i prodotti che ci sono già.
 on:
   workflow_dispatch:
+    inputs:
+      tutto: { description: "Riscarica tutto da capo (di norma no)", type: boolean, default: false }
   schedule:
     - cron: "41 4 * * 1"
 permissions:
@@ -22,7 +25,9 @@ jobs:
         shell: bash
         run: |
           mkdir -p out
-          python3 tools/fetch_set_assets.py out | tee out/log.txt
+          # raccolta precedente: serve per sapere cosa c'è già
+          if git fetch -q --depth 1 origin set-assets; then git archive FETCH_HEAD | tar -x -C out; fi
+          python3 tools/fetch_set_assets.py out ${{ inputs.tutto && 'tutto' || '' }} | tee out/log.txt
       - name: Salva nel branch set-assets
         shell: bash
         run: |

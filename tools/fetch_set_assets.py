@@ -4,7 +4,11 @@
 Fonte principale world.digimoncard.com (versione inglese globale); per ciò che manca prova le stesse cartelle su
 en.digimoncard.com e digimoncard.com (Giappone). I prodotti presenti solo su questi due siti vengono aggiunti a parte.
 
-Uso:  python3 tools/fetch_set_assets.py CARTELLA_OUT
+Uso:  python3 tools/fetch_set_assets.py CARTELLA_OUT [tutto]
+
+Scarica solo il materiale NUOVO: se CARTELLA_OUT contiene già la raccolta precedente (index.json e file), i prodotti già
+presenti non vengono riscaricati. Si cercano soltanto i prodotti nuovi e, per quelli recenti o non ancora usciti (ultimi
+12 mesi), i tipi di immagine che ancora mancano. I file già salvati non vengono mai sostituiti. Con "tutto" rifà tutto da capo.
 
 Per ogni espansione crea CARTELLA_OUT/CODICE/ con i file che il sito pubblica:
   keyvisual.*          key visual orizzontale (1920x756) con il logo del set – set dal 2024 in poi
@@ -16,6 +20,7 @@ Per ogni espansione crea CARTELLA_OUT/CODICE/ con i file che il sito pubblica:
 e in CARTELLA_OUT: index.json (elenco completo con le fonti), README.md (galleria) e anteprima.jpg (foglio provini).
 """
 import concurrent.futures as cf
+import datetime
 import html as htmllib
 import io
 import json
@@ -28,6 +33,9 @@ from PIL import Image, ImageDraw
 
 OUT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else "set-assets").resolve()
 OUT.mkdir(parents=True, exist_ok=True)
+FULL = len(sys.argv) > 2 and sys.argv[2] == "tutto"
+NEW = []   # file scaricati in questa esecuzione
+MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
 HOSTS = {"world": "https://world.digimoncard.com", "en": "https://en.digimoncard.com", "jp": "https://digimoncard.com"}
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"}
 KEEP = ("BT", "EX", "ST", "RB", "AD", "LM", "PB")          # famiglie di prodotto considerate "espansioni"
@@ -82,6 +90,39 @@ def app_codes(key):
     if m and m.group(1) != "LM":
         return ["%s%d" % (m.group(1), i) for i in range(int(m.group(2)), int(m.group(3)) + 1)]
     return [key]
+
+
+def is_recent(release):
+    """Vero se il prodotto è uscito da non più di 12 mesi, deve ancora uscire o non ha una data leggibile."""
+    m = re.search(r"(\d{4})", release or "")
+    if not m:
+        return True
+    month = 12
+    mm = re.search("|".join(MONTHS), release, re.I)
+    jp = re.search(r"\d{4}年\s*(\d{1,2})月", release)
+    if mm:
+        month = MONTHS.index(mm.group(0).lower()) + 1
+    elif jp:
+        month = int(jp.group(1))
+    today = datetime.date.today()
+    return (today.year - int(m.group(1))) * 12 + (today.month - month) <= 12
+
+
+def load_old():
+    """Raccolta già presente in CARTELLA_OUT: {codice: prodotto con i file che esistono davvero}."""
+    f = OUT / "index.json"
+    if FULL or not f.exists():
+        return {}
+    try:
+        idx = json.loads(f.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    old = {}
+    for e in idx:
+        files = {k: v for k, v in (e.get("file") or {}).items() if (OUT / v["file"]).exists()}
+        old[e["codice"]] = {"key": e["codice"], "name": e.get("nome", ""), "release": e.get("uscita", ""), "page": e.get("pagina"),
+                            "site": e.get("sito", "world"), "files": files}
+    return old
 
 
 def listing(site):
@@ -190,7 +231,7 @@ def process(prod):
     for s in order:
         pages.setdefault(s, pages.get(prod["site"]))
     out_dir = OUT / prod["key"]
-    files = {}
+    files = dict(prod.get("have") or {})   # già salvati: non si riscaricano
     for host in order:
         missing = [k for k in KINDS if k not in files]
         if not missing:
@@ -219,6 +260,7 @@ def process(prod):
                 out_dir.mkdir(parents=True, exist_ok=True)
                 name = "%s.%s" % (kind, ext)
                 (out_dir / name).write_bytes(data)
+                NEW.append("%s/%s" % (prod["key"], name))
                 files[kind] = {"file": "%s/%s" % (prod["key"], name), "url": url, "fonte": host,
                                "w": im.size[0], "h": im.size[1], "kb": round(len(data) / 1024)}
                 break
@@ -267,19 +309,24 @@ def add_own_logos(done):
         im = Image.open(io.BytesIO(data))
         im.load()
         (OUT / p["key"]).mkdir(parents=True, exist_ok=True)
+        if (OUT / p["key"] / "logo.webp").exists() and (OUT / p["key"] / "logo.webp").read_bytes() == data:
+            continue
         for old in (OUT / p["key"]).glob("logo.*"):
             old.unlink()
         (OUT / p["key"] / "logo.webp").write_bytes(data)
+        NEW.append("%s/logo.webp" % p["key"])
         p["files"]["logo"] = {"file": "%s/logo.webp" % p["key"], "url": "src/logos/%s.webp" % p["key"], "fonte": "utente",
                               "w": im.size[0], "h": im.size[1], "kb": round(len(data) / 1024)}
     print("loghi forniti a mano: %d" % sum(1 for p in done if p["files"].get("logo", {}).get("fonte") == "utente"))
 
 
-def add_una_logos(done):
+def add_una_logos(done, fresh):
+    """Solo per i prodotti controllati in questa esecuzione (fresh) che non hanno ancora un logo."""
+    todo = [p for p in done if p["key"] in fresh and "logo" not in p["files"]]
+    if not todo:
+        return
     logos = una_logos()
-    for p in done:
-        if "logo" in p["files"]:
-            continue
+    for p in todo:
         url = logos.get(p["key"]) or logos.get(p["key"].split("_v")[0])
         if not url:
             continue
@@ -289,6 +336,7 @@ def add_una_logos(done):
         ext = url.rsplit(".", 1)[1].lower()
         (OUT / p["key"]).mkdir(parents=True, exist_ok=True)
         (OUT / p["key"] / ("logo." + ext)).write_bytes(data)
+        NEW.append("%s/logo.%s" % (p["key"], ext))
         p["files"]["logo"] = {"file": "%s/logo.%s" % (p["key"], ext), "url": url, "fonte": "unacollezione",
                               "w": im.size[0], "h": im.size[1], "kb": round(len(data) / 1024)}
 
@@ -336,12 +384,25 @@ def main():
                 continue
             products[it["key"]] = it
             covered |= plain
-    print("espansioni:", len(products), flush=True)
+    old = load_old()
+    todo, done = [], []
+    for key, it in products.items():
+        o = old.get(key)
+        if o is None:                                        # prodotto nuovo: si scarica tutto
+            todo.append(it)
+        elif is_recent(it["release"] or o["release"]):       # recente o in arrivo: si cercano solo i tipi che mancano
+            it["have"] = o["files"]
+            todo.append(it)
+        else:                                                # vecchio: resta com'è, nessuno scaricamento
+            done.append(dict(it, files=o["files"]))
+    done += [o for key, o in old.items() if key not in products]   # non più in elenco sul sito: resta com'è
+    print("espansioni: %d sul sito, %d già in raccolta; da controllare: %d (%d nuove)"
+          % (len(products), len(old), len(todo), sum(1 for it in todo if "have" not in it)), flush=True)
     with cf.ThreadPoolExecutor(8) as ex:
-        done = list(ex.map(process, products.values()))
+        done += list(ex.map(process, todo))
     done.sort(key=order_key)
     add_own_logos(done)
-    add_una_logos(done)
+    add_una_logos(done, {it["key"] for it in todo})
     index = []
     for p in done:
         index.append({"codice": p["key"], "codici_app": app_codes(p["key"]), "nome": p["name"], "uscita": p["release"],
@@ -373,6 +434,7 @@ def main():
     from collections import Counter
     cnt = Counter(k for p in index for k in p["file"])
     print("file per tipo:", dict(cnt))
+    print("::notice title=Materiale nuovo::%d file scaricati%s" % (len(NEW), ": " + " ".join(sorted(NEW)) if NEW else ""))
     no_art = [p["codice"] for p in index if not any(k in p["file"] for k in ("keyvisual", "banner", "promo", "keyvisual-verticale"))]
     print("::notice title=Loghi e artwork::%d espansioni, %d con artwork, %d con logo separato. Senza artwork: %s"
           % (len(index), len(index) - len(no_art), cnt.get("logo", 0), " ".join(no_art) or "nessuna"))
