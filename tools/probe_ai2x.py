@@ -35,7 +35,7 @@ def ai2x(im, k):
 codes = ["BT5", "BT10", "EX2", "ST1"]
 rows = []
 for c in codes:
-    b = subprocess.run(["git", "show", "FETCH_HEAD:%s/confezione.png" % c], capture_output=True, cwd=root).stdout
+    b = subprocess.run(["git", "show", "FETCH_HEAD:%s/confezione.png" % c], stdout=subprocess.PIPE, cwd=root).stdout
     o = Image.open(io.BytesIO(b)).convert("RGBA")
     ims = [o.resize((o.size[0] * 2, o.size[1] * 2), Image.BILINEAR)]
     for k in "AB":
