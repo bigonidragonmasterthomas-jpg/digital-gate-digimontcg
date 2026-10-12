@@ -16,7 +16,7 @@ for k, path in sorted({(p["k"], p["pk"]) for p in prod.values() if p.get("pk")})
     im = im.convert("RGBA")
     box = im.getbbox()
     if box: im = im.crop(box)
-    if im.size[1] > 420: im = im.resize((round(im.size[0] * 420 / im.size[1]), 420), Image.LANCZOS)
+    if im.size[1] > 340: im = im.resize((round(im.size[0] * 340 / im.size[1]), 340), Image.LANCZOS)
     im.save(outdir / (k + ".webp"), "WEBP", quality=88, method=5)
     done += 1
 print("confezioni:", done)

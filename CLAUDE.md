@@ -33,6 +33,8 @@ Esiste come **sito** (GitHub Pages) e come **APK Android** (Capacitor). Ogni mod
 - `tools/make_data2.py` – genera `src/data.json` dalla raccolta TakaOtaku (`PreparedDigimonCardsENG.json`, repo `TakaOtaku/Digimon-Card-App`, clonata in `/home/claude/TakaOtaku_Digimon-Card-App`). Contiene nomi set, prodotti PB, prossime uscite.
 - `tools/fetch_images.py` – scarica immagini carte (ufficiali HD, ripiego TakaOtaku) in `www/img/f` (grandi) e `www/img/t` (miniature), con cache.
 - `tools/fetch_banners.py` + `tools/banners.json` – banner HD dei prodotti per la Home (`W/` sito ufficiale, `U/` img.unacollezione.it), con ritaglio per togliere date/testi promo e tenere il logo.
+- `tools/fetch_products.py` + `tools/product_fixes.json` – caratteristiche dei prodotti dal sito ufficiale (uscita anche per regione, pre-release, prezzo, numero di carte, contenuto, rarità, immagine della confezione) in `src/products.json`, una voce per codice set; parte dall'indice del ramo `set-assets`. Va rilanciato quando escono prodotti nuovi (anche via `analysis.yml`). `tools/build.py` le aggiunge ai dati come `products`.
+- `tools/fetch_product_images.py` – confezioni (`pk` in `products.json`) in `www/prod/CODICE.webp`.
 - `tools/apply_errata_images.py` – mette le immagini post-errata (`src/errata/KEY.webp`) come principali e salva l'originale in `www/img/pre/`.
 - Formato carta in `data.json`: `[code,name,lv,colors,ct,form,attr,sp(trait),dp,play,evo,eff,inh,sec,extra,rar,setId,{x}]`; `x.d` = lato Option delle Digimon/Option, `x.o` = spiegazione Overflow.
 - Formato set: `{id,code,name,type,n,date,v:[idx | [idx,suf,versionIdx,mark,cls]]}`.
@@ -46,7 +48,7 @@ Esiste come **sito** (GitHub Pages) e come **APK Android** (Capacitor). Ogni mod
 
 ## Pubblicazione (GitHub Actions)
 
-- `.github/workflows/build.yml` parte a ogni push su `main`: build → immagini → banner → errata → GitHub Pages → APK (Capacitor 6, Java 17, `assembleDebug`) → release `latest`.
+- `.github/workflows/build.yml` parte a ogni push su `main`: build → immagini → banner → confezioni → errata → GitHub Pages → APK (Capacitor 6, Java 17, `assembleDebug`) → release `latest`.
 - APK firmato sempre con `android-keys/debug.keystore` e `versionCode` = numero di run: così gli aggiornamenti si installano sopra senza disinstallare. **Non cambiare la chiave.**
 - La release `latest` viene forzata a non-bozza; il nome contiene `build N` (usato dall'app per il controllo aggiornamenti).
 - Commit con autore `Claude <noreply@anthropic.com>`.
@@ -63,6 +65,7 @@ Esiste come **sito** (GitHub Pages) e come **APK Android** (Capacitor). Ogni mod
 - Navigazione con cronologia (tasto/gesto indietro). Nell'APK il gesto indietro torna alla schermata precedente; nella scheda carta non fa nulla (lì: giù per chiudere con la maniglia, sinistra/destra per carta precedente/successiva). Barra superiore che si nasconde scorrendo.
 - **Scheda carta**: intestazione con codice, set (arancione), rarità estesa colorata con ★/SP, versione ("Foil" arcobaleno); tag sotto l'immagine su righe separate (tipo+livello+colori / forma / attribute / trait), colori come le barrette; box Costo/DP/Rarità; Digievoluzione su una riga separata da •; Altra Digievoluzione e Digievoluzione speciale (DNA, App Fusion, Burst) con icone; Effetto, Ereditato, Sicurezza, Effetto Option (Use + colori), Regole, Regole Link/Assembly/DigiXros/Ace Overflow, Altre regole; Alternative Art (toccandone una si apre, uscendo si va alla sua espansione); sezione Pre errata.
 - Icone per `[ ]` e `＜ ＞` con i colori delle carte: timing blu (anche Security), Trash/Hand/Breeding viola, Once/Twice Per Turn rosso, keyword arancioni esagonali, Digivolve/DNA/Burst/App Fusion blu-petrolio, DigiXros/Assembly/Link verdi, Rule grigio chiaro, Overflow grigio metallizzato, trait bianchi con testo nero.
+- **Scheda prodotto**: in cima alla pagina di ogni prodotto (nascosta mentre si cerca), con confezione, tipo, uscita, pre-release, prezzo, carte, contenuto, rarità e link alla pagina ufficiale. Etichette in italiano; contenuto e rarità restano in inglese come sul sito (tranne "N carte per busta" / "N buste per box"). I prodotti in arrivo con dati ufficiali hanno una pagina con la sola scheda (da Home, Prodotti e Prossime uscite).
 - **Collezione** salvata nel dispositivo (localStorage), con quantità per versione.
 - **Deckbuilding**: 50 carte principali esatte, 0–5 Digi-Egg, max 4 copie per numero (tutte le versioni insieme), carte "fino a 50"; bandite (lucchetto), limitate (MAX), coppie vietate (tag solo se entrambe nel mazzo; nella scheda nome cliccabile che apre la carta, chiudendo si torna indietro). Vista elenco/griglia, import/export testo, versioni alt nel mazzo, copie possedute bloccate con lucchetto nella scheda.
 - **APK**: all'avvio controlla la release `latest` e propone l'aggiornamento aprendo il download nel browser esterno.
