@@ -256,6 +256,25 @@ def una_logos():
     return out
 
 
+def add_own_logos(done):
+    """Loghi forniti a mano (src/logos/CODICE.webp): hanno la precedenza su tutte le altre fonti."""
+    src = pathlib.Path(__file__).resolve().parent.parent / "src" / "logos"
+    for p in done:
+        f = src / (p["key"] + ".webp")
+        if not f.exists():
+            continue
+        data = f.read_bytes()
+        im = Image.open(io.BytesIO(data))
+        im.load()
+        (OUT / p["key"]).mkdir(parents=True, exist_ok=True)
+        for old in (OUT / p["key"]).glob("logo.*"):
+            old.unlink()
+        (OUT / p["key"] / "logo.webp").write_bytes(data)
+        p["files"]["logo"] = {"file": "%s/logo.webp" % p["key"], "url": "src/logos/%s.webp" % p["key"], "fonte": "utente",
+                              "w": im.size[0], "h": im.size[1], "kb": round(len(data) / 1024)}
+    print("loghi forniti a mano: %d" % sum(1 for p in done if p["files"].get("logo", {}).get("fonte") == "utente"))
+
+
 def add_una_logos(done):
     logos = una_logos()
     for p in done:
@@ -321,6 +340,7 @@ def main():
     with cf.ThreadPoolExecutor(8) as ex:
         done = list(ex.map(process, products.values()))
     done.sort(key=order_key)
+    add_own_logos(done)
     add_una_logos(done)
     index = []
     for p in done:
@@ -333,7 +353,8 @@ def main():
           "Immagini scaricate automaticamente dal sito ufficiale Bandai (world.digimoncard.com; dove manca, en.digimoncard.com "
           "o digimoncard.com). Il copyright di artwork e loghi è di Bandai / Toei Animation: usale solo per scopi personali "
           "o con il loro permesso.", "",
-          "I **loghi trasparenti** (`logo.*`) vengono da unacollezione.it, perché il sito Bandai non li pubblica come file separati. "
+          "I **loghi trasparenti** (`logo.*`) vengono da unacollezione.it, perché il sito Bandai non li pubblica come file separati; "
+          "quelli con fonte `utente` in `index.json` sono stati forniti a mano (cartella `src/logos/` del progetto) e hanno la precedenza. "
           "Elenco completo con fonti e dimensioni in `index.json`, foglio riassuntivo in `anteprima.jpg`.", ""]
     fam = None
     for p in index:
