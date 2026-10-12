@@ -199,6 +199,7 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .altsec { margin-top: 26px; }
 .alt { width: min(300px, 86%); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
 .alt .from { font: 600 .74rem var(--font-display); color: var(--accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.alt .from.pre { color: var(--ink-2); }
 .sheet-head .c .hset { color: var(--accent); font-weight: 600; }
 .foil { font-weight: 700; background: linear-gradient(90deg, #ff5f6d, #ffc371, #f9f871, #47e891, #3fb7ff, #a66bff, #ff5f6d); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: foilshift 3s linear infinite; }
 @keyframes foilshift { to { background-position: 200% 0; } }
@@ -429,10 +430,12 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var b = el("div", cls), im = document.createElement("img");
     im.alt = ""; im.loading = "lazy"; im.decoding = "async"; im.referrerPolicy = "no-referrer";
     im.onerror = function () { b.classList.add("noimg"); };
-    im.src = IMG + kind + "/" + encodeURIComponent(c.img || c.code) + ".webp";
+    var key = c.img || c.code;
+    im.src = IMG + kind + "/" + encodeURIComponent(key) + ".webp" + (ERRATA[key] && kind !== "pre" ? "?e=1" : "");
     b.appendChild(im); return b;
   }
 
+  var ERRATA = {}; (DATA.errata || []).forEach(function (k) { ERRATA[k] = 1; });
   var SETS = DATA.sets, SETBY = {};
   SETS.forEach(function (s) { SETBY[s.id] = s; });
   var CARDS = DATA.cards.map(function (a) {
@@ -1185,6 +1188,14 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         strip.appendChild(it);
       });
       at.appendChild(strip); sh.appendChild(at);
+    }
+    var ek = c.img || c.code;
+    if (ERRATA[ek]) {
+      var es = el("div", "fx altsec"); es.appendChild(el("h3", "", "Pre errata"));
+      var est = el("div", "alts"), ei = el("div", "alt");
+      ei.appendChild(el("div", "from pre", "Versione stampata prima dell'errata ufficiale"));
+      ei.appendChild(picBox("pic", "pre", c));
+      est.appendChild(ei); es.appendChild(est); sh.appendChild(es);
     }
     scrim.appendChild(sh); sheet.appendChild(scrim);
     fitAll();

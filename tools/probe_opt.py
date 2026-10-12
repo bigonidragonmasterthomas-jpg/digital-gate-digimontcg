@@ -1,9 +1,12 @@
 import sys, pathlib, urllib.request
 out = pathlib.Path("analysis"); out.mkdir(exist_ok=True)
 U = {
- "ban_world.html": "https://world.digimoncard.com/rule/restriction_card/",
- "ban_en.html": "https://en.digimoncard.com/rule/restriction_card/",
  "rule_world.html": "https://world.digimoncard.com/rule/",
+ "errata_world.html": "https://world.digimoncard.com/rule/errata_card/",
+ "errata_world2.html": "https://world.digimoncard.com/rule/errata/",
+ "errata_en.html": "https://en.digimoncard.com/rule/errata_card/",
+ "rule_en.html": "https://en.digimoncard.com/rule/",
+ "lang.html": "https://world.digimoncard.com/rule/lang-standardization-rules/",
 }
 for n, u in U.items():
     try:

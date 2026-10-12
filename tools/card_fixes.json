@@ -1,0 +1,396 @@
+{
+ "AD1-001": {
+  "evo_add": "Lv.3 Red: 2"
+ },
+ "AD1-003": {
+  "evo_add": "Lv.4 Red: 3"
+ },
+ "AD1-010": {
+  "attr": "Vaccine",
+  "evo_add": "Lv.3 Blue: 2"
+ },
+ "BT10-060": {
+  "trait": "Bird/Twilight/Xros Heart"
+ },
+ "BT11-007": {
+  "evo_add": "Lv.2 Red: 0"
+ },
+ "BT11-009": {
+  "evo_set": "Lv.3 Red: 0; Lv.2 Yellow: 1"
+ },
+ "BT12-014": {
+  "evo_add": "Lv.4 Red: 3"
+ },
+ "BT12-045": {
+  "attr": "Data"
+ },
+ "BT12-052": {
+  "attr": "Vaccine"
+ },
+ "BT12-064": {
+  "evo_costs": {
+   "Lv.3": "3",
+   "Lv.4": "1"
+  }
+ },
+ "BT12-082": {
+  "rar": "R"
+ },
+ "BT13-089": {
+  "text": [
+   [
+    11,
+    "at the end of your opponent's next turn",
+    "at the next end of your opponent's turn"
+   ]
+  ]
+ },
+ "BT14-054": {
+  "attr": "Data",
+  "rar": "U"
+ },
+ "BT17-042": {
+  "cost": "3"
+ },
+ "BT18-016": {
+  "attr": "Data"
+ },
+ "BT18-030": {
+  "evo_add": "Lv.2 Yellow: 0"
+ },
+ "BT18-045": {
+  "evo_add": "Lv.2 Green: 0"
+ },
+ "BT18-060": {
+  "evo_add": "Lv.2 Black: 0"
+ },
+ "BT18-065": {
+  "evo_add": "Lv.3 Black: 3"
+ },
+ "BT19-007": {
+  "evo_set": "Lv.2 Red: 0"
+ },
+ "BT19-016": {
+  "evo_add": "Lv.2 Blue: 0"
+ },
+ "BT19-030": {
+  "evo_add": "Lv.2 Yellow: 0"
+ },
+ "BT19-091": {
+  "text": [
+   [
+    11,
+    "you can ignore this card's color requirements",
+    "you may ignore this card's color requirements"
+   ]
+  ]
+ },
+ "BT19-100": {
+  "trait": "D-Reaper"
+ },
+ "BT20-010": {
+  "trait": "Beast/X Antibody/Chronicle"
+ },
+ "BT20-022": {
+  "evo_add": "Lv.2 Blue: 0"
+ },
+ "BT20-030": {
+  "evolv": "Lv.3->Lv.2"
+ },
+ "BT20-038": {
+  "evolv": "Lv.3->Lv.2"
+ },
+ "BT20-054": {
+  "evo_add": "Lv.4 Black: 3"
+ },
+ "BT20-063": {
+  "rar": "U"
+ },
+ "BT20-101": {
+  "evo_add": "Lv.5 Green: 5"
+ },
+ "BT21-019": {
+  "cost": "5"
+ },
+ "BT21-033": {
+  "rar": "U"
+ },
+ "BT21-039": {
+  "rar": "R"
+ },
+ "BT21-055": {
+  "evo_add": "Lv.2 Black: 0"
+ },
+ "BT21-067": {
+  "evocost": "2"
+ },
+ "BT22-011": {
+  "attr": "Virus"
+ },
+ "BT22-023": {
+  "trait": "Holy Dragon/CS"
+ },
+ "BT22-067": {
+  "evo_add": "Lv.5 Red: 4"
+ },
+ "BT23-007": {
+  "dp": "1000"
+ },
+ "BT23-025": {
+  "evo_add": "Lv.5 Yellow: 3"
+ },
+ "BT23-044": {
+  "cost": "7"
+ },
+ "BT23-058": {
+  "attr": "Vaccine"
+ },
+ "BT23-060": {
+  "evo_add": "Lv.5 Red: 4"
+ },
+ "BT23-061": {
+  "attr": "Data"
+ },
+ "BT23-064": {
+  "evo_add": "Lv.3 Purple: 2"
+ },
+ "BT23-078": {
+  "text": [
+   [
+    1,
+    "Goro Matayoshi",
+    "Gorou Matayoshi"
+   ]
+  ]
+ },
+ "BT24-008": {
+  "rar": "U"
+ },
+ "BT24-038": {
+  "rar": "U"
+ },
+ "BT24-062": {
+  "evo_add": "Lv.4 Blue: 4"
+ },
+ "BT24-075": {
+  "attr": "Data",
+  "form": "Ultimate"
+ },
+ "BT25-044": {
+  "attr": "Virus"
+ },
+ "BT25-047": {
+  "evo_add": "Lv.2 Green: 0"
+ },
+ "BT25-050": {
+  "evo_add": "Lv.3 Green: 2"
+ },
+ "BT25-079": {
+  "evocost": "0"
+ },
+ "BT26-020": {
+  "rar": "U"
+ },
+ "BT26-039": {
+  "rar": "C"
+ },
+ "BT26-060": {
+  "trait": "Shaman/Titan/Iliad/TS"
+ },
+ "BT26-091": {
+  "cost": "3",
+  "rar": "R"
+ },
+ "BT26-096": {
+  "cost": "4"
+ },
+ "BT6-016": {
+  "evo_add": "Lv.5 Red: 3"
+ },
+ "BT6-054": {
+  "attr": "Data"
+ },
+ "BT6-057": {
+  "attr": "Virus"
+ },
+ "BT8-055": {
+  "evolv": "Lv.5->Lv.4"
+ },
+ "BT9-024": {
+  "evolv": "Lv.4->Lv.3"
+ },
+ "BT9-072": {
+  "attr": "Vaccine"
+ },
+ "EX10-028": {
+  "rar": "C"
+ },
+ "EX11-010": {
+  "attr": "Vaccine"
+ },
+ "EX11-013": {
+  "dp": "1000"
+ },
+ "EX11-041": {
+  "evocost": "4"
+ },
+ "EX11-050": {
+  "evocost": "4"
+ },
+ "EX12-034": {
+  "attr": "Vaccine"
+ },
+ "EX12-063": {
+  "evocost": "4"
+ },
+ "EX13-001": {
+  "form": "In-Training",
+  "lv": "Lv.2",
+  "trait": "Lesser"
+ },
+ "EX13-004": {
+  "trait": "Flame"
+ },
+ "EX13-033": {
+  "colors": "Yellow/Red"
+ },
+ "EX13-051": {
+  "trait": "Machine"
+ },
+ "EX13-072": {
+  "rar": "U"
+ },
+ "EX2-020": {
+  "evo_add": "Lv.2 Yellow: 0"
+ },
+ "EX2-028": {
+  "text": [
+   [
+    11,
+    "place this Digimon under 1 of your other Digimon as its bottom digivolution card",
+    "place this Digimon as 1 of your other Digimon's bottom digivolution card"
+   ]
+  ]
+ },
+ "EX2-030": {
+  "evo_add": "Lv.2 Black: 0"
+ },
+ "EX2-039": {
+  "evo_add": "Lv.2 Purple: 0"
+ },
+ "EX3-011": {
+  "attr": "Virus",
+  "form": "Ultimate",
+  "trait": "Rock Dragon"
+ },
+ "EX3-069": {
+  "text": [
+   [
+    11,
+    "at the end of your opponent's turn",
+    "at the next end of your opponent's turn"
+   ]
+  ]
+ },
+ "EX4-014": {
+  "evo_add": "Lv.2 Blue: 0"
+ },
+ "EX4-047": {
+  "cost": "8"
+ },
+ "EX4-053": {
+  "rar": "R"
+ },
+ "EX4-058": {
+  "text": [
+   [
+    11,
+    "at the end of your opponent's turn",
+    "at the next end of your opponent's turn"
+   ]
+  ]
+ },
+ "EX4-063": {
+  "text": [
+   [
+    11,
+    "at the end of your opponent's turn",
+    "at the next end of your opponent's turn"
+   ]
+  ]
+ },
+ "EX4-071": {
+  "text": [
+   [
+    11,
+    "at the end of your opponent's turn",
+    "at the next end of your opponent's turn"
+   ]
+  ]
+ },
+ "EX6-010": {
+  "trait": "Holy Sword/Legend-Arms"
+ },
+ "EX7-017": {
+  "evo_add": "Lv.2 Blue: 0"
+ },
+ "EX8-027": {
+  "evocost": "3"
+ },
+ "EX8-053": {
+  "evo_add": "Lv.5 Black: 3"
+ },
+ "EX9-015": {
+  "rar": "C"
+ },
+ "EX9-039": {
+  "cost": "5"
+ },
+ "EX9-061": {
+  "rar": "U"
+ },
+ "LM-013": {
+  "text": [
+   [
+    11,
+    "At the end of your opponent's turn",
+    "At the next end of your opponent's turn"
+   ]
+  ]
+ },
+ "P-004": {
+  "evo_add": "Lv.2 Blue: 0"
+ },
+ "P-067": {
+  "evolv": "Lv.3->Lv.2"
+ },
+ "P-158": {
+  "trait": "D-Reaper"
+ },
+ "P-162": {
+  "evo_add": "Lv.3 Black: 2"
+ },
+ "P-163": {
+  "evo_add": "Lv.3 Green: 2"
+ },
+ "ST10-06": {
+  "text": [
+   [
+    11,
+    "you may search your security stack for 1 level 5 or lower Digimon card and play it without paying its memory cost",
+    "search your security stack, and you may play 1 level 5 or lower Digimon card among it without paying its cost"
+   ]
+  ]
+ },
+ "ST13-07": {
+  "evo_add": "Lv.2 Black: 0"
+ },
+ "ST24-08": {
+  "dp": "2000"
+ },
+ "_note": "Correzioni verificate sulle immagini ufficiali delle carte (ott. 2026).",
+ "_remove": [
+  "P-226",
+  "P-251"
+ ]
+}

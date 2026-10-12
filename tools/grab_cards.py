@@ -5,5 +5,5 @@ for code in sys.argv[1:]:
     for u in SRC:
         try:
             b = urllib.request.urlopen(urllib.request.Request(u.format(code), headers={"User-Agent": "Mozilla/5.0"}), timeout=30).read()
-            if len(b) > 5000: (out / (code + "_" + str(SRC.index(u)) + "." + u.rsplit(".", 1)[1])).write_bytes(b); print(code, "ok", u, len(b))
+            if len(b) > 5000: (out / (code + "." + u.rsplit(".", 1)[1])).write_bytes(b); print(code, "ok", u, len(b)); break
         except Exception as e: print(code, "err", u, e)
