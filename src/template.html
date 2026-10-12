@@ -33,6 +33,10 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-body); 
 button { font-family: inherit; }
 .bar { transition: transform .22s ease; will-change: transform; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 16px 10px; }
 .wrap { max-width: 720px; margin: 0 auto; }
+/* Schermi grandi da computer (mouse): tutta l'app ingrandita in proporzione */
+@media (min-width: 1100px) and (hover: hover) and (pointer: fine) { html { zoom: 1.25; } }
+@media (min-width: 1500px) and (min-height: 800px) and (hover: hover) and (pointer: fine) { html { zoom: 1.5; } }
+@media (min-width: 2300px) and (min-height: 1200px) and (hover: hover) and (pointer: fine) { html { zoom: 2; } }
 .top { margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 h1 { min-width: 0; flex: 1 1 auto; font-family: var(--font-display); font-size: 1.4rem; margin: 0; font-weight: 700; }
 .count { font-family: var(--font-display); font-weight: 600; color: var(--ink-2); font-size: .85rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
