@@ -138,7 +138,7 @@ def scan_page(host, rel_page, rel_folder):
     found = []
     h = get(HOSTS[host] + rel_page) if rel_page else None
     if not h:
-        return found
+        return [], []
     page_url = HOSTS[host] + rel_page
     texts = [(page_url, h)]
     for c in dict.fromkeys(re.findall(r'href=["\']([^"\']+\.css[^"\']*)', h)):
