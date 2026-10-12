@@ -1,45 +1,46 @@
 #!/usr/bin/env python3
-"""Sonda 2: cerca nei bundle js di unacollezione.it come costruisce l'URL del logo del set, e prova nomi plausibili."""
-import re, json, pathlib, urllib.request, urllib.parse, io
-from PIL import Image
+"""Sonda 3: scarica l'immagine "imgset" (logo del set) di tutti i set Digimon di unacollezione.it e crea un foglio di prova."""
+import re, json, pathlib, urllib.request, io, concurrent.futures as cf
+from PIL import Image, ImageDraw
 root = pathlib.Path(__file__).resolve().parent.parent
-out = root / "analysis"; out.mkdir(exist_ok=True)
+out = root / "analysis"; (out / "una").mkdir(parents=True, exist_ok=True)
 UA = {"User-Agent": "Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/126 Mobile Safari/537.36"}
 def get(u, b=False):
     try:
-        r = urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=20).read(); return r if b else r.decode("utf-8", "replace")
-    except Exception as e:
+        r = urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=25).read(); return r if b else r.decode("utf-8", "replace")
+    except Exception:
         return None
-h = get("https://unacollezione.it/carta/b64_NDkyMTY1X0JUMTItMDAx") or ""
-main = [urllib.parse.urljoin("https://unacollezione.it/", s) for s in re.findall(r'src="(/assets/index-[^"]+\.js)"', h)]
-js = get(main[0]) if main else ""
-chunks = sorted(set(re.findall(r'assets/[A-Za-z0-9_\-]+\.js', js or "")))
-print("chunks", len(chunks))
-pat = re.compile(r"[Ll]ogo|LOGO|IMGSET|img\.unacollezione\.it/[A-Za-z_]+|_imgset|imgset")
-seen = {}
-for c in chunks:
-    t = get("https://unacollezione.it/" + c) or ""
-    for m in pat.finditer(t):
-        ctx = t[max(0, m.start() - 160):m.end() + 160].replace("\n", " ")
-        if re.search(r"tierbadge|LogOut|logout|Logout|TcgLogoSelector\"|adminLogos\"", ctx): continue
-        seen.setdefault(c, []).append(ctx)
-for c, l in seen.items():
-    print("== ", c, len(l))
-    for x in l[:12]: print("    ", x[:340])
-folders = sorted(set(re.findall(r"img\.unacollezione\.it/([A-Za-z_]+)/", " ".join(sum(seen.values(), [])))))
-print("cartelle img:", folders)
-# tentativi
-names = ["digimon_across_time"]
-tries = []
-for f in set(folders + ["LOGO", "LOGOSET", "SETLOGO", "LOGHI", "logo", "IMGLOGO", "ICONSET", "SETICON"]):
-    for n in names:
-        for suf in ["_logo.webp", "_logo.png", ".webp", ".png", "_setlogo.webp", "_icon.webp"]:
-            tries.append("https://img.unacollezione.it/%s/%s%s" % (f, n, suf))
-for u in tries:
+ids = set()
+for p in ["https://unacollezione.it/tutti-i-set?category=tcg&subcategory=digimon", "https://unacollezione.it/category/tcg/digimon", "https://unacollezione.it/tutti-i-set"]:
+    h = get(p) or ""
+    ids |= set(re.findall(r'/set/(digimon[A-Za-z0-9_\-]*)', h))
+print("set digimon:", len(ids))
+def one(i):
+    h = get("https://unacollezione.it/set/" + i) or ""
+    t = re.search(r"<title>(.*?)</title>", h, re.S)
+    img = re.search(r'https://img\.unacollezione\.it/IMGSET/[^"\'\s&]+', h)
+    u = img.group(0) if img else "https://img.unacollezione.it/IMGSET/%s_imgset.webp" % i
     b = get(u, True)
-    if b:
-        try:
-            im = Image.open(io.BytesIO(b)); print("HIT", u, im.size, im.mode)
-            (out / re.sub(r"\W+", "_", u.split("it/")[1])).write_bytes(b)
-        except Exception:
-            print("HIT?", u, len(b))
+    if not b: return i, {"title": t.group(1) if t else "", "url": u, "ok": False}
+    im = Image.open(io.BytesIO(b)); im.load()
+    alpha = im.mode in ("RGBA", "LA") or "transparency" in im.info
+    transp = 0.0
+    if alpha:
+        a = im.convert("RGBA").split()[-1]; transp = sum(1 for v in a.getdata() if v < 20) / (im.size[0] * im.size[1])
+    (out / "una" / (i + ".webp")).write_bytes(b)
+    return i, {"title": t.group(1).strip() if t else "", "url": u, "ok": True, "size": im.size, "mode": im.mode, "transp": round(transp, 2)}
+res = {}
+with cf.ThreadPoolExecutor(10) as ex:
+    for i, r in ex.map(one, sorted(ids)): res[i] = r
+json.dump(res, open(out / "una_imgset.json", "w"), indent=1, ensure_ascii=False)
+for i, r in res.items(): print(i, r)
+ok = [i for i, r in res.items() if r["ok"]]
+cw, ch, cols = 300, 150, 5
+S = Image.new("RGB", (cols * cw, ((len(ok) + cols - 1) // cols) * ch), (40, 40, 48)); d = ImageDraw.Draw(S)
+for k, i in enumerate(ok):
+    im = Image.open(out / "una" / (i + ".webp")).convert("RGBA"); im.thumbnail((cw - 10, ch - 22))
+    x, y = (k % cols) * cw, (k // cols) * ch
+    bg = Image.new("RGBA", im.size, (255, 0, 255, 255)); bg.alpha_composite(im)
+    S.paste(bg.convert("RGB"), (x + 5, y + 5)); d.text((x + 5, y + ch - 15), i[8:40], fill=(255, 255, 255))
+S.save(out / "una_sheet.jpg", quality=75)
+import shutil; shutil.rmtree(out / "una")
