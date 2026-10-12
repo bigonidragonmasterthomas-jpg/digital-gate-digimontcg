@@ -112,6 +112,9 @@ main { padding: 8px 16px 48px; }
 .tile .pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .tile .pic.noimg img { display: none; }
 .tile .cline { height: 5px; border-radius: 3px; }
+.zoompop { position: fixed; z-index: 60; pointer-events: none; display: none; border-radius: 12px; overflow: hidden; background: var(--surface-2); box-shadow: 0 14px 44px rgba(0,0,0,.6); }
+.zoompop.on { display: block; }
+.zoompop img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .tile .tname { font-weight: 600; line-height: 1.25; overflow-wrap: anywhere; }
 .tile .sub { margin-top: 0; }
 .tile .qty { margin-top: auto; justify-content: center; padding-top: 2px; }
@@ -1365,6 +1368,33 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     else if (isInfo) renderInfo(); else if (isHome) renderHome(); else if (isSoon) renderSoon(); else if (isSets) renderSets(); else if (isUp) renderUp(st.setId.slice(3)); else renderCards();
     fitAll();
   }
+  // ---- Computer (mouse): passando sopra una carta degli elenchi compare l'immagine ingrandita accanto al puntatore
+  (function () {
+    if (!window.matchMedia || !matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    var pop = el("div", "zoompop"), pim = document.createElement("img"), cur = null;
+    pim.alt = ""; pim.referrerPolicy = "no-referrer"; pop.appendChild(pim); document.body.appendChild(pop);
+    function place(e) {
+      // le misure del mouse sono in pixel dello schermo, quelle CSS vanno divise per l'ingrandimento della pagina
+      var z = parseFloat(getComputedStyle(document.documentElement).zoom) || 1, vw = window.innerWidth, vh = window.innerHeight;
+      var h = Math.min(vh * 0.8, 640), w = h * 5 / 7;
+      var x = e.clientX + 28; if (x + w > vw - 8) x = e.clientX - 28 - w; if (x < 8) x = 8;
+      var y = Math.max(8, Math.min(vh - h - 8, e.clientY - h / 2));
+      pop.style.width = w / z + "px"; pop.style.height = h / z + "px"; pop.style.left = x / z + "px"; pop.style.top = y / z + "px";
+    }
+    function hide() { if (cur) { cur = null; pop.classList.remove("on"); } }
+    document.addEventListener("mouseover", function (e) {
+      var t = e.target.closest ? e.target.closest(".row.card, .tile") : null;
+      if (!t || e.target.closest(".qty")) { hide(); return; }
+      if (t === cur) return;
+      var im = t.querySelector(".thumb img, .pic img");
+      if (!im || !im.getAttribute("src") || im.parentNode.classList.contains("noimg")) { hide(); return; }
+      cur = t; pim.src = im.src.replace(/\/t\/([^\/]+)$/, "/f/$1"); place(e); pop.classList.add("on");
+    });
+    document.addEventListener("mousemove", function (e) { if (cur) place(e); });
+    document.addEventListener("mousedown", hide);
+    document.documentElement.addEventListener("mouseleave", hide);
+    window.addEventListener("scroll", hide, true);
+  })();
   // ---- Cronologia: il tasto/gesto "indietro" del telefono torna alla schermata precedente
   var restoring = false, lastKey = null, replaceNext = false;
   function navKey() { return [st.tab, st.setId, st.type, st.ownOnly, st.deckId].join("|"); }
