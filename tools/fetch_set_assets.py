@@ -38,7 +38,8 @@ KINDS = {  # tipo -> (regex sul percorso relativo alla cartella del prodotto, no
     "keyvisual-verticale": (r"^(?:point/)?sp/mv\.(?:webp|jpe?g|png)$", ["point/sp/mv.webp", "point/sp/mv.jpg", "sp/mv.jpg"]),
     "banner": (r"^bnr\.(?:jpe?g|png|webp)$", ["bnr.jpg", "bnr.png", "bnr.webp"]),
     "promo": (r"^img_?01\.(?:jpe?g|webp)$", []),
-    "confezione": (r"^img_pkg\.(?:png|webp|jpe?g)$", ["img_pkg.png", "img_pkg.webp"]),
+    # bustina: img_pkg è la miniatura dell'elenco; nei set recenti la pagina ha anche una versione grande in point/NN/pkg
+    "confezione": (r"^(?:img_pkg|point/\d+/pkg(?:_?0?1)?)\.(?:png|webp|jpe?g)$", ["img_pkg.png", "img_pkg.webp"]),
     "logo": (r"^(?:(?:point/)?pc/)?(?:img_)?(?:logo|title)\.(?:png|webp|svg)$", ["logo.png", "logo.webp", "point/pc/logo.png", "point/logo.png", "pc/title.png"]),
 }
 TYPE_NAMES = {"BT": "Booster", "EX": "Extra / Theme Booster", "RB": "Reboot Booster", "AD": "Advanced Booster",
@@ -205,6 +206,11 @@ def process(prod):
                 cands.sort(key=lambda u: "logo" not in u.rsplit("/", 1)[1])
             if kind.startswith("keyvisual"):
                 cands += [u for u in shared if re.match(pattern, u.split("/images/products/", 1)[1].split("/", 2)[2], re.I)]
+            if kind == "confezione":  # tra le versioni disponibili tieni la più grande
+                got = [(u,) + fetch_image(u) for u in dict.fromkeys(cands)]
+                got = [g for g in got if g[1] is not None]
+                got.sort(key=lambda g: -g[2].size[0] * g[2].size[1])
+                cands = [g[0] for g in got[:1]]
             for url in cands:
                 data, im = fetch_image(url)
                 if data is None:
