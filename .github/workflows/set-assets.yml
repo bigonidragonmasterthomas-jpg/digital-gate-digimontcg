@@ -31,9 +31,14 @@ jobs:
         run: |
           pip install -q --index-url https://download.pytorch.org/whl/cpu torch torchvision
           pip install -q spandrel numpy
-          python3 tools/upscale_packs.py out
+          git fetch -q --depth 1 origin set-assets && git worktree add -q --detach prev FETCH_HEAD || true
+          PREV=prev python3 tools/upscale_packs.py out
+          git worktree remove --force prev || true
       - name: Salva nel branch set-assets
+        shell: bash
         run: |
+          set -eE
+          trap 'echo "::error title=Salvataggio::riga $LINENO: $BASH_COMMAND"' ERR
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           if git fetch -q --depth 1 origin set-assets; then
@@ -50,7 +55,8 @@ jobs:
             echo "Nessuna novità rispetto all'ultima esecuzione"
           else
             git -C br commit -qm "Loghi e artwork aggiornati (run ${{ github.run_number }})"
-            git -C br push -q origin set-assets
+            git -C br push origin set-assets 2>&1 | tail -5 | sed 's/^/::warning title=push::/'
+            test "${PIPESTATUS[0]}" -eq 0
           fi
       - uses: actions/upload-artifact@v4
         with:
