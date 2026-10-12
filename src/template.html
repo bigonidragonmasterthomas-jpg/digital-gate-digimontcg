@@ -1368,7 +1368,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     else if (isInfo) renderInfo(); else if (isHome) renderHome(); else if (isSoon) renderSoon(); else if (isSets) renderSets(); else if (isUp) renderUp(st.setId.slice(3)); else renderCards();
     fitAll();
   }
-  // ---- Computer (mouse): passando sopra una carta degli elenchi compare l'immagine ingrandita accanto al puntatore
+  // ---- Computer (mouse): passando sull'immagine di una carta negli elenchi compare, dopo un attimo, la carta ingrandita accanto al puntatore
   (function () {
     if (!window.matchMedia || !matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     var pop = el("div", "zoompop"), pim = document.createElement("img"), cur = null;
@@ -1381,16 +1381,19 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       var y = Math.max(8, Math.min(vh - h - 8, e.clientY - h / 2));
       pop.style.width = w / z + "px"; pop.style.height = h / z + "px"; pop.style.left = x / z + "px"; pop.style.top = y / z + "px";
     }
-    function hide() { if (cur) { cur = null; pop.classList.remove("on"); } }
+    var timer = null, last = null;
+    function hide() { clearTimeout(timer); timer = null; if (cur) { cur = null; pop.classList.remove("on"); } }
+    // solo sopra l'immagine della carta, e dopo un breve ritardo (per non farla comparire mentre si scorre l'elenco col mouse)
     document.addEventListener("mouseover", function (e) {
-      var t = e.target.closest ? e.target.closest(".row.card, .tile") : null;
-      if (!t || e.target.closest(".qty")) { hide(); return; }
-      if (t === cur) return;
-      var im = t.querySelector(".thumb img, .pic img");
-      if (!im || !im.getAttribute("src") || im.parentNode.classList.contains("noimg")) { hide(); return; }
-      cur = t; pim.src = im.src.replace(/\/t\/([^\/]+)$/, "/f/$1"); place(e); pop.classList.add("on");
+      var box = e.target.closest ? e.target.closest(".row.card .thumb, .tile .pic") : null;
+      if (!box) { hide(); return; }
+      if (box === cur) return;
+      var im = box.querySelector("img");
+      if (!im || !im.getAttribute("src") || box.classList.contains("noimg")) { hide(); return; }
+      hide(); cur = box; last = e; pim.src = im.src.replace(/\/t\/([^\/]+)$/, "/f/$1");
+      timer = setTimeout(function () { timer = null; if (cur === box) { place(last); pop.classList.add("on"); } }, 350);
     });
-    document.addEventListener("mousemove", function (e) { if (cur) place(e); });
+    document.addEventListener("mousemove", function (e) { if (cur) { last = e; if (!timer) place(e); } });
     document.addEventListener("mousedown", hide);
     document.documentElement.addEventListener("mouseleave", hide);
     window.addEventListener("scroll", hide, true);
