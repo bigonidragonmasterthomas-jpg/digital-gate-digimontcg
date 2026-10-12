@@ -200,6 +200,7 @@ upcoming=[
  {"code":"PB24","name":"Tamer's Evolution Card Set: Nexus of Digimon","kind":"Premium Bandai","prec":"none","note":"Annunciato, data non ancora comunicata."}]
 BAN=json.load(open(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)),"banners.json")))
 out={"sets":sets,"cards":rows,"upcoming":upcoming,"versions":VERS,"banners":sorted(k for k in BAN if not k.startswith("_")),
+     "errata":sorted(f[:-5] for f in __import__("os").listdir(SP+"errata") if f.endswith(".webp")),
      "ban":json.load(open(SP+"../tools/banlist.json",encoding="utf-8"))}  # lista ufficiale carte bandite/limitate
 s=json.dumps(out,ensure_ascii=False,separators=(",",":")).replace("</","<\\/")
 open(SP+"data.json","w",encoding="utf-8").write(s)

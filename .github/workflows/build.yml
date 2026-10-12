@@ -18,12 +18,13 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: www/img
-          key: img-v1-${{ hashFiles('src/data.json') }}
+          key: img-v1-${{ hashFiles('src/data.json', 'src/errata/*') }}
           restore-keys: img-v1-
       - run: pip install pillow
       - run: python3 tools/build.py
       - run: python3 tools/fetch_images.py
       - run: python3 tools/fetch_banners.py
+      - run: python3 tools/apply_errata_images.py
       - uses: actions/configure-pages@v5
         continue-on-error: true
       - uses: actions/upload-pages-artifact@v3
