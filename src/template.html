@@ -126,6 +126,26 @@ main { padding: 8px 16px 48px; }
 .back { border: 0; background: transparent; color: var(--blue); font: 600 .9rem var(--font-body); cursor: pointer; padding: 10px 0 4px; }
 .sethead { margin: 4px 0 6px; }
 .sethead h2 { font-family: var(--font-display); font-size: 1.15rem; margin: 0; }
+.prod { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 4px 12px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin: 8px 0 4px; }
+.prod.nopk { grid-template-columns: minmax(0, 1fr); }
+.prod .ppk { width: 80px; max-height: 170px; object-fit: contain; align-self: center; filter: drop-shadow(0 3px 6px rgba(0,0,0,.28)); }
+.pfacts { margin: 0; min-width: 0; }
+.pfacts.wide { grid-column: 1 / -1; }
+.pf { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: .86rem; align-items: baseline; }
+.pfacts.wide .pf:first-child { border-top: 1px solid var(--line); }
+.pfacts:not(.wide) .pf:last-child { border-bottom: 0; }
+.prod.nopk .pfacts.wide .pf:first-child { border-top: 1px solid var(--line); }
+.pf dt { font-family: var(--font-display); font-size: .64rem; letter-spacing: .04em; white-space: nowrap; text-transform: uppercase; color: var(--ink-2); }
+.pf dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.pf dd > div + div { margin-top: 3px; }
+.pf dd .reg { color: var(--ink-2); font-size: .78rem; display: block; }
+.rchs { display: flex; flex-wrap: wrap; gap: 6px; }
+.rch { display: inline-flex; align-items: baseline; gap: 6px; padding: 3px 10px; border-radius: 999px; background: var(--surface-2); font-size: .78rem; }
+.rch b { font-family: var(--font-display); font-variant-numeric: tabular-nums; }
+.psrc { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--ink-2); font-size: .74rem; padding-top: 8px; }
+.plink { border: 0; background: transparent; color: var(--blue); font: 600 .82rem var(--font-body); cursor: pointer; padding: 4px 0; white-space: nowrap; }
+.soon .plink { grid-column: 1 / -1; justify-self: start; }
+.row.upc:not([disabled]) { cursor: pointer; }
 .more { display: block; margin: 16px auto 0; padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 500 .9rem var(--font-body); cursor: pointer; }
 .empty { text-align: center; color: var(--ink-2); padding: 48px 0; }
 .hint { color: var(--ink-2); font-size: .8rem; margin-top: 24px; }
@@ -661,6 +681,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     nm.appendChild(sub);
     r.appendChild(nm);
     if (withNote && u.note) r.appendChild(el("div", "note", u.note));
+    if (PRODUCTS[u.code]) { r.disabled = false; r.onclick = function () { openUp(u.code); }; }
     return r;
   }
   function fitOne(e) {
@@ -767,6 +788,74 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     return bits.join(" · ");
   }
 
+  // ---- Scheda prodotto: caratteristiche dal sito ufficiale Bandai (src/products.json, da tools/fetch_products.py)
+  var PRODUCTS = DATA.products || {};
+  var IMGP = IMG.replace(/img\/$/, "prod/");
+  var REGIONS = { "Europe": "Europa", "North America": "Nord America", "Latin America": "America Latina", "Oceania": "Oceania", "United States": "Stati Uniti", "Other regions": "Altre regioni" };
+  var UNITS = { pack: "a busta", deck: "a mazzo", box: "a box" };
+  function itDate(d) { var p = d.split("-"), m = MONTHS[+p[1] - 1]; return p[2] ? +p[2] + " " + m + " " + p[0] : m.charAt(0).toUpperCase() + m.slice(1) + " " + p[0]; }
+  function itRegion(r) { return r.split("/").map(function (x) { return REGIONS[x] || x; }).join(", "); }
+  function itPrice(p, type) {
+    var booster = (p.cont || []).some(function (x) { return /^1 Booster Pack contains/i.test(x); });
+    var pr = p.price, u = pr[2] ? UNITS[pr[2]] : type === "ST" ? UNITS.deck : booster ? UNITS.pack : "";
+    return pr[1].replace(".", ",") + (pr[0] === "USD" ? " $" : " ¥") + (u ? " " + u : "");
+  }
+  // Il contenuto resta come sul sito ufficiale, tranne le due frasi standard delle buste
+  function itContent(t) {
+    var m = t.match(/^1 Booster Pack contains (\d+) cards/i); if (m) return m[1] + " carte per busta";
+    m = t.match(/^1 Box contains (\d+) Booster Packs/i); if (m) return m[1] + " buste per box";
+    return t;
+  }
+  function prodBox(code, type, kind, fallbackDate) {
+    var p = PRODUCTS[code]; if (!p) return null;
+    var box = el("div", "prod" + (p.pk ? "" : " nopk"));
+    if (p.pk) {
+      var im = document.createElement("img"); im.className = "ppk"; im.alt = "Confezione di " + code; im.decoding = "async"; im.src = IMGP + p.k + ".webp";
+      im.onerror = function () { box.classList.add("nopk"); if (im.parentNode) im.parentNode.removeChild(im); };
+      box.appendChild(im);
+    }
+    var dl = el("dl", "pfacts"), wide = el("dl", "pfacts wide");
+    function row(to, k, v) {
+      var r = el("div", "pf"); r.appendChild(el("dt", "", k)); var dd = el("dd");
+      if (typeof v === "string") dd.textContent = v; else v.forEach(function (x) { dd.appendChild(x); });
+      r.appendChild(dd); to.appendChild(r);
+    }
+    if (kind) row(dl, "Tipo", kind);
+    var rel = p.rel && p.rel.length ? p.rel : fallbackDate ? [["", fallbackDate]] : [];
+    if (rel.length === 1 && !rel[0][0]) row(dl, "Uscita", itDate(rel[0][1]));
+    else if (rel.length) row(dl, "Uscita", rel.map(function (x) { var d = el("div", "", itDate(x[1])); if (x[0]) d.appendChild(el("span", "reg", itRegion(x[0]))); return d; }));
+    if (p.pre) row(dl, "Pre-release", itDate(p.pre));
+    if (p.price) row(dl, "Prezzo", itPrice(p, type));
+    if (p.types) { var tm = p.types.match(/^([\d+]+) types?(?: in total)? ?(\+ ?\d+)?(?: types?)?$/); row(dl, "Carte", tm ? tm[1] + (tm[2] ? " " + tm[2].replace(" ", "") : "") + " diverse" : p.types); }
+    box.appendChild(dl);
+    if (p.cont) row(wide, "Contenuto", p.cont.map(function (x) { return el("div", "", itContent(x)); }));
+    if (p.rar) {
+      var ch = el("div", "rchs");
+      p.rar.forEach(function (x) { var c = el("span", "rch"); c.appendChild(document.createTextNode(x[0])); c.appendChild(el("b", "", String(x[1]))); ch.appendChild(c); });
+      row(wide, "Rarità", [ch]);
+    }
+    if (wide.firstChild) box.appendChild(wide);
+    var src = el("div", "psrc"); src.appendChild(el("span", "", p.price && p.price[0] === "USD" ? "Dati ufficiali Bandai · prezzo consigliato USA" : "Dati ufficiali Bandai"));
+    var lk = el("button", "plink", "Pagina ufficiale ↗"); lk.type = "button"; lk.onclick = function () { openExternal(p.url); }; src.appendChild(lk);
+    box.appendChild(src);
+    return box;
+  }
+  // Prodotti non ancora usciti: solo la scheda, le carte arrivano dopo
+  function openUp(code, fromHome) {
+    st.back = { y: window.pageYOffset || document.documentElement.scrollTop || 0, q: st.q, type: st.type, qm: st.qm, home: !!fromHome };
+    st.tab = "cards"; st.setId = "up-" + code; qi.value = ""; st.q = ""; window.scrollTo(0, 0); render();
+  }
+  function renderUp(code) {
+    var u = (DATA.upcoming || []).filter(function (x) { return x.code === code; })[0];
+    var b = el("button", "back", st.back && st.back.home ? "← Home" : "← Indietro"); b.type = "button"; b.onclick = goSets; out.appendChild(b);
+    if (!u) { out.appendChild(el("p", "empty", "Prodotto non trovato.")); return; }
+    var h = el("div", "sethead"); h.appendChild(el("h2", "fit", u.code + " · " + u.name));
+    h.appendChild(el("div", "sub", "In arrivo · " + upWhen(u))); out.appendChild(h);
+    var pb = prodBox(u.code, typeOf(u.code), u.kind, null); if (pb) out.appendChild(pb);
+    if (u.note) { var n = el("p", "hint", u.note); n.style.marginTop = "12px"; out.appendChild(n); }
+    out.appendChild(el("p", "empty", "Le carte saranno aggiunte al catalogo dopo l'uscita."));
+  }
+
   function renderCards() {
     var q = normQ(st.q);
     if (st.setId) {
@@ -775,8 +864,11 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       b.onclick = goSets;
       out.appendChild(b);
       var h = el("div", "sethead"); h.appendChild(el("h2", "fit", s.code + " · " + s.name));
-      if (s.date && s.date.charAt(0) !== "0") { var dm = s.date.split("-"); var mn = MONTHS[+dm[1] - 1]; h.appendChild(el("div", "sub", "Uscita: " + mn.charAt(0).toUpperCase() + mn.slice(1) + " " + dm[0])); }
+      var hasDate = s.date && s.date.charAt(0) !== "0";
+      var pb = q ? null : prodBox(s.code, s.type, s.type === "AL" ? "" : TYPES[s.type], hasDate ? s.date.slice(0, 7) : null);
+      if (hasDate && !pb) { var dm = s.date.split("-"); var mn = MONTHS[+dm[1] - 1]; h.appendChild(el("div", "sub", "Uscita: " + mn.charAt(0).toUpperCase() + mn.slice(1) + " " + dm[0])); }
       out.appendChild(h);
+      if (pb) out.appendChild(pb);
     }
     var list = (st.setId ? cardsOfSet(st.setId) : CARDS).filter(function (c) { return cardMatches(c, q); });
     if (q) {
@@ -895,6 +987,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       if (cd.month) box.appendChild(el("div", "mon", cd.month));
       r.appendChild(box);
       r.appendChild(el("div", "note", u.note));
+      if (PRODUCTS[u.code]) { var pl = el("button", "plink", "Scheda prodotto →"); pl.type = "button"; pl.onclick = function () { openUp(u.code); }; r.appendChild(pl); }
       return r;
     }
     var ul = el("div", "list");
@@ -953,12 +1046,12 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     });
     if (ups.length) {
       var u0 = ups[0], hero = el("div", "hero");
-      var hb = banner(u0.code, u0.name, CLOCK + "<span>" + esc(upBadge(u0)) + "</span>"); hb.onclick = openSoon; hero.appendChild(hb);
+      var hb = banner(u0.code, u0.name, CLOCK + "<span>" + esc(upBadge(u0)) + "</span>"); hb.onclick = PRODUCTS[u0.code] ? function () { openUp(u0.code, true); } : openSoon; hero.appendChild(hb);
       var cap = el("div", "cap"); cap.appendChild(el("div", "t fit", "Digimon TCG - " + u0.name + " [" + u0.code + "]")); cap.appendChild(el("div", "s", u0.kind + " · " + upWhen(u0))); hero.appendChild(cap);
       h.appendChild(hero);
       var g = el("div", "hgrid up");
       ups.slice(1).forEach(function (u) {
-        var it = el("div", "hitem"); var bb = banner(u.code, u.name, CLOCK + "<span>" + esc(upBadge(u)) + "</span>"); bb.onclick = openSoon; it.appendChild(bb);
+        var it = el("div", "hitem"); var bb = banner(u.code, u.name, CLOCK + "<span>" + esc(upBadge(u)) + "</span>"); bb.onclick = PRODUCTS[u.code] ? function () { openUp(u.code, true); } : openSoon; it.appendChild(bb);
         it.appendChild(el("div", "lbl", u.code + " - " + u.name)); it.appendChild(el("div", "lbl2", upWhen(u)));
         g.appendChild(it);
       });
@@ -1221,13 +1314,14 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     recomputeStatsIfNeeded();
     var isDeck = st.tab === "deck", isDeckList = isDeck && !st.deckId;
     var isInfo = st.tab === "info", isHome = st.tab === "home" || isInfo || isDeckList, isSets = st.tab === "sets", isSoon = isSets && st.type === "SOON";
+    var isUp = st.tab === "cards" && /^up-/.test(st.setId || "");
     ["home", "sets", "cards"].forEach(function (t) { document.getElementById("tab-" + t).setAttribute("aria-selected", st.tab === t ? "true" : "false"); });
-    document.getElementById("filters").hidden = isSets || isHome;
-    document.getElementById("qmodes").hidden = isSets || isHome;
+    document.getElementById("filters").hidden = isSets || isHome || isUp;
+    document.getElementById("qmodes").hidden = isSets || isHome || isUp;
     document.getElementById("qm-name").setAttribute("aria-pressed", String(st.qm === "name"));
     document.getElementById("qm-text").setAttribute("aria-pressed", String(st.qm === "text"));
     chips.hidden = !isSets;
-    qi.hidden = isSoon || isHome;
+    qi.hidden = isSoon || isHome || isUp;
     document.getElementById("hint").textContent = "Carte in inglese, da una raccolta pubblica aggiornata fino a BT26, EX13 e ST24, più promo e RB01. Quantità e collezione restano salvate in questo browser.";
     qi.placeholder = isDeck ? "Cerca una carta da aggiungere, es. Agumon o BT1-010" : isSets ? "Cerca per set, codice o Digimon, es. BT10 o Omnimon" :
       st.qm === "name" ? "Cerca per nome, es. Omnimon" :
@@ -1238,10 +1332,10 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     document.getElementById("count").innerHTML = "<b>" + uniq + "</b> / " + CARDS.length + " carte";
     document.getElementById("bar").style.width = (uniq / CARDS.length * 100) + "%";
     out.innerHTML = ""; NAVLIST = [];
-    document.getElementById("hint").hidden = isHome;
+    document.getElementById("hint").hidden = isHome || isUp;
     trackNav();
     if (isDeck) { document.getElementById("hint").hidden = true; if (st.deckId) renderDeck(); else renderDeckList(); }
-    else if (isInfo) renderInfo(); else if (isHome) renderHome(); else if (isSoon) renderSoon(); else if (isSets) renderSets(); else renderCards();
+    else if (isInfo) renderInfo(); else if (isHome) renderHome(); else if (isSoon) renderSoon(); else if (isSets) renderSets(); else if (isUp) renderUp(st.setId.slice(3)); else renderCards();
     fitAll();
   }
   // ---- Cronologia: il tasto/gesto "indietro" del telefono torna alla schermata precedente

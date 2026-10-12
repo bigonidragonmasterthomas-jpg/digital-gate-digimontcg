@@ -24,6 +24,7 @@ jobs:
       - run: python3 tools/build.py
       - run: python3 tools/fetch_images.py
       - run: python3 tools/fetch_banners.py
+      - run: python3 tools/fetch_product_images.py
       - run: python3 tools/apply_errata_images.py
       - uses: actions/configure-pages@v5
         continue-on-error: true

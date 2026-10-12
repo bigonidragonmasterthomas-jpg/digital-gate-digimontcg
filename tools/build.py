@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Costruisce www/index.html (sito e APK usano gli stessi file) da src/template.html + src/data.json."""
-import shutil, pathlib, os
+import json, shutil, pathlib, os
 root = pathlib.Path(__file__).resolve().parent.parent
 src, www = root / "src", root / "www"
 www.mkdir(exist_ok=True)
 tpl = (src / "template.html").read_text(encoding="utf-8")
 data = (src / "data.json").read_text(encoding="utf-8")
+# caratteristiche dei prodotti (tools/fetch_products.py): aggiunte ai dati come "products"
+prod = json.loads((src / "products.json").read_text(encoding="utf-8"))
+data = data.rstrip()[:-1] + ',"products":' + json.dumps(prod, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/") + "}"
 assert "/*DATA*/" in tpl
 head = ('<!doctype html>\n<html lang="it">\n<head>\n<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'

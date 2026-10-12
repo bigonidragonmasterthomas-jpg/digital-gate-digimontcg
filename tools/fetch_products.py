@@ -3,7 +3,7 @@
 Parte dall'indice del ramo "set-assets" (index.json: codice prodotto, codici dell'app, pagina ufficiale) e salva
 src/products.json, con una voce per ogni codice set dell'app. Correzioni a mano in tools/product_fixes.json.
 Uso: python3 tools/fetch_products.py [cartella con le pagine già scaricate CODICE.html]"""
-import html, json, os, pathlib, re, sys, urllib.request
+import html, json, os, pathlib, re, sys, urllib.parse, urllib.request
 root = pathlib.Path(__file__).resolve().parent.parent
 INDEX = "https://raw.githubusercontent.com/knightofgemini/digital-gate-digimontcg/set-assets/index.json"
 cache = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 and pathlib.Path(sys.argv[1]).is_dir() else None
@@ -131,6 +131,14 @@ def parse(page):
         if c: p["cont"] = c
     return p
 
+def pack_image(page, url, e):
+    """Immagine della confezione: img_pkg della pagina (quella del prodotto, se la pagina ne mostra due); ripiego: indice set-assets."""
+    c = list(dict.fromkeys(re.findall(r"[\"'(]([^\"'() ?]*img_pkg\.(?:png|jpg|webp))", page, re.I)))
+    slug = [s for s in url.split("/") if s][-1].replace(".php", "")
+    c.sort(key=lambda x: slug not in x)
+    if c: return urllib.parse.urljoin(url, c[0])
+    return e.get("file", {}).get("confezione", {}).get("url")
+
 def main():
     idx = json.loads((cache / "index.json").read_text(encoding="utf-8")) if cache and (cache / "index.json").exists() else json.loads(get(INDEX))
     fixes = json.load(open(root / "tools" / "product_fixes.json", encoding="utf-8"))
@@ -140,7 +148,8 @@ def main():
         page = (cache / (code + ".html")).read_text(encoding="utf-8", errors="replace") if cache and (cache / (code + ".html")).exists() else get(e["pagina"])
         p = parse(page) if page else {}
         p["k"] = code; p["url"] = e["pagina"]
-        if "confezione" in e.get("file", {}): p["pk"] = 1
+        pk = pack_image(page, e["pagina"], e)
+        if pk: p["pk"] = pk
         raw.append(code + " " + json.dumps(p, ensure_ascii=False))
         for app in e.get("codici_app") or [code]:
             if app in out and PREFER.get(app, code) != code: continue
