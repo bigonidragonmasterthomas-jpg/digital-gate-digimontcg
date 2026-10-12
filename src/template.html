@@ -80,6 +80,10 @@ main { padding: 8px 16px 48px; }
 .list { display: flex; flex-direction: column; gap: 6px; }
 .row { display: grid; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; cursor: pointer; text-align: left; width: 100%; color: inherit; font: inherit; }
 .row.set { grid-template-columns: 62px minmax(0, 1fr) auto; }
+.row.set.wl { grid-template-columns: 132px 62px minmax(0, 1fr) auto; padding-top: 7px; padding-bottom: 7px; }
+.slogo { width: 132px; height: 44px; display: grid; place-items: center; }
+@media (max-width: 520px) { .row.set.wl { grid-template-columns: 100px 54px minmax(0, 1fr) auto; gap: 8px; } .row.upc.wl { grid-template-columns: 100px 54px minmax(0, 1fr) !important; } .slogo { width: 100px; height: 34px; } }
+.slogo img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
 .row.card { grid-template-columns: 8px 46px minmax(0, 1fr) auto; padding-left: 0; overflow: hidden; }
 .thumb { width: 46px; height: 64px; border-radius: 4px; background: var(--surface-2); overflow: hidden; display: flex; align-items: center; justify-content: center; margin-left: 2px; }
 .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -280,6 +284,7 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .soon .note { grid-column: 1 / -1; color: var(--ink-2); font-size: .8rem; }
 .row.upc[disabled] { opacity: 1; cursor: default; border-style: dashed; }
 .row.upc { grid-template-columns: 62px minmax(0, 1fr); gap: 8px 12px; }
+.row.upc.wl { grid-template-columns: 132px 62px minmax(0, 1fr); }
 .row.upc .name, .soon .name, .row.set .name { overflow: hidden; }
 .soon .ttl { font-weight: 500; }
 .row.upc .ttl { font-weight: 500; }
@@ -293,6 +298,9 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 @media (max-width: 380px) {
   .row.set { grid-template-columns: 50px minmax(0, 1fr) auto; gap: 8px; padding: 10px 10px; }
   .row.upc, .soon { grid-template-columns: 50px minmax(0, 1fr); gap: 6px 8px; }
+  .row.set.wl { grid-template-columns: 92px 50px minmax(0, 1fr) auto; }
+  .row.upc.wl { grid-template-columns: 92px 50px minmax(0, 1fr) !important; }
+  .slogo { width: 92px; height: 31px; }
   .code { font-size: .8rem; padding: 5px 2px; }
 }
 /* Home */
@@ -704,6 +712,11 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   // Titolo della sezione in cima a ogni pagina (stessi nomi del menu)
   function pageTitle(t) { out.appendChild(el("h2", "ptitle", t)); }
+  function setLogo(code) {
+    var p = PRODUCTS[code], w = el("div", "slogo");
+    if (p && p.lg) { var im = document.createElement("img"); im.alt = ""; im.loading = "lazy"; im.decoding = "async"; im.src = IMGP + "logo/" + p.k + ".webp"; im.onerror = function () { if (im.parentNode) im.parentNode.removeChild(im); }; w.appendChild(im); }
+    return w;
+  }
   function renderSets() {
     pageTitle("Prodotti");
     var q = normQ(st.q);
@@ -724,9 +737,12 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       var gh = el("div", "group-title"); gh.appendChild(el("span", "", TYPES[t]));
       out.appendChild(gh);
       var ul = el("div", "list");
+      // Logo del prodotto prima del codice, nei gruppi in cui la maggior parte dei prodotti ne ha uno
+      var wl = items.filter(function (s) { var p = PRODUCTS[s.code]; return p && p.lg; }).length * 2 > items.length;
       items.forEach(function (s) {
-        if (s.up) { ul.appendChild(upcRow(s.up, false)); return; }
-        var r = el("button", "row set"); r.type = "button";
+        if (s.up) { var ur = upcRow(s.up, false); if (wl) { ur.classList.add("wl"); ur.insertBefore(setLogo(s.code), ur.firstChild); } ul.appendChild(ur); return; }
+        var r = el("button", "row set" + (wl ? " wl" : "")); r.type = "button";
+        if (wl) r.appendChild(setLogo(s.code));
         r.appendChild(el("div", "code fit", s.code));
         if (hits[s.id]) {
           var nm = el("div", "name"); nm.appendChild(el("div", "ttl fit", s.name));

@@ -150,6 +150,7 @@ def main():
         p["k"] = code; p["url"] = e["pagina"]
         pk = pack_image(page, e["pagina"], e)
         if pk: p["pk"] = pk
+        if "logo" in e.get("file", {}): p["lg"] = e["file"]["logo"]["file"]
         raw.append(code + " " + json.dumps(p, ensure_ascii=False))
         for app in e.get("codici_app") or [code]:
             if app in out and PREFER.get(app, code) != code: continue
