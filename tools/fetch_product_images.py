@@ -20,18 +20,19 @@ for k, path in sorted({(p["k"], p["pk"]) for p in prod.values() if p.get("pk")})
     im.save(outdir / (k + ".webp"), "WEBP", quality=88, method=5)
     done += 1
 print("confezioni:", done)
-# loghi per l'elenco dei prodotti: dal ramo "set-assets" (percorso in "lg") a www/prod/logo/CODICE.webp
+# loghi per l'elenco dei prodotti: da src/logos/CODICE.webp se presente, altrimenti dal ramo "set-assets" (percorso in "lg"), a www/prod/logo/CODICE.webp
 BASE = "https://raw.githubusercontent.com/knightofgemini/digital-gate-digimontcg/set-assets/"
 (outdir / "logo").mkdir(exist_ok=True)
 done = 0
 for k, path in sorted({(p["k"], p["lg"]) for p in prod.values() if p.get("lg")}):
     try:
-        data = urllib.request.urlopen(urllib.request.Request(BASE + urllib.parse.quote(path), headers={"User-Agent": "Mozilla/5.0"}), timeout=20).read()
+        own = root / "src" / "logos" / (k + ".webp")   # logo scelto a mano: ha la precedenza
+        data = own.read_bytes() if own.exists() else urllib.request.urlopen(urllib.request.Request(BASE + urllib.parse.quote(path), headers={"User-Agent": "Mozilla/5.0"}), timeout=20).read()
         im = Image.open(io.BytesIO(data)); im.load()
     except Exception as e:
         print("manca logo", k, e); continue
     im = im.convert("RGBA")
-    box = im.getbbox()
+    box = im.getchannel("A").point(lambda a: 255 if a > 16 else 0).getbbox()   # ritaglio sui bordi trasparenti
     if box: im = im.crop(box)
     if im.size[1] > 110: im = im.resize((round(im.size[0] * 110 / im.size[1]), 110), Image.LANCZOS)
     im.save(outdir / "logo" / (k + ".webp"), "WEBP", quality=86, method=5)
