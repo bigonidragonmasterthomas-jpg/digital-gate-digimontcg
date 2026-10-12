@@ -148,14 +148,24 @@ def scan_page(host, rel_page, rel_folder):
             if ch:
                 texts.append((cu, ch))
     folder = HOSTS[host] + rel_folder
+    # cartelle condivise da due prodotti usciti insieme (es. deck/st18-19/ per ST18 e ST19)
+    num = re.search(r"(\d+)/$", rel_folder)
+    parent = HOSTS[host] + rel_folder.rstrip("/").rsplit("/", 1)[0] + "/"
+    shared = []
     for src, t in texts:
         refs = re.findall(r'(?:src|data-src|srcset|href|content)=["\']([^"\']+)', t) + re.findall(r'url\(\s*["\']?([^"\')]+)', t)
         for r in refs:
             for part in r.split(","):
                 u = urllib.parse.urljoin(src, part.strip().split(" ")[0]).split("?")[0]
-                if u.startswith(folder) and re.search(r"\.(png|jpe?g|webp|svg)$", u, re.I):
+                if not re.search(r"\.(png|jpe?g|webp|svg)$", u, re.I):
+                    continue
+                if u.startswith(folder):
                     found.append(u[len(folder):])
-    return list(dict.fromkeys(found))
+                elif num and u.startswith(parent):
+                    sub = u[len(parent):].split("/", 1)
+                    if len(sub) == 2 and re.search(r"\d+-\d+$", sub[0]) and re.search(r"(?<!\d)0?%d(?!\d)" % int(num.group(1)), sub[0]):
+                        shared.append(u)
+    return list(dict.fromkeys(found)), list(dict.fromkeys(shared))
 
 
 def fetch_image(url):
@@ -184,18 +194,20 @@ def process(prod):
         missing = [k for k in KINDS if k not in files]
         if not missing:
             break
-        rels = scan_page(host, pages.get(host), prod["rel_folder"])
+        rels, shared = scan_page(host, pages.get(host), prod["rel_folder"])
+        base = HOSTS[host] + prod["rel_folder"]
         for kind in missing:
             pattern, probes = KINDS[kind]
             if kind == "promo" and not prod["key"].startswith(("LM", "PB")):
                 continue
-            cands = [r for r in rels if re.match(pattern, r, re.I)] + [p for p in probes if p not in rels]
-            for rel in cands:
-                url = HOSTS[host] + prod["rel_folder"] + rel
+            cands = [base + r for r in rels if re.match(pattern, r, re.I)] + [base + p for p in probes if p not in rels]
+            if kind.startswith("keyvisual"):
+                cands += [u for u in shared if re.match(pattern, u.split("/images/products/", 1)[1].split("/", 2)[2], re.I)]
+            for url in cands:
                 data, im = fetch_image(url)
                 if data is None:
                     continue
-                ext = rel.rsplit(".", 1)[1].lower().replace("jpeg", "jpg")
+                ext = url.rsplit(".", 1)[1].lower().replace("jpeg", "jpg")
                 out_dir.mkdir(parents=True, exist_ok=True)
                 name = "%s.%s" % (kind, ext)
                 (out_dir / name).write_bytes(data)
