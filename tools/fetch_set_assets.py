@@ -201,6 +201,8 @@ def process(prod):
             if kind == "promo" and not prod["key"].startswith(("LM", "PB")):
                 continue
             cands = [base + r for r in rels if re.match(pattern, r, re.I)] + [base + p for p in probes if p not in rels]
+            if kind == "logo":  # un file che si chiama "logo" batte un "title"
+                cands.sort(key=lambda u: "logo" not in u.rsplit("/", 1)[1])
             if kind.startswith("keyvisual"):
                 cands += [u for u in shared if re.match(pattern, u.split("/images/products/", 1)[1].split("/", 2)[2], re.I)]
             for url in cands:
