@@ -1,0 +1,3350 @@
+[
+ {
+  "codice": "BT27",
+  "codici_app": [
+   "BT27"
+  ],
+  "nome": "IGNITION OF X [BT-27]",
+  "uscita": "December 11, 2026",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver27/",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT27/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver27/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 266
+   },
+   "confezione": {
+    "file": "BT27/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver27/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 56
+   }
+  }
+ },
+ {
+  "codice": "BT26",
+  "codici_app": [
+   "BT26"
+  ],
+  "nome": "TIMELESS BONDS [BT-26]",
+  "uscita": "September 4, 2026",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver26/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "BT26/keyvisual.webp",
+    "url": "https://world.digimoncard.com/images/products/pack/ver26/point/pc/mv.webp",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 515
+   },
+   "keyvisual-verticale": {
+    "file": "BT26/keyvisual-verticale.webp",
+    "url": "https://world.digimoncard.com/images/products/pack/ver26/point/sp/mv.webp",
+    "fonte": "world",
+    "w": 750,
+    "h": 882,
+    "kb": 207
+   },
+   "banner": {
+    "file": "BT26/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver26/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 286
+   },
+   "confezione": {
+    "file": "BT26/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver26/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 60
+   }
+  }
+ },
+ {
+  "codice": "BT25",
+  "codici_app": [
+   "BT25"
+  ],
+  "nome": "DUAL REVOLUTION [BT-25]",
+  "uscita": "May 22, 2026",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver25/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "BT25/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver25/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 584
+   },
+   "keyvisual-verticale": {
+    "file": "BT25/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver25/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 357
+   },
+   "banner": {
+    "file": "BT25/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver25/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 298
+   },
+   "confezione": {
+    "file": "BT25/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver25/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 57
+   }
+  }
+ },
+ {
+  "codice": "BT24",
+  "codici_app": [
+   "BT24"
+  ],
+  "nome": "TIME STRANGER [BT-24]",
+  "uscita": "January 23, 2026",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver24/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "BT24/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver24/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 421
+   },
+   "keyvisual-verticale": {
+    "file": "BT24/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver24/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 266
+   },
+   "banner": {
+    "file": "BT24/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver24/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 298
+   },
+   "confezione": {
+    "file": "BT24/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver24/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 52
+   }
+  }
+ },
+ {
+  "codice": "BT23",
+  "codici_app": [
+   "BT23"
+  ],
+  "nome": "HACKERS' SLUMBER [BT-23]",
+  "uscita": "October 24, 2025",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver23/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "BT23/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver23/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 583
+   },
+   "keyvisual-verticale": {
+    "file": "BT23/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver23/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 379
+   },
+   "banner": {
+    "file": "BT23/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver23/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 306
+   },
+   "confezione": {
+    "file": "BT23/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver23/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 54
+   }
+  }
+ },
+ {
+  "codice": "BT22",
+  "codici_app": [
+   "BT22"
+  ],
+  "nome": "CYBER EDEN [BT-22]",
+  "uscita": "July 25, 2025",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver22/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "BT22/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver22/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 441
+   },
+   "keyvisual-verticale": {
+    "file": "BT22/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver22/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 285
+   },
+   "banner": {
+    "file": "BT22/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver22/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 237
+   },
+   "confezione": {
+    "file": "BT22/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver22/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 404,
+    "kb": 55
+   }
+  }
+ },
+ {
+  "codice": "BT21",
+  "codici_app": [
+   "BT21"
+  ],
+  "nome": "WORLD CONVERGENCE [BT-21]",
+  "uscita": "April 25, 2025",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver21/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "BT21/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver21/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 609
+   },
+   "keyvisual-verticale": {
+    "file": "BT21/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver21/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 388
+   },
+   "banner": {
+    "file": "BT21/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver21/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 286
+   },
+   "confezione": {
+    "file": "BT21/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver21/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 247
+   }
+  }
+ },
+ {
+  "codice": "BT19-20",
+  "codici_app": [
+   "BT19",
+   "BT20"
+  ],
+  "nome": "SPECIAL BOOSTER Ver.2.5 [BT19-20]",
+  "uscita": "February 28, 2025",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver19-20/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "BT19-20/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver19-20/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 644
+   },
+   "keyvisual-verticale": {
+    "file": "BT19-20/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver19-20/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 335
+   },
+   "banner": {
+    "file": "BT19-20/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver19-20/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 316
+   },
+   "confezione": {
+    "file": "BT19-20/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver19-20/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 406,
+    "kb": 63
+   }
+  }
+ },
+ {
+  "codice": "BT18-19",
+  "codici_app": [
+   "BT18",
+   "BT19"
+  ],
+  "nome": "SPECIAL BOOSTER Ver.2.0 [BT18-19]",
+  "uscita": "November 1, 2024",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver18-19/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "BT18-19/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver18-19/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 614
+   },
+   "keyvisual-verticale": {
+    "file": "BT18-19/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver18-19/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 396
+   },
+   "banner": {
+    "file": "BT18-19/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver18-19/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 325
+   },
+   "confezione": {
+    "file": "BT18-19/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver18-19/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 406,
+    "kb": 61
+   }
+  }
+ },
+ {
+  "codice": "BT17",
+  "codici_app": [
+   "BT17"
+  ],
+  "nome": "SECRET CRISIS [BT17]",
+  "uscita": "August 9, 2024",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver17/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "BT17/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver17/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 489
+   },
+   "keyvisual-verticale": {
+    "file": "BT17/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver17/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 384
+   },
+   "banner": {
+    "file": "BT17/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver17/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 285
+   },
+   "confezione": {
+    "file": "BT17/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver17/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 406,
+    "kb": 59
+   }
+  }
+ },
+ {
+  "codice": "BT16",
+  "codici_app": [
+   "BT16"
+  ],
+  "nome": "BEGINNING OBSERVER [BT16]",
+  "uscita": "May 24, 2024",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver16.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT16/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver16/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 317
+   },
+   "confezione": {
+    "file": "BT16/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver16/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 45
+   }
+  }
+ },
+ {
+  "codice": "BT15",
+  "codici_app": [
+   "BT15"
+  ],
+  "nome": "EXCEED APOCALYPSE [BT15]",
+  "uscita": "February 16, 2024",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver15.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT15/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver15/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 323
+   },
+   "confezione": {
+    "file": "BT15/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver15/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 43
+   }
+  }
+ },
+ {
+  "codice": "BT14",
+  "codici_app": [
+   "BT14"
+  ],
+  "nome": "BLAST ACE [BT14]",
+  "uscita": "November 17, 2023",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver14.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT14/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver14/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 319
+   },
+   "confezione": {
+    "file": "BT14/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver14/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 44
+   }
+  }
+ },
+ {
+  "codice": "BT13",
+  "codici_app": [
+   "BT13"
+  ],
+  "nome": "VERSUS ROYAL KNIGHTS [BT13]",
+  "uscita": "July 21, 2023",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver13.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT13/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver13/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 295
+   },
+   "confezione": {
+    "file": "BT13/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver13/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 153
+   }
+  }
+ },
+ {
+  "codice": "BT12",
+  "codici_app": [
+   "BT12"
+  ],
+  "nome": "ACROSS TIME [BT12]",
+  "uscita": "April 28, 2023",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver12.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT12/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver12/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 297
+   },
+   "confezione": {
+    "file": "BT12/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver12/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 40
+   }
+  }
+ },
+ {
+  "codice": "BT11",
+  "codici_app": [
+   "BT11"
+  ],
+  "nome": "DIMENSIONAL PHASE [BT11]",
+  "uscita": "February 17, 2023",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver11.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT11/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver11/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 366
+   },
+   "confezione": {
+    "file": "BT11/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver11/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 37
+   }
+  }
+ },
+ {
+  "codice": "BT10",
+  "codici_app": [
+   "BT10"
+  ],
+  "nome": "XROS ENCOUNTER [BT10]",
+  "uscita": "October 14, 2022",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver10.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT10/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver10/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 229
+   },
+   "confezione": {
+    "file": "BT10/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver10/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 40
+   }
+  }
+ },
+ {
+  "codice": "BT9",
+  "codici_app": [
+   "BT9"
+  ],
+  "nome": "X RECORD [BT09]",
+  "uscita": "July 29, 2022",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver9.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT9/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver9/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 252
+   },
+   "confezione": {
+    "file": "BT9/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver9/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 40
+   }
+  }
+ },
+ {
+  "codice": "BT8",
+  "codici_app": [
+   "BT8"
+  ],
+  "nome": "NEW AWAKENING [BT08]",
+  "uscita": "May 13, 2022",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver8.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT8/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver8/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 219
+   },
+   "confezione": {
+    "file": "BT8/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver8/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 156
+   }
+  }
+ },
+ {
+  "codice": "BT7",
+  "codici_app": [
+   "BT7"
+  ],
+  "nome": "NEXT ADVENTURE [BT07]",
+  "uscita": "March 4, 2022",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver7.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT7/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver7/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 224
+   },
+   "confezione": {
+    "file": "BT7/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver7/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 38
+   }
+  }
+ },
+ {
+  "codice": "BT6",
+  "codici_app": [
+   "BT6"
+  ],
+  "nome": "DOUBLE DIAMOND [BT06]",
+  "uscita": "October 15, 2021",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver6.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT6/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver6/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 197
+   },
+   "confezione": {
+    "file": "BT6/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver6/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 41
+   }
+  }
+ },
+ {
+  "codice": "BT5",
+  "codici_app": [
+   "BT5"
+  ],
+  "nome": "BATTLE OF OMNI [BT05]",
+  "uscita": "August 6, 2021",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver5.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT5/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver5/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 199
+   },
+   "confezione": {
+    "file": "BT5/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver5/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 42
+   }
+  }
+ },
+ {
+  "codice": "BT4",
+  "codici_app": [
+   "BT4"
+  ],
+  "nome": "GREAT LEGEND [BT04]",
+  "uscita": "June 11, 2021",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver4.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT4/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver4/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 337
+   },
+   "confezione": {
+    "file": "BT4/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver4/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 49
+   }
+  }
+ },
+ {
+  "codice": "BT1-3_v1.0",
+  "codici_app": [
+   "BT1",
+   "BT2"
+  ],
+  "nome": "RELEASE SPECIAL BOOSTER Ver.1.0 [BT01-03]",
+  "uscita": "February 12, 2021",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver2.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT1-3_v1.0/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver2/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 138
+   },
+   "confezione": {
+    "file": "BT1-3_v1.0/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver2/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 215
+   }
+  }
+ },
+ {
+  "codice": "BT1-3_v1.5",
+  "codici_app": [
+   "BT2",
+   "BT3"
+  ],
+  "nome": "RELEASE SPECIAL BOOSTER Ver.1.5 [BT01-03]",
+  "uscita": "March 12, 2021",
+  "tipo": "Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ver3.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "BT1-3_v1.5/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ver3/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 261
+   },
+   "confezione": {
+    "file": "BT1-3_v1.5/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ver3/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 404,
+    "kb": 236
+   }
+  }
+ },
+ {
+  "codice": "EX13",
+  "codici_app": [
+   "EX13"
+  ],
+  "nome": "EXTRA BOOSTER CHIVALROUS XIII [EX-13]",
+  "uscita": "October 2, 2026",
+  "tipo": "Extra / Theme Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ex-13/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "EX13/keyvisual.webp",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-13/point/pc/mv.webp",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 691
+   },
+   "keyvisual-verticale": {
+    "file": "EX13/keyvisual-verticale.webp",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-13/point/sp/mv.webp",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 399
+   },
+   "banner": {
+    "file": "EX13/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-13/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 368
+   },
+   "confezione": {
+    "file": "EX13/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-13/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 60
+   }
+  }
+ },
+ {
+  "codice": "EX12",
+  "codici_app": [
+   "EX12"
+  ],
+  "nome": "EXTRA BOOSTER DIGITAL WORLD SHAMBALA [EX-12]",
+  "uscita": "July 3, 2026",
+  "tipo": "Extra / Theme Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ex-12/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "EX12/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-12/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 465
+   },
+   "keyvisual-verticale": {
+    "file": "EX12/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-12/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 267
+   },
+   "banner": {
+    "file": "EX12/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-12/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 288
+   },
+   "confezione": {
+    "file": "EX12/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-12/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 62
+   }
+  }
+ },
+ {
+  "codice": "EX11",
+  "codici_app": [
+   "EX11"
+  ],
+  "nome": "EXTRA BOOSTER DAWN OF LIBERATOR [EX-11]",
+  "uscita": "February 13, 2026",
+  "tipo": "Extra / Theme Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ex-11/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "EX11/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-11/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 737
+   },
+   "keyvisual-verticale": {
+    "file": "EX11/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-11/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 343
+   },
+   "banner": {
+    "file": "EX11/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-11/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 352
+   },
+   "confezione": {
+    "file": "EX11/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-11/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 53
+   }
+  }
+ },
+ {
+  "codice": "EX10",
+  "codici_app": [
+   "EX10"
+  ],
+  "nome": "EXTRA BOOSTER SINISTER ORDER [EX-10]",
+  "uscita": "September 19, 2025",
+  "tipo": "Extra / Theme Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ex-10/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "EX10/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-10/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 522
+   },
+   "keyvisual-verticale": {
+    "file": "EX10/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-10/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 280
+   },
+   "banner": {
+    "file": "EX10/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-10/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 246
+   },
+   "confezione": {
+    "file": "EX10/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-10/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 218
+   }
+  }
+ },
+ {
+  "codice": "EX9",
+  "codici_app": [
+   "EX9"
+  ],
+  "nome": "EXTRA BOOSTER VERSUS MONSTERS [EX-09]",
+  "uscita": "June 26, 2025",
+  "tipo": "Extra / Theme Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ex-09/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "EX9/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-09/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 638
+   },
+   "keyvisual-verticale": {
+    "file": "EX9/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-09/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 349
+   },
+   "banner": {
+    "file": "EX9/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-09/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 315
+   },
+   "confezione": {
+    "file": "EX9/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-09/img_pkg.png",
+    "fonte": "world",
+    "w": 191,
+    "h": 322,
+    "kb": 42
+   }
+  }
+ },
+ {
+  "codice": "EX8",
+  "codici_app": [
+   "EX8"
+  ],
+  "nome": "EXTRA BOOSTER CHAIN OF LIBERATION [EX08]",
+  "uscita": "January 10, 2025",
+  "tipo": "Extra / Theme Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ex-08/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "EX8/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-08/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 762
+   },
+   "keyvisual-verticale": {
+    "file": "EX8/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-08/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 456
+   },
+   "banner": {
+    "file": "EX8/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-08/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 366
+   },
+   "confezione": {
+    "file": "EX8/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-08/img_pkg.png",
+    "fonte": "world",
+    "w": 242,
+    "h": 406,
+    "kb": 61
+   }
+  }
+ },
+ {
+  "codice": "EX7",
+  "codici_app": [
+   "EX7"
+  ],
+  "nome": "EXTRA BOOSTER DIGIMON LIBERATOR [EX07]",
+  "uscita": "September 13, 2024",
+  "tipo": "Extra / Theme Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ex-07/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "EX7/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-07/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 444
+   },
+   "keyvisual-verticale": {
+    "file": "EX7/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-07/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 258
+   },
+   "banner": {
+    "file": "EX7/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-07/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 312
+   },
+   "confezione": {
+    "file": "EX7/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-07/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 62
+   }
+  }
+ },
+ {
+  "codice": "EX6",
+  "codici_app": [
+   "EX6"
+  ],
+  "nome": "THEME BOOSTER INFERNAL ASCENSION [EX06]",
+  "uscita": "June 28, 2024",
+  "tipo": "Extra / Theme Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ex-06/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "EX6/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-06/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 586
+   },
+   "keyvisual-verticale": {
+    "file": "EX6/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-06/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 393
+   },
+   "banner": {
+    "file": "EX6/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-06/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 280
+   },
+   "confezione": {
+    "file": "EX6/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-06/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 43
+   }
+  }
+ },
+ {
+  "codice": "EX5",
+  "codici_app": [
+   "EX5"
+  ],
+  "nome": "THEME BOOSTER ANIMAL COLOSSEUM [EX05]",
+  "uscita": "January 19, 2024",
+  "tipo": "Extra / Theme Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ex-05.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "EX5/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-05/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 308
+   },
+   "confezione": {
+    "file": "EX5/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-05/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 61
+   }
+  }
+ },
+ {
+  "codice": "EX4",
+  "codici_app": [
+   "EX4"
+  ],
+  "nome": "THEME BOOSTER ALTERNATIVE BEING [EX04]",
+  "uscita": "June 23, 2023",
+  "tipo": "Extra / Theme Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ex-04.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "EX4/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-04/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 230
+   },
+   "confezione": {
+    "file": "EX4/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-04/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 43
+   }
+  }
+ },
+ {
+  "codice": "EX3",
+  "codici_app": [
+   "EX3"
+  ],
+  "nome": "THEME BOOSTER DRACONIC ROAR [EX-03]",
+  "uscita": "November 11, 2022",
+  "tipo": "Extra / Theme Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ex-03.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "EX3/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-03/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 177
+   },
+   "confezione": {
+    "file": "EX3/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-03/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 41
+   }
+  }
+ },
+ {
+  "codice": "EX2",
+  "codici_app": [
+   "EX2"
+  ],
+  "nome": "THEME BOOSTER DIGITAL HAZARD [EX-02]",
+  "uscita": "June 24, 2022",
+  "tipo": "Extra / Theme Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ex-02.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "EX2/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-02/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 208
+   },
+   "confezione": {
+    "file": "EX2/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-02/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 39
+   }
+  }
+ },
+ {
+  "codice": "EX1",
+  "codici_app": [
+   "EX1"
+  ],
+  "nome": "THEME BOOSTER CLASSIC COLLECTION [EX01]",
+  "uscita": "December 10, 2021",
+  "tipo": "Extra / Theme Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ex-01.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "EX1/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-01/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 317
+   },
+   "confezione": {
+    "file": "EX1/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ex-01/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 39
+   }
+  }
+ },
+ {
+  "codice": "ST26",
+  "codici_app": [
+   "ST26"
+  ],
+  "nome": "DIGIMON ALYSION Yukinamon [ST-26]",
+  "uscita": "December 4, 2026",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-26/",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST26/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-26/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 328
+   },
+   "confezione": {
+    "file": "ST26/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-26/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 47
+   }
+  }
+ },
+ {
+  "codice": "ST25",
+  "codici_app": [
+   "ST25"
+  ],
+  "nome": "DIGIMON ALYSION Rubeusdramon [ST-25]",
+  "uscita": "December 4, 2026",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-25/",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST25/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-25/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 318
+   },
+   "confezione": {
+    "file": "ST25/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-25/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 45
+   }
+  }
+ },
+ {
+  "codice": "ST24",
+  "codici_app": [
+   "ST24"
+  ],
+  "nome": "DIGIMON DATA SQUAD [ST-24]",
+  "uscita": "May 15, 2026",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-24/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "ST24/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-24/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 486
+   },
+   "keyvisual-verticale": {
+    "file": "ST24/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-24/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 309
+   },
+   "banner": {
+    "file": "ST24/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-24/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 252
+   },
+   "confezione": {
+    "file": "ST24/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-24/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 490,
+    "kb": 67
+   }
+  }
+ },
+ {
+  "codice": "ST23",
+  "codici_app": [
+   "ST23"
+  ],
+  "nome": "DIGIMON BEATBREAK [ST-23]",
+  "uscita": "May 15, 2026",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-23/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "ST23/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-23/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 505
+   },
+   "keyvisual-verticale": {
+    "file": "ST23/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-23/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 346
+   },
+   "banner": {
+    "file": "ST23/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-23/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 191
+   },
+   "confezione": {
+    "file": "ST23/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-23/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 490,
+    "kb": 57
+   }
+  }
+ },
+ {
+  "codice": "ST22",
+  "codici_app": [
+   "ST22"
+  ],
+  "nome": "AMETHYST MANDALA [ST-22]",
+  "uscita": "December 5, 2025",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-22/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "ST22/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-22/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 783,
+    "kb": 615
+   },
+   "keyvisual-verticale": {
+    "file": "ST22/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-22/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 425
+   },
+   "banner": {
+    "file": "ST22/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-22/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 354
+   },
+   "confezione": {
+    "file": "ST22/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-22/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 399,
+    "kb": 60
+   }
+  }
+ },
+ {
+  "codice": "ST21",
+  "codici_app": [
+   "ST21"
+  ],
+  "nome": "HERO OF HOPE [ST-21]",
+  "uscita": "April 18, 2025",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-21/",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST21/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-21/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 334
+   },
+   "confezione": {
+    "file": "ST21/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-21/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 172
+   }
+  }
+ },
+ {
+  "codice": "ST20",
+  "codici_app": [
+   "ST20"
+  ],
+  "nome": "PROTECTOR OF LIGHT [ST-20]",
+  "uscita": "April 18, 2025",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-20/",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST20/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-20/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 358
+   },
+   "confezione": {
+    "file": "ST20/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-20/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 178
+   }
+  }
+ },
+ {
+  "codice": "ST19",
+  "codici_app": [
+   "ST19"
+  ],
+  "nome": "FABLE WALTZ [ST19]",
+  "uscita": "September 13, 2024",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-19/",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST19/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-19/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 368
+   },
+   "confezione": {
+    "file": "ST19/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-19/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 490,
+    "kb": 70
+   }
+  }
+ },
+ {
+  "codice": "ST18",
+  "codici_app": [
+   "ST18"
+  ],
+  "nome": "GUARDIAN VORTEX [ST18]",
+  "uscita": "September 13, 2024",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-18/",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST18/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-18/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 358
+   },
+   "confezione": {
+    "file": "ST18/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-18/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 490,
+    "kb": 70
+   }
+  }
+ },
+ {
+  "codice": "ST17",
+  "codici_app": [
+   "ST17"
+  ],
+  "nome": "DOUBLE TYPHOON [ST17]",
+  "uscita": "March 8, 2024",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-17/",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST17/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-17/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 245
+   },
+   "confezione": {
+    "file": "ST17/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-17/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 490,
+    "kb": 46
+   }
+  }
+ },
+ {
+  "codice": "ST16",
+  "codici_app": [
+   "ST16"
+  ],
+  "nome": "WOLF OF FRIENDSHIP [ST16]",
+  "uscita": "October 13, 2023",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-16.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST16/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-16/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 279
+   },
+   "confezione": {
+    "file": "ST16/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-16/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 39
+   }
+  }
+ },
+ {
+  "codice": "ST15",
+  "codici_app": [
+   "ST15"
+  ],
+  "nome": "DRAGON OF COURAGE [ST15]",
+  "uscita": "October 13, 2023",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-15.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST15/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-15/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 318
+   },
+   "confezione": {
+    "file": "ST15/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-15/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 41
+   }
+  }
+ },
+ {
+  "codice": "ST14",
+  "codici_app": [
+   "ST14"
+  ],
+  "nome": "BEELZEMON [ST14]",
+  "uscita": "March 24, 2023",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-14.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST14/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-14/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 200
+   },
+   "confezione": {
+    "file": "ST14/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-14/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 36
+   }
+  }
+ },
+ {
+  "codice": "ST13",
+  "codici_app": [
+   "ST13"
+  ],
+  "nome": "RAGNALOARDMON [ST-13]",
+  "uscita": "October 14, 2022",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-13.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST13/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-13/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 219
+   },
+   "confezione": {
+    "file": "ST13/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-13/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 40
+   }
+  }
+ },
+ {
+  "codice": "ST12",
+  "codici_app": [
+   "ST12"
+  ],
+  "nome": "JESMON [ST-12]",
+  "uscita": "October 14, 2022",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-12.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST12/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-12/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 229
+   },
+   "confezione": {
+    "file": "ST12/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-12/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 39
+   }
+  }
+ },
+ {
+  "codice": "ST11",
+  "codici_app": [
+   "ST11"
+  ],
+  "nome": "SPECIAL ENTRY SET [ST-11]",
+  "uscita": "November 26, 2021",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://en.digimoncard.com/products/deck/st-11.php",
+  "sito": "en",
+  "file": {
+   "banner": {
+    "file": "ST11/banner.jpg",
+    "url": "https://en.digimoncard.com/images/products/deck/st-11/bnr.jpg",
+    "fonte": "en",
+    "w": 800,
+    "h": 600,
+    "kb": 202
+   },
+   "confezione": {
+    "file": "ST11/confezione.png",
+    "url": "https://en.digimoncard.com/images/products/deck/st-11/img_pkg.png",
+    "fonte": "en",
+    "w": 196,
+    "h": 275,
+    "kb": 29
+   }
+  }
+ },
+ {
+  "codice": "ST10",
+  "codici_app": [
+   "ST10"
+  ],
+  "nome": "PARALLEL WORLD TACTICIAN [ST-10]",
+  "uscita": "May 13, 2022",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-10.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST10/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-10/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 273
+   },
+   "confezione": {
+    "file": "ST10/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-10/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 152
+   }
+  }
+ },
+ {
+  "codice": "ST9",
+  "codici_app": [
+   "ST9"
+  ],
+  "nome": "ULTIMATE ANCIENT DRAGON [ST-9]",
+  "uscita": "May 13, 2022",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-9.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST9/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-9/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 269
+   },
+   "confezione": {
+    "file": "ST9/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-9/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 140
+   }
+  }
+ },
+ {
+  "codice": "ST8",
+  "codici_app": [
+   "ST8"
+  ],
+  "nome": "ULFORCEVEEDRAMON [ST-8]",
+  "uscita": "October 15, 2021",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-8.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST8/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-8/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 236
+   },
+   "confezione": {
+    "file": "ST8/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-8/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 39
+   }
+  }
+ },
+ {
+  "codice": "ST7",
+  "codici_app": [
+   "ST7"
+  ],
+  "nome": "GALLANTMON [ST-7]",
+  "uscita": "October 15, 2021",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-7.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST7/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-7/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 273
+   },
+   "confezione": {
+    "file": "ST7/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-7/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 39
+   }
+  }
+ },
+ {
+  "codice": "ST6",
+  "codici_app": [
+   "ST6"
+  ],
+  "nome": "VENOMOUS VIOLET [ST-6]",
+  "uscita": "June 11, 2021",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-6.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST6/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-6/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 271
+   },
+   "confezione": {
+    "file": "ST6/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-6/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 36
+   }
+  }
+ },
+ {
+  "codice": "ST5",
+  "codici_app": [
+   "ST5"
+  ],
+  "nome": "MACHINE BLACK [ST-5]",
+  "uscita": "June 11, 2021",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-5.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST5/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-5/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 292
+   },
+   "confezione": {
+    "file": "ST5/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-5/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 36
+   }
+  }
+ },
+ {
+  "codice": "ST4",
+  "codici_app": [
+   "ST4"
+  ],
+  "nome": "GIGA GREEN [ST-4]",
+  "uscita": "June 11, 2021",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-4.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST4/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-4/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 306
+   },
+   "confezione": {
+    "file": "ST4/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-4/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 36
+   }
+  }
+ },
+ {
+  "codice": "ST3",
+  "codici_app": [
+   "ST3"
+  ],
+  "nome": "HEAVEN’S YELLOW [ST-3]",
+  "uscita": "January 29th, 2021",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-3.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST3/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-3/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 216
+   },
+   "confezione": {
+    "file": "ST3/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-3/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 113
+   }
+  }
+ },
+ {
+  "codice": "ST2",
+  "codici_app": [
+   "ST2"
+  ],
+  "nome": "COCYTUS BLUE [ST-2]",
+  "uscita": "January 29th, 2021",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-2.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST2/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-2/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 252
+   },
+   "confezione": {
+    "file": "ST2/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-2/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 120
+   }
+  }
+ },
+ {
+  "codice": "ST1",
+  "codici_app": [
+   "ST1"
+  ],
+  "nome": "GAIA RED [ST-1]",
+  "uscita": "January 29th, 2021",
+  "tipo": "Starter / Advanced Deck",
+  "pagina": "https://world.digimoncard.com/products/deck/st-1.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "ST1/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/deck/st-1/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 277
+   },
+   "confezione": {
+    "file": "ST1/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/deck/st-1/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 124
+   }
+  }
+ },
+ {
+  "codice": "RB1",
+  "codici_app": [
+   "RB1"
+  ],
+  "nome": "RESURGENCE BOOSTER [RB01]",
+  "uscita": "September 29, 2023",
+  "tipo": "Reboot Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/rb-01.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "RB1/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/rb-01/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 152
+   },
+   "confezione": {
+    "file": "RB1/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/rb-01/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 350,
+    "kb": 40
+   }
+  }
+ },
+ {
+  "codice": "AD1",
+  "codici_app": [
+   "AD1"
+  ],
+  "nome": "ADVANCED BOOSTER DIGIMON GENERATION [AD-01]",
+  "uscita": "March 27, 2026",
+  "tipo": "Advanced Booster",
+  "pagina": "https://world.digimoncard.com/products/pack/ad-01/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "AD1/keyvisual.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ad-01/point/pc/mv.jpg",
+    "fonte": "world",
+    "w": 1920,
+    "h": 756,
+    "kb": 485
+   },
+   "keyvisual-verticale": {
+    "file": "AD1/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ad-01/point/sp/mv.jpg",
+    "fonte": "world",
+    "w": 750,
+    "h": 1082,
+    "kb": 345
+   },
+   "banner": {
+    "file": "AD1/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/pack/ad-01/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 337
+   },
+   "confezione": {
+    "file": "AD1/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/pack/ad-01/img_pkg.png",
+    "fonte": "world",
+    "w": 200,
+    "h": 405,
+    "kb": 51
+   }
+  }
+ },
+ {
+  "codice": "LM09",
+  "codici_app": [
+   "LM09"
+  ],
+  "nome": "LIMITED CARD PACK DISTANCIA CERO [LM-09]",
+  "uscita": "November 27, 2026",
+  "tipo": "Limited",
+  "pagina": "https://world.digimoncard.com/products/goods/limited-lm-09.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "LM09/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/limited-lm-09/img_01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 937,
+    "kb": 291
+   },
+   "confezione": {
+    "file": "LM09/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/limited-lm-09/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 83
+   }
+  }
+ },
+ {
+  "codice": "LM08",
+  "codici_app": [
+   "LM08"
+  ],
+  "nome": "LIMITED CARD PACK FINAL CREST [LM-08]",
+  "uscita": "August 28, 2026",
+  "tipo": "Limited",
+  "pagina": "https://world.digimoncard.com/products/goods/limited-lm-08.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "LM08/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/limited-lm-08/img_01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 1096,
+    "kb": 289
+   },
+   "confezione": {
+    "file": "LM08/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/limited-lm-08/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 80
+   }
+  }
+ },
+ {
+  "codice": "LM07",
+  "codici_app": [
+   "LM07"
+  ],
+  "nome": "LIMITED CARD PACK ANOTHER KNIGHT [LM-07]",
+  "uscita": "March 2026",
+  "tipo": "Limited",
+  "pagina": "https://world.digimoncard.com/products/goods/limited-lm-07.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "LM07/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/limited-lm-07/img_01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 1086,
+    "kb": 322
+   },
+   "confezione": {
+    "file": "LM07/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/limited-lm-07/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 405,
+    "kb": 79
+   }
+  }
+ },
+ {
+  "codice": "LM06",
+  "codici_app": [
+   "LM06"
+  ],
+  "nome": "LIMITED CARD PACK BILLION BULLET [LM-06]",
+  "uscita": "October 2025",
+  "tipo": "Limited",
+  "pagina": "https://world.digimoncard.com/products/goods/limited-pack-billion-bullet.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "LM06/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/limited-pack-billion-bullet/img01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 1000,
+    "kb": 263
+   },
+   "confezione": {
+    "file": "LM06/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/limited-pack-billion-bullet/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 406,
+    "kb": 76
+   }
+  }
+ },
+ {
+  "codice": "LM05",
+  "codici_app": [
+   "LM05"
+  ],
+  "nome": "LIMITED CARD PACK SHIELD OF THE JUST [LM-05]",
+  "uscita": "March 21, 2025",
+  "tipo": "Limited",
+  "pagina": "https://en.digimoncard.com/products/goods/limited_lm-05.php",
+  "sito": "en",
+  "file": {
+   "confezione": {
+    "file": "LM05/confezione.png",
+    "url": "https://en.digimoncard.com/images/products/goods/limited_lm-05/img_pkg.png",
+    "fonte": "en",
+    "w": 240,
+    "h": 490,
+    "kb": 242
+   }
+  }
+ },
+ {
+  "codice": "LM04",
+  "codici_app": [
+   "LM04"
+  ],
+  "nome": "LIMITED CARD PACK TORRIDVICE [LM-04]",
+  "uscita": "August 18, 2024",
+  "tipo": "Limited",
+  "pagina": "https://en.digimoncard.com/products/goods/limited_lm-04.php",
+  "sito": "en",
+  "file": {
+   "confezione": {
+    "file": "LM04/confezione.png",
+    "url": "https://en.digimoncard.com/images/products/goods/limited_lm-04/img_pkg.png",
+    "fonte": "en",
+    "w": 240,
+    "h": 490,
+    "kb": 221
+   }
+  }
+ },
+ {
+  "codice": "LM03",
+  "codici_app": [
+   "LM03"
+  ],
+  "nome": "LIMITED CARD SET 2024 [LM-03]",
+  "uscita": "March 2, 2024",
+  "tipo": "Limited",
+  "pagina": "https://en.digimoncard.com/products/goods/limited_lm-03.php",
+  "sito": "en",
+  "file": {
+   "confezione": {
+    "file": "LM03/confezione.png",
+    "url": "https://en.digimoncard.com/images/products/goods/limited_lm-03/img_pkg.png",
+    "fonte": "en",
+    "w": 240,
+    "h": 490,
+    "kb": 96
+   }
+  }
+ },
+ {
+  "codice": "LM02",
+  "codici_app": [
+   "LM02"
+  ],
+  "nome": "LIMITED CARD PACK DEATHXMON [LM-02]",
+  "uscita": "November 12, 2023",
+  "tipo": "Limited",
+  "pagina": "https://en.digimoncard.com/products/goods/limited_lm-02.php",
+  "sito": "en",
+  "file": {
+   "confezione": {
+    "file": "LM02/confezione.png",
+    "url": "https://en.digimoncard.com/images/products/goods/limited_lm-02/img_pkg.png",
+    "fonte": "en",
+    "w": 240,
+    "h": 490,
+    "kb": 227
+   }
+  }
+ },
+ {
+  "codice": "LM01",
+  "codici_app": [
+   "LM01"
+  ],
+  "nome": "LIMITED CARD PACK DIGIMON GHOST GAME [LM-01]",
+  "uscita": "July 22, 2023",
+  "tipo": "Limited",
+  "pagina": "https://en.digimoncard.com/products/goods/limited_pack.php",
+  "sito": "en",
+  "file": {
+   "confezione": {
+    "file": "LM01/confezione.png",
+    "url": "https://en.digimoncard.com/images/products/goods/limited_pack/img_pkg.png",
+    "fonte": "en",
+    "w": 240,
+    "h": 487,
+    "kb": 235
+   }
+  }
+ },
+ {
+  "codice": "LM01-05",
+  "codici_app": [
+   "LM01-05"
+  ],
+  "nome": "SPECIAL LIMITED SET",
+  "uscita": "December 13, 2024",
+  "tipo": "Limited",
+  "pagina": "https://world.digimoncard.com/products/goods/special-limited-set.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "LM01-05/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/special-limited-set/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 233
+   },
+   "confezione": {
+    "file": "LM01-05/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/special-limited-set/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 406,
+    "kb": 78
+   }
+  }
+ },
+ {
+  "codice": "PB28",
+  "codici_app": [
+   "PB28"
+  ],
+  "nome": "PREMIUM BATTLE SET Ver. Seven Great Demon Lords [PB-28]",
+  "uscita": "June 2027",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/seven-great-demon-lords.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB28/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/seven-great-demon-lords/img_01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 1423,
+    "kb": 510
+   },
+   "confezione": {
+    "file": "PB28/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/seven-great-demon-lords/img_pkg.png",
+    "fonte": "world",
+    "w": 336,
+    "h": 280,
+    "kb": 62
+   }
+  }
+ },
+ {
+  "codice": "PB27",
+  "codici_app": [
+   "PB27"
+  ],
+  "nome": "PREMIUM BATTLE SET Ver. Royal Knights [PB-27]",
+  "uscita": "June 2027",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/royal-knights.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB27/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/royal-knights/img_01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 1433,
+    "kb": 488
+   },
+   "confezione": {
+    "file": "PB27/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/royal-knights/img_pkg.png",
+    "fonte": "world",
+    "w": 336,
+    "h": 280,
+    "kb": 68
+   }
+  }
+ },
+ {
+  "codice": "PB26",
+  "codici_app": [
+   "PB26"
+  ],
+  "nome": "TAMER’S SELECTION BOX Ver.X Antibody [PB-26]",
+  "uscita": "March 2027",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/selection-box-verx-antibody.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB26/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/selection-box-verx-antibody/img_01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 973,
+    "kb": 355
+   },
+   "confezione": {
+    "file": "PB26/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/selection-box-verx-antibody/img_pkg.png",
+    "fonte": "world",
+    "w": 336,
+    "h": 280,
+    "kb": 60
+   }
+  }
+ },
+ {
+  "codice": "PB25",
+  "codici_app": [
+   "PB25"
+  ],
+  "nome": "DIGIMON STORY TIME STRANGER SET [PB-25]",
+  "uscita": "February 2027",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/story-time-stranger-set.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB25/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/story-time-stranger-set/img_01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 715,
+    "kb": 385
+   },
+   "confezione": {
+    "file": "PB25/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/story-time-stranger-set/img_pkg.png",
+    "fonte": "world",
+    "w": 336,
+    "h": 280,
+    "kb": 240
+   }
+  }
+ },
+ {
+  "codice": "PB24",
+  "codici_app": [
+   "PB24"
+  ],
+  "nome": "TAMER’S EVOLUTION CARD SET -NEXUS OF DIGIMON-",
+  "uscita": "January 2027 onwards",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/nexus-of-digimon/",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "PB24/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/nexus-of-digimon/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 343
+   },
+   "confezione": {
+    "file": "PB24/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/nexus-of-digimon/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 148,
+    "kb": 33
+   }
+  }
+ },
+ {
+  "codice": "PB23",
+  "codici_app": [
+   "PB23"
+  ],
+  "nome": "PREMIUM HEROINES SET VER. 2 [PB-23]",
+  "uscita": "March 2026",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/premium-heroines-set-02.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB23/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/premium-heroines-set-02/img_01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 1487,
+    "kb": 803
+   },
+   "confezione": {
+    "file": "PB23/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/premium-heroines-set-02/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 148,
+    "kb": 23
+   }
+  }
+ },
+ {
+  "codice": "PB22",
+  "codici_app": [
+   "PB22"
+  ],
+  "nome": "DIGIMON LIBERATOR DEBUGGERS SET [PB-22]",
+  "uscita": "February 2026",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/liberator-debuggers-set.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB22/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/liberator-debuggers-set/img01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 687,
+    "kb": 275
+   },
+   "confezione": {
+    "file": "PB22/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/liberator-debuggers-set/img_pkg.png",
+    "fonte": "world",
+    "w": 336,
+    "h": 280,
+    "kb": 65
+   }
+  }
+ },
+ {
+  "codice": "PB21",
+  "codici_app": [
+   "PB21"
+  ],
+  "nome": "TAMER’S EVOLUTION BOX -RISE OF DIGIMON- [PB-21]",
+  "uscita": "December 2025 onwards",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/tamers-evolution-box/",
+  "sito": "world",
+  "file": {
+   "keyvisual": {
+    "file": "PB21/keyvisual.png",
+    "url": "https://world.digimoncard.com/images/products/goods/tamers-evolution-box/pc/mv.png",
+    "fonte": "world",
+    "w": 2000,
+    "h": 952,
+    "kb": 640
+   },
+   "keyvisual-verticale": {
+    "file": "PB21/keyvisual-verticale.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/tamers-evolution-box/sp/mv.jpg",
+    "fonte": "world",
+    "w": 751,
+    "h": 1333,
+    "kb": 353
+   },
+   "banner": {
+    "file": "PB21/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/tamers-evolution-box/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 201
+   },
+   "confezione": {
+    "file": "PB21/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/tamers-evolution-box/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 148,
+    "kb": 19
+   },
+   "logo": {
+    "file": "PB21/logo.png",
+    "url": "https://world.digimoncard.com/images/products/goods/tamers-evolution-box/pc/title.png",
+    "fonte": "world",
+    "w": 761,
+    "h": 168,
+    "kb": 9
+   }
+  }
+ },
+ {
+  "codice": "PB20",
+  "codici_app": [
+   "PB20"
+  ],
+  "nome": "DIGIMON ANIMATION SERIES 25TH ANNIVERSARY SET [PB20]",
+  "uscita": "May 2025",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/animation_series_25th.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB20/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/animation_series_25th/img01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 1111,
+    "kb": 1088
+   },
+   "confezione": {
+    "file": "PB20/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/animation_series_25th/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 147,
+    "kb": 24
+   }
+  }
+ },
+ {
+  "codice": "PB19",
+  "codici_app": [
+   "PB19"
+  ],
+  "nome": "OMNIMON BINDER SET [PB19]",
+  "uscita": "February 2025",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/omnimon-binder-set.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB19/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/omnimon-binder-set/img01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 1084,
+    "kb": 347
+   },
+   "confezione": {
+    "file": "PB19/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/omnimon-binder-set/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 163,
+    "kb": 25
+   }
+  }
+ },
+ {
+  "codice": "PB18",
+  "codici_app": [
+   "PB18"
+  ],
+  "nome": "PREMIUM HEROINES SET [PB18]",
+  "uscita": "October 2024",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/premium-heroines-set.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB18/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/premium-heroines-set/img_01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 1475,
+    "kb": 516
+   },
+   "confezione": {
+    "file": "PB18/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/premium-heroines-set/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 200,
+    "kb": 34
+   }
+  }
+ },
+ {
+  "codice": "PB17",
+  "codici_app": [
+   "PB17"
+  ],
+  "nome": "“Digimon Adventure 02: The Beginning” Set [PB17]",
+  "uscita": "June 2024",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/the_beginning_set.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB17/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/the_beginning_set/img_01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 1100,
+    "kb": 375
+   },
+   "confezione": {
+    "file": "PB17/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/the_beginning_set/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 168,
+    "kb": 28
+   }
+  }
+ },
+ {
+  "codice": "PB16",
+  "codici_app": [
+   "PB16"
+  ],
+  "nome": "TAMER GOODS SET DIABOROMON [PB16]",
+  "uscita": "July 2023",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/tamer-goods-set_PB16.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB16/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_PB16/img_01.jpg",
+    "fonte": "world",
+    "w": 1220,
+    "h": 1040,
+    "kb": 556
+   },
+   "confezione": {
+    "file": "PB16/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_PB16/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 200,
+    "kb": 37
+   }
+  }
+ },
+ {
+  "codice": "PB15",
+  "codici_app": [
+   "PB15"
+  ],
+  "nome": "3rd Anniversary Set【PB-15】",
+  "uscita": "2023年6月発送予定",
+  "tipo": "Premium Bandai",
+  "pagina": "https://digimoncard.com/products/goods/3rd_anniversary_set.php",
+  "sito": "jp",
+  "file": {
+   "promo": {
+    "file": "PB15/promo.jpg",
+    "url": "https://digimoncard.com/images/products/goods/3rd_anniversary_set/img01.jpg",
+    "fonte": "jp",
+    "w": 700,
+    "h": 3709,
+    "kb": 1492
+   },
+   "confezione": {
+    "file": "PB15/confezione.png",
+    "url": "https://digimoncard.com/images/products/goods/3rd_anniversary_set/img_pkg.png",
+    "fonte": "jp",
+    "w": 196,
+    "h": 163,
+    "kb": 25
+   }
+  }
+ },
+ {
+  "codice": "PB14",
+  "codici_app": [
+   "PB14"
+  ],
+  "nome": "TAMER GOODS SET ANGEWOMON & LADYDEVIMON [PB14]",
+  "uscita": "June 2023",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/tamer-goods-set_PB14.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "PB14/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_PB14/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 278
+   },
+   "promo": {
+    "file": "PB14/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_PB14/img_01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 602,
+    "kb": 206
+   },
+   "confezione": {
+    "file": "PB14/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_PB14/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 200,
+    "kb": 33
+   }
+  }
+ },
+ {
+  "codice": "PB13",
+  "codici_app": [
+   "PB13"
+  ],
+  "nome": "ROYAL KNIGHTS BINDER SET [PB13]",
+  "uscita": "June 2023",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/royal_knights_binderset.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB13/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/royal_knights_binderset/img_01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 1481,
+    "kb": 455
+   },
+   "confezione": {
+    "file": "PB13/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/royal_knights_binderset/img_pkg.png",
+    "fonte": "world",
+    "w": 240,
+    "h": 200,
+    "kb": 31
+   }
+  }
+ },
+ {
+  "codice": "PB12E",
+  "codici_app": [
+   "PB12E"
+  ],
+  "nome": "2nd ANNIVERSARY SET [PB-12E]",
+  "uscita": "March 2023",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/2nd-anniversary-set.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB12E/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/2nd-anniversary-set/img01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 3381,
+    "kb": 1389
+   },
+   "confezione": {
+    "file": "PB12E/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/2nd-anniversary-set/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 131,
+    "kb": 20
+   }
+  }
+ },
+ {
+  "codice": "PB11",
+  "codici_app": [
+   "PB11"
+  ],
+  "nome": "TAMER'S SET Vol.5 [PB-11]",
+  "uscita": "December 2022",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/tamer-goods-set_05.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB11/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_05/img01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 2014,
+    "kb": 552
+   },
+   "confezione": {
+    "file": "PB11/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_05/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 131,
+    "kb": 17
+   }
+  }
+ },
+ {
+  "codice": "PB10",
+  "codici_app": [
+   "PB10"
+  ],
+  "nome": "TAMER'S SET Vol.4 [PB-10]",
+  "uscita": "September 2022",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/tamer-goods-set_04.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB10/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_04/img01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 1838,
+    "kb": 642
+   },
+   "confezione": {
+    "file": "PB10/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_04/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 147,
+    "kb": 18
+   }
+  }
+ },
+ {
+  "codice": "PB9",
+  "codici_app": [
+   "PB9"
+  ],
+  "nome": "PLAYMAT AND CARD SET 2 FLORAL FUN [PB-09]",
+  "uscita": "September 2022",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/playmat_floral-fun.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB9/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/playmat_floral-fun/img01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 2475,
+    "kb": 1125
+   },
+   "confezione": {
+    "file": "PB9/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/playmat_floral-fun/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 147,
+    "kb": 18
+   }
+  }
+ },
+ {
+  "codice": "PB8",
+  "codici_app": [
+   "PB8"
+  ],
+  "nome": "PLAYMAT AND CARD SET 1 DIGIMON TAMERS [PB-08]",
+  "uscita": "June 2022",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/playmat_digimon-tamers.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB8/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/playmat_digimon-tamers/img01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 2278,
+    "kb": 862
+   },
+   "confezione": {
+    "file": "PB8/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/playmat_digimon-tamers/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 147,
+    "kb": 18
+   }
+  }
+ },
+ {
+  "codice": "PB7",
+  "codici_app": [
+   "PB7"
+  ],
+  "nome": "TAMER'S SET EX [PB-07]",
+  "uscita": "June 2022",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/tamer-goods-set_ex.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB7/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_ex/img01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 2324,
+    "kb": 758
+   },
+   "confezione": {
+    "file": "PB7/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_ex/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 147,
+    "kb": 17
+   }
+  }
+ },
+ {
+  "codice": "PB6",
+  "codici_app": [
+   "PB6"
+  ],
+  "nome": "TAMER'S EVOLUTION BOX 2 [PB-06]",
+  "uscita": "May 2022",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/tamer-evolution-box2.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB6/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-evolution-box2/img01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 3707,
+    "kb": 1365
+   },
+   "confezione": {
+    "file": "PB6/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-evolution-box2/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 147,
+    "kb": 20
+   }
+  }
+ },
+ {
+  "codice": "PB5",
+  "codici_app": [
+   "PB5"
+  ],
+  "nome": "TAMER'S SET Vol.3 [PB-05]",
+  "uscita": "April 2022",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/tamer-goods-set_03.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB5/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_03/img01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 2647,
+    "kb": 1055
+   },
+   "confezione": {
+    "file": "PB5/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_03/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 147,
+    "kb": 19
+   }
+  }
+ },
+ {
+  "codice": "PB4",
+  "codici_app": [
+   "PB4"
+  ],
+  "nome": "TAMER'S SET Vol.2 [PB-04]",
+  "uscita": "December 2021",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/tamer-goods-set_02.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB4/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_02/img01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 1844,
+    "kb": 606
+   },
+   "confezione": {
+    "file": "PB4/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set_02/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 147,
+    "kb": 19
+   }
+  }
+ },
+ {
+  "codice": "PB3",
+  "codici_app": [
+   "PB3"
+  ],
+  "nome": "OFFICIAL WARGREYMON PLAYMAT [PB-03]",
+  "uscita": "September 2021",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/playmat.php",
+  "sito": "world",
+  "file": {
+   "banner": {
+    "file": "PB3/banner.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/playmat/bnr.jpg",
+    "fonte": "world",
+    "w": 800,
+    "h": 600,
+    "kb": 280
+   },
+   "confezione": {
+    "file": "PB3/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/playmat/img_pkg.png",
+    "fonte": "world",
+    "w": 760,
+    "h": 430,
+    "kb": 243
+   }
+  }
+ },
+ {
+  "codice": "PB2",
+  "codici_app": [
+   "PB2"
+  ],
+  "nome": "TAMER'S SET [PB-02]",
+  "uscita": "May 2021",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/tamer-goods-set.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB2/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set/img01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 1845,
+    "kb": 775
+   },
+   "confezione": {
+    "file": "PB2/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/tamer-goods-set/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 147,
+    "kb": 20
+   }
+  }
+ },
+ {
+  "codice": "PB1",
+  "codici_app": [
+   "PB1"
+  ],
+  "nome": "TAMER'S EVOLUTION BOX [PB-01]",
+  "uscita": "February 2021",
+  "tipo": "Premium Bandai",
+  "pagina": "https://world.digimoncard.com/products/goods/evolution-box.php",
+  "sito": "world",
+  "file": {
+   "promo": {
+    "file": "PB1/promo.jpg",
+    "url": "https://world.digimoncard.com/images/products/goods/evolution-box/img01.jpg",
+    "fonte": "world",
+    "w": 700,
+    "h": 3675,
+    "kb": 1296
+   },
+   "confezione": {
+    "file": "PB1/confezione.png",
+    "url": "https://world.digimoncard.com/images/products/goods/evolution-box/img_pkg.png",
+    "fonte": "world",
+    "w": 196,
+    "h": 147,
+    "kb": 19
+   }
+  }
+ }
+]
