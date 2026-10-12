@@ -273,6 +273,28 @@ def process(prod):
     return prod
 
 
+def add_own_logos(done):
+    """Loghi forniti a mano (src/logos/CODICE.webp): hanno la precedenza su tutte le altre fonti."""
+    src = pathlib.Path(__file__).resolve().parent.parent / "src" / "logos"
+    for p in done:
+        f = src / (p["key"] + ".webp")
+        if not f.exists():
+            continue
+        data = f.read_bytes()
+        im = Image.open(io.BytesIO(data))
+        im.load()
+        (OUT / p["key"]).mkdir(parents=True, exist_ok=True)
+        if (OUT / p["key"] / "logo.webp").exists() and (OUT / p["key"] / "logo.webp").read_bytes() == data:
+            continue
+        for old in (OUT / p["key"]).glob("logo.*"):
+            old.unlink()
+        (OUT / p["key"] / "logo.webp").write_bytes(data)
+        NEW.append("%s/logo.webp" % p["key"])
+        p["files"]["logo"] = {"file": "%s/logo.webp" % p["key"], "url": "src/logos/%s.webp" % p["key"], "fonte": "utente",
+                              "w": im.size[0], "h": im.size[1], "kb": round(len(data) / 1024)}
+    print("loghi forniti a mano: %d" % sum(1 for p in done if p["files"].get("logo", {}).get("fonte") == "utente"))
+
+
 def head(url):
     """Dimensione e data di modifica dichiarate dal sito, senza scaricare il file."""
     try:
