@@ -69,7 +69,10 @@ h1 { min-width: 0; flex: 1 1 auto; font-family: var(--font-display); font-size: 
 .qmodes { display: flex; gap: 8px; margin-top: 8px; }
 .qmodes .chip { flex: 1 1 0; min-width: 0; text-align: center; }
 .filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
-.sel { padding: 8px 8px; font-size: 14px; }
+/* Freccia disegnata dall'app (uguale in tutti i browser: quella nativa in Opera diventava bianca al passaggio del mouse) */
+.sel { padding: 8px 26px 8px 8px; font-size: 14px; -webkit-appearance: none; appearance: none; cursor: pointer; text-overflow: ellipsis;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: right 14px top 50%, right 9px top 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; }
 .chips { display: flex; gap: 8px; overflow-x: auto; padding: 10px 0 2px; scrollbar-width: none; }
 .chips::-webkit-scrollbar { display: none; }
 .chip { flex: none; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 500 .85rem var(--font-body); cursor: pointer; }
