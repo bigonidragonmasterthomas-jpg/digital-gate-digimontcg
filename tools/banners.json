@@ -1,5 +1,5 @@
 {
- "_nota": "Artwork promozionali ufficiali (sito Digimon Card Game e unacollezione.it) con logo originale; crop = [x0,y0,x1,y1] in frazioni per togliere date, prezzi e testi promozionali",
+ "_nota": "Artwork promozionali ufficiali con logo originale: W/ = dal sito Digimon Card Game, L/ = copia salvata nel progetto in src/banners/; crop = [x0,y0,x1,y1] in frazioni per togliere date, prezzi e testi promozionali",
  "LM09": {
   "url": "W/goods/limited-lm-09/img_01.jpg",
   "crop": [
@@ -76,28 +76,28 @@
   ]
  },
  "EX13": {
-  "url": "U/IMGSET/digimon_chivalrous_xiii_imgset.webp"
+  "url": "L/digimon_chivalrous_xiii_imgset.webp"
  },
  "BT26": {
-  "url": "U/IMGSET/digimon_timeless_bonds_imgset.webp"
+  "url": "L/digimon_timeless_bonds_imgset.webp"
  },
  "LM08": {
-  "url": "U/IMGSET/digimon_final_crest_imgset.webp"
+  "url": "L/digimon_final_crest_imgset.webp"
  },
  "EX12": {
-  "url": "U/IMGSET/digimon_digital_world_shambala_imgset.webp"
+  "url": "L/digimon_digital_world_shambala_imgset.webp"
  },
  "BT25": {
-  "url": "U/IMGSET/digimon_dual_revolution_imgset.webp"
+  "url": "L/digimon_dual_revolution_imgset.webp"
  },
  "ST24": {
-  "url": "U/IMGSET/digimon_data_squad_imgset.webp"
+  "url": "L/digimon_data_squad_imgset.webp"
  },
  "ST23": {
-  "url": "U/IMGSET/digimon_beatbreak_imgset.webp"
+  "url": "L/digimon_beatbreak_imgset.webp"
  },
  "AD1": {
-  "url": "U/IMGSET/digimon_digimon_generation_imgset.webp"
+  "url": "L/digimon_digimon_generation_imgset.webp"
  },
  "PB23": {
   "url": "W/goods/premium-heroines-set-02/img_01.jpg",
@@ -109,10 +109,10 @@
   ]
  },
  "LM07": {
-  "url": "U/IMGSET/digimon_another_knight_imgset.webp"
+  "url": "L/digimon_another_knight_imgset.webp"
  },
  "EX11": {
-  "url": "U/IMGSET/digimon_dawn_of_liberator_imgset.webp"
+  "url": "L/digimon_dawn_of_liberator_imgset.webp"
  },
  "PB22": {
   "url": "W/goods/liberator-debuggers-set/img01.jpg",
@@ -124,27 +124,27 @@
   ]
  },
  "BT24": {
-  "url": "U/IMGSET/digimon_time_stranger_imgset.webp"
+  "url": "L/digimon_time_stranger_imgset.webp"
  },
  "ST22": {
-  "url": "U/digimon_amethyst_mandala_advanced_deck_set.webp"
+  "url": "L/digimon_amethyst_mandala_advanced_deck_set.webp"
  },
  "BT23": {
-  "url": "U/IMGSET/digimon_hackers_slumber_imgset.webp"
+  "url": "L/digimon_hackers_slumber_imgset.webp"
  },
  "EX10": {
-  "url": "U/IMGSET/digimon_sinister_order_imgset.webp"
+  "url": "L/digimon_sinister_order_imgset.webp"
  },
  "LM06": {
-  "url": "U/IMGSET/digimon_billion_bullet_imgset.webp"
+  "url": "L/digimon_billion_bullet_imgset.webp"
  },
  "BT22": {
-  "url": "U/IMGSET/digimon_cyber_eden_imgset.webp"
+  "url": "L/digimon_cyber_eden_imgset.webp"
  },
  "EX9": {
-  "url": "U/IMGSET/digimon_versus_monsters_imgset.webp"
+  "url": "L/digimon_versus_monsters_imgset.webp"
  },
  "BT21": {
-  "url": "U/IMGSET/digimon_world_convergence_imgset.webp"
+  "url": "L/digimon_world_convergence_imgset.webp"
  }
 }

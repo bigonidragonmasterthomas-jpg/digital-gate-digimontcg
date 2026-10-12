@@ -1,18 +1,23 @@
 #!/usr/bin/env python3
-"""Scarica gli artwork promozionali ufficiali (banner) per la home e li salva in www/banners/CODICE.webp.
+"""Prepara gli artwork promozionali ufficiali (banner) per la home, dal sito ufficiale o dalle copie in src/banners/, e li salva in www/banners/CODICE.webp.
 Le immagini piccole vengono ingrandite (Lanczos) e rese più nitide; tutte ridotte a max 1600 px di larghezza."""
 import io, json, pathlib, sys, urllib.request
 from PIL import Image, ImageFilter, ImageDraw
 root = pathlib.Path(__file__).resolve().parent.parent
 outdir = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else root / "www" / "banners"
 outdir.mkdir(parents=True, exist_ok=True)
-BASES = {"W": ["https://world.digimoncard.com/images/products/", "https://en.digimoncard.com/images/products/", "https://digimoncard.com/images/products/"],
-         "U": ["https://img.unacollezione.it/"]}
+BASES = {"W": ["https://world.digimoncard.com/images/products/", "https://en.digimoncard.com/images/products/", "https://digimoncard.com/images/products/"]}
+LOCAL = root / "src" / "banners"   # "L/nome": copia salvata nel progetto, nessuno scaricamento
 src = {k: v for k, v in json.load(open(root / "tools" / "banners.json")).items() if not k.startswith("_")}
 info = {}
 for code, spec in src.items():
     im = None; pre, path = spec["url"].split("/", 1)
-    for b in BASES[pre]:
+    if pre == "L":
+        try:
+            im = Image.open(LOCAL / path); im.load()
+        except Exception:
+            im = None
+    for b in BASES.get(pre, []):
         try:
             data = urllib.request.urlopen(urllib.request.Request(b + path, headers={"User-Agent": "Mozilla/5.0"}), timeout=20).read()
             im = Image.open(io.BytesIO(data)); im.load(); break

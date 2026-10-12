@@ -7,10 +7,12 @@ on:
   workflow_dispatch:
     inputs:
       tutto: { description: "Riscarica tutto da capo (di norma no)", type: boolean, default: false }
+      prova: { description: "Crea una segnalazione di prova", type: boolean, default: false }
   schedule:
     - cron: "41 4 * * 1"
 permissions:
   contents: write
+  issues: write
 concurrency:
   group: set-assets
   cancel-in-progress: false
@@ -23,6 +25,7 @@ jobs:
       - run: pip install pillow
       - name: Scarica loghi e artwork
         shell: bash
+        env: { SEGNALA_PROVA: "${{ inputs.prova && '1' || '' }}" }
         run: |
           mkdir -p out
           # raccolta precedente: serve per sapere cosa c'è già
@@ -43,7 +46,7 @@ jobs:
           fi
           git -C br rm -rqf --ignore-unmatch .
           cp -r out/. br/
-          rm -f br/log.txt
+          rm -f br/log.txt br/_segnalazione.md
           git -C br add -A
           if git -C br diff --cached --quiet; then
             echo "Nessuna novità rispetto all'ultima esecuzione"
@@ -51,6 +54,15 @@ jobs:
             git -C br commit -qm "Loghi e artwork aggiornati (run ${{ github.run_number }})"
             git -C br push origin set-assets 2>&1 | tail -5 | sed 's/^/::warning title=push::/'
             test "${PIPESTATUS[0]}" -eq 0
+          fi
+      - name: Segnala il materiale aggiornato sul sito
+        env: { GH_TOKEN: "${{ github.token }}" }
+        shell: bash
+        run: |
+          if [ -s out/_segnalazione.md ]; then
+            gh issue create --repo "${{ github.repository }}" --title "Materiale promozionale aggiornato sul sito ufficiale – $(date +%d/%m/%Y)" --body-file out/_segnalazione.md
+          else
+            echo "Nessun materiale aggiornato da segnalare"
           fi
       - uses: actions/upload-artifact@v4
         with:

@@ -9,6 +9,9 @@ Uso:  python3 tools/fetch_set_assets.py CARTELLA_OUT [tutto]
 Scarica solo il materiale NUOVO: se CARTELLA_OUT contiene già la raccolta precedente (index.json e file), i prodotti già
 presenti non vengono riscaricati. Si cercano soltanto i prodotti nuovi e, per quelli recenti o non ancora usciti (ultimi
 12 mesi), i tipi di immagine che ancora mancano. I file già salvati non vengono mai sostituiti. Con "tutto" rifà tutto da capo.
+Per i file già salvati controlla però, senza scaricarli, se sul sito sono stati sostituiti (dimensione diversa): in quel caso
+scrive CARTELLA_OUT/_segnalazione.md, che il workflow trasforma in una segnalazione (issue) su GitHub.
+I loghi separati non vengono più cercati su siti esterni: si aggiungono a mano in src/logos/CODICE.webp.
 
 Per ogni espansione crea CARTELLA_OUT/CODICE/ con i file che il sito pubblica:
   keyvisual.*          key visual orizzontale (1920x756) con il logo del set – set dal 2024 in poi
@@ -21,6 +24,7 @@ e in CARTELLA_OUT: index.json (elenco completo con le fonti), README.md (galleri
 """
 import concurrent.futures as cf
 import datetime
+import os
 import html as htmllib
 import io
 import json
@@ -269,76 +273,48 @@ def process(prod):
     return prod
 
 
-def una_logos():
-    """Loghi trasparenti dei set Digimon da unacollezione.it (gli stessi della vista elenco di "Tutti i set").
-    Restituisce {codice canonico: url}."""
-    h = get("https://unacollezione.it/tutti-i-set") or ""
-    main = re.findall(r'src="(/assets/index-[^"]+\.js)"', h)
-    js = get("https://unacollezione.it" + main[0]) if main else ""
-    key = re.search(r"eyJ[A-Za-z0-9_\-]{20,}\.[A-Za-z0-9_\-]{20,}\.[A-Za-z0-9_\-]{10,}", js or "")
-    if not key:
-        print("unacollezione: chiave pubblica non trovata, salto i loghi")
-        return {}
-    req = urllib.request.Request("https://api.unacollezione.it/rest/v1/AllSets?select=setCode,imgset&subcategory=eq.digimon",
-                                 headers={**UA, "apikey": key.group(0), "Authorization": "Bearer " + key.group(0)})
+def head(url):
+    """Dimensione e data di modifica dichiarate dal sito, senza scaricare il file."""
     try:
-        rows = json.loads(urllib.request.urlopen(req, timeout=30).read())
-    except Exception as e:
-        print("unacollezione: elenco non disponibile", e)
-        return {}
-    out = {}
-    for r in rows:
-        code, url = (r.get("setCode") or "").strip(), (r.get("imgset") or "").strip()
-        if not code or not url:
-            continue
-        key2 = "LM01-05" if code == "LM01-05" else canonical(code)
-        if key2:
-            out[key2] = url
-    print("unacollezione: %d loghi" % len(out))
-    return out
+        r = urllib.request.urlopen(urllib.request.Request(url, headers=UA, method="HEAD"), timeout=20)
+        n = r.headers.get("Content-Length") or ""
+        return (int(n) if n.isdigit() else None, r.headers.get("Last-Modified") or "")
+    except Exception:
+        return (None, "")
 
 
-def add_own_logos(done):
-    """Loghi forniti a mano (src/logos/CODICE.webp): hanno la precedenza su tutte le altre fonti."""
-    src = pathlib.Path(__file__).resolve().parent.parent / "src" / "logos"
-    for p in done:
-        f = src / (p["key"] + ".webp")
-        if not f.exists():
+def check_changes(done):
+    """Materiale già salvato che sul sito ufficiale è stato sostituito: confronta la dimensione dichiarata dal sito con
+    quella del file salvato (nessuno scaricamento). Il file salvato non viene toccato; ogni cambiamento è segnalato una volta sola."""
+    items = [(p, k, v) for p in done for k, v in p["files"].items()
+             if v.get("fonte") in HOSTS and str(v.get("url", "")).startswith("http") and v["file"] not in NEW and (OUT / v["file"]).exists()]
+    with cf.ThreadPoolExecutor(8) as ex:
+        res = list(ex.map(lambda it: head(it[2]["url"]), items))
+    changed, seen = [], 0
+    for (p, k, v), (n, mod) in zip(items, res):
+        if n is None:
             continue
-        data = f.read_bytes()
-        im = Image.open(io.BytesIO(data))
-        im.load()
-        (OUT / p["key"]).mkdir(parents=True, exist_ok=True)
-        if (OUT / p["key"] / "logo.webp").exists() and (OUT / p["key"] / "logo.webp").read_bytes() == data:
-            continue
-        for old in (OUT / p["key"]).glob("logo.*"):
-            old.unlink()
-        (OUT / p["key"] / "logo.webp").write_bytes(data)
-        NEW.append("%s/logo.webp" % p["key"])
-        p["files"]["logo"] = {"file": "%s/logo.webp" % p["key"], "url": "src/logos/%s.webp" % p["key"], "fonte": "utente",
-                              "w": im.size[0], "h": im.size[1], "kb": round(len(data) / 1024)}
-    print("loghi forniti a mano: %d" % sum(1 for p in done if p["files"].get("logo", {}).get("fonte") == "utente"))
-
-
-def add_una_logos(done, fresh):
-    """Solo per i prodotti controllati in questa esecuzione (fresh) che non hanno ancora un logo."""
-    todo = [p for p in done if p["key"] in fresh and "logo" not in p["files"]]
-    if not todo:
-        return
-    logos = una_logos()
-    for p in todo:
-        url = logos.get(p["key"]) or logos.get(p["key"].split("_v")[0])
-        if not url:
-            continue
-        data, im = fetch_image(url)
-        if data is None or im.mode not in ("RGBA", "LA", "P"):
-            continue
-        ext = url.rsplit(".", 1)[1].lower()
-        (OUT / p["key"]).mkdir(parents=True, exist_ok=True)
-        (OUT / p["key"] / ("logo." + ext)).write_bytes(data)
-        NEW.append("%s/logo.%s" % (p["key"], ext))
-        p["files"]["logo"] = {"file": "%s/logo.%s" % (p["key"], ext), "url": url, "fonte": "unacollezione",
-                              "w": im.size[0], "h": im.size[1], "kb": round(len(data) / 1024)}
+        seen += 1
+        local = (OUT / v["file"]).stat().st_size
+        if n == local:
+            v.pop("segnalato", None)
+        elif v.get("segnalato") != n:
+            v["segnalato"] = n
+            changed.append((p["key"], p["name"], k, v["url"], local, n, mod))
+    print("controllo aggiornamenti: %d file verificati sul sito, %d cambiati" % (seen, len(changed)), flush=True)
+    if os.environ.get("SEGNALA_PROVA") and items and not changed:   # prova della segnalazione, senza toccare l'indice
+        p, k, v = items[0]
+        changed.append((p["key"], p["name"] + " (PROVA: nessun cambiamento reale)", k, v["url"], (OUT / v["file"]).stat().st_size, 0, ""))
+    if changed:
+        md = ["Il controllo settimanale ha trovato materiale promozionale che sul sito ufficiale Bandai è stato **sostituito** "
+              "rispetto alla copia salvata nel ramo `set-assets`. La copia salvata **non è stata modificata**.", "",
+              "| Prodotto | Immagine | Salvata | Sul sito | Modificata sul sito |", "|---|---|---|---|---|"]
+        for key, name, k, url, a, b, mod in changed:
+            md.append("| **%s** %s | [%s](%s) | %d KB | %d KB | %s |" % (key, name, k, url, round(a / 1024), round(b / 1024), mod or "—"))
+        md += ["", "Per prendere le versioni nuove: Actions → *Loghi e artwork set* → *Run workflow* con l'opzione **tutto** "
+               "(riscarica l'intera raccolta). Se le versioni salvate vanno bene così, basta chiudere questa segnalazione: "
+               "lo stesso cambiamento non verrà segnalato di nuovo."]
+        (OUT / "_segnalazione.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 
 
 def contact_sheet(products, path):
@@ -402,7 +378,8 @@ def main():
         done += list(ex.map(process, todo))
     done.sort(key=order_key)
     add_own_logos(done)
-    add_una_logos(done, {it["key"] for it in todo})
+    if not FULL:
+        check_changes(done)
     index = []
     for p in done:
         index.append({"codice": p["key"], "codici_app": app_codes(p["key"]), "nome": p["name"], "uscita": p["release"],
@@ -414,8 +391,9 @@ def main():
           "Immagini scaricate automaticamente dal sito ufficiale Bandai (world.digimoncard.com; dove manca, en.digimoncard.com "
           "o digimoncard.com). Il copyright di artwork e loghi è di Bandai / Toei Animation: usale solo per scopi personali "
           "o con il loro permesso.", "",
-          "I **loghi trasparenti** (`logo.*`) vengono da unacollezione.it, perché il sito Bandai non li pubblica come file separati; "
-          "quelli con fonte `utente` in `index.json` sono stati forniti a mano (cartella `src/logos/` del progetto) e hanno la precedenza. "
+          "Il sito Bandai non pubblica i **loghi trasparenti** (`logo.*`) come file separati: quelli con fonte `utente` in `index.json` "
+          "sono stati forniti a mano (cartella `src/logos/` del progetto) e hanno la precedenza; quelli con fonte `unacollezione` sono "
+          "copie salvate in passato da unacollezione.it, che non viene più consultato. "
           "Elenco completo con fonti e dimensioni in `index.json`, foglio riassuntivo in `anteprima.jpg`.", ""]
     fam = None
     for p in index:
