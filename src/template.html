@@ -1,5 +1,5 @@
 <title>Digital Gate - Digimon TCG</title>
-<script>try { var t0 = localStorage.getItem("dg-theme"); if (t0 === "light" || t0 === "dark") document.documentElement.setAttribute("data-theme", t0); if (localStorage.getItem("dg-side") === "r") document.documentElement.setAttribute("data-side", "r"); } catch (e) {}</script>
+<script>try { var t0 = localStorage.getItem("dg-theme"); if (t0 === "light" || t0 === "dark") document.documentElement.setAttribute("data-theme", t0); if (localStorage.getItem("dg-side") === "r") document.documentElement.setAttribute("data-side", "r"); if (localStorage.getItem("dg-sidec") === "1") document.documentElement.setAttribute("data-sidec", "1"); } catch (e) {}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -181,6 +181,9 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .optc { display: inline; }
 .ico.ocol { color: #fff; }
 .ico.ocol.oc-white { color: #111; }
+.acet { display: inline-block; font: italic 800 .74em/1.3 var(--font-display); letter-spacing: .04em; color: #fff; background: linear-gradient(90deg, #c4161c, #ff6a2b); padding: 0 .38em 0 .32em; border-radius: .25em; vertical-align: .1em; white-space: nowrap; }
+.acestar { font-size: .6em; vertical-align: super; margin-left: .1em; color: var(--ink-2); font-weight: 600; }
+.acenote { margin: 3px 0 0; font-size: .74rem; color: var(--ink-2); }
 .tags .ico { font-size: .8rem; margin: 0; padding: 3px 10px; line-height: 1.35; }
 .dacts { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
 .dbtn { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 600 .85rem var(--font-body); cursor: pointer; }
@@ -374,39 +377,57 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @keyframes sp-flash { 0% { opacity: 0; transform: scale(.2); } 60% { opacity: 1; } 100% { opacity: 1; transform: scale(3); } }
 @keyframes sp-zoom { to { transform: scale(2.4); opacity: 0; } }
 /* ==== Desktop (PC con mouse, da 1000 px): barra laterale fissa, pagine a tutta larghezza. Telefono e APK non cambiano. ==== */
-:root { --cyan: #0c7084; --cyan-soft: #e3f3f6; --side: #101a2a; --side-2: #1b2841; --side-line: #22314d; --side-ink: #e6edf8; --side-ink2: #8d9bb4; --sidew: 248px; --shadow: 0 8px 24px rgba(15,26,46,.10); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --cyan: #63d5ee; --cyan-soft: #12303a; --side: #0a1020; --side-2: #18233a; --side-line: #1c2843; --shadow: 0 8px 24px rgba(0,0,0,.35); } }
-:root[data-theme="dark"] { --cyan: #63d5ee; --cyan-soft: #12303a; --side: #0a1020; --side-2: #18233a; --side-line: #1c2843; --shadow: 0 8px 24px rgba(0,0,0,.35); }
-.menu .brand, .menu .sidetools, .menu nav .grp, .menu nav .nb { display: none; }
+/* colori della barra laterale: chiara nel tema chiaro, scura nel tema scuro */
+:root { --cyan: #0c7084; --cyan-soft: #e3f3f6; --side: #ffffff; --side-2: #eef2f8; --side-line: #d3dbe8; --side-ink: #0f1a2e; --side-ink2: #6a7891; --side-txt: #2b3a55; --side-ico: #6a7891; --side-hi: #0f1a2e; --side-acc: #e0531a; --side-nb: #e3f3f6; --side-nbt: #0c7084; --side-bar: #e2e8f1; --side-foot: #7a879e; --sidew: 248px; --shadow: 0 8px 24px rgba(15,26,46,.10); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --cyan: #63d5ee; --cyan-soft: #12303a; --side: #0a1020; --side-2: #18233a; --side-line: #1c2843; --side-ink: #e6edf8; --side-ink2: #8d9bb4; --side-txt: #c9d3e4; --side-ico: #8d9bb4; --side-hi: #ffffff; --side-acc: #ff8a4c; --side-nb: #1d3a4d; --side-nbt: #8fe2f4; --side-bar: #0c1424; --side-foot: #6f7d99; --shadow: 0 8px 24px rgba(0,0,0,.35); } }
+:root[data-theme="dark"] { --cyan: #63d5ee; --cyan-soft: #12303a; --side: #0a1020; --side-2: #18233a; --side-line: #1c2843; --side-ink: #e6edf8; --side-ink2: #8d9bb4; --side-txt: #c9d3e4; --side-ico: #8d9bb4; --side-hi: #ffffff; --side-acc: #ff8a4c; --side-nb: #1d3a4d; --side-nbt: #8fe2f4; --side-bar: #0c1424; --side-foot: #6f7d99; --shadow: 0 8px 24px rgba(0,0,0,.35); }
+.menu .brandrow, .menu .sidetools, .menu nav .grp, .menu nav .nb { display: none; }
 body.desk { padding-left: var(--sidew); }
-body.desk .menu { left: 0; right: auto; width: var(--sidew); transform: none; background: var(--side); border-left: 0; border-right: 1px solid var(--side-line); color: var(--side-ink); padding: 20px 14px 16px; transition: none; }
+body.desk .menu { left: 0; right: auto; width: var(--sidew); transform: none; background: var(--side); border-left: 0; border-right: 1px solid var(--side-line); color: var(--side-ink); padding: 18px 14px 16px; transition: none; overflow-x: hidden; }
 body.desk .menu-scrim, body.desk .burger, body.desk .menu .mh { display: none; }
-body.desk .menu .brand { display: flex; align-items: center; gap: 11px; border: 0; background: none; color: inherit; padding: 2px 8px 18px; cursor: pointer; text-align: left; }
+body.desk .menu .brandrow { display: flex; align-items: center; gap: 6px; padding: 0 0 16px; }
+body.desk .menu .brand { flex: 1; min-width: 0; display: flex; align-items: center; gap: 11px; border: 0; background: none; color: inherit; padding: 2px 6px; cursor: pointer; text-align: left; }
 body.desk .brand svg { width: 36px; height: 36px; flex: none; }
 body.desk .brand b { display: block; white-space: nowrap; font: 700 1.08rem/1.1 var(--font-display); letter-spacing: .07em; text-transform: uppercase; }
 body.desk .brand small { display: block; font: 600 .6rem var(--font-display); letter-spacing: .34em; color: var(--side-ink2); }
+body.desk .menu .colbtn { flex: none; width: 34px; height: 34px; border-radius: 9px; border: 1px solid var(--side-line); background: none; color: var(--side-ico); display: grid; place-items: center; cursor: pointer; padding: 0; }
+body.desk .menu .colbtn:hover { background: var(--side-2); color: var(--side-hi); }
+body.desk .menu .colbtn svg { width: 18px; height: 18px; }
 body.desk .menu nav { gap: 2px; }
-body.desk .menu nav .grp { display: block; font: 600 .64rem var(--font-display); letter-spacing: .2em; text-transform: uppercase; color: var(--side-ink2); padding: 16px 12px 6px; }
-body.desk .menu nav button { position: relative; white-space: nowrap; color: #c9d3e4; font: 500 .93rem var(--font-body); padding: 10px 12px; border-radius: 9px; }
-body.desk .menu nav button svg { color: #8d9bb4; width: 19px; height: 19px; }
-body.desk .menu nav button:hover { background: var(--side-2); color: #fff; }
-body.desk .menu nav button[aria-current="page"] { background: var(--side-2); color: #fff; }
+body.desk .menu nav .grp { display: block; white-space: nowrap; font: 600 .64rem var(--font-display); letter-spacing: .2em; text-transform: uppercase; color: var(--side-ink2); padding: 16px 12px 6px; }
+body.desk .menu nav button { position: relative; white-space: nowrap; color: var(--side-txt); font: 500 .93rem var(--font-body); padding: 10px 12px; border-radius: 9px; }
+body.desk .menu nav button svg { color: var(--side-ico); width: 19px; height: 19px; }
+body.desk .menu nav button:hover { background: var(--side-2); color: var(--side-hi); }
+body.desk .menu nav button[aria-current="page"] { background: var(--side-2); color: var(--side-hi); font-weight: 600; }
 body.desk .menu nav button[aria-current="page"]::before { content: ""; position: absolute; left: -14px; top: 9px; bottom: 9px; width: 3px; border-radius: 0 3px 3px 0; background: #ff7a3d; }
-body.desk .menu nav button[aria-current="page"] svg { color: #ff8a4c; }
-body.desk .menu nav .nb { display: inline-block; margin-left: auto; font: 700 .68rem var(--font-display); padding: 2px 7px; border-radius: 6px; background: #1d3a4d; color: #8fe2f4; }
+body.desk .menu nav button[aria-current="page"] svg { color: var(--side-acc); }
+body.desk .menu nav .nb { display: inline-block; margin-left: auto; font: 700 .68rem var(--font-display); padding: 2px 7px; border-radius: 6px; background: var(--side-nb); color: var(--side-nbt); }
 body.desk .menu .coll { margin-top: auto; background: var(--side-2); border-color: var(--side-line); }
-body.desk .menu .coll .count { color: var(--side-ink2); }
-body.desk .menu .coll .count b { color: #ff8a4c; font-size: 1.35rem; }
-body.desk .menu .progress { background: #0c1424; }
+body.desk .menu .coll .count { color: var(--side-ink2); white-space: nowrap; }
+body.desk .menu .coll .count b { color: var(--side-acc); font-size: 1.35rem; }
+body.desk .menu .progress { background: var(--side-bar); }
 body.desk .menu .sidetools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 8px; }
-body.desk .menu .stb { display: flex; flex-direction: column; align-items: center; gap: 5px; border: 1px solid var(--side-line); background: none; color: #b8c4d8; font: 500 .74rem/1.2 var(--font-body); padding: 9px 4px 8px; border-radius: 9px; cursor: pointer; text-align: center; }
-body.desk .menu .stb:hover { background: var(--side-2); color: #fff; border-color: #34466a; }
+body.desk .menu .stb { display: flex; flex-direction: column; align-items: center; gap: 5px; border: 1px solid var(--side-line); background: none; color: var(--side-txt); font: 500 .74rem/1.2 var(--font-body); padding: 9px 4px 8px; border-radius: 9px; cursor: pointer; text-align: center; }
+body.desk .menu .stb:hover { background: var(--side-2); color: var(--side-hi); }
 body.desk .menu .stb svg { width: 18px; height: 18px; flex: none; }
+body.desk .menu .foot { margin-top: 6px; padding: 8px 12px 0; color: var(--side-foot); font-size: .68rem; line-height: 1.45; }
 /* barra a destra (scelta dell'utente, salvata in dg-side) */
 :root[data-side="r"] body.desk { padding-left: 0; padding-right: var(--sidew); }
 :root[data-side="r"] body.desk .menu { left: auto; right: 0; border-right: 0; border-left: 1px solid var(--side-line); }
 :root[data-side="r"] body.desk .menu nav button[aria-current="page"]::before { left: auto; right: -14px; border-radius: 3px 0 0 3px; }
-body.desk .menu .foot { margin-top: 6px; padding: 8px 12px 0; color: #6f7d99; font-size: .68rem; line-height: 1.45; }
+/* barra ridotta a sole icone (salvato in dg-sidec) */
+:root[data-sidec="1"] body.desk { --sidew: 72px; }
+:root[data-sidec="1"] body.desk .menu { padding: 16px 10px; }
+:root[data-sidec="1"] body.desk .menu .brandrow { flex-direction: column; gap: 10px; padding-bottom: 10px; }
+:root[data-sidec="1"] body.desk .menu .brand { flex: none; padding: 0; }
+:root[data-sidec="1"] body.desk .brand span, :root[data-sidec="1"] body.desk .menu nav .lbl, :root[data-sidec="1"] body.desk .menu .stb span, :root[data-sidec="1"] body.desk .menu .foot, :root[data-sidec="1"] body.desk .menu .coll { display: none; }
+:root[data-sidec="1"] body.desk .menu nav .grp { font-size: 0; padding: 8px 0 4px; margin: 0 10px; border-top: 1px solid var(--side-line); }
+:root[data-sidec="1"] body.desk .menu nav button { justify-content: center; padding: 11px 0; }
+:root[data-sidec="1"] body.desk .menu nav .nb { position: absolute; top: 3px; right: 4px; padding: 0 4px; font-size: .58rem; line-height: 1.5; }
+:root[data-sidec="1"] body.desk .menu nav button[aria-current="page"]::before { left: -10px; }
+:root[data-sidec="1"][data-side="r"] body.desk .menu nav button[aria-current="page"]::before { left: auto; right: -10px; }
+:root[data-sidec="1"] body.desk .menu .sidetools { grid-template-columns: 1fr; margin-top: auto; }
+:root[data-sidec="1"] body.desk .menu .stb { padding: 10px 0; }
 body.desk .bar { padding: 14px 36px 12px; transform: none !important; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); }
 body.desk .bar.empty { display: none; }
 body.desk .bar .top { display: none; }
@@ -539,8 +560,8 @@ body.desk .list .row.card { padding-top: 8px; padding-bottom: 8px; }
 .cempty { text-align: center; padding: 46px 20px; }
 .cempty p { color: var(--ink-2); margin: 0 0 16px; }
 /* Scheda carta desktop: immagine a sinistra, dati a destra */
-body.desk .scrim { z-index: 40; align-items: center; padding: 28px 84px; }
-body.desk .sheet { max-width: 1140px; max-height: calc(100vh - 56px); border-radius: 18px; padding: 0 28px 26px; box-shadow: 0 24px 70px rgba(0,0,0,.4); }
+body.desk .scrim { z-index: 40; align-items: center; padding: 64px 84px 32px; }
+body.desk .sheet { max-width: 1140px; max-height: calc(100vh - 96px); border-radius: 18px; padding: 0 28px 26px; box-shadow: 0 24px 70px rgba(0,0,0,.4); }
 body.desk .sheet .swipe-hint { display: none; }
 body.desk .sheet-head { padding: 18px 0 12px; align-items: center; }
 body.desk .sheet-head h2 { font-size: 1.75rem; }
@@ -638,7 +659,7 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
 .panel.cstat { padding: 14px 16px; }
 /* finestre desktop più strette (1000-1279 px) */
 @media (max-width: 1279px) {
-  body.desk { --sidew: 220px; }
+  :root:not([data-sidec="1"]) body.desk { --sidew: 220px; }
   body.desk .brand b { font-size: .95rem; }
   body.desk .menu nav button { font-size: .88rem; }
   body.desk .bar, body.desk main { padding-left: 24px; padding-right: 24px; }
@@ -736,10 +757,13 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
 <div class="menu-scrim" id="menuScrim"></div>
 <aside class="menu" id="menu" aria-label="Menu di navigazione" aria-hidden="true">
   <div class="mh"><span>Menu</span></div>
-  <button class="brand" id="brand" type="button" aria-label="Digital Gate, vai alla Home">
-    <svg viewBox="0 0 40 40" aria-hidden="true"><polygon points="20,2 35.6,11 35.6,29 20,38 4.4,29 4.4,11" fill="none" stroke="#ff7a3d" stroke-width="2.4" stroke-linejoin="round"/><polygon points="20,8.5 30,14.25 30,25.75 20,31.5 10,25.75 10,14.25" fill="none" stroke="#39c6ff" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 13.5l2 4.3 4.6.6-3.4 3.1.9 4.6-4.1-2.3-4.1 2.3.9-4.6-3.4-3.1 4.6-.6z" fill="#fff"/></svg>
-    <span><b>Digital Gate</b><small>Digimon TCG</small></span>
-  </button>
+  <div class="brandrow">
+    <button class="brand" id="brand" type="button" aria-label="Digital Gate, vai alla Home" title="Home">
+      <svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><rect x="1.5" y="1.5" width="31" height="31" rx="8" stroke="#ff7a3d" stroke-width="2"/><path d="M10 25V9h7a8 8 0 0 1 0 16h-3" stroke="#ff7a3d" stroke-width="2.4" stroke-linecap="round"/><circle cx="17" cy="17" r="2.6" fill="currentColor"/></svg>
+      <span><b>Digital Gate</b><small>Digimon TCG</small></span>
+    </button>
+    <button class="colbtn" id="colBtn" type="button"></button>
+  </div>
   <nav id="menuNav"></nav>
   <div class="coll"><span class="count" id="count"></span><div class="progress" aria-hidden="true"><i id="bar"></i></div></div>
   <div class="sidetools"><button class="stb" id="sideBtn" type="button"></button><button class="stb" id="themeBtn" type="button"></button></div>
@@ -769,7 +793,7 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
   SETS.forEach(function (s) { SETBY[s.id] = s; });
   var CARDS = DATA.cards.map(function (a) {
     var c = { code: a[0], name: a[1], lv: a[2], colors: a[3] ? a[3].split("/") : [], ct: a[4], form: a[5], attr: a[6], sp: a[7], dp: a[8], play: a[9], evo: a[10], eff: a[11], inh: a[12], sec: a[13], extra: a[14], rar: a[15], set: a[16], x: a[17] || null };
-    c.nb = " " + fold(c.code + " " + c.name) + " ";
+    c.nb = " " + fold(c.code + " " + c.name + (isAceX(c.extra) ? " ACE" : "")) + " ";
     c.tb = " " + fold([c.sp, c.form, c.attr, c.eff, c.inh, c.sec, c.extra, c.x && c.x.d ? c.x.d.l.join(" ") : ""].join(" ")) + " ";
     return c;
   });
@@ -813,6 +837,14 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
     return "linear-gradient(" + (dir ? dir + "," : "") + s.join(",") + ")";
   }
   function owned(c) { return qty[c.k] || 0; }
+  // Digimon ACE: l'icona "ACE" è stampata accanto al nome ma non fa parte del nome (regolamento ufficiale)
+  function isAceX(extra) { return /(^|\n)Effetto ACE:/.test(extra || ""); }
+  function isAce(c) { return isAceX(c.extra); }
+  function nameFrag(c, star) {
+    var f = document.createDocumentFragment(); f.appendChild(document.createTextNode(c.name));
+    if (isAce(c)) { f.appendChild(document.createTextNode(" ")); f.appendChild(el("span", "acet", "ACE")); if (star) f.appendChild(el("span", "acestar", "*")); }
+    return f;
+  }
   var SETSTAT = {};
   function recomputeStats() { SETSTAT = {}; SETS.forEach(function (s) { var t = { n: 0, h: 0 }; cardsOfSet(s.id).forEach(function (e) { t.n++; if (owned(e)) t.h++; }); SETSTAT[s.id] = t; }); }
 
@@ -881,10 +913,23 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
     var right = document.documentElement.getAttribute("data-side") !== "r";
     if (right) document.documentElement.setAttribute("data-side", "r"); else document.documentElement.removeAttribute("data-side");
     try { if (right) localStorage.setItem("dg-side", "r"); else localStorage.removeItem("dg-side"); } catch (e) {}
-    drawSideTools(); fitAll();
+    drawSideTools(); drawColBtn(); fitAll();
+  };
+  // barra ridotta a sole icone (solo desktop), scelta salvata in dg-sidec
+  function drawColBtn() {
+    var c = document.documentElement.getAttribute("data-sidec") === "1", right = document.documentElement.getAttribute("data-side") === "r", cb = document.getElementById("colBtn");
+    var pointLeft = c ? right : !right;
+    cb.innerHTML = SVGO + '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="' + (right ? "M15 4v16" : "M9 4v16") + '"/><path d="' + (pointLeft ? (right ? "M10 9l-3 3 3 3" : "M16 9l-3 3 3 3") : (right ? "M7 9l3 3-3 3" : "M13 9l3 3-3 3")) + '"/></svg>';
+    var t = c ? "Espandi la barra" : "Riduci la barra"; cb.title = t; cb.setAttribute("aria-label", t); cb.setAttribute("aria-expanded", String(!c));
+  }
+  document.getElementById("colBtn").onclick = function () {
+    var c = document.documentElement.getAttribute("data-sidec") !== "1";
+    if (c) document.documentElement.setAttribute("data-sidec", "1"); else document.documentElement.removeAttribute("data-sidec");
+    try { if (c) localStorage.setItem("dg-sidec", "1"); else localStorage.removeItem("dg-sidec"); } catch (e) {}
+    drawColBtn(); fitAll();
   };
   if (DARKMQ) { if (DARKMQ.addEventListener) DARKMQ.addEventListener("change", drawSideTools); else if (DARKMQ.addListener) DARKMQ.addListener(drawSideTools); }
-  drawSideTools();
+  drawSideTools(); drawColBtn();
   document.getElementById("brand").onclick = function () { go("home"); };
   // ---- Menu di navigazione
   var IC = {
@@ -918,7 +963,7 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
       if (m[0] === "info") nav.appendChild(el("div", "grp", "Progetto"));
       var b = el("button"); b.type = "button";
       b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + IC[m[0]] + "</svg>";
-      b.appendChild(document.createTextNode(m[1]));
+      b.appendChild(el("span", "lbl", m[1])); if (DESK) b.title = m[1];
       if (m[0] === "soon" && (DATA.upcoming || []).length) b.appendChild(el("span", "nb", String(DATA.upcoming.length)));
       if (m[0] === "deck" && decks.length) b.appendChild(el("span", "nb", String(decks.length)));
       if (curPage() === m[0]) b.setAttribute("aria-current", "page");
@@ -927,6 +972,9 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
     });
   }
   function go(where) {
+    var from = curPage();
+    // passando da Prodotti (o da un prodotto) a Ricerca carte o Collezione la ricerca riparte da zero
+    if ((where === "cards" || where === "coll") && (from === "sets" || from === "soon")) { qi.value = ""; st.q = ""; st.qm = ""; st.color = st.ct = st.lv = ""; syncSelects(); }
     st.setId = null; st.back = null; st.shown = PAGE; st.ownOnly = false;
     if (where === "home") st.tab = "home";
     else if (where === "sets") { st.tab = "sets"; st.type = "ALL"; qi.value = ""; st.q = ""; }
@@ -1486,7 +1534,7 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
         var t = el("div", "tile"); t.tabIndex = 0; t.setAttribute("role", "button");
         t.appendChild(picBox("pic", "f", c));
         var cl = el("div", "cline"); cl.style.background = gradient(c.colors, "to right"); t.appendChild(cl);
-        t.appendChild(el("div", "tname", c.name));
+        var tn = el("div", "tname"); tn.appendChild(nameFrag(c)); t.appendChild(tn);
         listLines(c).forEach(function (x) { t.appendChild(x); });
         t.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
         t.onclick = function () { st.open = c; drawSheet(); };
@@ -1496,7 +1544,7 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
       var r = el("div", "row card"); r.tabIndex = 0; r.setAttribute("role", "button");
       var sw = el("div", "swatch"); sw.style.background = gradient(c.colors); r.appendChild(sw);
       r.appendChild(picBox("thumb", "t", c));
-      var mid = el("div", "name"); mid.appendChild(document.createTextNode(c.name));
+      var mid = el("div", "name"); mid.appendChild(nameFrag(c));
       listLines(c).forEach(function (x) { mid.appendChild(x); });
       r.appendChild(mid);
       r.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
@@ -1862,7 +1910,8 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
       var vparts = c.ver.split(/\s*-\s*/).filter(function (vp) { return !RN[vp.toLowerCase()] && !/^(promo|rare)$/i.test(vp); });
       if (vparts.length) { hc.appendChild(document.createTextNode(" · ")); vparts.forEach(function (vp, i) { if (i) hc.appendChild(document.createTextNode(" - ")); hc.appendChild(el("span", /foil/i.test(vp) ? "foil" : "", vp)); }); }
     }
-    t.appendChild(hc); t.appendChild(el("h2", "", c.name));
+    var h2n = el("h2"); h2n.appendChild(nameFrag(c, true)); t.appendChild(hc); t.appendChild(h2n);
+    if (isAce(c)) t.appendChild(el("p", "acenote", "* ACE è il simbolo stampato accanto al nome delle carte Digimon ACE: non fa parte del nome della carta."));
     head.appendChild(t);
     sh.appendChild(head);
     sh.appendChild(el("hr", "sep"));
@@ -2046,7 +2095,7 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
     function place(e) {
       // le misure del mouse sono in pixel dello schermo, quelle CSS vanno divise per l'ingrandimento della pagina
       var z = parseFloat(getComputedStyle(document.documentElement).zoom) || 1, vw = window.innerWidth, vh = window.innerHeight;
-      var h = Math.min(vh * 0.8, 640), w = h * 5 / 7;
+      var h = Math.min(vh * 0.8, 640) * 0.85, w = h * 5 / 7;
       var x = e.clientX + 28; if (x + w > vw - 8) x = e.clientX - 28 - w; if (x < 8) x = 8;
       var y = Math.max(8, Math.min(vh - h - 8, e.clientY - h / 2));
       pop.style.width = w / z + "px"; pop.style.height = h / z + "px"; pop.style.left = x / z + "px"; pop.style.top = y / z + "px";
@@ -2376,7 +2425,7 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
       g[1].forEach(function (c) {
         var r = el("div", "drow"); r.tabIndex = 0; r.setAttribute("role", "button");
         r.appendChild(picBox("thumb", "t", c));
-        var nm = el("div", "dnm"); nm.appendChild(document.createTextNode(c.name)); nm.appendChild(el("small", "", c.code + (c.suf ? " · " + (verLabel(c.ver) || "Alternative Art") : ""))); r.appendChild(nm);
+        var nm = el("div", "dnm"); nm.appendChild(nameFrag(c)); nm.appendChild(el("small", "", c.code + (c.suf ? " · " + (verLabel(c.ver) || "Alternative Art") : ""))); r.appendChild(nm);
         var rc = el("div", "dright"); rc.appendChild(deckQty(d, c, function () { render(); })); var bb = banBadge(c, d); if (bb) rc.appendChild(bb); r.appendChild(rc);
         r.onclick = function () { st.open = c; drawSheet(); };
         r.onkeydown = function (e) { if (e.target === r && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); st.open = c; drawSheet(); } };
@@ -2456,7 +2505,7 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
       var t = el("div", "tile"); t.tabIndex = 0; t.setAttribute("role", "button");
       t.appendChild(picBox("pic", "f", c));
       var cl = el("div", "cline"); cl.style.background = gradient(c.colors, "to right"); t.appendChild(cl);
-      t.appendChild(el("div", "tname", c.name));
+      var tn = el("div", "tname"); tn.appendChild(nameFrag(c)); t.appendChild(tn);
       listLines(c).forEach(function (x) { t.appendChild(x); });
       t.appendChild(deckQty(d, c, function () { render(); }));
       if (bb) { var tb = el("div", "dbl"); tb.appendChild(bb); t.appendChild(tb); }
@@ -2468,7 +2517,7 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
     var r = el("div", "row card"); r.tabIndex = 0; r.setAttribute("role", "button");
     var sw = el("div", "swatch"); sw.style.background = gradient(c.colors); r.appendChild(sw);
     r.appendChild(picBox("thumb", "t", c));
-    var mid = el("div", "name"); mid.appendChild(document.createTextNode(c.name));
+    var mid = el("div", "name"); mid.appendChild(nameFrag(c));
     listLines(c).forEach(function (x) { mid.appendChild(x); });
     r.appendChild(mid);
     var rc = el("div", "dright"); rc.appendChild(deckQty(d, c, function () { render(); }));
