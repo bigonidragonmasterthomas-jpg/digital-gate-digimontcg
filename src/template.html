@@ -1,5 +1,5 @@
 <title>Digital Gate - Digimon TCG</title>
-<script>try { var t0 = localStorage.getItem("dg-theme"); if (t0 === "light" || t0 === "dark") document.documentElement.setAttribute("data-theme", t0); } catch (e) {}</script>
+<script>try { var t0 = localStorage.getItem("dg-theme"); if (t0 === "light" || t0 === "dark") document.documentElement.setAttribute("data-theme", t0); if (localStorage.getItem("dg-side") === "r") document.documentElement.setAttribute("data-side", "r"); } catch (e) {}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -377,7 +377,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 :root { --cyan: #0c7084; --cyan-soft: #e3f3f6; --side: #101a2a; --side-2: #1b2841; --side-line: #22314d; --side-ink: #e6edf8; --side-ink2: #8d9bb4; --sidew: 248px; --shadow: 0 8px 24px rgba(15,26,46,.10); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --cyan: #63d5ee; --cyan-soft: #12303a; --side: #0a1020; --side-2: #18233a; --side-line: #1c2843; --shadow: 0 8px 24px rgba(0,0,0,.35); } }
 :root[data-theme="dark"] { --cyan: #63d5ee; --cyan-soft: #12303a; --side: #0a1020; --side-2: #18233a; --side-line: #1c2843; --shadow: 0 8px 24px rgba(0,0,0,.35); }
-.menu .brand, .menu .themebtn, .menu nav .grp, .menu nav .nb { display: none; }
+.menu .brand, .menu .sidetools, .menu nav .grp, .menu nav .nb { display: none; }
 body.desk { padding-left: var(--sidew); }
 body.desk .menu { left: 0; right: auto; width: var(--sidew); transform: none; background: var(--side); border-left: 0; border-right: 1px solid var(--side-line); color: var(--side-ink); padding: 20px 14px 16px; transition: none; }
 body.desk .menu-scrim, body.desk .burger, body.desk .menu .mh { display: none; }
@@ -398,9 +398,14 @@ body.desk .menu .coll { margin-top: auto; background: var(--side-2); border-colo
 body.desk .menu .coll .count { color: var(--side-ink2); }
 body.desk .menu .coll .count b { color: #ff8a4c; font-size: 1.35rem; }
 body.desk .menu .progress { background: #0c1424; }
-body.desk .menu .themebtn { display: flex; align-items: center; gap: 10px; margin-top: 8px; border: 0; background: none; color: #b8c4d8; font: 500 .82rem var(--font-body); padding: 9px 12px; border-radius: 9px; cursor: pointer; text-align: left; }
-body.desk .menu .themebtn:hover { background: var(--side-2); color: #fff; }
-body.desk .menu .themebtn svg { width: 17px; height: 17px; flex: none; }
+body.desk .menu .sidetools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 8px; }
+body.desk .menu .stb { display: flex; flex-direction: column; align-items: center; gap: 5px; border: 1px solid var(--side-line); background: none; color: #b8c4d8; font: 500 .74rem/1.2 var(--font-body); padding: 9px 4px 8px; border-radius: 9px; cursor: pointer; text-align: center; }
+body.desk .menu .stb:hover { background: var(--side-2); color: #fff; border-color: #34466a; }
+body.desk .menu .stb svg { width: 18px; height: 18px; flex: none; }
+/* barra a destra (scelta dell'utente, salvata in dg-side) */
+:root[data-side="r"] body.desk { padding-left: 0; padding-right: var(--sidew); }
+:root[data-side="r"] body.desk .menu { left: auto; right: 0; border-right: 0; border-left: 1px solid var(--side-line); }
+:root[data-side="r"] body.desk .menu nav button[aria-current="page"]::before { left: auto; right: -14px; border-radius: 3px 0 0 3px; }
 body.desk .menu .foot { margin-top: 6px; padding: 8px 12px 0; color: #6f7d99; font-size: .68rem; line-height: 1.45; }
 body.desk .bar { padding: 14px 36px 12px; transform: none !important; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); }
 body.desk .bar.empty { display: none; }
@@ -737,7 +742,7 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
   </button>
   <nav id="menuNav"></nav>
   <div class="coll"><span class="count" id="count"></span><div class="progress" aria-hidden="true"><i id="bar"></i></div></div>
-  <button class="themebtn" id="themeBtn" type="button"></button>
+  <div class="sidetools"><button class="stb" id="sideBtn" type="button"></button><button class="stb" id="themeBtn" type="button"></button></div>
   <div class="foot">Digital Gate - Digimon TCG · catalogo non ufficiale. Immagini e marchi © Bandai, Akiyoshi Hongo, Toei Animation.</div>
 </aside>
 
@@ -854,23 +859,32 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
     var onDesk = function () { var was = DESK; setDesk(); if (was === DESK) return; if (DESK && menuEl.classList.contains("open")) menuOpen(false, true); render(); };
     if (DMQ.addEventListener) DMQ.addEventListener("change", onDesk); else if (DMQ.addListener) DMQ.addListener(onDesk);
   }
-  // Tema (solo desktop): automatico (come il sistema), chiaro o scuro; la scelta resta salvata
-  var THEMES = [["", "Tema automatico", '<circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/>'], ["light", "Tema chiaro", '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'], ["dark", "Tema scuro", '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>']];
-  function drawTheme() {
-    var cur = document.documentElement.getAttribute("data-theme") || "", t = THEMES.filter(function (x) { return x[0] === cur; })[0] || THEMES[0];
-    var b = document.getElementById("themeBtn");
-    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">' + t[2] + "</svg>";
-    b.appendChild(document.createTextNode(t[1])); b.title = "Cambia tema";
+  // Pulsanti in fondo alla barra (solo desktop): tema chiaro/scuro e barra a sinistra/destra; le scelte restano salvate
+  var DARKMQ = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : null;
+  function isDark() { var t = document.documentElement.getAttribute("data-theme"); return t ? t === "dark" : !!(DARKMQ && DARKMQ.matches); }
+  var SVGO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+  function drawSideTools() {
+    var dk = isDark(), tb = document.getElementById("themeBtn");
+    tb.innerHTML = SVGO + (dk ? '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>' : '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>') + "</svg>";
+    tb.appendChild(el("span", "", dk ? "Tema chiaro" : "Tema scuro")); tb.title = dk ? "Passa al tema chiaro" : "Passa al tema scuro";
+    var right = document.documentElement.getAttribute("data-side") === "r", sb = document.getElementById("sideBtn");
+    sb.innerHTML = SVGO + '<rect x="3" y="4" width="18" height="16" rx="2"/>' + (right ? '<path d="M9 4v16"/><path d="M15 9l-3 3 3 3"/>' : '<path d="M15 4v16"/><path d="M9 9l3 3-3 3"/>') + "</svg>";
+    sb.appendChild(el("span", "", right ? "Barra a sinistra" : "Barra a destra")); sb.title = right ? "Sposta la barra a sinistra" : "Sposta la barra a destra";
   }
   document.getElementById("themeBtn").onclick = function () {
-    var cur = document.documentElement.getAttribute("data-theme") || "", i = 0;
-    THEMES.forEach(function (x, j) { if (x[0] === cur) i = j; });
-    var nx = THEMES[(i + 1) % THEMES.length][0];
-    if (nx) document.documentElement.setAttribute("data-theme", nx); else document.documentElement.removeAttribute("data-theme");
-    try { if (nx) localStorage.setItem("dg-theme", nx); else localStorage.removeItem("dg-theme"); } catch (e) {}
-    drawTheme();
+    var nx = isDark() ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", nx);
+    try { localStorage.setItem("dg-theme", nx); } catch (e) {}
+    drawSideTools();
   };
-  drawTheme();
+  document.getElementById("sideBtn").onclick = function () {
+    var right = document.documentElement.getAttribute("data-side") !== "r";
+    if (right) document.documentElement.setAttribute("data-side", "r"); else document.documentElement.removeAttribute("data-side");
+    try { if (right) localStorage.setItem("dg-side", "r"); else localStorage.removeItem("dg-side"); } catch (e) {}
+    drawSideTools(); fitAll();
+  };
+  if (DARKMQ) { if (DARKMQ.addEventListener) DARKMQ.addEventListener("change", drawSideTools); else if (DARKMQ.addListener) DARKMQ.addListener(drawSideTools); }
+  drawSideTools();
   document.getElementById("brand").onclick = function () { go("home"); };
   // ---- Menu di navigazione
   var IC = {
