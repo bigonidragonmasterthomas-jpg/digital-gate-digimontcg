@@ -1,4 +1,5 @@
 <title>Digital Gate - Digimon TCG</title>
+<script>try { var t0 = localStorage.getItem("dg-theme"); if (t0 === "light" || t0 === "dark") document.documentElement.setAttribute("data-theme", t0); } catch (e) {}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -33,10 +34,10 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-body); 
 button { font-family: inherit; }
 .bar { transition: transform .22s ease; will-change: transform; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 16px 10px; }
 .wrap { max-width: 720px; margin: 0 auto; }
-/* Schermi grandi da computer (mouse): tutta l'app ingrandita in proporzione */
-@media (min-width: 1100px) and (hover: hover) and (pointer: fine) { html { zoom: 1.25; } }
-@media (min-width: 1500px) and (min-height: 800px) and (hover: hover) and (pointer: fine) { html { zoom: 1.5; } }
-@media (min-width: 2300px) and (min-height: 1200px) and (hover: hover) and (pointer: fine) { html { zoom: 2; } }
+/* Schermi grandi da computer (mouse): layout desktop con barra laterale; l'ingrandimento cresce solo sugli schermi molto larghi */
+@media (min-width: 1500px) and (min-height: 800px) and (hover: hover) and (pointer: fine) { html { zoom: 1.12; } }
+@media (min-width: 1800px) and (min-height: 950px) and (hover: hover) and (pointer: fine) { html { zoom: 1.3; } }
+@media (min-width: 2300px) and (min-height: 1200px) and (hover: hover) and (pointer: fine) { html { zoom: 1.7; } }
 .top { margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 h1 { min-width: 0; flex: 1 1 auto; font-family: var(--font-display); font-size: 1.4rem; margin: 0; font-weight: 700; }
 .count { font-family: var(--font-display); font-weight: 600; color: var(--ink-2); font-size: .85rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -372,6 +373,284 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @keyframes sp-fade { to { opacity: 1; } }
 @keyframes sp-flash { 0% { opacity: 0; transform: scale(.2); } 60% { opacity: 1; } 100% { opacity: 1; transform: scale(3); } }
 @keyframes sp-zoom { to { transform: scale(2.4); opacity: 0; } }
+/* ==== Desktop (PC con mouse, da 1000 px): barra laterale fissa, pagine a tutta larghezza. Telefono e APK non cambiano. ==== */
+:root { --cyan: #0c7084; --cyan-soft: #e3f3f6; --side: #101a2a; --side-2: #1b2841; --side-line: #22314d; --side-ink: #e6edf8; --side-ink2: #8d9bb4; --sidew: 248px; --shadow: 0 8px 24px rgba(15,26,46,.10); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --cyan: #63d5ee; --cyan-soft: #12303a; --side: #0a1020; --side-2: #18233a; --side-line: #1c2843; --shadow: 0 8px 24px rgba(0,0,0,.35); } }
+:root[data-theme="dark"] { --cyan: #63d5ee; --cyan-soft: #12303a; --side: #0a1020; --side-2: #18233a; --side-line: #1c2843; --shadow: 0 8px 24px rgba(0,0,0,.35); }
+.menu .brand, .menu .themebtn, .menu nav .grp, .menu nav .nb { display: none; }
+body.desk { padding-left: var(--sidew); }
+body.desk .menu { left: 0; right: auto; width: var(--sidew); transform: none; background: var(--side); border-left: 0; border-right: 1px solid var(--side-line); color: var(--side-ink); padding: 20px 14px 16px; transition: none; }
+body.desk .menu-scrim, body.desk .burger, body.desk .menu .mh { display: none; }
+body.desk .menu .brand { display: flex; align-items: center; gap: 11px; border: 0; background: none; color: inherit; padding: 2px 8px 18px; cursor: pointer; text-align: left; }
+body.desk .brand svg { width: 36px; height: 36px; flex: none; }
+body.desk .brand b { display: block; white-space: nowrap; font: 700 1.08rem/1.1 var(--font-display); letter-spacing: .07em; text-transform: uppercase; }
+body.desk .brand small { display: block; font: 600 .6rem var(--font-display); letter-spacing: .34em; color: var(--side-ink2); }
+body.desk .menu nav { gap: 2px; }
+body.desk .menu nav .grp { display: block; font: 600 .64rem var(--font-display); letter-spacing: .2em; text-transform: uppercase; color: var(--side-ink2); padding: 16px 12px 6px; }
+body.desk .menu nav button { position: relative; white-space: nowrap; color: #c9d3e4; font: 500 .93rem var(--font-body); padding: 10px 12px; border-radius: 9px; }
+body.desk .menu nav button svg { color: #8d9bb4; width: 19px; height: 19px; }
+body.desk .menu nav button:hover { background: var(--side-2); color: #fff; }
+body.desk .menu nav button[aria-current="page"] { background: var(--side-2); color: #fff; }
+body.desk .menu nav button[aria-current="page"]::before { content: ""; position: absolute; left: -14px; top: 9px; bottom: 9px; width: 3px; border-radius: 0 3px 3px 0; background: #ff7a3d; }
+body.desk .menu nav button[aria-current="page"] svg { color: #ff8a4c; }
+body.desk .menu nav .nb { display: inline-block; margin-left: auto; font: 700 .68rem var(--font-display); padding: 2px 7px; border-radius: 6px; background: #1d3a4d; color: #8fe2f4; }
+body.desk .menu .coll { margin-top: auto; background: var(--side-2); border-color: var(--side-line); }
+body.desk .menu .coll .count { color: var(--side-ink2); }
+body.desk .menu .coll .count b { color: #ff8a4c; font-size: 1.35rem; }
+body.desk .menu .progress { background: #0c1424; }
+body.desk .menu .themebtn { display: flex; align-items: center; gap: 10px; margin-top: 8px; border: 0; background: none; color: #b8c4d8; font: 500 .82rem var(--font-body); padding: 9px 12px; border-radius: 9px; cursor: pointer; text-align: left; }
+body.desk .menu .themebtn:hover { background: var(--side-2); color: #fff; }
+body.desk .menu .themebtn svg { width: 17px; height: 17px; flex: none; }
+body.desk .menu .foot { margin-top: 6px; padding: 8px 12px 0; color: #6f7d99; font-size: .68rem; line-height: 1.45; }
+body.desk .bar { padding: 14px 36px 12px; transform: none !important; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); }
+body.desk .bar.empty { display: none; }
+body.desk .bar .top { display: none; }
+body.desk .bar .wrap { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+body.desk #q { flex: 1 1 380px; width: auto; height: 46px; font-size: 15px; padding: 10px 16px; }
+body.desk .qmodes { margin-top: 0; flex: 0 0 auto; }
+body.desk .qmodes .chip { flex: none; padding: 10px 14px; }
+body.desk .filters { margin-top: 0; flex: 1 1 420px; }
+body.desk .filters .sel { height: 46px; }
+body.desk .chips { flex: 1 1 100%; padding: 2px 0 0; }
+body.desk .wrap { max-width: 1340px; }
+body.desk main { padding: 6px 36px 56px; }
+body.desk .ptitle { font-size: 2.05rem; margin: 22px 0 4px; }
+body.desk .psub { color: var(--ink-2); margin: 0 0 20px; font-size: .92rem; }
+body.desk .back { padding-top: 18px; }
+.eyebrow { font: 600 .7rem var(--font-display); letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); }
+.sec-h { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 30px 0 12px; }
+.sec-h h3 { margin: 0 !important; font: 600 .78rem var(--font-display); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); }
+.sec-h .lnk { border: 0; background: none; color: var(--cyan); font: 600 .85rem var(--font-body); cursor: pointer; padding: 4px 0; }
+.btn { display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 600 .88rem var(--font-body); cursor: pointer; white-space: nowrap; }
+.btn:hover { border-color: var(--cyan); }
+.btn.pri { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.pri:hover { filter: brightness(1.06); }
+.btn svg { width: 16px; height: 16px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; min-width: 0; }
+.panel > h4 { margin: 0 0 12px; font: 600 .72rem var(--font-display); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-2); }
+/* Home desktop */
+.hero2 { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(320px, 1fr); background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.bn.noimg .fb img.fblg, .bn.noimg .fb img.fbpk { display: block; position: static; width: auto; height: auto; max-width: 74%; max-height: 62%; object-fit: contain; filter: drop-shadow(0 3px 8px rgba(0,0,0,.45)); }
+.bn.noimg .fb img.fbpk { max-height: 86%; }
+.hero2 .bn { border-radius: 0; box-shadow: none; aspect-ratio: auto; min-height: 330px; height: 100%; }
+.hero2 .hi { padding: 26px 28px; display: flex; flex-direction: column; justify-content: center; gap: 12px; min-width: 0; }
+.hero2 .hn { font: 700 2rem/1.1 var(--font-display); margin: 0; }
+.hero2 .hs { color: var(--ink-2); font-size: .92rem; }
+.hero2 .cdw { display: flex; align-items: flex-end; gap: 12px; margin: 4px 0 6px; }
+.hero2 .cdw b { font: 700 3.6rem/.85 var(--font-display); color: var(--accent); font-variant-numeric: tabular-nums; }
+.hero2 .cdw span { font: 600 .74rem var(--font-display); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); padding-bottom: 4px; }
+.hero2 .acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.hgrid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 0; }
+.hgrid.six { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-top: 0; }
+.hpg { display: flex; align-items: center; gap: 8px; margin-top: 6px; font: 600 .72rem var(--font-display); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.hpg .progress { flex: 1; margin: 0; height: 4px; }
+.hrow { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 14px; margin-top: 30px; }
+.dkpan .dn { font: 700 1.15rem var(--font-display); margin-bottom: 2px; }
+.dkpan .ds { color: var(--ink-2); font-size: .85rem; margin-bottom: 10px; }
+.dkpan .progress { margin: 0 0 12px; height: 6px; }
+.banpan { display: flex; gap: 14px; align-items: flex-start; }
+.banpan svg { width: 26px; height: 26px; color: var(--accent); flex: none; margin-top: 2px; }
+.banpan .bt { font-weight: 600; margin-bottom: 4px; }
+.banpan .bs { color: var(--ink-2); font-size: .86rem; margin-bottom: 10px; }
+.bnums { display: flex; flex-wrap: wrap; gap: 8px; }
+/* Prodotti desktop: griglia con artwork */
+.pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(224px, 1fr)); gap: 14px; }
+.ptile { display: flex; flex-direction: column; text-align: left; padding: 0; border: 1px solid var(--line); background: var(--surface); border-radius: 12px; overflow: hidden; cursor: pointer; color: inherit; font: inherit; transition: border-color .15s, transform .15s, box-shadow .15s; min-width: 0; }
+.ptile:hover { border-color: var(--cyan); transform: translateY(-2px); box-shadow: var(--shadow); }
+.ptile[disabled] { cursor: default; transform: none; box-shadow: none; border-style: dashed; }
+.pv { position: relative; aspect-ratio: 16 / 9; display: grid; place-items: center; overflow: hidden; background: radial-gradient(110% 90% at 30% 15%, #26365a, #0e1628 70%); }
+.pv .bimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+.pv .limg { max-width: 80%; max-height: 64%; object-fit: contain; filter: drop-shadow(0 3px 8px rgba(0,0,0,.45)); }
+.pv .pkimg { height: 86%; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(0,0,0,.5)); }
+.pv .pcode { font: italic 700 2rem var(--font-display); color: #c7d2e8; letter-spacing: .04em; }
+.pv .badge { top: 8px; left: 8px; }
+.pb { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pb .k { font: 600 .7rem var(--font-display); letter-spacing: .08em; text-transform: uppercase; color: var(--cyan); }
+.pb .n { font-weight: 600; }
+.pb .d { font-size: .78rem; color: var(--ink-2); }
+.pb .hits { font-size: .78rem; color: var(--accent); font-weight: 600; }
+.pg2 { display: flex; align-items: center; gap: 8px; margin-top: 8px; font: 600 .74rem var(--font-display); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.pg2 .progress { flex: 1; margin: 0; }
+.pg2.done { color: var(--ok); }
+.pg2.done .progress i { background: var(--ok); }
+/* Pagina prodotto desktop */
+.shead { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin: 6px 0 14px; }
+.shead h2 { font: 700 1.9rem/1.15 var(--font-display); margin: 4px 0 0; }
+.shead .own2 { min-width: 260px; }
+.own2 .ob { font: 700 1.6rem var(--font-display); font-variant-numeric: tabular-nums; }
+.own2 .ob small { font-size: .9rem; color: var(--ink-2); font-weight: 600; }
+.own2 .progress { margin: 6px 0 4px; height: 6px; }
+.own2 .os { font-size: .78rem; color: var(--ink-2); }
+.rbar { display: none; }
+body.desk .rbar { display: flex; height: 10px; border-radius: 99px; overflow: hidden; gap: 2px; margin-top: 10px; }
+body.desk .prod { grid-template-columns: 120px minmax(0, 1fr) minmax(0, 1.3fr); gap: 4px 28px; padding: 18px 22px; }
+body.desk .prod.nopk { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); }
+body.desk .prod .ppk { width: 120px; max-height: 210px; grid-row: 1 / span 2; }
+body.desk .pfacts.wide { grid-column: auto; }
+body.desk .pfacts.wide .pf:first-child { border-top: 0; }
+body.desk .pf { grid-template-columns: 96px minmax(0, 1fr); font-size: .9rem; }
+body.desk .psrc { grid-column: 1 / -1; }
+body.desk .subhead { font-size: .8rem; margin: 26px 0 10px; }
+/* Ricerca e collezione desktop: filtri a sinistra */
+.slay { display: grid; grid-template-columns: 236px minmax(0, 1fr); gap: 24px; align-items: start; }
+.fside { position: sticky; top: 88px; display: flex; flex-direction: column; gap: 4px; padding: 16px; }
+.fside .fh { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.fside .fh b { font: 700 1rem var(--font-display); }
+.fside .fh button { border: 0; background: none; color: var(--cyan); font: 600 .82rem var(--font-body); cursor: pointer; padding: 4px 0; }
+.fgrp { padding: 12px 0; border-top: 1px solid var(--line); }
+.fgrp > span { display: block; font: 600 .68rem var(--font-display); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 9px; }
+.fopts { display: flex; flex-wrap: wrap; gap: 6px; }
+.fopt { padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 500 .8rem var(--font-body); cursor: pointer; }
+.fopt:hover { border-color: var(--cyan); }
+.fopt[aria-pressed="true"] { background: var(--cyan-soft); border-color: var(--cyan); color: var(--cyan); font-weight: 600; }
+.fsw { width: 30px; height: 30px; border-radius: 50%; border: 0; cursor: pointer; box-shadow: inset 0 0 0 1px rgba(0,0,0,.18); padding: 0; }
+.fsw[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--cyan); }
+.fradio { display: flex; flex-direction: column; gap: 2px; }
+.fradio button { display: flex; align-items: center; gap: 9px; border: 0; background: none; color: var(--ink); font: 400 .86rem var(--font-body); padding: 5px 0; cursor: pointer; text-align: left; }
+.fradio button i { width: 15px; height: 15px; border-radius: 50%; border: 1.5px solid var(--ink-2); flex: none; }
+.fradio button[aria-checked="true"] i { border: 4.5px solid var(--cyan); }
+body.desk .group-title.withv { margin-top: 2px; font-size: .8rem; }
+body.desk .grid { grid-template-columns: repeat(auto-fill, minmax(178px, 1fr)); gap: 14px; }
+body.desk .tile { padding: 9px; border-radius: 12px; transition: border-color .15s, box-shadow .15s; }
+body.desk .tile:hover { border-color: var(--cyan); box-shadow: var(--shadow); }
+body.desk .tile .tname { font-size: .9rem; }
+body.desk .tile .qty { display: flex; justify-content: space-between; border: 1px solid var(--line); border-radius: 9px; padding: 2px; }
+body.desk .tile .qbtn { width: 30px; height: 28px; border-radius: 7px; border: 0; }
+body.desk .tile .qbtn.on { background: var(--accent); }
+body.desk .list .row.card { padding-top: 8px; padding-bottom: 8px; }
+.cstats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 8px; }
+.cstat .v { font: 700 1.8rem/1.1 var(--font-display); font-variant-numeric: tabular-nums; }
+.cstat .v small { font-size: .95rem; color: var(--ink-2); }
+.cstat .l { font: 600 .68rem var(--font-display); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 6px; }
+.cstat .s { font-size: .8rem; color: var(--ink-2); margin-top: 4px; }
+.csets { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.cset { display: grid; grid-template-columns: 110px minmax(0, 1fr) auto; gap: 6px 14px; align-items: center; text-align: left; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: inherit; font: inherit; cursor: pointer; }
+.cset:hover { border-color: var(--cyan); }
+.cset .slogo { width: 110px; height: 38px; }
+.cset .cl { min-width: 0; }
+.cset .cp { font: 700 .82rem var(--font-display); color: var(--cyan); background: var(--cyan-soft); padding: 2px 8px; border-radius: 6px; }
+.cset .cp.done { color: var(--ok); background: color-mix(in srgb, var(--ok) 14%, transparent); }
+.cset .pg2 { grid-column: 1 / -1; margin-top: 2px; }
+.cempty { text-align: center; padding: 46px 20px; }
+.cempty p { color: var(--ink-2); margin: 0 0 16px; }
+/* Scheda carta desktop: immagine a sinistra, dati a destra */
+body.desk .scrim { z-index: 40; align-items: center; padding: 28px 84px; }
+body.desk .sheet { max-width: 1140px; max-height: calc(100vh - 56px); border-radius: 18px; padding: 0 28px 26px; box-shadow: 0 24px 70px rgba(0,0,0,.4); }
+body.desk .sheet .swipe-hint { display: none; }
+body.desk .sheet-head { padding: 18px 0 12px; align-items: center; }
+body.desk .sheet-head h2 { font-size: 1.75rem; }
+.shbtns { display: flex; gap: 8px; flex: none; }
+.shbtns .x { width: 40px; height: 40px; display: grid; place-items: center; padding: 0; }
+.shbtns .x svg { width: 18px; height: 18px; }
+.shbtns .x[disabled] { opacity: .35; cursor: default; }
+.sgrid { display: grid; grid-template-columns: minmax(280px, 370px) minmax(0, 1fr); gap: 30px; align-items: start; }
+.sgrid .sl { position: sticky; top: 78px; min-width: 0; }
+.sgrid .sr { min-width: 0; }
+body.desk .art { margin-top: 0; }
+body.desk .art .pic, body.desk .art .artband { width: 100%; }
+body.desk .altsec { margin-top: 16px; }
+body.desk .alts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; align-items: start; }
+body.desk .alt { width: auto; padding: 6px; gap: 4px; border-radius: 10px; }
+body.desk .alt .from { font-size: .62rem; }
+body.desk .alt .sub { font-size: .7rem; }
+body.desk .alt .qty { gap: 0; }
+body.desk .alt .qbtn { width: 26px; height: 26px; font-size: .95rem; }
+body.desk .alt .qn { min-width: 18px; font-size: .85rem; }
+body.desk .sr .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
+/* Deckbuilding desktop */
+.dkhead { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.dkhead .dname { flex: 1 1 360px; font-size: 1.6rem; margin: 0; }
+.dkhead .dacts { margin: 0; }
+.dklay { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 22px; align-items: start; }
+.dkr { position: sticky; top: 88px; display: flex; flex-direction: column; gap: 12px; max-height: calc(100vh - 104px); overflow-y: auto; scrollbar-width: thin; }
+.dkr .dstat { border-radius: 14px; }
+.curve { display: flex; align-items: flex-end; gap: 6px; height: 104px; }
+.curve div { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 3px; height: 100%; font: 600 .68rem var(--font-display); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.curve i { display: block; width: 100%; border-radius: 4px 4px 0 0; background: var(--accent); min-height: 2px; }
+.curve i.alt2 { background: var(--cyan); }
+.cbar { display: flex; height: 10px; border-radius: 99px; overflow: hidden; gap: 2px; margin-bottom: 8px; }
+.clg { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: .8rem; color: var(--ink-2); }
+.clg span::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; background: var(--dot); }
+.dlist .dlg { font: 600 .68rem var(--font-display); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); display: flex; justify-content: space-between; margin: 12px 0 6px; }
+.dlist .dlg:first-child { margin-top: 0; }
+.drow { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 5px 4px; border-top: 1px solid var(--line); cursor: pointer; }
+.drow:hover { background: var(--surface-2); border-radius: 8px; }
+.drow .thumb { width: 34px; height: 47px; margin: 0; }
+.drow .dnm { font-size: .86rem; font-weight: 500; line-height: 1.25; overflow: hidden; }
+.drow .dnm small { display: block; color: var(--ink-2); font-size: .74rem; }
+.drow .qbtn { width: 26px; height: 26px; font-size: .95rem; }
+.drow .qn { min-width: 18px; font-size: .85rem; }
+.drow .dbadge { font-size: .6rem; padding: 1px 6px; }
+.dkgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+.dktile { display: flex; flex-direction: column; text-align: left; padding: 0; border: 1px solid var(--line); background: var(--surface); border-radius: 12px; overflow: hidden; cursor: pointer; color: inherit; font: inherit; transition: border-color .15s, box-shadow .15s; }
+.dktile:hover { border-color: var(--cyan); box-shadow: var(--shadow); }
+.dktile .cov { height: 130px; background: radial-gradient(110% 90% at 30% 15%, #26365a, #0e1628 70%); position: relative; overflow: hidden; }
+.dktile .cov .pic { position: absolute; inset: 0; }
+.dktile .cov img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; display: block; }
+.dktile .cov .pic.noimg img { display: none; }
+.dktile .cov .ccols { position: absolute; left: 10px; bottom: 10px; display: flex; gap: 4px; }
+.dktile .cov .ccols i { width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,.85); }
+.dktile .kb { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; }
+.dktile .kb b { font: 700 1.02rem var(--font-display); }
+.dktile .kb .sub { margin: 0; }
+.dktile .progress { margin: 2px 0 0; }
+.dktile.new { align-items: center; justify-content: center; min-height: 236px; border-style: dashed; color: var(--ink-2); gap: 8px; }
+.dktile.new svg { width: 30px; height: 30px; color: var(--accent); }
+/* Prossime uscite desktop: cronologia */
+.tlay { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 24px; align-items: start; }
+.tmon { position: relative; padding-left: 26px; border-left: 2px solid var(--line); margin-left: 6px; padding-bottom: 10px; }
+.tmon > h3 { position: relative; font: 700 1.05rem var(--font-display); margin: 0 0 10px; padding-top: 2px; }
+.tmon > h3::before { content: ""; position: absolute; left: -34px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 4px var(--bg); }
+.titem { display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 10px 16px 10px 10px; margin-bottom: 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); text-align: left; width: 100%; color: inherit; font: inherit; cursor: pointer; }
+.titem:hover { border-color: var(--cyan); }
+.titem[disabled] { cursor: default; }
+.titem[disabled]:hover { border-color: var(--line); }
+.titem .tv { width: 150px; border-radius: 8px; }
+.titem .tv .pcode { font-size: 1.4rem; }
+.titem .tk { display: inline-block; font: 600 .7rem var(--font-display); letter-spacing: .04em; color: var(--ink-2); background: var(--surface-2); padding: 2px 8px; border-radius: 6px; }
+.titem .tn { font: 600 1.05rem var(--font-display); margin: 4px 0 2px; }
+.titem .tt { font-size: .8rem; color: var(--ink-2); }
+.titem .tw { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.titem .tw b { font: 700 .95rem var(--font-display); }
+.tchip { font: 600 .74rem var(--font-body); padding: 3px 9px; border-radius: 7px; background: color-mix(in srgb, var(--accent) 13%, transparent); color: var(--accent); white-space: nowrap; }
+.tchip.m { background: var(--cyan-soft); color: var(--cyan); }
+.tside { position: sticky; top: 88px; display: flex; flex-direction: column; gap: 12px; }
+.tside .mlist { display: flex; flex-direction: column; gap: 2px; }
+.tside .mlist button { border: 0; background: none; text-align: left; padding: 8px 10px; border-radius: 8px; color: var(--ink); font: 500 .88rem var(--font-body); cursor: pointer; display: flex; justify-content: space-between; }
+.tside .mlist button:hover { background: var(--surface-2); }
+.tside .mlist button span { color: var(--ink-2); font-size: .8rem; }
+.tside p { margin: 0; color: var(--ink-2); font-size: .85rem; line-height: 1.55; }
+/* Informazioni desktop */
+.igrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.igrid .cap { margin: 0 !important; padding: 18px 20px; }
+.igrid .cap .t { font-style: normal; text-transform: none; font-size: 1.1rem; margin-bottom: 6px; }
+.igrid .cap .s { font-size: .92rem; line-height: 1.6; }
+.titem .tt { font-size: .8rem; color: var(--ink-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.tmon { scroll-margin-top: 90px; }
+.rbar i { display: block; min-width: 3px; }
+.cbar i { display: block; min-width: 3px; }
+.panel.cstat { padding: 14px 16px; }
+/* finestre desktop più strette (1000-1279 px) */
+@media (max-width: 1279px) {
+  body.desk { --sidew: 220px; }
+  body.desk .brand b { font-size: .95rem; }
+  body.desk .menu nav button { font-size: .88rem; }
+  body.desk .bar, body.desk main { padding-left: 24px; padding-right: 24px; }
+  .hgrid.six { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .hero2 { grid-template-columns: minmax(0, 1.3fr) minmax(280px, 1fr); }
+  .hero2 .bn { min-height: 260px; }
+  .cstats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dklay { grid-template-columns: minmax(0, 1fr) 320px; }
+  .tlay { grid-template-columns: minmax(0, 1fr) 220px; }
+  .titem { grid-template-columns: 120px minmax(0, 1fr) auto; }
+  .titem .tv { width: 120px; }
+  .slay { grid-template-columns: 210px minmax(0, 1fr); }
+  body.desk .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  body.desk .prod { grid-template-columns: 100px minmax(0, 1fr) minmax(0, 1.2fr); gap: 4px 20px; }
+  body.desk .prod .ppk { width: 100px; }
+}
+@media (prefers-reduced-motion: reduce) { .ptile, .tile { transition: none; } .ptile:hover { transform: none; } }
 @media (prefers-reduced-motion: reduce) { #splash * { animation-duration: .01s !important; animation-delay: 0s !important; } }
 @media (prefers-reduced-motion: reduce) { .progress i { transition: none; } }
 </style>
@@ -452,8 +731,13 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 <div class="menu-scrim" id="menuScrim"></div>
 <aside class="menu" id="menu" aria-label="Menu di navigazione" aria-hidden="true">
   <div class="mh"><span>Menu</span></div>
+  <button class="brand" id="brand" type="button" aria-label="Digital Gate, vai alla Home">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><polygon points="20,2 35.6,11 35.6,29 20,38 4.4,29 4.4,11" fill="none" stroke="#ff7a3d" stroke-width="2.4" stroke-linejoin="round"/><polygon points="20,8.5 30,14.25 30,25.75 20,31.5 10,25.75 10,14.25" fill="none" stroke="#39c6ff" stroke-width="1.6" stroke-linejoin="round"/><path d="M20 13.5l2 4.3 4.6.6-3.4 3.1.9 4.6-4.1-2.3-4.1 2.3.9-4.6-3.4-3.1 4.6-.6z" fill="#fff"/></svg>
+    <span><b>Digital Gate</b><small>Digimon TCG</small></span>
+  </button>
   <nav id="menuNav"></nav>
   <div class="coll"><span class="count" id="count"></span><div class="progress" aria-hidden="true"><i id="bar"></i></div></div>
+  <button class="themebtn" id="themeBtn" type="button"></button>
   <div class="foot">Digital Gate - Digimon TCG · catalogo non ufficiale. Immagini e marchi © Bandai, Akiyoshi Hongo, Toei Animation.</div>
 </aside>
 
@@ -557,6 +841,37 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   document.getElementById("tab-sets").onclick = goSets;
   document.getElementById("tab-home").onclick = function () { st.tab = "home"; st.setId = null; window.scrollTo(0, 0); render(); };
   if (window.Capacitor || /^capacitor:/.test(location.protocol)) document.body.classList.add("apk");
+  // ---- Desktop (PC con mouse e finestra da almeno 1000 px): barra laterale fissa e pagine a tutta larghezza. Telefono e APK restano come prima.
+  var DMQ = window.matchMedia ? matchMedia("(min-width: 1000px) and (hover: hover) and (pointer: fine)") : null;
+  var DESK = false;
+  function setDesk() {
+    DESK = !!(DMQ && DMQ.matches) && !document.body.classList.contains("apk");
+    document.body.classList.toggle("desk", DESK);
+  }
+  setDesk();
+  if (DESK) { try { if (!localStorage.getItem("dgm-view")) st.view = "grid"; } catch (e) { st.view = "grid"; } }
+  if (DMQ) {
+    var onDesk = function () { var was = DESK; setDesk(); if (was === DESK) return; if (DESK && menuEl.classList.contains("open")) menuOpen(false, true); render(); };
+    if (DMQ.addEventListener) DMQ.addEventListener("change", onDesk); else if (DMQ.addListener) DMQ.addListener(onDesk);
+  }
+  // Tema (solo desktop): automatico (come il sistema), chiaro o scuro; la scelta resta salvata
+  var THEMES = [["", "Tema automatico", '<circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/>'], ["light", "Tema chiaro", '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'], ["dark", "Tema scuro", '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>']];
+  function drawTheme() {
+    var cur = document.documentElement.getAttribute("data-theme") || "", t = THEMES.filter(function (x) { return x[0] === cur; })[0] || THEMES[0];
+    var b = document.getElementById("themeBtn");
+    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">' + t[2] + "</svg>";
+    b.appendChild(document.createTextNode(t[1])); b.title = "Cambia tema";
+  }
+  document.getElementById("themeBtn").onclick = function () {
+    var cur = document.documentElement.getAttribute("data-theme") || "", i = 0;
+    THEMES.forEach(function (x, j) { if (x[0] === cur) i = j; });
+    var nx = THEMES[(i + 1) % THEMES.length][0];
+    if (nx) document.documentElement.setAttribute("data-theme", nx); else document.documentElement.removeAttribute("data-theme");
+    try { if (nx) localStorage.setItem("dg-theme", nx); else localStorage.removeItem("dg-theme"); } catch (e) {}
+    drawTheme();
+  };
+  drawTheme();
+  document.getElementById("brand").onclick = function () { go("home"); };
   // ---- Menu di navigazione
   var IC = {
     home: '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
@@ -580,13 +895,18 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     menuEl.setAttribute("aria-hidden", String(!o)); menuBtn.setAttribute("aria-expanded", String(o));
     if (o) drawMenu();
   }
-  function curPage() { return st.tab === "home" ? "home" : st.tab === "info" ? "info" : st.tab === "deck" ? "deck" : st.tab === "sets" ? (st.type === "SOON" ? "soon" : "sets") : st.ownOnly ? "coll" : "cards"; }
+  function curPage() { return st.tab === "home" ? "home" : st.tab === "info" ? "info" : st.tab === "deck" ? "deck" : st.tab === "sets" ? (st.type === "SOON" ? "soon" : "sets") : st.setId ? "sets" : st.ownOnly ? "coll" : "cards"; }
   function drawMenu() {
     var nav = document.getElementById("menuNav"); nav.innerHTML = "";
     MENU.forEach(function (m) {
+      if (m[0] === "home") nav.appendChild(el("div", "grp", "Esplora"));
+      if (m[0] === "coll") nav.appendChild(el("div", "grp", "Il tuo spazio"));
+      if (m[0] === "info") nav.appendChild(el("div", "grp", "Progetto"));
       var b = el("button"); b.type = "button";
       b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + IC[m[0]] + "</svg>";
       b.appendChild(document.createTextNode(m[1]));
+      if (m[0] === "soon" && (DATA.upcoming || []).length) b.appendChild(el("span", "nb", String(DATA.upcoming.length)));
+      if (m[0] === "deck" && decks.length) b.appendChild(el("span", "nb", String(decks.length)));
       if (curPage() === m[0]) b.setAttribute("aria-current", "page");
       b.onclick = function () { var ov = history.state && history.state.ov === "menu"; menuOpen(false, true); if (ov) replaceNext = true; go(m[0]); if (replaceNext) { replaceNext = false; var rs = snap(); rs.d = ovDepth(); history.replaceState(rs, ""); } };
       nav.appendChild(b);
@@ -717,14 +1037,66 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
 
   // Titolo della sezione in cima a ogni pagina (stessi nomi del menu)
-  function pageTitle(t) { out.appendChild(el("h2", "ptitle", t)); }
+  function pageTitle(t, sub) { out.appendChild(el("h2", "ptitle", t)); if (DESK && sub) out.appendChild(el("p", "psub", sub)); }
+  // ---- piccoli componenti condivisi dalle pagine desktop
+  function pbar(h, n) { var w = el("div", "progress"), i = el("i"); i.style.width = (n ? Math.min(100, h / n * 100) : 0) + "%"; w.appendChild(i); return w; }
+  function progLine(h, n, cls) { var d = el("div", (cls || "pg2") + (n && h === n ? " done" : "")); d.appendChild(pbar(h, n)); d.appendChild(el("span", "", n ? h + "/" + n : "—")); return d; }
+  function btn(label, cls, onclick, icon) {
+    var b = el("button", "btn" + (cls ? " " + cls : "")); b.type = "button";
+    if (icon) b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + icon + "</svg>";
+    b.appendChild(document.createTextNode(label)); b.onclick = onclick; return b;
+  }
+  function secHead(title, linkLabel, onLink) {
+    var h = el("div", "sec-h"); h.appendChild(el("h3", "", title));
+    if (linkLabel) { var a = el("button", "lnk", linkLabel); a.type = "button"; a.onclick = onLink; h.appendChild(a); }
+    return h;
+  }
+  var RARCOL = { "common": "#9aa4b6", "uncommon": "#3fbf75", "rare": "#4c8dff", "super rare": "#b06bff", "secret rare": "#f2b230", "ultra rare": "#ff5470", "ultimate rare": "#ff5470", "special card": "#ff7a3d", "promo": "#2fc6c0" };
   function setLogo(code) {
     var p = PRODUCTS[code], w = el("div", "slogo");
     if (p && p.lg) { var im = document.createElement("img"); im.alt = ""; im.loading = "lazy"; im.decoding = "async"; im.src = IMGP + "logo/" + p.k + ".webp"; im.onerror = function () { if (im.parentNode) im.parentNode.removeChild(im); }; w.appendChild(im); }
     return w;
   }
+  // Riquadro di un prodotto (desktop): artwork se c'è, altrimenti logo, confezione o codice
+  function prodVisual(code, name) {
+    var v = el("div", "pv"), p = PRODUCTS[code], im = document.createElement("img");
+    im.alt = ""; im.loading = "lazy"; im.decoding = "async";
+    var fb = function () { if (im.parentNode) im.parentNode.removeChild(im); v.appendChild(el("span", "pcode", code)); };
+    if (BANNERS[code]) { im.className = "bimg"; im.src = IMGB + code + ".webp"; }
+    else if (p && p.lg) { im.className = "limg"; im.src = IMGP + "logo/" + p.k + ".webp"; }
+    else if (p && p.pk) { im.className = "pkimg"; im.src = IMGP + p.k + ".webp"; }
+    else { fb(); return v; }
+    im.onerror = fb; v.appendChild(im);
+    return v;
+  }
+  function prodTile(s, hit) {
+    var t = el("button", "ptile"); t.type = "button";
+    var v = prodVisual(s.code, s.name); t.appendChild(v);
+    var b = el("div", "pb");
+    b.appendChild(el("div", "k", s.code + (s.up ? " · In arrivo" : "")));
+    b.appendChild(el("div", "n fit", s.name));
+    if (s.up) {
+      var bd = el("span", "badge"); bd.innerHTML = CLOCK + "<span>" + esc(upBadge(s.up)) + "</span>"; v.appendChild(bd);
+      b.appendChild(el("div", "d", upWhen(s.up)));
+      if (PRODUCTS[s.code]) t.onclick = function () { openUp(s.code); }; else t.disabled = true;
+      t.appendChild(b); return t;
+    }
+    if (s.date && s.date.charAt(0) !== "0") b.appendChild(el("div", "d", monthLabel(s.date)));
+    if (s.date && daysTo(s.date) >= -60 && daysTo(s.date) <= 0) { var nb = el("span", "badge new"); nb.innerHTML = SPARK + "<span>Nuovo</span>"; v.appendChild(nb); }
+    if (hit) b.appendChild(el("div", "hits", hit + (hit === 1 ? " carta trovata" : " carte trovate")));
+    var stt = SETSTAT[s.id];
+    b.appendChild(progLine(stt.h, stt.n));
+    t.appendChild(b);
+    t.onclick = function () {
+      st.back = { y: window.pageYOffset || document.documentElement.scrollTop || 0, q: st.q, type: st.type, qm: st.qm };
+      st.tab = "cards"; st.setId = s.id; st.shown = PAGE;
+      if (hit) { st.qm = "name"; } else { qi.value = ""; st.q = ""; }
+      window.scrollTo(0, 0); render();
+    };
+    return t;
+  }
   function renderSets() {
-    pageTitle("Prodotti");
+    pageTitle("Prodotti", "Artwork, contenuto e avanzamento della tua collezione per ogni prodotto, dal più recente.");
     var q = normQ(st.q);
     var all = upcomingSets().concat(SETS);
     var hits = {};
@@ -737,6 +1109,17 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       return false;
     });
     if (!list.length) { out.appendChild(el("p", "empty", "Nessun set corrisponde ai filtri.")); return; }
+    if (DESK) {
+      Object.keys(TYPES).forEach(function (t) {
+        var items = list.filter(function (s) { return s.type === t; });
+        if (!items.length) return;
+        var gh = el("div", "group-title"); gh.appendChild(el("span", "", TYPES[t] + " · " + items.length)); out.appendChild(gh);
+        var gr = el("div", "pgrid");
+        items.forEach(function (s) { gr.appendChild(prodTile(s, hits[s.id])); });
+        out.appendChild(gr);
+      });
+      return;
+    }
     Object.keys(TYPES).forEach(function (t) {
       var items = list.filter(function (s) { return s.type === t; });
       if (!items.length) return;
@@ -863,7 +1246,11 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     if (p.rar) {
       var ch = el("div", "rchs");
       p.rar.forEach(function (x) { var c = el("span", "rch"); c.appendChild(document.createTextNode(x[0])); c.appendChild(el("b", "", String(x[1]))); ch.appendChild(c); });
-      row(wide, "Rarità", [ch]);
+      // barra della distribuzione delle rarità (visibile su desktop)
+      var rb = el("div", "rbar"); rb.setAttribute("role", "img");
+      rb.setAttribute("aria-label", "Distribuzione rarità: " + p.rar.map(function (x) { return x[0] + " " + x[1]; }).join(", "));
+      p.rar.forEach(function (x) { var n = parseInt(x[1], 10); if (!n) return; var sg = el("i"); sg.style.flex = String(n); sg.style.background = RARCOL[String(x[0]).toLowerCase()] || "var(--cyan)"; sg.title = x[0] + " " + x[1]; rb.appendChild(sg); });
+      row(wide, "Rarità", rb.children.length ? [ch, rb] : [ch]);
     }
     if (wide.firstChild) box.appendChild(wide);
     var src = el("div", "psrc"); src.appendChild(el("span", "", p.price && p.price[0] === "USD" ? "Dati ufficiali Bandai · prezzo consigliato USA" : "Dati ufficiali Bandai"));
@@ -894,13 +1281,30 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       var b = el("button", "back", st.back && st.back.home ? "← Home" : "← Tutti i set"); b.type = "button";
       b.onclick = goSets;
       out.appendChild(b);
-      var h = el("div", "sethead"); h.appendChild(el("h2", "fit", s.code + " · " + s.name));
+      var h = el("div", "sethead");
       var hasDate = s.date && s.date.charAt(0) !== "0";
       var pb = q ? null : prodBox(s.code, s.type, s.type === "AL" ? "" : TYPES[s.type], hasDate ? s.date.slice(0, 7) : null);
-      if (hasDate && !pb) { var dm = s.date.split("-"); var mn = MONTHS[+dm[1] - 1]; h.appendChild(el("div", "sub", "Uscita: " + mn.charAt(0).toUpperCase() + mn.slice(1) + " " + dm[0])); }
+      if (DESK) {
+        h.className = "shead";
+        var ht = el("div"); ht.appendChild(el("div", "eyebrow", (s.type === "AL" ? "" : TYPES[s.type] + " · ") + s.code));
+        ht.appendChild(el("h2", "", s.name));
+        if (hasDate && !pb) ht.appendChild(el("div", "sub", "Uscita: " + monthLabel(s.date)));
+        h.appendChild(ht);
+        var sst = SETSTAT[s.id];
+        if (sst && sst.n) {
+          var o2 = el("div", "own2"); o2.appendChild(el("div", "eyebrow", "La tua collezione"));
+          var ob = el("div", "ob"); ob.appendChild(document.createTextNode(sst.h + " ")); ob.appendChild(el("small", "", "/ " + sst.n)); o2.appendChild(ob);
+          o2.appendChild(pbar(sst.h, sst.n)); o2.appendChild(el("div", "os", "Carte e illustrazioni possedute in questo prodotto"));
+          h.appendChild(o2);
+        }
+      } else {
+        h.appendChild(el("h2", "fit", s.code + " · " + s.name));
+        if (hasDate && !pb) { var dm = s.date.split("-"); var mn = MONTHS[+dm[1] - 1]; h.appendChild(el("div", "sub", "Uscita: " + mn.charAt(0).toUpperCase() + mn.slice(1) + " " + dm[0])); }
+      }
       out.appendChild(h);
       if (pb) out.appendChild(pb);
-    } else pageTitle(st.ownOnly ? "La mia collezione" : "Ricerca carte");
+    } else if (DESK) { renderCardsDesk(q); return; }
+    else pageTitle(st.ownOnly ? "La mia collezione" : "Ricerca carte");
     var list = (st.setId ? cardsOfSet(st.setId) : CARDS).filter(function (c) { return cardMatches(c, q); });
     if (q) {
       list = list.map(function (c, j) { return { c: c, j: j, r: relevance(c, q) }; })
@@ -954,6 +1358,95 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       out.appendChild(m);
     }
   }
+  // ---- Ricerca carte e La mia collezione su desktop: filtri nella colonna a sinistra, carte a griglia
+  function syncSelects() {
+    [["f-color", st.color], ["f-type", st.ct], ["f-lv", st.lv]].forEach(function (x) { var s = document.getElementById(x[0]); s.value = x[1] || ""; if (!x[1]) s.selectedIndex = 0; });
+  }
+  function filterSide() {
+    var a = el("aside", "panel fside"); a.setAttribute("aria-label", "Filtri");
+    var fh = el("div", "fh"); fh.appendChild(el("b", "", "Filtri"));
+    var rs = el("button", "", "Azzera"); rs.type = "button";
+    rs.onclick = function () { st.color = st.ct = st.lv = ""; st.qm = ""; st.shown = PAGE; syncSelects(); render(); };
+    fh.appendChild(rs); a.appendChild(fh);
+    function grp(label) { var g = el("div", "fgrp"); g.appendChild(el("span", "", label)); a.appendChild(g); return g; }
+    function set(k, v) { st[k] = v; st.shown = PAGE; syncSelects(); render(); }
+    var g1 = grp("Cerca in"), rad = el("div", "fradio"); rad.setAttribute("role", "radiogroup");
+    [["", "Nome, codice e testo"], ["name", "Solo nel nome"], ["text", "Solo nel testo"]].forEach(function (m) {
+      var b = el("button"); b.type = "button"; b.setAttribute("role", "radio"); b.setAttribute("aria-checked", String(st.qm === m[0]));
+      b.appendChild(el("i")); b.appendChild(document.createTextNode(m[1])); b.onclick = function () { set("qm", m[0]); }; rad.appendChild(b);
+    });
+    g1.appendChild(rad);
+    var g2 = grp("Colore"), sw = el("div", "fopts");
+    Object.keys(COLORS).forEach(function (k) {
+      var b = el("button", "fsw"); b.type = "button"; b.style.background = colorVar(k); b.title = COLORS[k];
+      b.setAttribute("aria-label", COLORS[k]); b.setAttribute("aria-pressed", String(st.color === k));
+      b.onclick = function () { set("color", st.color === k ? "" : k); }; sw.appendChild(b);
+    });
+    g2.appendChild(sw);
+    var g3 = grp("Tipo di carta"), to = el("div", "fopts");
+    CARDTYPES.forEach(function (k) { var b = el("button", "fopt", k); b.type = "button"; b.setAttribute("aria-pressed", String(st.ct === k)); b.onclick = function () { set("ct", st.ct === k ? "" : k); }; to.appendChild(b); });
+    g3.appendChild(to);
+    var g4 = grp("Livello"), lo = el("div", "fopts");
+    [2, 3, 4, 5, 6, 7].forEach(function (n) { var v = "Lv." + n, b = el("button", "fopt", v); b.type = "button"; b.setAttribute("aria-pressed", String(st.lv === v)); b.onclick = function () { set("lv", st.lv === v ? "" : v); }; lo.appendChild(b); });
+    g4.appendChild(lo);
+    return a;
+  }
+  function collSummary() {
+    var uniq = 0, tot = 0, dup = 0, done = 0, started = [];
+    CARDS.forEach(function (c) { if (owned(c)) uniq++; });
+    Object.keys(qty).forEach(function (k) { tot += qty[k]; if (qty[k] > 1) dup++; });
+    SETS.forEach(function (s) { var t = SETSTAT[s.id]; if (t && t.n && t.h) { started.push(s); if (t.h === t.n) done++; } });
+    var cs = el("div", "cstats");
+    [["Carte diverse", uniq, "/ " + CARDS.length, "Una voce per ogni carta"], ["Copie totali", tot, "", "Tutte le quantità, illustrazioni comprese"],
+     ["Con doppioni", dup, "", "Carte o illustrazioni con più di una copia"], ["Prodotti completi", done, "/ " + started.length, "Sui prodotti che hai iniziato"]].forEach(function (x) {
+      var p = el("div", "panel cstat"); p.appendChild(el("div", "l", x[0]));
+      var v = el("div", "v", String(x[1])); if (x[2]) { v.appendChild(document.createTextNode(" ")); v.appendChild(el("small", "", x[2])); } p.appendChild(v);
+      p.appendChild(el("div", "s", x[3])); cs.appendChild(p);
+    });
+    out.appendChild(cs);
+    if (!started.length) return;
+    started.sort(function (a, b) { var A = SETSTAT[a.id], B = SETSTAT[b.id]; return (B.h / B.n - A.h / A.n) || (a.date < b.date ? 1 : -1); });
+    out.appendChild(secHead("Per prodotto", started.length > 9 ? (st.allSets ? "Mostra meno" : "Mostra tutti (" + started.length + ")") : "", function () { st.allSets = !st.allSets; render(); }));
+    var g = el("div", "csets");
+    (st.allSets ? started : started.slice(0, 9)).forEach(function (s) {
+      var t = SETSTAT[s.id], b = el("button", "cset"); b.type = "button";
+      b.appendChild(setLogo(s.code));
+      var c = el("div", "cl"); c.appendChild(el("div", "name fit", s.name)); c.appendChild(el("div", "sub", s.code + (s.date && s.date.charAt(0) !== "0" ? " · " + monthLabel(s.date) : ""))); b.appendChild(c);
+      var pc = Math.floor(t.h / t.n * 100); b.appendChild(el("span", "cp" + (t.h === t.n ? " done" : ""), pc + "%"));
+      b.appendChild(progLine(t.h, t.n));
+      b.onclick = function () { st.back = { y: 0, q: "", type: "ALL", qm: "" }; st.ownOnly = false; st.tab = "cards"; st.setId = s.id; st.shown = PAGE; qi.value = ""; st.q = ""; window.scrollTo(0, 0); render(); };
+      g.appendChild(b);
+    });
+    out.appendChild(g);
+  }
+  function renderCardsDesk(q) {
+    pageTitle(st.ownOnly ? "La mia collezione" : "Ricerca carte", st.ownOnly ? "Le copie che hai segnato, prodotto per prodotto. Restano salvate su questo dispositivo." : "Trova una carta, confronta le illustrazioni e aggiungila alla collezione.");
+    if (st.ownOnly) {
+      var anyOwned = Object.keys(qty).length > 0;
+      if (!anyOwned) {
+        var e = el("div", "panel cempty"); e.appendChild(el("div", "eyebrow", "Collezione vuota"));
+        e.appendChild(el("p", "", "Non hai ancora segnato carte. Usa il + nella ricerca o nella pagina di un prodotto per aggiungerle."));
+        var ea = el("div", "dacts"); ea.style.justifyContent = "center";
+        ea.appendChild(btn("Cerca carte", "pri", function () { go("cards"); })); ea.appendChild(btn("Esplora i prodotti", "", function () { go("sets"); }));
+        e.appendChild(ea); out.appendChild(e); return;
+      }
+      collSummary();
+      out.appendChild(secHead("Le tue carte"));
+    }
+    var lay = el("div", "slay"); lay.appendChild(filterSide());
+    var res = el("section"); res.setAttribute("aria-label", "Risultati"); lay.appendChild(res); out.appendChild(lay);
+    var list = CARDS.filter(function (c) { return cardMatches(c, q); });
+    if (q) list = list.map(function (c, j) { return { c: c, j: j, r: relevance(c, q) }; }).sort(function (a, b) { return (a.r - b.r) || (a.j - b.j); }).map(function (o) { return o.c; });
+    var gt = el("div", "group-title withv");
+    gt.appendChild(el("span", "", list.length + (list.length === 1 ? " carta" : " carte") + (st.q ? " per “" + st.q + "”" : "")));
+    gt.appendChild(viewToggle()); res.appendChild(gt);
+    if (!list.length) { res.appendChild(el("p", "empty", st.ownOnly ? "Nessuna delle tue carte corrisponde ai filtri." : "Nessuna carta corrisponde ai filtri.")); return; }
+    var ul = el("div", st.view === "grid" ? "grid" : "list"); drawItems(ul, list.slice(0, st.shown)); res.appendChild(ul);
+    if (list.length > st.shown) {
+      var m = el("button", "more", "Mostra altre " + Math.min(PAGE, list.length - st.shown)); m.type = "button";
+      m.onclick = function () { st.shown += PAGE; render(); }; res.appendChild(m);
+    }
+  }
   // Ordine nelle liste dei prodotti: Digi-Egg, Digimon, Tamer, Option; poi categoria e data del set (come nella lista prodotti); poi numero carta
   var SETRANK = {}; SETS.forEach(function (x, i) { SETRANK[x.id] = i; });
   function ctRank(c) { var t = c.ct || ""; return /^Digi-Egg/.test(t) ? 0 : /^Digimon/.test(t) ? 1 : /^Tamer/.test(t) ? 2 : /^Option/.test(t) ? 3 : 4; }
@@ -1000,7 +1493,48 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     });
   }
 
+  // Prossime uscite su desktop: cronologia per mese, dalla più vicina
+  function renderSoonDesk() {
+    pageTitle("Prossime uscite", "Dalla più vicina alla più lontana. Giorno preciso, solo mese o data ancora da annunciare sono distinti.");
+    var items = upSorted(), groups = [], byKey = {};
+    items.forEach(function (u) {
+      var k = u.prec === "none" ? "tbd" : u.from.slice(0, 7);
+      if (!byKey[k]) { byKey[k] = { k: k, label: k === "tbd" ? "Senza data" : monthLabel(u.from), items: [] }; groups.push(byKey[k]); }
+      byKey[k].items.push(u);
+    });
+    var lay = el("div", "tlay"), tl = el("div"); lay.appendChild(tl);
+    groups.forEach(function (g) {
+      var m = el("section", "tmon"); m.id = "m-" + g.k; m.appendChild(el("h3", "", g.label));
+      g.items.forEach(function (u) {
+        var r = el("button", "titem"); r.type = "button";
+        var tv = prodVisual(u.code, u.name); tv.classList.add("tv"); r.appendChild(tv);
+        var mid = el("div"); mid.style.minWidth = "0";
+        mid.appendChild(el("span", "tk", u.code + " · " + u.kind));
+        mid.appendChild(el("div", "tn fit", u.name));
+        if (u.note) mid.appendChild(el("div", "tt", u.note));
+        r.appendChild(mid);
+        var tw = el("div", "tw"), when = upWhen(u);
+        tw.appendChild(el("b", "", u.prec === "none" ? "Da definire" : when));
+        if (u.prec === "day") { var dd = daysTo(u.from); tw.appendChild(el("span", "tchip", dd <= 0 ? "Oggi" : dd + (dd === 1 ? " giorno" : " giorni"))); }
+        else if (u.prec === "none") tw.appendChild(el("span", "tchip m", "Annunciato"));
+        else { var cd = cdText(u); tw.appendChild(el("span", "tchip m", cd.big ? "Mese annunciato · tra " + cd.big + " " + cd.unit : cd.unit)); }
+        r.appendChild(tw);
+        if (PRODUCTS[u.code]) r.onclick = function () { openUp(u.code); }; else r.disabled = true;
+        m.appendChild(r);
+      });
+      tl.appendChild(m);
+    });
+    var side = el("aside", "tside");
+    var p1 = el("div", "panel"); p1.appendChild(el("h4", "", "Vai al mese"));
+    var ml = el("div", "mlist");
+    groups.forEach(function (g) { var b = el("button"); b.type = "button"; b.appendChild(document.createTextNode(g.label)); b.appendChild(el("span", "", String(g.items.length))); b.onclick = function () { var t = document.getElementById("m-" + g.k); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); }; ml.appendChild(b); });
+    p1.appendChild(ml); side.appendChild(p1);
+    var p2 = el("div", "panel"); p2.appendChild(el("h4", "", "Come leggere le date"));
+    p2.appendChild(el("p", "", "Il giorno compare solo quando la data è precisa; se è noto solo il mese, il conto è al mese. Le date possono riferirsi all'uscita giapponese: quella inglese può arrivare più tardi e cambiare."));
+    side.appendChild(p2); lay.appendChild(side); out.appendChild(lay);
+  }
   function renderSoon() {
+    if (DESK) { renderSoonDesk(); return; }
     pageTitle("Prossime uscite");
     var items = (DATA.upcoming || []).slice();
     var note = el("p", "hint", "Le date possono riferirsi all'uscita giapponese; quella inglese può arrivare più tardi e cambiare. Quando è noto solo il mese, il conto è al mese di uscita. Ordine dal più recente al meno recente.");
@@ -1050,6 +1584,13 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var b = el("button", "bn" + (BANNERS[code] ? "" : " noimg")); b.type = "button";
     if (BANNERS[code]) { var im = document.createElement("img"); im.alt = ""; im.loading = "lazy"; im.decoding = "async"; im.src = IMGB + code + ".webp"; im.onerror = function () { b.classList.add("noimg"); }; b.appendChild(im); }
     var fb = el("div", "fb"); var inner = el("div"); inner.appendChild(el("b", "", code)); inner.appendChild(el("span", "", name)); fb.appendChild(inner); b.appendChild(fb);
+    // desktop: senza artwork mostra il logo o la confezione del prodotto, se ci sono
+    var pp = DESK && !BANNERS[code] && PRODUCTS[code];
+    if (pp && (pp.lg || pp.pk)) {
+      var li = document.createElement("img"); li.alt = ""; li.decoding = "async"; li.className = pp.lg ? "fblg" : "fbpk";
+      li.src = IMGP + (pp.lg ? "logo/" : "") + pp.k + ".webp"; li.onerror = function () { if (li.parentNode) li.parentNode.removeChild(li); inner.style.display = ""; };
+      inner.style.display = "none"; fb.insertBefore(li, inner);
+    }
     if (badgeHtml) { var bd = el("span", "badge" + (cls ? " " + cls : "")); bd.innerHTML = badgeHtml; b.appendChild(bd); }
     return b;
   }
@@ -1057,8 +1598,8 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   function openSoon() { st.tab = "sets"; st.type = "SOON"; st.setId = null; qi.value = ""; st.q = ""; window.scrollTo(0, 0); render(); }
   function openSet(id) { st.back = { y: 0, q: "", type: st.type, qm: st.qm, home: true }; st.tab = "cards"; st.setId = id; st.shown = PAGE; qi.value = ""; st.q = ""; window.scrollTo(0, 0); render(); }
   function renderInfo() {
-    pageTitle("Informazioni");
-    var h = el("div", "home");
+    pageTitle("Informazioni", "Un catalogo per i Tamer: da dove arrivano i dati e dove resta la tua collezione.");
+    var h = el("div", "home" + (DESK ? " igrid" : ""));
     [["Cos'è", "Digital Gate è un catalogo non ufficiale del Digimon Card Game in inglese: tutti i prodotti, le carte (con ristampe e alternative art), le prossime uscite e la tua collezione."],
      ["Dati", "Carte dal database pubblico TakaOtaku (Digimon Card App) e dal sito ufficiale Bandai; date e materiali promozionali dal sito ufficiale Digimon Card Game. Possono esserci errori: segnalali e li correggo."],
      ["Collezione", "Le copie che segni restano salvate su questo dispositivo, nel browser o nell'app."],
@@ -1067,7 +1608,89 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     });
     out.appendChild(h);
   }
+  function upSorted() {
+    var IMP = { BT: 0, EX: 1, ST: 2, LM: 3, PB: 4, AL: 5 };
+    return (DATA.upcoming || []).slice().sort(function (a, b) {
+      var an = a.prec === "none", bn = b.prec === "none"; if (an !== bn) return an ? 1 : -1;
+      return (a.from || "") < (b.from || "") ? -1 : (a.from || "") > (b.from || "") ? 1 :
+        (IMP[typeOf(a.code)] - IMP[typeOf(b.code)]) || (numOf(a.code) - numOf(b.code));
+    });
+  }
+  function recentSets(n) {
+    var IMP = { BT: 0, EX: 1, ST: 2, LM: 3, PB: 4, AL: 5 };
+    return SETS.filter(function (x) { return x.date && x.date.charAt(0) !== "0" && BANNERS[x.code]; })
+      .sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : (IMP[a.type] - IMP[b.type]) || (numOf(b.code) - numOf(a.code)); }).slice(0, n);
+  }
+  function monthLabel(d) { var p = d.split("-"), m = MONTHS[+p[1] - 1]; return m.charAt(0).toUpperCase() + m.slice(1) + " " + p[0]; }
+  var ICO_PLUS = '<path d="M12 5v14M5 12h14"/>', ICO_ARROW = '<path d="M5 12h14M13 6l6 6-6 6"/>';
+  function renderHomeDesk() {
+    var h = el("div", "home");
+    pageTitle("Home", "Nuove uscite, i tuoi set e il tuo prossimo mazzo, in un colpo d'occhio.");
+    var ups = upSorted();
+    if (ups.length) {
+      var u0 = ups[0], hero = el("div", "hero2");
+      var go0 = PRODUCTS[u0.code] ? function () { openUp(u0.code, true); } : openSoon;
+      var hb = banner(u0.code, u0.name, ""); hb.onclick = go0; hb.setAttribute("aria-label", u0.code + " " + u0.name); hero.appendChild(hb);
+      var hi = el("div", "hi");
+      hi.appendChild(el("div", "eyebrow", "Prossima uscita · " + u0.code));
+      hi.appendChild(el("div", "hn", u0.name));
+      hi.appendChild(el("div", "hs", u0.kind + " · " + upWhen(u0)));
+      var cdw = el("div", "cdw");
+      if (u0.prec === "day") { var dd = daysTo(u0.from); cdw.appendChild(el("b", "", String(Math.max(0, dd)))); cdw.appendChild(el("span", "", dd === 1 ? "giorno all'uscita" : "giorni all'uscita")); }
+      else { var cd = cdText(u0); if (cd.big) { cdw.appendChild(el("b", "", cd.big)); cdw.appendChild(el("span", "", cd.unit + " all'uscita")); } else cdw.appendChild(el("span", "", cd.unit)); }
+      hi.appendChild(cdw);
+      var acts = el("div", "acts");
+      if (PRODUCTS[u0.code]) acts.appendChild(btn("Scheda prodotto", "pri", go0));
+      acts.appendChild(btn("Tutte le uscite", "", openSoon, ICO_ARROW));
+      hi.appendChild(acts); hero.appendChild(hi); h.appendChild(hero);
+      if (ups.length > 1) {
+        h.appendChild(secHead("All'orizzonte", "Calendario completo →", openSoon));
+        var g = el("div", "hgrid four");
+        ups.slice(1, 5).forEach(function (u) {
+          var it = el("div", "hitem"); var bb = banner(u.code, u.name, CLOCK + "<span>" + esc(upBadge(u)) + "</span>"); bb.onclick = PRODUCTS[u.code] ? function () { openUp(u.code, true); } : openSoon; it.appendChild(bb);
+          it.appendChild(el("div", "lbl", u.code + " - " + u.name)); it.appendChild(el("div", "lbl2", upWhen(u)));
+          g.appendChild(it);
+        });
+        h.appendChild(g);
+      }
+    }
+    h.appendChild(secHead("Usciti di recente", "Tutti i prodotti →", function () { go("sets"); }));
+    var g2 = el("div", "hgrid six");
+    recentSets(12).forEach(function (x) {
+      var isNew = daysTo(x.date) >= -60;
+      var it = el("div", "hitem"); var bb = banner(x.code, x.name, isNew ? SPARK + "<span>Nuovo</span>" : "", "new"); bb.onclick = function () { openSet(x.id); }; it.appendChild(bb);
+      it.appendChild(el("div", "lbl", x.code + " - " + x.name));
+      it.appendChild(el("div", "lbl2", monthLabel(x.date)));
+      var s = SETSTAT[x.id]; if (s && s.n) it.appendChild(progLine(s.h, s.n, "hpg"));
+      g2.appendChild(it);
+    });
+    h.appendChild(g2);
+    var row = el("div", "hrow");
+    var dp = el("div", "panel dkpan"); dp.appendChild(el("h4", "", "Riprendi da dove eri rimasto"));
+    var last = decks.slice().sort(function (a, b) { return b.upd - a.upd; })[0];
+    if (last) {
+      var s0 = deckStats(last);
+      dp.appendChild(el("div", "dn", last.name));
+      dp.appendChild(el("div", "ds", "Principale " + s0.main + "/50 · Digi-Egg " + s0.egg + "/5 · " + (s0.problems.length ? s0.problems.length + (s0.problems.length === 1 ? " cosa da sistemare" : " cose da sistemare") : "mazzo valido")));
+      dp.appendChild(pbar(Math.min(s0.main, 50), 50));
+      dp.appendChild(btn("Continua il mazzo", "pri", function () { openDeck(last.id); }, ICO_ARROW));
+    } else {
+      dp.appendChild(el("div", "ds", "Non hai ancora mazzi: creane uno e controlla subito regole, lista ban e statistiche."));
+      dp.appendChild(btn("Nuovo mazzo", "pri", function () { var d = newDeck("Nuovo mazzo 1"); openDeck(d.id); }, ICO_PLUS));
+    }
+    row.appendChild(dp);
+    var bp = el("div", "panel banpan");
+    var ic = el("span"); ic.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>'; bp.appendChild(ic.firstChild);
+    var bt = el("div"); bt.appendChild(el("div", "bt", "Lista ban e restrizioni in vigore dal " + fmtDate(BAN.effective)));
+    bt.appendChild(el("div", "bs", "Il deckbuilding la controlla da solo mentre componi i mazzi."));
+    var nums = el("div", "bnums");
+    nums.appendChild(el("span", "dbadge ban", BAN.banned.length + " bandite")); nums.appendChild(el("span", "dbadge lim", BAN.restricted.length + " limitate")); nums.appendChild(el("span", "dbadge pair", BAN.pairs.length + " coppie vietate"));
+    bt.appendChild(nums); bp.appendChild(bt); row.appendChild(bp);
+    h.appendChild(row);
+    out.appendChild(h);
+  }
   function renderHome() {
+    if (DESK) { renderHomeDesk(); return; }
     var h = el("div", "home");
     pageTitle("Home");
     var hs = el("h3", "", "Prossime uscite"); hs.style.marginTop = "6px"; h.appendChild(hs);
@@ -1323,6 +1946,25 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       ei.appendChild(picBox("pic", "pre", c));
       est.appendChild(ei); es.appendChild(est); sh.appendChild(es);
     }
+    if (DESK) {
+      // desktop: finestra a due colonne (immagine e versioni a sinistra, dati e testo a destra) con frecce e chiusura
+      var bx = el("div", "shbtns"), ni = NAVLIST.indexOf(c);
+      var navB = function (lbl, path, target, fn) {
+        var b = el("button", "x"); b.type = "button"; b.title = lbl; b.setAttribute("aria-label", lbl);
+        b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + path + "</svg>";
+        if (fn) b.onclick = fn; else if (target) b.onclick = function () { st.open = target; drawSheet(); var n2 = sheet.querySelector(".sheet"); if (n2) n2.scrollTop = 0; }; else b.disabled = true;
+        return b;
+      };
+      if (ni >= 0 && !SHSTACK.length) { bx.appendChild(navB("Carta precedente (←)", '<path d="M15 5l-7 7 7 7"/>', NAVLIST[ni - 1])); bx.appendChild(navB("Carta successiva (→)", '<path d="M9 5l7 7-7 7"/>', NAVLIST[ni + 1])); }
+      bx.appendChild(navB("Chiudi (Esc)", '<path d="M6 6l12 12M18 6L6 18"/>', null, closeSheet));
+      head.appendChild(bx);
+      var sg = el("div", "sgrid"), sL = el("div", "sl"), sR = el("div", "sr");
+      Array.prototype.slice.call(sh.children).forEach(function (k) {
+        if (k === hint || k === head || k.classList.contains("sep")) return;
+        (k.classList.contains("art") || k.classList.contains("altsec") ? sL : sR).appendChild(k);
+      });
+      sg.appendChild(sL); sg.appendChild(sR); sh.appendChild(sg);
+    }
     scrim.appendChild(sh); sheet.appendChild(scrim);
     fitAll();
     sh.tabIndex = -1; sh.focus({ preventScroll: true });
@@ -1341,7 +1983,14 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     st.tab = "cards"; st.setId = to; st.shown = PAGE; qi.value = ""; st.q = ""; st.ownOnly = false;
     window.scrollTo(0, 0); render();
   }
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && st.open != null) closeSheet(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && st.open != null) closeSheet();
+    // desktop: frecce della tastiera per la carta precedente/successiva
+    if (DESK && st.open != null && !SHSTACK.length && (e.key === "ArrowLeft" || e.key === "ArrowRight") && !/^(INPUT|TEXTAREA|SELECT)$/.test((e.target && e.target.tagName) || "")) {
+      var i = NAVLIST.indexOf(st.open), n = e.key === "ArrowRight" ? NAVLIST[i + 1] : NAVLIST[i - 1];
+      if (i >= 0 && n) { e.preventDefault(); st.open = n; drawSheet(); var n2 = sheet.querySelector(".sheet"); if (n2) n2.scrollTop = 0; }
+    }
+  });
 
   function render() {
     recomputeStatsIfNeeded();
@@ -1349,8 +1998,10 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     var isInfo = st.tab === "info", isHome = st.tab === "home" || isInfo || isDeckList, isSets = st.tab === "sets", isSoon = isSets && st.type === "SOON";
     var isUp = st.tab === "cards" && /^up-/.test(st.setId || "");
     ["home", "sets", "cards"].forEach(function (t) { document.getElementById("tab-" + t).setAttribute("aria-selected", st.tab === t ? "true" : "false"); });
-    document.getElementById("filters").hidden = isSets || isHome || isUp;
-    document.getElementById("qmodes").hidden = isSets || isHome || isUp;
+    // su desktop Ricerca e Collezione hanno i filtri nella colonna a sinistra
+    var sideF = DESK && st.tab === "cards" && !st.setId;
+    document.getElementById("filters").hidden = isSets || isHome || isUp || sideF;
+    document.getElementById("qmodes").hidden = isSets || isHome || isUp || sideF;
     document.getElementById("qm-name").setAttribute("aria-pressed", String(st.qm === "name"));
     document.getElementById("qm-text").setAttribute("aria-pressed", String(st.qm === "text"));
     chips.hidden = !isSets;
@@ -1366,6 +2017,8 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     document.getElementById("bar").style.width = (uniq / CARDS.length * 100) + "%";
     out.innerHTML = ""; NAVLIST = [];
     document.getElementById("hint").hidden = isHome || isUp;
+    barEl.classList.toggle("empty", DESK && qi.hidden && chips.hidden && document.getElementById("filters").hidden && document.getElementById("qmodes").hidden);
+    if (DESK) { menuEl.setAttribute("aria-hidden", "false"); drawMenu(); }
     trackNav();
     if (isDeck) { document.getElementById("hint").hidden = true; if (st.deckId) renderDeck(); else renderDeckList(); }
     else if (isInfo) renderInfo(); else if (isHome) renderHome(); else if (isSoon) renderSoon(); else if (isSets) renderSets(); else if (isUp) renderUp(st.setId.slice(3)); else renderCards();
@@ -1629,7 +2282,133 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     box.appendChild(ta); box.appendChild(go2);
     return box;
   }
+  // ---- Deckbuilding su desktop
+  function deckCover(d) {
+    var best = null, bs = -1;
+    Object.keys(d.cards).forEach(function (k) { var c = entryByKey(k); if (!c || !/^Digimon/.test(c.ct)) return; var sc = lvNum(c) * 10 + d.cards[k]; if (sc > bs) { bs = sc; best = c; } });
+    return best;
+  }
+  function deckColors(d) {
+    var cnt = {};
+    Object.keys(d.cards).forEach(function (k) { var c = entryByKey(k); if (!c) return; c.colors.forEach(function (x) { cnt[x] = (cnt[x] || 0) + d.cards[k]; }); });
+    return Object.keys(cnt).sort(function (a, b) { return cnt[b] - cnt[a]; }).map(function (k) { return [k, cnt[k]]; });
+  }
+  function renderDeckListDesk() {
+    pageTitle("Deckbuilding", "Dall'idea al mazzo: componi, controlla le regole e la lista ban, esporta.");
+    var acts = el("div", "dacts"), slot = el("div");
+    acts.appendChild(btn("Nuovo mazzo", "pri", function () { var d = newDeck("Nuovo mazzo " + (decks.length + 1)); openDeck(d.id); }, ICO_PLUS));
+    acts.appendChild(btn("Importa da testo", "", function () { slot.innerHTML = ""; slot.appendChild(importPanel(function (cards) { var d = newDeck("Mazzo importato", cards); openDeck(d.id); }, "Crea mazzo")); slot.querySelector("textarea").focus(); }));
+    out.appendChild(acts); out.appendChild(slot);
+    var g = el("div", "dkgrid");
+    decks.slice().sort(function (a, b) { return b.upd - a.upd; }).forEach(function (d) {
+      var s = deckStats(d), ok = !s.problems.length, inc = !ok && s.problems.length === 1 && s.main < 50;
+      var t = el("button", "dktile"); t.type = "button";
+      var cov = el("div", "cov"), cc = deckCover(d); if (cc) cov.appendChild(picBox("pic", "f", cc));
+      var cl = el("div", "ccols"); deckColors(d).slice(0, 4).forEach(function (x) { var i = el("i"); i.style.background = colorVar(x[0]); i.title = x[0]; cl.appendChild(i); }); cov.appendChild(cl);
+      t.appendChild(cov);
+      var kb = el("div", "kb"); kb.appendChild(el("b", "fit", d.name));
+      var bd = el("div"); bd.appendChild(el("span", "dbadge " + (ok ? "okb" : inc ? "lim" : "ban"), ok ? "Valido" : inc ? "Incompleto" : "Non valido")); kb.appendChild(bd);
+      kb.appendChild(el("div", "sub", "Principale " + s.main + "/50 · Digi-Egg " + s.egg + "/5"));
+      kb.appendChild(pbar(Math.min(s.main, 50), 50));
+      t.appendChild(kb); t.onclick = function () { openDeck(d.id); };
+      g.appendChild(t);
+    });
+    var nt = el("button", "dktile new"); nt.type = "button"; nt.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">' + ICO_PLUS + "</svg>";
+    nt.appendChild(el("b", "", decks.length ? "Nuovo mazzo" : "Il tuo primo mazzo")); nt.appendChild(el("span", "sub", "Parti da una carta o da un'idea"));
+    nt.onclick = function () { var d = newDeck("Nuovo mazzo " + (decks.length + 1)); openDeck(d.id); };
+    g.appendChild(nt); out.appendChild(g);
+    out.appendChild(banNote());
+  }
+  function deckPanels(d, s) {
+    var col = el("aside", "dkr"); col.setAttribute("aria-label", "Il mazzo");
+    var panel = el("div", "dstat");
+    [["Mazzo principale", s.main, 50, s.main === 50], ["Mazzo Digi-Egg", s.egg, 5, s.egg <= 5]].forEach(function (x) {
+      var m = el("div", "dmeter"); m.appendChild(el("span", "", x[0]));
+      m.appendChild(el("b", x[3] ? "okt" : "", x[1] + " / " + x[2]));
+      var bar = pbar(x[1], x[2]); if (x[1] > x[2]) bar.firstChild.style.background = "var(--c-red)"; m.appendChild(bar);
+      panel.appendChild(m);
+    });
+    var pr = el("div", "dprob " + (s.problems.length ? "bad" : "good"));
+    if (!s.problems.length) pr.textContent = "✓ Mazzo valido secondo le regole e la lista ban in vigore dal " + fmtDate(BAN.effective) + ".";
+    else { var ul0 = el("ul"); s.problems.forEach(function (t) { ul0.appendChild(el("li", "", t)); }); pr.appendChild(ul0); }
+    panel.appendChild(pr); col.appendChild(panel);
+    // curva: copie per livello (Digimon) più Tamer e Option
+    var bins = [["Lv.2", 0], ["Lv.3", 0], ["Lv.4", 0], ["Lv.5", 0], ["Lv.6", 0], ["Lv.7", 0], ["Tamer", 0], ["Option", 0]];
+    Object.keys(d.cards).forEach(function (k) {
+      var c = entryByKey(k); if (!c || isEgg(c)) return; var n = d.cards[k];
+      if (/^Digimon/.test(c.ct)) { var lv = lvNum(c); bins.forEach(function (b) { if (b[0] === "Lv." + lv) b[1] += n; }); }
+      else if (c.ct === "Tamer") bins[6][1] += n; else if (/^Option/.test(c.ct)) bins[7][1] += n;
+    });
+    if (!bins[0][1]) bins.shift();
+    var mx = Math.max.apply(null, bins.map(function (b) { return b[1]; }).concat([1]));
+    var cp = el("div", "panel"); cp.appendChild(el("h4", "", "Curva del mazzo"));
+    var cv = el("div", "curve"); cv.setAttribute("role", "img"); cv.setAttribute("aria-label", "Copie per livello: " + bins.map(function (b) { return b[0] + " " + b[1]; }).join(", "));
+    bins.forEach(function (b) { var c2 = el("div"); c2.appendChild(el("span", "", String(b[1]))); var i = el("i", /^Lv/.test(b[0]) ? "" : "alt2"); i.style.height = Math.round(b[1] / mx * 70) + "px"; c2.appendChild(i); c2.appendChild(el("span", "", b[0] === "Tamer" ? "Tam." : b[0] === "Option" ? "Opt." : b[0])); cv.appendChild(c2); });
+    cp.appendChild(cv); col.appendChild(cp);
+    var cols = deckColors(d);
+    if (cols.length) {
+      var kp = el("div", "panel"); kp.appendChild(el("h4", "", "Colori"));
+      var cb = el("div", "cbar"); cb.setAttribute("role", "img"); cb.setAttribute("aria-label", cols.map(function (x) { return x[0] + " " + x[1]; }).join(", "));
+      var lg = el("div", "clg");
+      cols.forEach(function (x) { var sg = el("i"); sg.style.flex = String(x[1]); sg.style.background = colorVar(x[0]); cb.appendChild(sg); var l = el("span", "", x[0] + " " + x[1]); l.style.setProperty("--dot", colorVar(x[0])); lg.appendChild(l); });
+      kp.appendChild(cb); kp.appendChild(lg); col.appendChild(kp);
+    }
+    var lp = el("div", "panel dlist"); lp.appendChild(el("h4", "", "Carte nel mazzo"));
+    var any = false;
+    deckGroups(d).forEach(function (g) {
+      if (!g[1].length) return; any = true;
+      var n = 0; g[1].forEach(function (c) { n += d.cards[c.k]; });
+      var gh = el("div", "dlg"); gh.appendChild(el("span", "", g[0])); gh.appendChild(el("span", "", n + (n === 1 ? " carta" : " carte"))); lp.appendChild(gh);
+      g[1].forEach(function (c) {
+        var r = el("div", "drow"); r.tabIndex = 0; r.setAttribute("role", "button");
+        r.appendChild(picBox("thumb", "t", c));
+        var nm = el("div", "dnm"); nm.appendChild(document.createTextNode(c.name)); nm.appendChild(el("small", "", c.code + (c.suf ? " · " + (verLabel(c.ver) || "Alternative Art") : ""))); r.appendChild(nm);
+        var rc = el("div", "dright"); rc.appendChild(deckQty(d, c, function () { render(); })); var bb = banBadge(c, d); if (bb) rc.appendChild(bb); r.appendChild(rc);
+        r.onclick = function () { st.open = c; drawSheet(); };
+        r.onkeydown = function (e) { if (e.target === r && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); st.open = c; drawSheet(); } };
+        lp.appendChild(r);
+      });
+    });
+    if (!any) lp.appendChild(el("p", "sub", "Il mazzo è vuoto: cerca le carte a sinistra e aggiungile con +."));
+    col.appendChild(lp);
+    return col;
+  }
+  function renderDeckDesk(d) {
+    var b = el("button", "back", "← I miei mazzi"); b.type = "button"; b.onclick = function () { st.deckId = null; qi.value = ""; st.q = ""; window.scrollTo(0, 0); render(); };
+    out.appendChild(b);
+    var hd = el("div", "dkhead");
+    var ni = el("input", "dname"); ni.value = d.name; ni.setAttribute("aria-label", "Nome del mazzo"); ni.maxLength = 60;
+    ni.onchange = function () { d.name = ni.value.trim() || d.name; ni.value = d.name; d.upd = Date.now(); saveDecks(); };
+    hd.appendChild(ni);
+    var acts = el("div", "dacts"), slot = el("div");
+    acts.appendChild(btn("Esporta lista", "", function () {
+      var t = deckText(d);
+      var done = function () { toast("Lista copiata negli appunti."); };
+      var fallback = function () { slot.innerHTML = ""; var ta = el("textarea", "dta"); ta.rows = 10; ta.value = t; ta.readOnly = true; slot.appendChild(ta); ta.focus(); ta.select(); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, fallback); else fallback();
+    }));
+    acts.appendChild(btn("Importa", "", function () { slot.innerHTML = ""; slot.appendChild(importPanel(function (cards) { d.cards = cards; d.upd = Date.now(); saveDecks(); render(); }, "Sostituisci il contenuto")); }));
+    acts.appendChild(btn("Svuota", "", function () { if (confirm("Togliere tutte le carte da \"" + d.name + "\"?")) { d.cards = {}; d.upd = Date.now(); saveDecks(); render(); } }));
+    var del = btn("Elimina mazzo", "", function () { if (confirm("Eliminare il mazzo \"" + d.name + "\"?")) { decks = decks.filter(function (x) { return x !== d; }); saveDecks(); st.deckId = null; render(); } }); del.style.color = "var(--c-red)";
+    acts.appendChild(del); hd.appendChild(acts); out.appendChild(hd); out.appendChild(slot);
+    var lay = el("div", "dklay"), left = el("section"); left.setAttribute("aria-label", "Aggiungi carte");
+    lay.appendChild(left); lay.appendChild(deckPanels(d, deckStats(d))); out.appendChild(lay);
+    var q = normQ(st.q), filt = q || st.color || st.ct || st.lv;
+    var gt2 = el("div", "group-title withv"); gt2.appendChild(el("span", "", "Aggiungi carte")); gt2.appendChild(viewToggle()); left.appendChild(gt2);
+    if (!filt) {
+      var e = el("div", "panel cempty"); e.appendChild(el("div", "eyebrow", "Cerca una carta"));
+      e.appendChild(el("p", "", "Scrivi un nome, un codice o una parola dell'effetto nella barra in alto, oppure scegli colore, tipo e livello. Il + aggiunge la carta al mazzo."));
+      left.appendChild(e); left.appendChild(banNote()); return;
+    }
+    var list = CARDS.filter(function (c) { return deckable(c) && cardMatches(c, q); });
+    if (q) list = list.map(function (c, j) { return { c: c, j: j, r: relevance(c, q) }; }).sort(function (a, b2) { return (a.r - b2.r) || (a.j - b2.j); }).map(function (o) { return o.c; });
+    gt2.firstChild.textContent = "Aggiungi carte · " + list.length + (list.length === 1 ? " trovata" : " trovate");
+    if (!list.length) left.appendChild(el("p", "empty", "Nessuna carta corrisponde alla ricerca."));
+    var ul2 = el("div", st.view === "grid" ? "grid" : "list"); list.slice(0, st.shown).forEach(function (c) { ul2.appendChild(deckRow(d, c)); }); left.appendChild(ul2);
+    if (list.length > st.shown) { var mo = el("button", "more", "Mostra altre (" + (list.length - st.shown) + ")"); mo.type = "button"; mo.onclick = function () { st.shown += PAGE; render(); }; left.appendChild(mo); }
+  }
   function renderDeckList() {
+    if (DESK) { renderDeckListDesk(); return; }
     pageTitle("Deckbuilding");
     var h = el("div", "group-title"); h.appendChild(el("span", "", "I miei mazzi")); h.style.marginTop = "4px"; out.appendChild(h);
     var acts = el("div", "dacts");
@@ -1689,6 +2468,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   function renderDeck() {
     var d = deckById(st.deckId);
     if (!d) { st.deckId = null; renderDeckList(); return; }
+    if (DESK) { renderDeckDesk(d); return; }
     var b = el("button", "back", "← I miei mazzi"); b.type = "button"; b.onclick = function () { st.deckId = null; qi.value = ""; st.q = ""; window.scrollTo(0, 0); render(); };
     out.appendChild(b);
     var ni = el("input", "dname"); ni.value = d.name; ni.setAttribute("aria-label", "Nome del mazzo"); ni.maxLength = 60;
