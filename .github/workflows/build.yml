@@ -57,6 +57,18 @@ jobs:
       - run: npm install
       - run: npx cap add android
       - run: npx capacitor-assets generate --android
+      - name: Icona Digital Gate (adattiva, rotonda, a tema) e fondo blu notte dello splash nativo
+        run: |
+          cp -r android-res/. android/app/src/main/res/
+          python3 - <<'PY'
+          import pathlib, re
+          p = pathlib.Path("android/app/src/main/res/values/styles.xml"); t = p.read_text()
+          if "windowSplashScreenBackground" not in t and "Theme.SplashScreen" in t:
+              t = re.sub(r'(<style name="AppTheme.NoActionBarLaunch"[^>]*>)', r'\1\n        <item name="windowSplashScreenBackground">#0b1120</item>', t)
+              p.write_text(t)
+          print(t)
+          PY
+          ls android/app/src/main/res/mipmap-anydpi-v26 android/app/src/main/res/mipmap-anydpi-v33 android/app/src/main/res/drawable
       - run: npx cap sync android
       - name: Firma fissa e numero di versione (aggiornamenti senza disinstallare)
         run: |

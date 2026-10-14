@@ -347,35 +347,46 @@ body.apk .hgrid.up::-webkit-scrollbar { display: none; }
 body.apk .hgrid.up .hitem { flex: 0 0 62%; scroll-snap-align: start; }
 body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 /* ---- Animazione di avvio: "Digital Gate" (ispirata al varco digitale e al codice digitale di Digimon) */
-#splash { position: fixed; inset: 0; z-index: 100; background: #04060d; display: grid; place-items: center; overflow: hidden; transition: opacity .45s ease; }
-#splash.out { opacity: 0; pointer-events: none; }
-#splash canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-#splash .gate { position: relative; width: min(62vw, 300px); aspect-ratio: 1; }
-#splash svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-#splash .hx { fill: none; stroke-linejoin: round; stroke-dasharray: 1000; stroke-dashoffset: 1000; }
-#splash .hx1 { stroke: #ff7a3d; stroke-width: 3; animation: sp-draw .9s .15s ease-out forwards, sp-spin 6s linear infinite; transform-origin: 50% 50%; filter: drop-shadow(0 0 6px #ff7a3d); }
-#splash .hx2 { stroke: #39c6ff; stroke-width: 2; animation: sp-draw .9s .35s ease-out forwards, sp-spin 8s linear infinite reverse; transform-origin: 50% 50%; filter: drop-shadow(0 0 6px #39c6ff); }
-#splash .ring { fill: none; stroke: #ffffff33; stroke-width: 1; stroke-dasharray: 4 7; transform-origin: 50% 50%; animation: sp-spin 10s linear infinite; }
-#splash .core { fill: url(#spCore); transform-origin: 50% 50%; transform: scale(0); animation: sp-core .7s .7s cubic-bezier(.2,1.4,.4,1) forwards, sp-pulse 1.2s 1.4s ease-in-out infinite; }
-#splash .beam { stroke: #ffd2b8; stroke-width: 2; stroke-linecap: round; opacity: 0; stroke-dasharray: 60; stroke-dashoffset: 60; animation: sp-beam .5s ease-out forwards; }
-#splash .crest { fill: #fff; opacity: 0; transform-origin: 50% 50%; animation: sp-crest .5s 1.05s ease-out forwards; }
-#splash .title { position: absolute; left: 0; right: 0; bottom: 14%; text-align: center; color: #fff; font-family: var(--font-display); }
-#splash .title b { display: block; font-size: clamp(1.6rem, 7vw, 2.4rem); font-style: italic; letter-spacing: .06em; }
-#splash .title b span { display: inline-block; opacity: 0; transform: translateY(8px) skewX(-12deg); animation: sp-letter .28s ease-out forwards; text-shadow: 0 0 12px #ff7a3d99; }
-#splash .title small { display: block; margin-top: 6px; font-size: .72rem; letter-spacing: .5em; color: #39c6ff; opacity: 0; animation: sp-fade .4s 1.55s forwards; }
-#splash .flash { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, #fff 0, #ffe1cf 25%, transparent 60%); opacity: 0; transform: scale(.2); pointer-events: none; }
-#splash.open .flash { animation: sp-flash .55s ease-in forwards; }
-#splash.open .gate { animation: sp-zoom .55s ease-in forwards; }
-@keyframes sp-draw { to { stroke-dashoffset: 0; } }
-@keyframes sp-spin { to { transform: rotate(360deg); } }
-@keyframes sp-core { to { transform: scale(1); } }
-@keyframes sp-pulse { 50% { transform: scale(1.08); } }
-@keyframes sp-beam { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: .0; stroke-dashoffset: -60; } }
-@keyframes sp-crest { from { opacity: 0; transform: scale(.6) rotate(-20deg); } to { opacity: .95; transform: none; } }
-@keyframes sp-letter { to { opacity: 1; transform: none; } }
-@keyframes sp-fade { to { opacity: 1; } }
-@keyframes sp-flash { 0% { opacity: 0; transform: scale(.2); } 60% { opacity: 1; } 100% { opacity: 1; transform: scale(3); } }
-@keyframes sp-zoom { to { transform: scale(2.4); opacity: 0; } }
+/* intro Digital Gate (Digivice, 1,9 s): Salta animazione, Esc, movimento ridotto */
+.dg-boot{--dg-boot-navy:#0b1120;--dg-boot-orange:#ff7a3d;--dg-boot-cyan:#63d5ee;position:fixed;inset:0;z-index:1000;display:grid;place-items:center;overflow:hidden;background:var(--dg-boot-navy);color:#f1f4f9;isolation:isolate;font-family:var(--font-body,'IBM Plex Sans',system-ui,sans-serif);opacity:0;pointer-events:none;visibility:hidden;}
+.dg-boot.is-pending{visibility:visible;opacity:1;pointer-events:auto;}
+.dg-boot.is-running{visibility:visible;opacity:1;pointer-events:auto;animation:dg-boot-exit 260ms 1640ms ease-out forwards;}
+.dg-boot__ambient{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,#17314b 0%,#0b1120 54%);opacity:.88;}
+.dg-boot__grid{position:absolute;inset:0;background-image:linear-gradient(#63d5ee0a 1px,transparent 1px),linear-gradient(90deg,#63d5ee0a 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at 50% 46%,#000 4%,transparent 65%);pointer-events:none;}
+.dg-boot__content{position:relative;display:flex;align-items:center;flex-direction:column;width:100%;padding:24px;transform:translateY(-10px);}
+.dg-boot__portal{position:relative;display:grid;place-items:center;width:240px;height:240px;margin-bottom:25px;}
+.dg-boot__ring{position:absolute;inset:0;border:1px solid #63d5ee36;border-radius:50%;opacity:0;}
+.dg-boot__ring::before{content:'';position:absolute;inset:-1px;border:5px solid transparent;border-top-color:var(--dg-boot-cyan);border-right-color:var(--dg-boot-cyan);border-radius:50%;transform:rotate(-45deg);}
+.dg-boot__ring--outer{inset:-19px;border-color:#ff7a3d35;}
+.dg-boot__ring--outer::before{border-top-color:var(--dg-boot-orange);border-right-color:transparent;border-left-color:var(--dg-boot-orange);}
+.dg-boot__ring--inner{inset:15px;border-color:#63d5ee1f;}
+.dg-boot__ring--inner::before{border-right-color:transparent;}
+.dg-boot__mark{position:relative;z-index:2;width:204px;height:204px;display:block;opacity:0;transform:scale(.9);}
+.dg-boot__screenlight{position:absolute;z-index:3;width:57px;height:57px;left:calc(50% - 28px);top:calc(50% - 29px);border-radius:50%;background:radial-gradient(circle,#63d5ee26 0%,#63d5ee12 40%,transparent 72%);opacity:0;pointer-events:none;}
+.dg-boot__pixel{position:absolute;width:4px;height:4px;background:var(--dg-boot-cyan);opacity:0;--dg-start-x:0px;--dg-start-y:0px;}
+.dg-boot__pixel:nth-of-type(3n){background:var(--dg-boot-orange);}
+.dg-boot__wordmark{font:700 italic clamp(27px,7vw,40px)/1.1 var(--font-display,'Chakra Petch',system-ui,sans-serif);letter-spacing:.02em;text-align:center;margin:0;opacity:0;transform:translateY(8px);}
+.dg-boot__subtitle{font:600 11px/1.5 var(--font-display,'Chakra Petch',system-ui,sans-serif);letter-spacing:.3em;color:var(--dg-boot-cyan);text-align:center;margin:10px 0 0;opacity:0;}
+.dg-boot__skip{position:absolute;z-index:6;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(15px + env(safe-area-inset-bottom,0px));min-height:44px;padding:8px 14px;border:1px solid #465571;border-radius:10px;background:#131b2e;color:#b7c2d5;font:500 13px 'IBM Plex Sans',system-ui,sans-serif;cursor:pointer;}
+.dg-boot__skip:focus-visible{outline:2px solid var(--dg-boot-cyan);outline-offset:3px;}
+.dg-boot__sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;}
+.dg-boot.is-running .dg-boot__ring{animation:dg-boot-ring 1650ms 0ms cubic-bezier(.2,.8,.2,1) both;}
+.dg-boot.is-running .dg-boot__ring--outer{animation-duration:1750ms;animation-delay:40ms;}
+.dg-boot.is-running .dg-boot__ring--inner{animation-duration:1580ms;animation-delay:110ms;}
+.dg-boot.is-running .dg-boot__mark{animation:dg-boot-mark 1450ms 160ms ease-out both;}
+.dg-boot.is-running .dg-boot__screenlight{animation:dg-boot-light 1250ms 380ms ease-in-out both;}
+.dg-boot.is-running .dg-boot__wordmark{animation:dg-boot-word 380ms 760ms cubic-bezier(.2,.8,.2,1) both;}
+.dg-boot.is-running .dg-boot__subtitle{animation:dg-boot-subtitle 300ms 940ms ease-out both;}
+.dg-boot.is-running .dg-boot__pixel{animation:dg-boot-pixel 760ms var(--dg-delay,0ms) ease-out both;}
+@keyframes dg-boot-ring{0%{opacity:0;transform:rotate(-38deg) scale(.76)}20%{opacity:.8}70%{opacity:.72;transform:rotate(26deg) scale(1)}100%{opacity:0;transform:rotate(43deg) scale(1.32)}}
+@keyframes dg-boot-mark{0%{opacity:0;transform:scale(.88)}22%{opacity:1;transform:scale(1)}84%{opacity:1;transform:scale(1)}100%{opacity:1;transform:scale(1.04)}}
+@keyframes dg-boot-light{0%{opacity:0;transform:scale(.7)}35%{opacity:1;transform:scale(1.3)}70%{opacity:.8;transform:scale(1.1)}100%{opacity:0;transform:scale(2.3)}}
+@keyframes dg-boot-word{to{opacity:1;transform:translateY(0)}}
+@keyframes dg-boot-subtitle{to{opacity:1}}
+@keyframes dg-boot-pixel{0%{opacity:0;transform:translate(var(--dg-start-x),var(--dg-start-y)) scale(1)}16%{opacity:.75}100%{opacity:0;transform:translate(0,0) scale(.2)}}
+@keyframes dg-boot-exit{to{opacity:0;visibility:hidden;pointer-events:none}}
+@media(max-width:380px){.dg-boot__portal{width:214px;height:214px;margin-bottom:22px}.dg-boot__mark{width:184px;height:184px}.dg-boot__ring--outer{inset:-14px}}
+@media(prefers-reduced-motion:reduce){.dg-boot.is-running{animation:none}.dg-boot__ring,.dg-boot__pixel,.dg-boot__screenlight{display:none!important}.dg-boot.is-running .dg-boot__mark,.dg-boot.is-running .dg-boot__wordmark,.dg-boot.is-running .dg-boot__subtitle{animation:none;opacity:1;transform:none}}
 /* ==== Desktop (PC con mouse, da 1000 px): barra laterale fissa, pagine a tutta larghezza. Telefono e APK non cambiano. ==== */
 /* colori della barra laterale: chiara nel tema chiaro, scura nel tema scuro */
 :root { --cyan: #0c7084; --cyan-soft: #e3f3f6; --side: #ffffff; --side-2: #eef2f8; --side-line: #d3dbe8; --side-ink: #0f1a2e; --side-ink2: #6a7891; --side-txt: #2b3a55; --side-ico: #6a7891; --side-hi: #0f1a2e; --side-acc: #e0531a; --side-nb: #e3f3f6; --side-nbt: #0c7084; --side-bar: #e2e8f1; --side-foot: #7a879e; --sidew: 248px; --shadow: 0 8px 24px rgba(15,26,46,.10); }
@@ -887,62 +898,56 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
 .idet[open] > summary::after { transform: rotate(-135deg); margin-top: 4px; }
 .idet p { margin: 0; padding: 0 16px 16px; color: var(--ink-2); line-height: 1.6; font-size: .92rem; }
 @media (prefers-reduced-motion: reduce) { .ptile, .tile { transition: none; } .ptile:hover { transform: none; } }
-@media (prefers-reduced-motion: reduce) { #splash * { animation-duration: .01s !important; animation-delay: 0s !important; } }
 @media (prefers-reduced-motion: reduce) { .progress i { transition: none; } }
 </style>
 
-<div id="splash" aria-hidden="true">
-  <canvas id="spCode"></canvas>
-  <div class="gate">
-    <svg viewBox="0 0 200 200">
-      <defs><radialGradient id="spCore"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#ffd9c2"/><stop offset=".7" stop-color="#ff7a3d" stop-opacity=".55"/><stop offset="1" stop-color="#ff7a3d" stop-opacity="0"/></radialGradient></defs>
-      <circle class="ring" cx="100" cy="100" r="96"/>
-      <polygon class="hx hx1" points="100,14 174.5,57 174.5,143 100,186 25.5,143 25.5,57"/>
-      <polygon class="hx hx2" points="100,34 157.2,67 157.2,133 100,166 42.8,133 42.8,67"/>
-      <g id="spBeams"></g>
-      <circle class="core" cx="100" cy="100" r="44"/>
-      <path class="crest" d="M100 74l7 15 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2z"/>
-    </svg>
+<section id="dg-boot" class="dg-boot" aria-label="Animazione di avvio di Digital Gate">
+  <div class="dg-boot__ambient" aria-hidden="true"></div>
+  <div class="dg-boot__grid" aria-hidden="true"></div>
+  <div class="dg-boot__content">
+    <div class="dg-boot__portal" aria-hidden="true">
+      <div class="dg-boot__ring dg-boot__ring--outer"></div>
+      <div class="dg-boot__ring"></div>
+      <div class="dg-boot__ring dg-boot__ring--inner"></div>
+      <svg class="dg-boot__mark" viewBox="0 0 320 320" fill="none" width="204" height="204" aria-hidden="true" focusable="false"><path d="M114 38H206C214 38 219 42 225 48L272 95C278 101 282 108 282 116V204C282 212 278 219 272 225L225 272C219 278 212 282 204 282H116C108 282 101 278 95 272L48 225C42 219 38 212 38 204V116C38 108 42 101 48 95L95 48C101 42 108 38 114 38Z" fill="#ff7a3d" transform="translate(160 160) scale(.96) translate(-160 -160)"/>
+  <path d="M119 57H201L263 119V201L201 263H119L57 201V119L119 57Z" fill="#17253b"/>
+  <path d="M108 239L68 199V121L121 68H199L252 121V199L212 239" stroke="#63d5ee" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="88" y="87" width="144" height="145" rx="23" fill="#08111f" stroke="#f1f4f9" stroke-width="9"/>
+  <path d="M111 111H209" stroke="#28425b" stroke-width="5" stroke-linecap="round"/>
+  <path d="M128 194V128H159C181 128 196 142 196 161C196 181 181 194 160 194H153" stroke="#63d5ee" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M160 152C157.8 152 154.5 158.8 154.5 163C154.5 167.4 156.7 170 160 170C163.3 170 165.5 167.4 165.5 163C165.5 158.8 162.2 152 160 152Z" fill="#f1f4f9"/>
+  <rect x="118" y="248" width="20" height="8" rx="4" fill="#ff7a3d"/>
+  <rect x="150" y="248" width="20" height="8" rx="4" fill="#63d5ee"/>
+  <rect x="182" y="248" width="20" height="8" rx="4" fill="#ff7a3d"/></svg>
+      <div class="dg-boot__screenlight"></div>
+      <span class="dg-boot__pixel" style="--dg-start-x:-100px;--dg-start-y:-114px;--dg-delay:0ms"></span>
+      <span class="dg-boot__pixel" style="--dg-start-x:112px;--dg-start-y:-82px;--dg-delay:60ms"></span>
+      <span class="dg-boot__pixel" style="--dg-start-x:-137px;--dg-start-y:24px;--dg-delay:110ms"></span>
+      <span class="dg-boot__pixel" style="--dg-start-x:118px;--dg-start-y:62px;--dg-delay:30ms"></span>
+      <span class="dg-boot__pixel" style="--dg-start-x:21px;--dg-start-y:128px;--dg-delay:130ms"></span>
+      <span class="dg-boot__pixel" style="--dg-start-x:-65px;--dg-start-y:113px;--dg-delay:90ms"></span>
+      <span class="dg-boot__pixel" style="--dg-start-x:62px;--dg-start-y:-128px;--dg-delay:160ms"></span>
+      <span class="dg-boot__pixel" style="--dg-start-x:144px;--dg-start-y:-11px;--dg-delay:190ms"></span>
+    </div>
+    <div class="dg-boot__wordmark">DIGITAL GATE</div>
+    <p class="dg-boot__subtitle">DIGIMON TCG</p>
   </div>
-  <div class="title"><b id="spTitle"></b><small>DIGIMON TCG</small></div>
-  <div class="flash"></div>
-</div>
+  <button type="button" class="dg-boot__skip">Salta animazione</button>
+  <span class="dg-boot__sr" role="status">Avvio di Digital Gate</span>
+</section>
 <script>
 (function () {
-  var sp = document.getElementById("splash"), apk = !!window.Capacitor || /^capacitor:/.test(location.protocol);
-  var seen = false; try { seen = !apk && sessionStorage.getItem("dg-splash") === "1"; sessionStorage.setItem("dg-splash", "1"); } catch (e) {}
-  if (seen || /[?&]nosplash/.test(location.search)) { sp.remove(); return; }
-  var t = document.getElementById("spTitle"), word = "DIGITAL GATE";
-  for (var i = 0; i < word.length; i++) { var s = document.createElement("span"); s.textContent = word[i] === " " ? "\u00a0" : word[i]; s.style.animationDelay = (0.95 + i * 0.045) + "s"; t.appendChild(s); }
-  var g = document.getElementById("spBeams"), NS = "http://www.w3.org/2000/svg";
-  for (var k = 0; k < 12; k++) { var a = k / 12 * Math.PI * 2, l = document.createElementNS(NS, "line");
-    l.setAttribute("x1", 100 + Math.cos(a) * 50); l.setAttribute("y1", 100 + Math.sin(a) * 50); l.setAttribute("x2", 100 + Math.cos(a) * 110); l.setAttribute("y2", 100 + Math.sin(a) * 110);
-    l.setAttribute("class", "beam"); l.style.animationDelay = (0.75 + (k % 6) * 0.06) + "s"; g.appendChild(l); }
-  // pioggia di "codice digitale"
-  var c = document.getElementById("spCode"), x = c.getContext("2d"), dpr = Math.min(2, window.devicePixelRatio || 1), W, H, cols, drops, fs = 14;
-  var glyphs = "0123456789ABCDEF<>/\\=+*#ΔΣΞΦΨΩ";
-  function size() { W = c.width = innerWidth * dpr; H = c.height = innerHeight * dpr; cols = Math.ceil(W / (fs * dpr)); drops = []; for (var i = 0; i < cols; i++) drops.push(Math.random() * -40); }
-  size(); var run = true, t0 = performance.now();
-  function frame(now) {
-    if (!run) return;
-    x.fillStyle = "rgba(4,6,13,.22)"; x.fillRect(0, 0, W, H); x.font = (fs * dpr) + "px monospace";
-    for (var i = 0; i < cols; i++) {
-      var ch = glyphs[(Math.random() * glyphs.length) | 0], y = drops[i] * fs * dpr;
-      x.fillStyle = i % 7 === 0 ? "rgba(57,198,255,.55)" : "rgba(255,122,61,.38)"; x.fillText(ch, i * fs * dpr, y);
-      if (y > H && Math.random() > .96) drops[i] = 0; drops[i] += .55 + (i % 3) * .2;
-    }
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-  var done = false;
-  function finish() { if (done) return; done = true; sp.classList.add("open"); setTimeout(function () { sp.classList.add("out"); }, 420); setTimeout(function () { run = false; sp.remove(); }, 900); }
-  setTimeout(finish, 2300); sp.addEventListener("click", finish);
+  var el = document.getElementById("dg-boot"), apk = !!window.Capacitor || /^capacitor:/.test(location.protocol), seen = false;
+  try { seen = !apk && sessionStorage.getItem("dg-splash") === "1"; } catch (e) {}
+  if (seen || /[?&]nosplash/.test(location.search)) return;
+  el.classList.add("is-pending");
+  setTimeout(function () { el.classList.remove("is-pending"); }, 4000); // sicurezza: se l'intro non parte, l'app resta usabile
 })();
 </script>
 <div class="bar">
   <div class="wrap">
     <div class="top"><h1 class="fit">Digital Gate - Digimon TCG</h1>
-      <button class="mbrand" id="mbrand" type="button" aria-label="Digital Gate, vai alla Home"><svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><rect x="1.5" y="1.5" width="31" height="31" rx="8" stroke="#e0531a" stroke-width="2"/><path d="M10 25V9h7a8 8 0 0 1 0 16h-3" stroke="#e0531a" stroke-width="2.4" stroke-linecap="round"/><circle cx="17" cy="17" r="2.6" fill="currentColor"/></svg><span><b>Digital Gate</b><small>Digimon TCG</small></span></button>
+      <button class="mbrand" id="mbrand" type="button" aria-label="Digital Gate - Digimon TCG, vai alla Home"><svg class="dgmark" viewBox="40 40 240 240" fill="none" aria-hidden="true" focusable="false"><path d="M114 38H206C214 38 219 42 225 48L272 95C278 101 282 108 282 116V204C282 212 278 219 272 225L225 272C219 278 212 282 204 282H116C108 282 101 278 95 272L48 225C42 219 38 212 38 204V116C38 108 42 101 48 95L95 48C101 42 108 38 114 38Z" fill="#ff7a3d" transform="translate(160 160) scale(.96) translate(-160 -160)"/><path d="M119 57H201L263 119V201L201 263H119L57 201V119L119 57Z" fill="#17253b"/><path d="M108 239L68 199V121L121 68H199L252 121V199L212 239" stroke="#63d5ee" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="88" y="87" width="144" height="145" rx="23" fill="#08111f" stroke="#f1f4f9" stroke-width="9"/><path d="M111 111H209" stroke="#28425b" stroke-width="5" stroke-linecap="round"/><path d="M128 194V128H159C181 128 196 142 196 161C196 181 181 194 160 194H153" stroke="#63d5ee" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M160 152C157.8 152 154.5 158.8 154.5 163C154.5 167.4 156.7 170 160 170C163.3 170 165.5 167.4 165.5 163C165.5 158.8 162.2 152 160 152Z" fill="#f1f4f9"/><rect x="118" y="248" width="20" height="8" rx="4" fill="#ff7a3d"/><rect x="150" y="248" width="20" height="8" rx="4" fill="#63d5ee"/><rect x="182" y="248" width="20" height="8" rx="4" fill="#ff7a3d"/></svg><span><b>Digital Gate</b><small>Digimon TCG</small></span></button>
       <button class="burger" id="menuBtn" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
       <button class="morebtn" id="moreBtn" type="button" aria-label="Altro: prossime uscite, informazioni e tema" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button></div>
     <div class="tabs" role="tablist" hidden>
@@ -972,8 +977,8 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
 <aside class="menu" id="menu" aria-label="Menu di navigazione" aria-hidden="true">
   <div class="mh"><span>Menu</span></div>
   <div class="brandrow">
-    <button class="brand" id="brand" type="button" aria-label="Digital Gate, vai alla Home" title="Home">
-      <svg viewBox="0 0 34 34" fill="none" aria-hidden="true"><rect x="1.5" y="1.5" width="31" height="31" rx="8" stroke="#ff7a3d" stroke-width="2"/><path d="M10 25V9h7a8 8 0 0 1 0 16h-3" stroke="#ff7a3d" stroke-width="2.4" stroke-linecap="round"/><circle cx="17" cy="17" r="2.6" fill="currentColor"/></svg>
+    <button class="brand" id="brand" type="button" aria-label="Digital Gate - Digimon TCG, vai alla Home" title="Home">
+      <svg class="dgmark" viewBox="40 40 240 240" fill="none" aria-hidden="true" focusable="false"><path d="M114 38H206C214 38 219 42 225 48L272 95C278 101 282 108 282 116V204C282 212 278 219 272 225L225 272C219 278 212 282 204 282H116C108 282 101 278 95 272L48 225C42 219 38 212 38 204V116C38 108 42 101 48 95L95 48C101 42 108 38 114 38Z" fill="#ff7a3d" transform="translate(160 160) scale(.96) translate(-160 -160)"/><path d="M119 57H201L263 119V201L201 263H119L57 201V119L119 57Z" fill="#17253b"/><path d="M108 239L68 199V121L121 68H199L252 121V199L212 239" stroke="#63d5ee" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="88" y="87" width="144" height="145" rx="23" fill="#08111f" stroke="#f1f4f9" stroke-width="9"/><path d="M111 111H209" stroke="#28425b" stroke-width="5" stroke-linecap="round"/><path d="M128 194V128H159C181 128 196 142 196 161C196 181 181 194 160 194H153" stroke="#63d5ee" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M160 152C157.8 152 154.5 158.8 154.5 163C154.5 167.4 156.7 170 160 170C163.3 170 165.5 167.4 165.5 163C165.5 158.8 162.2 152 160 152Z" fill="#f1f4f9"/><rect x="118" y="248" width="20" height="8" rx="4" fill="#ff7a3d"/><rect x="150" y="248" width="20" height="8" rx="4" fill="#63d5ee"/><rect x="182" y="248" width="20" height="8" rx="4" fill="#ff7a3d"/></svg>
       <span><b>Digital Gate</b><small>Digimon TCG</small></span>
     </button>
     <button class="colbtn" id="colBtn" type="button"></button>
@@ -3254,5 +3259,91 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
   var statsReady = false;
   function recomputeStatsIfNeeded() { if (!statsReady) { recomputeStats(); statsReady = true; } }
   render();
+})();
+</script>
+<script>
+/* Digital Gate: intro di 1.9 secondi, senza dipendenze e senza richieste di rete. */
+(() => {
+  'use strict';
+  const durations = { normal: 1900, reduced: 180 };
+  const sessionKey = 'dg-splash';
+  function mount(element, options = {}) {
+    if (!element) return null;
+    let timer = null, running = false, priorFocus = null;
+    const inertStates = new Map();
+    const skip = element.querySelector('.dg-boot__skip');
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    function release() {
+      for (const [node, wasInert] of inertStates) node.inert = wasInert;
+      inertStates.clear();
+    }
+    function finish() {
+      if (!running) return;
+      running = false;
+      clearTimeout(timer);
+      element.classList.remove('is-running');
+      element.setAttribute('aria-hidden', 'true');
+      skip.disabled = true;
+      release();
+      if (priorFocus?.isConnected && priorFocus !== document.body) priorFocus.focus({ preventScroll: true });
+      element.dispatchEvent(new CustomEvent('digitalgate:bootend', { bubbles: true }));
+    }
+    function play() {
+      clearTimeout(timer);
+      if (running) { element.classList.remove('is-running'); release(); }
+      priorFocus = document.activeElement;
+      element.setAttribute('aria-hidden', 'false');
+      skip.disabled = false;
+      if (options.inertTargets) for (const node of options.inertTargets) {
+        if (node && !node.contains(element)) { inertStates.set(node, node.inert); node.inert = true; }
+      }
+      element.classList.remove('is-running');
+      void element.offsetWidth;
+      running = true;
+      element.classList.add('is-running');
+      if (options.focusSkip !== false) skip.focus({ preventScroll: true });
+      timer = setTimeout(finish, reduced.matches ? durations.reduced : durations.normal);
+      return timer;
+    }
+    const onEscape = e => { if (running && e.key === 'Escape') { e.preventDefault(); finish(); } };
+    const onVisibility = () => { if (document.hidden) finish(); };
+    const onMotion = () => { if (running && reduced.matches) finish(); };
+    skip.addEventListener('click', finish);
+    document.addEventListener('keydown', onEscape);
+    document.addEventListener('visibilitychange', onVisibility);
+    reduced.addEventListener('change', onMotion);
+    element.setAttribute('aria-hidden', 'true');
+    skip.disabled = true;
+    return {
+      play, finish,
+      get running() { return running; },
+      destroy() {
+        finish();
+        skip.removeEventListener('click', finish);
+        document.removeEventListener('keydown', onEscape);
+        document.removeEventListener('visibilitychange', onVisibility);
+        reduced.removeEventListener('change', onMotion);
+      },
+      startOnce() {
+        let seen = false;
+        try { seen = sessionStorage.getItem(sessionKey) === '1'; sessionStorage.setItem(sessionKey, '1'); } catch (_) {}
+        const skipRequested = new URLSearchParams(location.search).has('nosplash');
+        if (!seen && !skipRequested) play();
+        return !seen && !skipRequested;
+      }
+    };
+  }
+  window.DigitalGateBoot = Object.freeze({ mount, durations });
+})();
+(function () {
+  // una sola intro: sul sito una volta per sessione (dg-splash), nell'APK a ogni avvio; ?nosplash la salta
+  var el = document.getElementById("dg-boot"); if (!el || !window.DigitalGateBoot) return;
+  var apk = !!window.Capacitor || /^capacitor:/.test(location.protocol);
+  var boot = DigitalGateBoot.mount(el, { inertTargets: [document.querySelector(".bar"), document.querySelector("main"), document.getElementById("menu"), document.getElementById("tabbar")].filter(Boolean) });
+  if (!boot) return;
+  el.addEventListener("digitalgate:bootend", function () { setTimeout(function () { if (!boot.running) el.hidden = true; }, 300); });
+  if (apk) { try { sessionStorage.setItem("dg-splash", "1"); } catch (e) {} if (!/[?&]nosplash/.test(location.search)) boot.play(); else el.hidden = true; }
+  else if (!boot.startOnce()) el.hidden = true;
+  el.classList.remove("is-pending");
 })();
 </script>
