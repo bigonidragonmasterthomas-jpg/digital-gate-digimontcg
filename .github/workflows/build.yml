@@ -72,12 +72,30 @@ jobs:
       - run: npx cap sync android
       - name: Firma fissa e numero di versione (aggiornamenti senza disinstallare)
         run: |
-          mkdir -p ~/.android && cp android-keys/debug.keystore ~/.android/debug.keystore
+          # la chiave del repository va indicata esplicitamente: copiata in ~/.android veniva ignorata
+          # e ogni build usciva con una firma diversa (l'aggiornamento sopra l'app installata falliva)
+          python3 - <<'PY'
+          import pathlib, re
+          p = pathlib.Path("android/app/build.gradle"); t = p.read_text()
+          ks = str(pathlib.Path("android-keys/debug.keystore").resolve())
+          cfg = ('    signingConfigs {\n        debug {\n            storeFile file("%s")\n            storePassword "android"\n'
+                 '            keyAlias "androiddebugkey"\n            keyPassword "android"\n        }\n    }\n' % ks)
+          t, n = re.subn(r"^android \{\n", "android {\n" + cfg, t, count=1, flags=re.M)
+          assert n == 1, "blocco android non trovato"
+          p.write_text(t)
+          PY
           sed -i -E "s/versionCode [0-9]+/versionCode ${{ github.run_number }}/; s/versionName \"[^\"]*\"/versionName \"1.${{ github.run_number }}\"/" android/app/build.gradle
           grep -E "versionCode|versionName" android/app/build.gradle
       - run: chmod +x gradlew && ./gradlew assembleDebug
         working-directory: android
       - run: cp android/app/build/outputs/apk/debug/app-debug.apk DigimonSetTracker.apk
+      - name: Controllo firma (deve essere sempre la stessa chiave, altrimenti l'aggiornamento non si installa)
+        run: |
+          BT=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -1)
+          GOT=$($BT/apksigner verify --print-certs DigimonSetTracker.apk | grep -m1 "certificate SHA-256 digest" | awk '{print $NF}')
+          WANT=$(keytool -list -v -keystore android-keys/debug.keystore -storepass android -alias androiddebugkey | grep -m1 "SHA256:" | awk '{print $2}' | tr -d ':' | tr 'A-F' 'a-f')
+          echo "firma APK: $GOT"; echo "chiave:     $WANT"
+          test -n "$GOT" && test "$GOT" = "$WANT"
       - name: Pubblica APK nella release "latest"
         env: { GH_TOKEN: "${{ github.token }}" }
         run: |

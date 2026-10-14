@@ -50,7 +50,7 @@ Esiste come **sito** (GitHub Pages) e come **APK Android** (Capacitor). Ogni mod
 ## Pubblicazione (GitHub Actions)
 
 - `.github/workflows/build.yml` parte a ogni push su `main`: build → immagini → banner → confezioni → errata → GitHub Pages → APK (Capacitor 6, Java 17, `assembleDebug`) → release `latest`.
-- APK firmato sempre con `android-keys/debug.keystore` e `versionCode` = numero di run: così gli aggiornamenti si installano sopra senza disinstallare. **Non cambiare la chiave.**
+- APK firmato sempre con `android-keys/debug.keystore` (SHA-256 `6279fcbf…6ff5`) e `versionCode` = numero di run: così gli aggiornamenti si installano sopra senza disinstallare. **Non cambiare la chiave.** La chiave è indicata esplicitamente in `signingConfigs.debug` di `android/app/build.gradle` dal workflow (copiarla in `~/.android` non bastava: fino alla build 76 ogni APK aveva una firma diversa) e uno step dopo la build controlla con `apksigner` che la firma sia quella giusta, altrimenti la build fallisce e non pubblica.
 - La release `latest` viene forzata a non-bozza; il nome contiene `build N` (usato dall'app per il controllo aggiornamenti).
 - Commit con autore `Claude <noreply@anthropic.com>`.
 
