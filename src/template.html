@@ -1030,7 +1030,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
   // Una "versione" = carta + arte uscita in quel prodotto. La versione base è la carta stessa (copie condivise).
   function mkEntry(c, suf, vv, mark, cls) {
     if (!suf) return c;
-    var e = Object.create(c); e.suf = suf; e.img = c.code + suf; e.k = c.k + "~" + suf; e.ver = VERS[vv] || ""; e.mark = mark || 0; e.cls = cls || ""; return e;
+    var e = Object.create(c); e.suf = suf; e.img = c.code + suf; e.k = c.k + "~" + suf; e.ver = VERS[vv] || ""; if (/^Foil - Coloured Border - Limited (Common|Uncommon)$/.test(e.ver)) e.ver = "Foil"; e.mark = mark || 0; e.cls = cls || ""; return e;
   }
   var qty = {};
   try { qty = JSON.parse(localStorage.getItem("dgm-qty") || "{}") || {}; } catch (e) { qty = {}; }
