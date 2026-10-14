@@ -30,6 +30,7 @@ Esiste come **sito** (GitHub Pages) e come **APK Android** (Capacitor). Ogni mod
 - `src/template.html` – **tutta l'app** (HTML+CSS+JS in un file). `/*DATA*/` viene sostituito con `src/data.json`.
 - `src/data.json` – dati generati (non modificare a mano): carte, prodotti, versioni, prossime uscite, banner, lista ban, errata.
 - `tools/build.py` – crea `www/index.html` (+ manifest, service worker, `window.APPBUILD` = numero di build).
+- **Icone (ottobre 2026, Digivice variante "Cornice ciano")**: unica sorgente `src/icons/digital-gate-mark.svg`; `tools/make_icons.py` (Playwright, solo in locale) rigenera favicon, apple-touch, icone PWA any/maskable in `src/` e le immagini Capacitor in `assets/` (anche `splash.png` per lo splash nativo). Le icone Android adattive/rotonde/a tema stanno in `android-res/` e il workflow le copia sopra quelle generate da `capacitor-assets`, impostando anche il fondo blu notte dello splash nativo (Android 12+).
 - `tools/make_data2.py` – genera `src/data.json` dalla raccolta TakaOtaku (`PreparedDigimonCardsENG.json`, repo `TakaOtaku/Digimon-Card-App`, clonata in `/home/claude/TakaOtaku_Digimon-Card-App`). Contiene nomi set, prodotti PB, prossime uscite.
 - `tools/fetch_images.py` – scarica immagini carte (ufficiali HD, ripiego TakaOtaku) in `www/img/f` (grandi) e `www/img/t` (miniature), con cache.
 - `tools/fetch_banners.py` + `tools/banners.json` – banner HD dei prodotti per la Home (`W/` sito ufficiale, `L/` copia salvata in `src/banners/`), con ritaglio per togliere date/testi promo e tenere il logo.
@@ -61,7 +62,7 @@ Esiste come **sito** (GitHub Pages) e come **APK Android** (Capacitor). Ogni mod
 
 ## Funzionalità dell'app (riassunto)
 
-- Splash animato, menu a hamburger: Home, Prodotti, Prossime uscite, Ricerca carte, La mia collezione, Deckbuilding, Informazioni.
+- Intro di avvio `#dg-boot` (Digivice, 1,9 s, Salta animazione/Esc, movimento ridotto; sul sito una volta per sessione con `dg-splash`, nell'APK a ogni avvio, `?nosplash` la salta), menu a hamburger: Home, Prodotti, Prossime uscite, Ricerca carte, La mia collezione, Deckbuilding, Informazioni.
 - Navigazione con cronologia (tasto/gesto indietro). Nell'APK il gesto indietro torna alla schermata precedente; nella scheda carta non fa nulla (lì: giù per chiudere con la maniglia, sinistra/destra per carta precedente/successiva). Barra superiore che si nasconde scorrendo.
 - **Scheda carta**: intestazione con codice, set (arancione), rarità estesa colorata con ★/SP, versione ("Foil" arcobaleno); tag sotto l'immagine su righe separate (tipo+livello+colori / forma / attribute / trait), colori come le barrette; box Costo/DP/Rarità; Digievoluzione su una riga separata da •; Altra Digievoluzione e Digievoluzione speciale (DNA, App Fusion, Burst) con icone; Effetto, Ereditato, Sicurezza, Effetto Option (Use + colori), Regole, Regole Link/Assembly/DigiXros/Ace Overflow, Altre regole; Alternative Art (toccandone una si apre, uscendo si va alla sua espansione); sezione Pre errata.
 - Icone per `[ ]` e `＜ ＞` con i colori delle carte: timing blu (anche Security), Trash/Hand/Breeding viola, Once/Twice Per Turn rosso, keyword arancioni esagonali, Digivolve/DNA/Burst/App Fusion blu-petrolio, DigiXros/Assembly/Link verdi, Rule grigio chiaro, Overflow grigio metallizzato, trait bianchi con testo nero.
