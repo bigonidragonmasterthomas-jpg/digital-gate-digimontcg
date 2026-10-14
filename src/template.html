@@ -231,6 +231,8 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .toast.on { opacity: 1; transform: translate(-50%, 0); }
 .tagrows { margin-bottom: 12px; display: grid; gap: 6px; }
 .tagrows .tags { margin-bottom: 0; }
+.tags.idrow { align-items: center; }
+.tags .tsep { width: 2px; height: 18px; border-radius: 1px; background: var(--ink-2); opacity: .55; flex: none; margin: 0 2px; }
 .ico.tagb { background: var(--surface-2); color: var(--ink); }
 .ico.kw { background: linear-gradient(#d8661f, #a2400c); border-radius: 0; padding: .08em .75em; clip-path: polygon(.45em 0, calc(100% - .45em) 0, 100% 50%, calc(100% - .45em) 100%, .45em 100%, 0 50%); }
 .ico.trt { background: #fff; color: #000; }
@@ -624,8 +626,10 @@ body.desk .sr .fx p { font-size: .95rem; line-height: 1.6; }
 .dktile .cov .pic { position: absolute; inset: 0; }
 .dktile .cov img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; display: block; }
 .dktile .cov .pic.noimg img { display: none; }
-.dktile .cov .ccols { position: absolute; left: 10px; bottom: 10px; display: flex; gap: 4px; }
-.dktile .cov .ccols i { width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,.85); }
+.dktile .kname { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.dktile .kname b { flex: 1; min-width: 0; }
+.dktile .ccols { display: flex; gap: 4px; flex: none; }
+.dktile .ccols i { width: 14px; height: 14px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.25); }
 .dktile .kb { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; }
 .dktile .kb b { font: 700 1.02rem var(--font-display); }
 .dktile .kb .sub { margin: 0; }
@@ -765,6 +769,7 @@ body.mob .mfbar.n5 .dd:nth-child(n+4) { flex-basis: calc(50% - 3px); }
 .ddo i { width: 12px; height: 12px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,.2); }
 .ddo[aria-selected="true"] { background: var(--cyan-soft); color: var(--cyan); font-weight: 700; }
 .ddo .ok { margin-left: auto; }
+.ddo.all i { width: 15px; height: 15px; }
 .ddpop.nums .ddo[aria-selected="true"] { border-color: var(--cyan); }
 /* scheda carta a tutto schermo */
 body.mob .scrim { align-items: stretch; }
@@ -800,7 +805,6 @@ body.mob .mpane .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .vcard .vl { margin-top: 3px; font-size: .86rem; color: var(--ink-2); }
 .vcard .vl .vk { color: var(--ink); font-weight: 600; }
 .vcard .vl .rarv { color: var(--ink); font-weight: 600; }
-.vcard .vnow { flex: none; font: 700 .68rem var(--font-display); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft, rgba(224,83,26,.12)); padding: 4px 8px; border-radius: 7px; }
 .vcard .pic { width: min(300px, 86%); margin: 0 auto; aspect-ratio: 5 / 7; border-radius: 12px; overflow: hidden; background: var(--surface-2); box-shadow: 0 6px 20px rgba(0,0,0,.22); }
 .vcard .pic[role="button"] { cursor: pointer; }
 .vcard .pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -1764,7 +1768,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
   var DDN = { qm: "Cerca in", color: "Colore", ct: "Tipo", lv: "Livello", cost: "Costo" };
   function ddOptions(kind) {
     if (kind === "qm") return [["", "Tutto (nome, codice e testo)"], ["name", "Solo nel nome"], ["text", "Solo nel testo"]];
-    if (kind === "color") return [["", "Tutti i colori"]].concat(Object.keys(COLORS).map(function (k) { return [k, k, colorVar(k)]; }));
+    if (kind === "color") return [["", "Tutti i colori", "conic-gradient(" + Object.keys(COLORS).map(function (k, i, a) { return colorVar(k) + " " + (i / a.length * 360).toFixed(2) + "deg " + ((i + 1) / a.length * 360).toFixed(2) + "deg"; }).join(", ") + ")"]].concat(Object.keys(COLORS).map(function (k) { return [k, k, colorVar(k)]; }));
     if (kind === "ct") return [["", "Tutti i tipi"]].concat(CARDTYPES.map(function (k) { return [k, k]; }));
     if (kind === "lv") return [["", "Tutti"]].concat(ddValues("lv").map(function (v) { return [v, v]; }));
     return [["", "Tutti"]].concat(ddValues("cost").map(function (v) { return [v, v]; }));
@@ -2381,7 +2385,14 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
       if (r.children.length) tags.appendChild(r);
     }
     trow([c.ct, c.lv]); var row1 = tags.lastChild; if (row1) c.colors.forEach(function (x) { row1.appendChild(colIco(x)); });
-    trow([c.form].concat(rForm)); trow([c.attr].concat(rAttr)); trow((c.sp || "").split("/").concat(rTrait));
+    // forma | attribute | trait su una sola riga, come sulle carte stampate
+    var idr = el("div", "tags idrow");
+    [[c.form].concat(rForm), [c.attr].concat(rAttr), (c.sp || "").split("/").concat(rTrait)].forEach(function (g) {
+      g = g.map(function (v) { return (v || "").trim(); }).filter(Boolean); if (!g.length) return;
+      if (idr.children.length) { var sp = el("span", "tsep"); sp.setAttribute("aria-hidden", "true"); idr.appendChild(sp); }
+      g.forEach(function (v) { idr.appendChild(el("span", "ico tagb", v)); });
+    });
+    if (idr.children.length) tags.appendChild(idr);
     sh.appendChild(tags);
     var bbd = deckable(c) ? banBadge(c) : null;
     if (bbd && /ban|lim|pair/.test(bbd.className)) { var bw = el("div", "banline"); bw.appendChild(bbd);
@@ -2496,7 +2507,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
         var vt = el("div", "vt"); vt.appendChild(el("b", "", fs ? fs.code + " · " + fs.name : a.code));
         var vl = el("div", "vl"); vl.appendChild(el("span", "vk", a.suf ? (verLabel(a.ver) || "Alternative Art") : "Regular"));
         vl.appendChild(document.createTextNode(" · " + a.code + " · ")); vl.appendChild(rarBadge(a)); vt.appendChild(vl);
-        vh.appendChild(vt); if (i === 0) vh.appendChild(el("span", "vnow", "Aperta")); v.appendChild(vh);
+        vh.appendChild(vt); if (i === 0) v.setAttribute("aria-current", "true"); v.appendChild(vh);
         var pic = picBox("pic", "f", a); v.appendChild(pic);
         if (i > 0) {
           pic.setAttribute("role", "button"); pic.tabIndex = 0; pic.setAttribute("aria-label", "Apri questa versione");
@@ -2897,9 +2908,9 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
       var s = deckStats(d), ok = !s.problems.length, inc = !ok && s.problems.length === 1 && s.main < 50;
       var t = el("button", "dktile"); t.type = "button";
       var cov = el("div", "cov"), cc = deckCover(d); if (cc) cov.appendChild(picBox("pic", "f", cc));
-      var cl = el("div", "ccols"); deckColors(d).slice(0, 4).forEach(function (x) { var i = el("i"); i.style.background = colorVar(x[0]); i.title = x[0]; cl.appendChild(i); }); cov.appendChild(cl);
+      var cl = el("div", "ccols"); deckColors(d).slice(0, 4).forEach(function (x) { var i = el("i"); i.style.background = colorVar(x[0]); i.title = x[0]; cl.appendChild(i); });
       t.appendChild(cov);
-      var kb = el("div", "kb"); kb.appendChild(el("b", "fit", d.name));
+      var kb = el("div", "kb"), kn = el("div", "kname"); kn.appendChild(el("b", "fit", d.name)); if (cl.children.length) kn.appendChild(cl); kb.appendChild(kn);
       var bd = el("div"); bd.appendChild(el("span", "dbadge " + (ok ? "okb" : inc ? "lim" : "ban"), ok ? "Valido" : inc ? "Incompleto" : "Non valido")); kb.appendChild(bd);
       kb.appendChild(el("div", "sub", "Principale " + s.main + "/50 · Digi-Egg " + s.egg + "/5"));
       kb.appendChild(pbar(Math.min(s.main, 50), 50));
@@ -2976,7 +2987,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
     ni.onchange = function () { d.name = ni.value.trim() || d.name; ni.value = d.name; d.upd = Date.now(); saveDecks(); };
     hd.appendChild(ni);
     var acts = el("div", "dacts"), slot = el("div");
-    acts.appendChild(btn("Esporta lista", "", function () {
+    acts.appendChild(btn("Esporta", "", function () {
       var t = deckText(d);
       var done = function () { toast("Lista copiata negli appunti."); };
       var fallback = function () { slot.innerHTML = ""; var ta = el("textarea", "dta"); ta.rows = 10; ta.value = t; ta.readOnly = true; slot.appendChild(ta); ta.focus(); ta.select(); };
@@ -3017,7 +3028,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
     mb.onclick = function () { st.dkActs = !st.dkActs; render(); }; hd.appendChild(mb);
     out.appendChild(hd);
     var acts = el("div", "mdkacts"), slot = el("div"); acts.hidden = !st.dkActs;
-    acts.appendChild(btn("Esporta lista", "", function () {
+    acts.appendChild(btn("Esporta", "", function () {
       var t = deckText(d);
       var done = function () { toast("Lista copiata negli appunti."); };
       var fallback = function () { slot.innerHTML = ""; var ta = el("textarea", "dta"); ta.rows = 10; ta.value = t; ta.readOnly = true; slot.appendChild(ta); ta.focus(); ta.select(); };
@@ -3171,7 +3182,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
     else { var ul0 = el("ul"); s.problems.forEach(function (t) { ul0.appendChild(el("li", "", t)); }); pr.appendChild(ul0); }
     panel.appendChild(pr); out.appendChild(panel);
     var acts = el("div", "dacts"), slot = el("div");
-    var ex = el("button", "dbtn", "Esporta lista"); ex.type = "button";
+    var ex = el("button", "dbtn", "Esporta"); ex.type = "button";
     ex.onclick = function () {
       var t = deckText(d);
       var done = function () { toast("Lista copiata negli appunti."); };
