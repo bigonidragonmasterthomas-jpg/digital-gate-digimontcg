@@ -2262,11 +2262,24 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
   function rich(target, text) {
     String(text).split(/(\[[^\]\n]+\]|＜[^＞\n]+＞|⟦[^⟧\n]+⟧)/).forEach(function (part, i) {
       if (!part) return;
-      if (!(i % 2)) { target.appendChild(document.createTextNode(part)); return; }
+      if (!(i % 2)) { colText(target, part); return; }
       var inner = part.slice(1, -1).replace(/\u00a0/g, " "), cls = part.charAt(0) === "⟦" ? "ovf" : part.charAt(0) === "＜" ? (/^Arts Digivolve/.test(inner) ? "grn" : "kw") : iconClass(inner);
       var b = el("span", "ico " + cls, inner); b.title = part; target.appendChild(b);
     });
     return target;
+  }
+  // nel testo libero i colori (red, Blue/Yellow...) diventano i tag colorati, con la parola com'è scritta sulla carta
+  var COLRE = /(^|[^\w-])(red|blue|yellow|green|black|purple|white)(?![\w-])/gi;
+  function colText(target, s) {
+    var last = 0, m; COLRE.lastIndex = 0;
+    while ((m = COLRE.exec(s))) {
+      var st = m.index + m[1].length;
+      if (st > last) target.appendChild(document.createTextNode(s.slice(last, st)));
+      var w = m[2], k = w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+      var cb = el("span", "ico ocol oc-" + k.toLowerCase(), w); cb.style.background = colorVar(k); target.appendChild(cb);
+      last = st + w.length;
+    }
+    if (last < s.length) target.appendChild(document.createTextNode(s.slice(last)));
   }
   function colIco(x) { var cb = el("span", "ico ocol oc-" + x.toLowerCase(), x); cb.style.background = colorVar(x); return cb; }
   function optFx(c) {
