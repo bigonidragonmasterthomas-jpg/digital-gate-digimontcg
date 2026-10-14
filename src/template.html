@@ -350,7 +350,7 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 /* intro Digital Gate (Digivice, 1,9 s): Salta animazione, Esc, movimento ridotto */
 .dg-boot{--dg-boot-navy:#0b1120;--dg-boot-orange:#ff7a3d;--dg-boot-cyan:#63d5ee;position:fixed;inset:0;z-index:1000;display:grid;place-items:center;overflow:hidden;background:var(--dg-boot-navy);color:#f1f4f9;isolation:isolate;font-family:var(--font-body,'IBM Plex Sans',system-ui,sans-serif);opacity:0;pointer-events:none;visibility:hidden;}
 .dg-boot.is-pending{visibility:visible;opacity:1;pointer-events:auto;}
-.dg-boot.is-running{visibility:visible;opacity:1;pointer-events:auto;animation:dg-boot-exit 260ms 1640ms ease-out forwards;}
+.dg-boot.is-running{visibility:visible;opacity:1;pointer-events:auto;cursor:pointer;animation:dg-boot-exit 169ms 1066ms ease-out forwards;}
 .dg-boot__ambient{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,#17314b 0%,#0b1120 54%);opacity:.88;}
 .dg-boot__grid{position:absolute;inset:0;background-image:linear-gradient(#63d5ee0a 1px,transparent 1px),linear-gradient(90deg,#63d5ee0a 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at 50% 46%,#000 4%,transparent 65%);pointer-events:none;}
 .dg-boot__content{position:relative;display:flex;align-items:center;flex-direction:column;width:100%;padding:24px;transform:translateY(-10px);}
@@ -367,17 +367,15 @@ body.apk .hgrid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .dg-boot__pixel:nth-of-type(3n){background:var(--dg-boot-orange);}
 .dg-boot__wordmark{font:700 italic clamp(27px,7vw,40px)/1.1 var(--font-display,'Chakra Petch',system-ui,sans-serif);letter-spacing:.02em;text-align:center;margin:0;opacity:0;transform:translateY(8px);}
 .dg-boot__subtitle{font:600 11px/1.5 var(--font-display,'Chakra Petch',system-ui,sans-serif);letter-spacing:.3em;color:var(--dg-boot-cyan);text-align:center;margin:10px 0 0;opacity:0;}
-.dg-boot__skip{position:absolute;z-index:6;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(15px + env(safe-area-inset-bottom,0px));min-height:44px;padding:8px 14px;border:1px solid #465571;border-radius:10px;background:#131b2e;color:#b7c2d5;font:500 13px 'IBM Plex Sans',system-ui,sans-serif;cursor:pointer;}
-.dg-boot__skip:focus-visible{outline:2px solid var(--dg-boot-cyan);outline-offset:3px;}
 .dg-boot__sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;}
-.dg-boot.is-running .dg-boot__ring{animation:dg-boot-ring 1650ms 0ms cubic-bezier(.2,.8,.2,1) both;}
-.dg-boot.is-running .dg-boot__ring--outer{animation-duration:1750ms;animation-delay:40ms;}
-.dg-boot.is-running .dg-boot__ring--inner{animation-duration:1580ms;animation-delay:110ms;}
-.dg-boot.is-running .dg-boot__mark{animation:dg-boot-mark 1450ms 160ms ease-out both;}
-.dg-boot.is-running .dg-boot__screenlight{animation:dg-boot-light 1250ms 380ms ease-in-out both;}
-.dg-boot.is-running .dg-boot__wordmark{animation:dg-boot-word 380ms 760ms cubic-bezier(.2,.8,.2,1) both;}
-.dg-boot.is-running .dg-boot__subtitle{animation:dg-boot-subtitle 300ms 940ms ease-out both;}
-.dg-boot.is-running .dg-boot__pixel{animation:dg-boot-pixel 760ms var(--dg-delay,0ms) ease-out both;}
+.dg-boot.is-running .dg-boot__ring{animation:dg-boot-ring 1072ms 0ms cubic-bezier(.2,.8,.2,1) both;}
+.dg-boot.is-running .dg-boot__ring--outer{animation-duration:1138ms;animation-delay:26ms;}
+.dg-boot.is-running .dg-boot__ring--inner{animation-duration:1027ms;animation-delay:72ms;}
+.dg-boot.is-running .dg-boot__mark{animation:dg-boot-mark 942ms 104ms ease-out both;}
+.dg-boot.is-running .dg-boot__screenlight{animation:dg-boot-light 812ms 247ms ease-in-out both;}
+.dg-boot.is-running .dg-boot__wordmark{animation:dg-boot-word 247ms 494ms cubic-bezier(.2,.8,.2,1) both;}
+.dg-boot.is-running .dg-boot__subtitle{animation:dg-boot-subtitle 195ms 611ms ease-out both;}
+.dg-boot.is-running .dg-boot__pixel{animation:dg-boot-pixel 494ms var(--dg-delay,0ms) ease-out both;}
 @keyframes dg-boot-ring{0%{opacity:0;transform:rotate(-38deg) scale(.76)}20%{opacity:.8}70%{opacity:.72;transform:rotate(26deg) scale(1)}100%{opacity:0;transform:rotate(43deg) scale(1.32)}}
 @keyframes dg-boot-mark{0%{opacity:0;transform:scale(.88)}22%{opacity:1;transform:scale(1)}84%{opacity:1;transform:scale(1)}100%{opacity:1;transform:scale(1.04)}}
 @keyframes dg-boot-light{0%{opacity:0;transform:scale(.7)}35%{opacity:1;transform:scale(1.3)}70%{opacity:.8;transform:scale(1.1)}100%{opacity:0;transform:scale(2.3)}}
@@ -921,19 +919,18 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
   <rect x="182" y="248" width="20" height="8" rx="4" fill="#ff7a3d"/></svg>
       <div class="dg-boot__screenlight"></div>
       <span class="dg-boot__pixel" style="--dg-start-x:-100px;--dg-start-y:-114px;--dg-delay:0ms"></span>
-      <span class="dg-boot__pixel" style="--dg-start-x:112px;--dg-start-y:-82px;--dg-delay:60ms"></span>
-      <span class="dg-boot__pixel" style="--dg-start-x:-137px;--dg-start-y:24px;--dg-delay:110ms"></span>
-      <span class="dg-boot__pixel" style="--dg-start-x:118px;--dg-start-y:62px;--dg-delay:30ms"></span>
-      <span class="dg-boot__pixel" style="--dg-start-x:21px;--dg-start-y:128px;--dg-delay:130ms"></span>
-      <span class="dg-boot__pixel" style="--dg-start-x:-65px;--dg-start-y:113px;--dg-delay:90ms"></span>
-      <span class="dg-boot__pixel" style="--dg-start-x:62px;--dg-start-y:-128px;--dg-delay:160ms"></span>
-      <span class="dg-boot__pixel" style="--dg-start-x:144px;--dg-start-y:-11px;--dg-delay:190ms"></span>
+      <span class="dg-boot__pixel" style="--dg-start-x:112px;--dg-start-y:-82px;--dg-delay:39ms"></span>
+      <span class="dg-boot__pixel" style="--dg-start-x:-137px;--dg-start-y:24px;--dg-delay:72ms"></span>
+      <span class="dg-boot__pixel" style="--dg-start-x:118px;--dg-start-y:62px;--dg-delay:20ms"></span>
+      <span class="dg-boot__pixel" style="--dg-start-x:21px;--dg-start-y:128px;--dg-delay:84ms"></span>
+      <span class="dg-boot__pixel" style="--dg-start-x:-65px;--dg-start-y:113px;--dg-delay:58ms"></span>
+      <span class="dg-boot__pixel" style="--dg-start-x:62px;--dg-start-y:-128px;--dg-delay:104ms"></span>
+      <span class="dg-boot__pixel" style="--dg-start-x:144px;--dg-start-y:-11px;--dg-delay:124ms"></span>
     </div>
     <div class="dg-boot__wordmark">DIGITAL GATE</div>
     <p class="dg-boot__subtitle">DIGIMON TCG</p>
   </div>
-  <button type="button" class="dg-boot__skip">Salta animazione</button>
-  <span class="dg-boot__sr" role="status">Avvio di Digital Gate</span>
+  <span class="dg-boot__sr" role="status">Avvio di Digital Gate. Tocca o premi Esc per entrare.</span>
 </section>
 <script>
 (function () {
@@ -3265,13 +3262,12 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
 /* Digital Gate: intro di 1.9 secondi, senza dipendenze e senza richieste di rete. */
 (() => {
   'use strict';
-  const durations = { normal: 1900, reduced: 180 };
+  const durations = { normal: 1240, reduced: 180 };
   const sessionKey = 'dg-splash';
   function mount(element, options = {}) {
     if (!element) return null;
     let timer = null, running = false, priorFocus = null;
     const inertStates = new Map();
-    const skip = element.querySelector('.dg-boot__skip');
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     function release() {
       for (const [node, wasInert] of inertStates) node.inert = wasInert;
@@ -3283,7 +3279,6 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
       clearTimeout(timer);
       element.classList.remove('is-running');
       element.setAttribute('aria-hidden', 'true');
-      skip.disabled = true;
       release();
       if (priorFocus?.isConnected && priorFocus !== document.body) priorFocus.focus({ preventScroll: true });
       element.dispatchEvent(new CustomEvent('digitalgate:bootend', { bubbles: true }));
@@ -3293,7 +3288,6 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
       if (running) { element.classList.remove('is-running'); release(); }
       priorFocus = document.activeElement;
       element.setAttribute('aria-hidden', 'false');
-      skip.disabled = false;
       if (options.inertTargets) for (const node of options.inertTargets) {
         if (node && !node.contains(element)) { inertStates.set(node, node.inert); node.inert = true; }
       }
@@ -3301,25 +3295,24 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
       void element.offsetWidth;
       running = true;
       element.classList.add('is-running');
-      if (options.focusSkip !== false) skip.focus({ preventScroll: true });
       timer = setTimeout(finish, reduced.matches ? durations.reduced : durations.normal);
       return timer;
     }
     const onEscape = e => { if (running && e.key === 'Escape') { e.preventDefault(); finish(); } };
     const onVisibility = () => { if (document.hidden) finish(); };
     const onMotion = () => { if (running && reduced.matches) finish(); };
-    skip.addEventListener('click', finish);
+    // un tap o un clic in qualsiasi punto chiude l'intro (solo 'click': il tocco non passa ai pulsanti sotto)
+    element.addEventListener('click', finish);
     document.addEventListener('keydown', onEscape);
     document.addEventListener('visibilitychange', onVisibility);
     reduced.addEventListener('change', onMotion);
     element.setAttribute('aria-hidden', 'true');
-    skip.disabled = true;
     return {
       play, finish,
       get running() { return running; },
       destroy() {
         finish();
-        skip.removeEventListener('click', finish);
+        element.removeEventListener('click', finish);
         document.removeEventListener('keydown', onEscape);
         document.removeEventListener('visibilitychange', onVisibility);
         reduced.removeEventListener('change', onMotion);
