@@ -2375,7 +2375,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
     sheetGestures(sh, c);
     var head = el("div", "sheet-head");
     var t = el("div"), hc = el("div", "c"); hc.appendChild(document.createTextNode(c.code + " · "));
-    var hs = SETBY[c.from || c.set]; if (hs) hc.appendChild(el("span", "hset", hs.code + " · " + hs.name));
+    var hs = SETBY[c.from || c.set]; if (hs) hc.appendChild(el("span", "hset", hs.name));
     var rr = (c.rar || "").trim();
     if (rr) { hc.appendChild(document.createTextNode(" · ")); var hr = rarBadge(c); hr.className += " hrar r-" + rr; hc.appendChild(hr); }
     if (c.suf && c.ver && c.ver !== "Normal") {
