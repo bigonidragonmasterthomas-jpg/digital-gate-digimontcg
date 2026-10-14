@@ -2268,8 +2268,8 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
     });
     return target;
   }
-  // nel testo libero i colori (red, Blue/Yellow...) diventano i tag colorati, con la parola com'è scritta sulla carta
-  var COLRE = /(^|[^\w-])(red|blue|yellow|green|black|purple|white)(?![\w-])/gi;
+  // nel testo libero i colori scritti con la maiuscola (Red, Blue/Yellow...) diventano i tag colorati, con la parola com'è scritta sulla carta
+  var COLRE = /(^|[^\w-])(Red|Blue|Yellow|Green|Black|Purple|White)(?![\w-])/g;
   function colText(target, s) {
     var last = 0, m; COLRE.lastIndex = 0;
     while ((m = COLRE.exec(s))) {
