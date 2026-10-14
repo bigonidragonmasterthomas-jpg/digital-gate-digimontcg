@@ -56,7 +56,8 @@ with sync_playwright() as p:
     render(pg, canvas(1024, NAVY, 0.7734), 1024).convert("RGB").save(a / "icon-only.png", optimize=True)
     render(pg, canvas(1024, None, 0.704), 1024).save(a / "icon-foreground.png", optimize=True)
     Image.new("RGB", (1024, 1024), NAVY).save(a / "icon-background.png", optimize=True)
-    sp = render(pg, canvas(2732, NAVY, 0.235), 2732).convert("RGB")
+    # splash nativo solo blu notte: il marchio compare una volta sola, nell'intro HTML
+    sp = Image.new("RGB", (2732, 2732), NAVY)
     sp.save(a / "splash.png", optimize=True)
     sp.save(a / "splash-dark.png", optimize=True)
     b.close()
