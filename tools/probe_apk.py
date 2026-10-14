@@ -8,7 +8,10 @@ urllib.request.urlretrieve(url, "app.apk")
 print("size", os.path.getsize("app.apk"))
 bt = sorted(glob.glob(os.environ.get("ANDROID_HOME", "/usr/local/lib/android/sdk") + "/build-tools/*"))[-1]
 def run(cmd):
-    r = subprocess.run(cmd, capture_output=True, text=True); print("$", " ".join(cmd)); print(r.stdout[-3000:], r.stderr[-2000:])
+    r = subprocess.run(cmd, capture_output=True, text=True); print("$", " ".join(cmd))
+    for l in (r.stdout + r.stderr).splitlines():
+        if "WARNING" in l or "application-label" in l or l.startswith(("locale", "densities", "uses-feature", "supports", "feature-group", "uses-implied")): continue
+        print(l)
 run([bt + "/apksigner", "verify", "--verbose", "--print-certs", "app.apk"])
 run([bt + "/aapt", "dump", "badging", "app.apk"])
 run(["keytool", "-list", "-v", "-keystore", "android-keys/debug.keystore", "-storepass", "android"])
