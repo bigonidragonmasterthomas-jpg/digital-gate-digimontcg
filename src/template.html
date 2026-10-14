@@ -2277,9 +2277,16 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
     p.insertBefore(document.createTextNode("\n"), p.firstChild); p.insertBefore(h, p.firstChild);
     return f;
   }
+  // le keyword iniziali (＜Raid＞ ＜Blocker＞ ...), una per riga nel testo, vanno tutte su una riga sola
+  function kwJoin(text) {
+    var ls = String(text).split("\n"), i = 0;
+    while (i < ls.length && /^\s*(＜[^＞]+＞\s*)+$/.test(ls[i])) i++;
+    if (i < 2) return text;
+    return [ls.slice(0, i).map(function (s) { return s.trim(); }).join(" ")].concat(ls.slice(i)).join("\n");
+  }
   function fx(title, text) {
     if (!text) return null;
-    var d = el("div", "fx"); d.appendChild(el("h3", "", title)); d.appendChild(rich(el("p", ""), text)); return d;
+    var d = el("div", "fx"); d.appendChild(el("h3", "", title)); d.appendChild(rich(el("p", ""), kwJoin(text))); return d;
   }
   function stat(label, val) {
     if (!val) return null;
