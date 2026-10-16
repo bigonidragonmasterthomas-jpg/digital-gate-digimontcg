@@ -8,7 +8,7 @@
 :root {
   --bg: #f1f4f9; --surface: #ffffff; --surface-2: #e7ecf4; --line: #d3dbe8;
   --ink: #0f1a2e; --ink-2: #51607a; --accent: #e0531a; --accent-ink: #ffffff;
-  --blue: #1f4fd8; --blue-ink: #ffffff; --ok: #17803d; --scrim: rgba(10,16,30,.55); --cm-ink: #012169;
+  --blue: #1f4fd8; --blue-ink: #ffffff; --ok: #17803d; --scrim: rgba(10,16,30,.55); --cm-ink: #012169; --ct-ink: #132545;
   --c-red: #d6403a; --c-blue: #2f6fe0; --c-yellow: #e2b21a; --c-green: #2e9e57; --c-black: #2a2d36; --c-purple: #8a4fd0; --c-white: #c4cad6;
   --font-display: "Chakra Petch", "Arial Narrow", system-ui, sans-serif;
   --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -17,7 +17,7 @@
   :root:not([data-theme="light"]) {
     --bg: #0b1120; --surface: #131b2e; --surface-2: #1c2640; --line: #26324f;
     --ink: #e8edf7; --ink-2: #93a1bd; --accent: #ff7a3d; --accent-ink: #1a0b03;
-    --blue: #7fa2ff; --blue-ink: #0b1120; --ok: #4ade80; --scrim: rgba(0,0,0,.65); --cm-ink: #ffffff;
+    --blue: #7fa2ff; --blue-ink: #0b1120; --ok: #4ade80; --scrim: rgba(0,0,0,.65); --cm-ink: #ffffff; --ct-ink: #ffffff;
     --c-red: #ef5b55; --c-blue: #5b92f5; --c-yellow: #f0c43a; --c-green: #46bd73; --c-black: #6b7388; --c-purple: #a878e8; --c-white: #e3e7ef;
     color-scheme: dark;
   }
@@ -25,7 +25,7 @@
 :root[data-theme="dark"] {
   --bg: #0b1120; --surface: #131b2e; --surface-2: #1c2640; --line: #26324f;
   --ink: #e8edf7; --ink-2: #93a1bd; --accent: #ff7a3d; --accent-ink: #1a0b03;
-  --blue: #7fa2ff; --blue-ink: #0b1120; --ok: #4ade80; --scrim: rgba(0,0,0,.65); --cm-ink: #ffffff;
+  --blue: #7fa2ff; --blue-ink: #0b1120; --ok: #4ade80; --scrim: rgba(0,0,0,.65); --cm-ink: #ffffff; --ct-ink: #ffffff;
   --c-red: #ef5b55; --c-blue: #5b92f5; --c-yellow: #f0c43a; --c-green: #46bd73; --c-black: #6b7388; --c-purple: #a878e8; --c-white: #e3e7ef;
   color-scheme: dark;
 }
@@ -309,8 +309,16 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .pline.wide .ptag { font-size: .7rem; padding: 4px 8px; border-radius: 6px; letter-spacing: .08em; text-transform: uppercase; }
 .sgrid .sl .pbox { margin-top: 14px; }
 .alt .pline { justify-self: center; width: 100%; }
+.ctk { display: inline-block; flex: none; width: 16px; height: 16px; }
+.ctk svg { display: block; width: 100%; height: 100%; }
+.pline.wide .ctk { width: 22px; height: 22px; }
+.pline + .pline { margin-top: 4px; }
+.pline.wide + .pline.wide { margin-top: 6px; }
+.pbox .pmain + .pmain { margin-top: 8px; }
+.pbox .pshop .ctk { width: 20px; height: 20px; }
+.fx.pbox p.pct { margin: 8px 0 0; padding: 0; background: none; border: 0; font-size: .74rem; color: var(--ink-2); }
 body.desk .alts .alt .pline { grid-template-columns: 13px minmax(0, 1fr) auto; gap: 4px; padding: 4px 5px; font-size: .74rem; }
-body.desk .alts .alt .pline .cmk { width: 13px; height: 13px; }
+body.desk .alts .alt .pline .cmk, body.desk .alts .alt .pline .ctk { width: 13px; height: 13px; }
 body.desk .alts .alt .pline .pval { overflow: hidden; }
 body.desk .alts .alt .pline .ptag { font-size: .5rem; padding: 2px 3px; }
 .fx h3 { font-family: var(--font-display); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 4px; }
@@ -1591,12 +1599,52 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
     var t = el("span", "ptag" + (tg ? "" : " off"), tg); if (tg) t.setAttribute("aria-label", /^(TR|Trend)$/.test(tg) ? "Trend" : "Minimo"); d.appendChild(t);
     return d;
   }
+  // ---- CardTrader (PRICES.ct da tools/cardmarket_prices.py): per versione [prezzo più basso EN Near Mint, n. offerte, blueprint]
+  var CTP = PRICES.ct || { p: {}, sets: [] }, CTCOV = {};
+  (CTP.sets || []).forEach(function (id) { CTCOV[id] = 1; });
+  function ctCovered(c) { return !!CTCOV[String(c.k).split("|")[0]]; }
+  function ctOf(c) { return (CTP.p || {})[c.k] || null; }
+  // simbolo ufficiale CardTrader (due triangoli): azzurro fisso, l'altro blu notte nel tema chiaro e bianco nello scuro, come i loro loghi
+  var CTSVG = '<svg viewBox="0 0 39.5 45.1" aria-hidden="true"><path fill="#2aa8f8" d="m12 17.7-1.1 2-1.1 2c-.1.2-.4.4-.6.3h-1.8c-2.2 0-4.4 0-6.6 0-.4.1-.7-.2-.8-.6 0-.2 0-.4.1-.5 1.2-2.1 2.4-4.3 3.6-6.4s2.3-4 3.5-6l3.3-5.9 1.2-2.2s.1-.1.1-.1c.2-.3.3-.3.4 0l.8 1.4 3 5.3 3 5.3 2.9 5.2c.7 1.2 1.4 2.5 2.1 3.7.2.3.1.7-.2.9-.1.1-.3.1-.4.1-2.8 0-5.5 0-8.3 0-.4 0-.8-.2-.9-.5-.7-1.2-1.4-2.5-2.1-3.7z"/><path fill="var(--ct-ink)" d="m27.4 27.4c.2-.4.4-.7.6-1 .6-1 1.1-2 1.7-3 .1-.3.4-.4.7-.4h8.3c.7 0 1 .5.6 1.1-1.1 1.9-2.1 3.8-3.2 5.7-1.3 2.2-2.5 4.4-3.8 6.7l-3.1 5.5-1.6 2.9c-.1.1-.1.1-.2.2-.1-.1-.1-.1-.2-.2l-3.2-5.8c-1.1-2-2.3-4-3.4-6.1s-2.3-4.1-3.4-6.1c-.5-1-1.1-2-1.6-2.9-.2-.3-.2-.7.1-.9.1-.1.3-.1.5-.1h8.3c.3 0 .6.2.8.5.7 1.2 1.4 2.5 2.1 3.7z"/></svg>';
+  function ctMark() { var m = el("span", "ctk"); m.innerHTML = CTSVG; m.setAttribute("role", "img"); m.setAttribute("aria-label", "CardTrader"); m.title = "CardTrader"; return m; }
+  function ctLine(c, wide) {
+    if (!ctCovered(c)) return null;
+    var p = ctOf(c), d = el("div", "pline" + (wide ? " wide" : "")), v = el("span", "pval"), has = p && p[0] != null;
+    d.appendChild(ctMark()); d.appendChild(v);
+    if (has) { v.textContent = eurC(p[0]) + " €"; d.title = "CardTrader: offerta più bassa in inglese, Near Mint"; }
+    else { d.classList.add("pna"); v.textContent = "N/D"; d.title = "CardTrader: nessuna offerta in inglese Near Mint"; }
+    var t = el("span", "ptag" + (has ? "" : " off"), has ? (wide ? "Minimo" : "MIN") : ""); d.appendChild(t);
+    return d;
+  }
+  // righe prezzo di tutti i negozi, una sotto l'altra
+  function priceLines(c, wide) { return [priceLine(c, wide), ctLine(c, wide)].filter(Boolean); }
   function priceBox(c) {
+    if (!priceCovered(c) && !ctCovered(c)) return null;
+    var b = el("div", "fx pbox"); b.appendChild(el("h3", "", "Prezzo"));
+    var cmb = cmBox(c); if (cmb) b.appendChild(cmb);
+    var ctb = ctBox(c); if (ctb) b.appendChild(ctb);
+    var note = [];
+    if (priceCovered(c)) note.push("Cardmarket: guida prezzi del " + fmtDate(PRICES.d) + ", dati aggregati che non distinguono lingua o condizione.");
+    if (ctCovered(c)) note.push("CardTrader: offerte in vendita il " + fmtDate(CTP.d) + ", solo carte in inglese Near Mint.");
+    b.appendChild(el("p", "pnote", note.join(" ")));
+    return b;
+  }
+  function ctBox(c) {
+    if (!ctCovered(c)) return null;
+    var p = ctOf(c), m = el("div", "pmain"), hd = el("div", "phead"), shop = el("div", "pshop");
+    shop.appendChild(ctMark()); shop.appendChild(el("span", "", "CardTrader")); hd.appendChild(shop); m.appendChild(hd);
+    if (!p || p[0] == null) { m.appendChild(el("p", "pct", "Nessuna offerta in inglese Near Mint al momento.")); return m; }
+    var tr = el("div", "ptr"), big = el("b", "pbig");
+    tr.appendChild(el("span", "", "Minimo · EN · NM"));
+    big.textContent = eurN(p[0]); big.appendChild(el("small", "", "€")); tr.appendChild(big); hd.appendChild(tr);
+    m.appendChild(el("p", "pct", p[1] === 1 ? "1 offerta in inglese Near Mint tra le più economiche" : p[1] + " offerte in inglese Near Mint tra le più economiche"));
+    return m;
+  }
+  function cmBox(c) {
     if (!priceCovered(c)) return null;
-    var p = priceOf(c), b = el("div", "fx pbox"); b.appendChild(el("h3", "", "Prezzo"));
-    var m = el("div", "pmain"), hd = el("div", "phead"), shop = el("div", "pshop");
+    var p = priceOf(c), m = el("div", "pmain"), hd = el("div", "phead"), shop = el("div", "pshop");
     shop.appendChild(cmMark()); shop.appendChild(el("span", "", "Cardmarket")); hd.appendChild(shop); m.appendChild(hd);
-    if (!p) { b.appendChild(m); b.appendChild(el("p", "pnone", "Prezzo non disponibile: questa versione non è stata abbinata con certezza al prodotto giusto su Cardmarket.")); return b; }
+    if (!p) { m.appendChild(el("p", "pct", "Prezzo non disponibile: questa versione non è stata abbinata con certezza al prodotto giusto su Cardmarket.")); return m; }
     var tr = el("div", "ptr"), big = el("b", "pbig"), useLow = p[0] == null && p[1] != null;
     tr.appendChild(el("span", "", useLow ? "Offerta più bassa" : "Trend Cardmarket"));
     big.textContent = eurN(useLow ? p[1] : p[0]); big.appendChild(el("small", "", "€")); tr.appendChild(big); hd.appendChild(tr);
@@ -1604,9 +1652,8 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
     [["Più basso", p[1]], ["Media 1 g", p[2]], ["Media 7 g", p[3]], ["Media 30 g", p[4]]].forEach(function (x) {
       var r = el("div", "pc"); r.appendChild(el("span", "", x[0])); r.appendChild(el("b", "", eur(x[1]))); g.appendChild(r);
     });
-    m.appendChild(g); b.appendChild(m);
-    b.appendChild(el("p", "pnote", "Guida prezzi Cardmarket del " + fmtDate(PRICES.d) + ". Dati aggregati: non distinguono lingua o condizione."));
-    return b;
+    m.appendChild(g);
+    return m;
   }
 
   // ---- Scheda prodotto: caratteristiche dal sito ufficiale Bandai (src/products.json, da tools/fetch_products.py)
@@ -1989,7 +2036,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
         var tn = el("div", "tname"); tn.appendChild(nameFrag(c)); t.appendChild(tn);
         listLines(c).forEach(function (x) { t.appendChild(x); });
         t.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
-        var tpl = priceLine(c); if (tpl) t.appendChild(tpl);
+        priceLines(c).forEach(function (x) { t.appendChild(x); });
         t.onclick = function () { st.open = c; drawSheet(); };
         t.onkeydown = function (e) { if (e.target === t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); st.open = c; drawSheet(); } };
         ul.appendChild(t); return;
@@ -2001,9 +2048,9 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
       listLines(c).forEach(function (x) { mid.appendChild(x); });
       r.appendChild(mid);
       // a destra: copie e, sotto, il prezzo (stessa larghezza dei pulsanti)
-      var rside = el("div", "rside"), rpl = priceLine(c);
+      var rside = el("div", "rside");
       rside.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
-      if (rpl) rside.appendChild(rpl);
+      priceLines(c).forEach(function (x) { rside.appendChild(x); });
       r.appendChild(rside);
       function open() { st.open = c; drawSheet(); }
       r.onclick = open;
@@ -2556,7 +2603,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
         it.appendChild(listLines(a)[1]);
         if (inDk) { var dl = el("div", "sub dlab", "Nel mazzo"); it.appendChild(dl); it.appendChild(deckQty(inDk, a, function () { render(); drawSheet(); })); }
         else it.appendChild(qtyControl(a, function () { recomputeStats(); render(); drawSheet(); }));
-        var apl = priceLine(a); if (apl) it.appendChild(apl);
+        priceLines(a).forEach(function (x) { it.appendChild(x); });
         strip.appendChild(it);
       });
       at.appendChild(strip); sh.appendChild(at);
@@ -2623,7 +2670,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
           bt.onclick = function (e) { e.stopPropagation(); collUnlocked = true; drawSheet(); };
         });
         r2.appendChild(q2); vq.appendChild(r2);
-        var vpl = priceLine(a, true); if (vpl) vq.appendChild(vpl);
+        priceLines(a, true).forEach(function (x) { vq.appendChild(x); });
         v.appendChild(vq);
         p2.appendChild(v);
       });
