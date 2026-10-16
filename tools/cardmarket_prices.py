@@ -1,32 +1,36 @@
-"""Prezzi Cardmarket per Digital Gate.
+"""Prezzi Cardmarket e CardTrader per Digital Gate -> src/prices.json.
 
-Legge i file pubblici di Cardmarket (catalogo carte singole + guida prezzi giornaliera,
-gioco Digimon = 17) e abbina ogni versione dell'app al prodotto Cardmarket giusto.
-Scrive src/prices.json.
+Cardmarket: file pubblici giornalieri (catalogo carte singole + guida prezzi, gioco Digimon = 17), nessun permesso necessario.
+CardTrader: API ufficiale con il codice del segreto CARDTRADER_TOKEN (mai stampato). Ogni carta CardTrader ("blueprint")
+indica il proprio prodotto Cardmarket (card_market_ids) e il tipo di versione nel numero (EX13-014 = Regular,
+...a = Alternate Art ★, ...rp = Rare Pull ★★, ...sp = Special Rare SP).
 
 Uso:
-  python3 tools/cardmarket_prices.py [--dir CARTELLA_FILE] [--sets EX13,BT26] [--scarica] [--ct-dir CARTELLA] [--ct-scarica]
+  python3 tools/cardmarket_prices.py [--sets ALL | EX13,BT26] [--dir cardmarket] [--scarica] [--ct-dir cardtrader] [--ct-scarica]
+         [--out src/prices.json] [--report report.txt]
 
-CardTrader (facoltativo): con il codice nel segreto CARDTRADER_TOKEN scarica, per ogni prodotto, carte ("blueprint") e
-offerte. Ogni carta CardTrader indica il proprio prodotto Cardmarket (card_market_ids) e il tipo di versione nel numero
-(EX13-014 = Regular, ...a = Alternate Art ★, ...rp = Rare Pull ★★, ...sp = Special Rare SP): serve per confermare o
-correggere l'abbinamento Cardmarket e per il prezzo CardTrader = offerta più bassa in inglese, Near Mint, non gradata.
-
-Regole di abbinamento (prudenti: nel dubbio nessun prezzo, mai un prezzo sbagliato):
-- per ogni prodotto dell'app si cerca l'espansione Cardmarket in cui compaiono più carte con il suo codice set;
-- per ogni numero di carta i prodotti Cardmarket vengono ordinati per idProduct (ordine di inserimento: V1, V2, ...);
-- se il numero di versioni coincide con quello dell'app si abbinano nell'ordine dell'app (Regular, ★, ★★, SP);
-  se i prezzi non salgono in quell'ordine (es. la ★ costa più della ★★) le alternative art restano senza prezzo;
-- se il numero non coincide si abbina solo la versione Regular, e solo se è chiaramente la più economica.
+Abbinamento (prudente: nel dubbio nessun prezzo, mai un prezzo sbagliato), per ogni prodotto dell'app:
+- espansione Cardmarket = quella con più carte che hanno il codice del prodotto (BT26-..., EX13-...); i prodotti senza
+  carte proprie (Premium Bandai, Limited, promo) per ora restano senza prezzi;
+- per ogni numero di carta (anche le ristampe presenti nel prodotto) si prendono i prodotti Cardmarket di quell'espansione;
+- se CardTrader indica con certezza il prodotto Cardmarket di ogni versione, vale quello;
+- altrimenti ordine di inserimento su Cardmarket (V1, V2...) = ordine dell'app (Regular, ★, ★★, SP), accettato solo se i
+  prezzi salgono in quell'ordine; se il numero di versioni non coincide si abbina solo la Regular, se è la più economica;
+- le indicazioni certe di CardTrader correggono comunque l'ordine (es. Gankoomon EX13-061: ★ e ★★ invertite).
+Prezzo CardTrader = offerta più bassa in inglese, Near Mint, non gradata (tra le 25 più economiche che dà l'API).
 """
 import argparse, json, os, re, time, urllib.request
-from collections import defaultdict
+from collections import defaultdict, Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 BASE = "https://downloads.s3.cardmarket.com/productCatalog"
 GAME = 17  # Digimon su Cardmarket
 CODE = re.compile(r"\(([A-Z0-9]+-\d+)\)\s*$")
+CT_API = "https://api.cardtrader.com/api/v2"
+CT_GAME = 8  # Digimon su CardTrader
+CT_SUFFIX = {"": 0, "a": 1, "rp": 2, "sp": "SP"}
+CT_NUM = re.compile(r"^([A-Z0-9]+-\d+)([a-z]*)$")
 
 
 def scarica(cartella):
@@ -38,57 +42,59 @@ def scarica(cartella):
             Path(cartella, nome).write_bytes(r.read())
 
 
-CT_API = "https://api.cardtrader.com/api/v2"
-CT_SUFFIX = {"": 0, "a": 1, "rp": 2, "sp": "SP"}
-CT_NUM = re.compile(r"^([A-Z0-9]+-\d+)([a-z]*)$")
-
-
-def ct_get(path):
+def ct_get(path, tentativi=3):
     tok = os.environ.get("CARDTRADER_TOKEN", "").strip()
-    req = urllib.request.Request(CT_API + path, headers={"Authorization": "Bearer " + tok, "User-Agent": "DigitalGate/1.0"})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        return json.loads(r.read())
+    for n in range(tentativi):
+        try:
+            req = urllib.request.Request(CT_API + path, headers={"Authorization": "Bearer " + tok, "User-Agent": "DigitalGate/1.0"})
+            with urllib.request.urlopen(req, timeout=60) as r:
+                return json.loads(r.read())
+        except Exception as e:
+            if n == tentativi - 1:
+                raise
+            print("CardTrader: nuovo tentativo dopo", type(e).__name__, getattr(e, "code", ""))
+            time.sleep(5 * (n + 1))
 
 
-def ct_scarica(cartella, codici):
-    """Espansioni Digimon (gioco 8), blueprint e offerte dei prodotti richiesti (solo campi utili, niente venditori)."""
+def ct_scarica(cartella):
+    """Tutte le espansioni Digimon: carte e offerte (solo i campi utili, niente venditori). Circa 2 chiamate al secondo."""
     os.makedirs(cartella, exist_ok=True)
-    exps = [e for e in ct_get("/expansions") if e.get("game_id") == 8]
+    exps = [e for e in ct_get("/expansions") if e.get("game_id") == CT_GAME]
     Path(cartella, "expansions_digimon.json").write_text(json.dumps(exps))
     for e in exps:
-        if e.get("code", "").upper().replace("-", "") not in codici:
-            continue
-        Path(cartella, f"blueprints_{e['id']}.json").write_text(json.dumps(ct_get(f"/blueprints/export?expansion_id={e['id']}")))
-        time.sleep(1.1)
-        mk = ct_get(f"/marketplace/products?expansion_id={e['id']}")
-        slim = {b: [{"price_cents": o.get("price", {}).get("cents"), "currency": o.get("price", {}).get("currency"), "qty": o.get("quantity"),
-                     "props": o.get("properties_hash"), "graded": o.get("graded")} for o in offs] for b, offs in mk.items()}
-        Path(cartella, f"market_{e['id']}.json").write_text(json.dumps(slim))
-        time.sleep(1.1)
+        try:
+            Path(cartella, f"blueprints_{e['id']}.json").write_text(json.dumps(ct_get(f"/blueprints/export?expansion_id={e['id']}")))
+            time.sleep(1.1)
+            mk = ct_get(f"/marketplace/products?expansion_id={e['id']}")
+            slim = {b: [{"price_cents": o.get("price", {}).get("cents"), "currency": o.get("price", {}).get("currency"),
+                         "qty": o.get("quantity"), "props": o.get("properties_hash"), "graded": o.get("graded")} for o in offs]
+                    for b, offs in mk.items()}
+            Path(cartella, f"market_{e['id']}.json").write_text(json.dumps(slim))
+            time.sleep(1.1)
+        except Exception as ex:
+            print("CardTrader: espansione", e.get("code"), "saltata:", type(ex).__name__)
 
 
-def ct_carica(cartella, codice):
-    """Per un codice set: {cmid: blueprint}, {(numero, segno): cmid}, offerte per blueprint. None se mancano i file."""
-    try:
-        exps = json.loads(Path(cartella, "expansions_digimon.json").read_text())
-    except Exception:
+def ct_carica(cartella):
+    """Tutte le carte CardTrader scaricate: {cmid: blueprint}, {cmid: (numero, segno)}, offerte per blueprint."""
+    cm2bp, cm2mk, market = {}, {}, {}
+    p = Path(cartella)
+    if not p.exists():
         return None
-    e = next((x for x in exps if x.get("code", "").upper().replace("-", "") == codice), None)
-    if not e or not Path(cartella, f"blueprints_{e['id']}.json").exists():
-        return None
-    bps = json.loads(Path(cartella, f"blueprints_{e['id']}.json").read_text())
-    market = json.loads(Path(cartella, f"market_{e['id']}.json").read_text())
-    cm2bp, hint = {}, {}
-    for b in bps:
-        cn = ((b.get("fixed_properties") or {}).get("collector_number") or "").strip()
-        m = CT_NUM.match(cn)
-        ids = b.get("card_market_ids") or []
-        for cid in ids:
-            cm2bp[cid] = b
-        if m and m.group(2) in CT_SUFFIX and len(ids) == 1:
-            k = (m.group(1), CT_SUFFIX[m.group(2)])
-            hint[k] = None if k in hint else ids[0]  # due carte con lo stesso segno = ambiguo
-    return {"exp": e["id"], "cm2bp": cm2bp, "hint": {k: v for k, v in hint.items() if v}, "market": market}
+    for f in sorted(p.glob("blueprints_*.json")):
+        eid = f.stem.split("_")[1]
+        mf = p / f"market_{eid}.json"
+        if mf.exists():
+            market.update(json.loads(mf.read_text()))
+        for b in json.loads(f.read_text()):
+            ids = b.get("card_market_ids") or []
+            cn = ((b.get("fixed_properties") or {}).get("collector_number") or "").strip()
+            m = CT_NUM.match(cn)
+            for cid in ids:
+                cm2bp[cid] = b
+                if len(ids) == 1 and m and m.group(2) in CT_SUFFIX:
+                    cm2mk[cid] = (m.group(1), CT_SUFFIX[m.group(2)])
+    return {"cm2bp": cm2bp, "cm2mk": cm2mk, "market": market} if cm2bp else None
 
 
 def ct_prezzo(ct, cmid):
@@ -118,20 +124,23 @@ def voce(g, idp):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dir", default="cardmarket")
-    ap.add_argument("--sets", default="EX13")
+    ap.add_argument("--sets", default="ALL")
     ap.add_argument("--scarica", action="store_true")
     ap.add_argument("--ct-dir", default="cardtrader")
     ap.add_argument("--ct-scarica", action="store_true")
+    ap.add_argument("--out", default=str(ROOT / "src/prices.json"))
+    ap.add_argument("--report", default="")
     a = ap.parse_args()
     if a.scarica:
         scarica(a.dir)
-    if a.ct_scarica:
-        ct_scarica(a.ct_dir, {x.strip().upper() for x in a.sets.split(",") if x.strip()})
+    if a.ct_scarica and os.environ.get("CARDTRADER_TOKEN", "").strip():
+        ct_scarica(a.ct_dir)
     singles = json.loads(Path(a.dir, "singles.json").read_text())
     guide = json.loads(Path(a.dir, "price_guide.json").read_text())
     pg = {g["idProduct"]: g for g in guide["priceGuides"]}
     data = json.loads((ROOT / "src/data.json").read_text())
     cards, versions = data["cards"], data["versions"]
+    ct = ct_carica(a.ct_dir)
 
     # prodotti Cardmarket per espansione e per numero di carta
     by_exp = defaultdict(lambda: defaultdict(list))
@@ -140,10 +149,11 @@ def main():
         if m:
             by_exp[p["idExpansion"]][m.group(1)].append(p)
 
-    wanted = {s.strip().upper() for s in a.sets.split(",") if s.strip()}
-    out, report, covered, ctout, ctcov = {}, [], [], {}, []
-    for s in data["sets"]:
-        if s["code"].upper() not in wanted:
+    wanted = None if a.sets.strip().upper() == "ALL" else {s.strip().upper() for s in a.sets.split(",") if s.strip()}
+    out, report, covered, ctout = {}, [], [], {}
+    tot = Counter()
+    for s in sorted(data["sets"], key=lambda x: x["date"], reverse=True):
+        if wanted and s["code"].upper() not in wanted:
             continue
         # versioni dell'app per numero di carta, nell'ordine dell'app
         app = defaultdict(list)
@@ -153,92 +163,95 @@ def main():
             key_base = f"{c[16]}|{c[0]}"
             key = key_base if isinstance(v, int) else key_base + "~" + v[1]
             app[c[0]].append((key, v))
-        # espansione Cardmarket con più carte di questo set
+        if not app:
+            continue
+        # espansione Cardmarket con più carte che hanno il codice di questo prodotto
         pref = s["code"].upper() + "-"
-        best = max(by_exp, key=lambda e: sum(1 for k in by_exp[e] if k.startswith(pref)), default=None)
-        if best is None or not any(k.startswith(pref) for k in by_exp[best]):
-            report.append(f"{s['code']}: nessuna espansione Cardmarket trovata")
+        own = [k for k in app if k.startswith(pref)]
+        best = max(by_exp, key=lambda e: sum(1 for k in own if k in by_exp[e]), default=None) if own else None
+        found = sum(1 for k in own if best is not None and k in by_exp[best])
+        if not own or found < max(1, len(own) // 2):
+            report.append(f"-- {s['code']} {s['name']}: nessuna espansione Cardmarket sicura (carte proprie {len(own)}), senza prezzi")
             continue
         covered.append(s["id"])
         cm = by_exp[best]
-        ct = ct_carica(a.ct_dir, s["code"].upper())
-        if ct:
-            ctcov.append(s["id"])
-        ok = dubbi = corretti = confermate = 0
+        ok = dubbi = conf = corr = 0
+        dettagli = []
         for code, vers in app.items():
             prods = sorted(cm.get(code, []), key=lambda p: p["idProduct"])
             if not prods:
-                report.append(f"{code}: non trovata su Cardmarket")
                 dubbi += len(vers)
                 continue
-            # indicazioni CardTrader: per ogni versione dell'app il prodotto Cardmarket corrispondente
             ids = {p["idProduct"] for p in prods}
+            # indicazioni CardTrader: per ogni versione il prodotto Cardmarket con lo stesso segno (Regular, ★, ★★, SP)
             hints = {}
             if ct:
+                bymk = defaultdict(list)
+                for cid in ids:
+                    mk = ct["cm2mk"].get(cid)
+                    if mk and mk[0] == code:
+                        bymk[mk[1]].append(cid)
                 for key, v in vers:
                     if isinstance(v, int):
                         mk = 0
-                    elif re.search(r"alternative art", versions[v[2]] if v[2] < len(versions) else "", re.I) and v[3] in (1, 2, "SP"):
+                    elif len(v) > 3 and re.search(r"alternative art", versions[v[2]] if v[2] < len(versions) else "", re.I) and v[3] in (1, 2, "SP"):
                         mk = v[3]
                     else:
                         continue
-                    cid = ct["hint"].get((code, mk))
-                    if cid in ids:
-                        hints[key] = cid
-            if hints and len(set(hints.values())) == len(hints) and len(hints) == len(vers):
-                confermate += 1
-                if [hints[k] for k, _ in vers] != [p["idProduct"] for p in prods[:len(vers)]]:
-                    report.append(f"{code}: ordine Cardmarket diverso dalle versioni, sistemato con CardTrader")
-                for key, v in vers:
-                    out[key] = voce(pg.get(hints[key]), hints[key]); ok += 1
-                continue
+                    if len(bymk.get(mk, [])) == 1:
+                        hints[key] = bymk[mk][0]
+                if len(set(hints.values())) != len(hints):
+                    hints = {}
             vals = [val(pg.get(p["idProduct"])) for p in prods]
+            assegnati = {}
             # la Regular dev'essere la prima e la più economica
             base_ok = isinstance(vers[0][1], int) and vals[0] is not None and all(x is None or vals[0] <= x for x in vals[1:])
             if len(prods) == len(vers):
                 seq = [x for x in vals if x is not None]
                 crescente = all(x <= y for x, y in zip(seq, seq[1:]))
                 for n, ((key, v), p) in enumerate(zip(vers, prods)):
-                    if (base_ok if (n == 0 and isinstance(v, int)) else crescente):
-                        out[key] = voce(pg.get(p["idProduct"]), p["idProduct"]); ok += 1
-                    else:
-                        dubbi += 1
-                if not crescente and len(vers) > 1:
-                    report.append(f"{code}: prezzi delle versioni fuori ordine {vals} -> alternative art senza prezzo")
-            else:
-                key, v = vers[0]
-                if base_ok:
-                    out[key] = voce(pg.get(prods[0]["idProduct"]), prods[0]["idProduct"]); ok += 1
-                dubbi += len(vers) - (1 if base_ok else 0)
-                report.append(f"{code}: app {len(vers)} versioni, Cardmarket {len(prods)} -> " + ("solo Regular" if base_ok else "nessun prezzo"))
-            # dove CardTrader indica con certezza il prodotto, quell'indicazione vale più dell'ordine di Cardmarket
-            if hints and len(set(hints.values())) == len(hints):
+                    if base_ok if (n == 0 and isinstance(v, int)) else crescente:
+                        assegnati[key] = p["idProduct"]
+            elif base_ok:
+                assegnati[vers[0][0]] = prods[0]["idProduct"]
+            # le indicazioni certe di CardTrader valgono più dell'ordine di Cardmarket
+            if hints:
+                conf += 1
                 for key, cid in hints.items():
-                    prima = out.get(key, [None] * 6)[5]
-                    if prima != cid:
-                        corretti += 1
-                        if prima is None:
-                            ok += 1; dubbi -= 1
-                    out[key] = voce(pg.get(cid), cid)
-                for key, v in vers:
-                    if key not in hints and key in out and out[key][5] in hints.values():
-                        del out[key]; ok -= 1; dubbi += 1
-        report.append(f"== {s['code']} (espansione Cardmarket {best}): {ok} versioni con prezzo, {dubbi} senza"
-                      + (f"; CardTrader espansione {ct['exp']}: {confermate} carte abbinate con certezza, {corretti} versioni corrette" if ct else ""))
-        if ct:
-            nct = 0
-            for key, v in [x for vs in app.values() for x in vs]:
-                if key in out:
-                    pr = ct_prezzo(ct, out[key][5])
+                    if key in assegnati and assegnati[key] != cid:
+                        corr += 1
+                        dettagli.append(f"   {code}: versione {key.split('~')[-1] if '~' in key else 'Regular'} corretta con CardTrader ({assegnati[key]} -> {cid})")
+                    assegnati[key] = cid
+                usati = set(hints.values())
+                for key in list(assegnati):
+                    if key not in hints and assegnati[key] in usati:
+                        del assegnati[key]
+            if len(set(assegnati.values())) != len(assegnati):
+                assegnati = {}  # mai lo stesso prodotto per due versioni
+            for key, cid in assegnati.items():
+                out[key] = voce(pg.get(cid), cid)
+                if ct:
+                    pr = ct_prezzo(ct, cid)
                     if pr:
-                        ctout[key] = pr; nct += pr[0] is not None
-            report.append(f"   CardTrader: {nct} versioni con prezzo (inglese, Near Mint)")
+                        ctout[key] = pr
+            ok += len(assegnati)
+            dubbi += len(vers) - len(assegnati)
+        chiavi = [k for vs in app.values() for k, _ in vs]
+        nct = sum(1 for k in chiavi if ctout.get(k) and ctout[k][0] is not None)
+        tot["ok"] += ok; tot["no"] += dubbi; tot["ct"] += nct
+        report.append(f"{s['code']:8} {s['name'][:34]:34} Cardmarket {ok:3}/{ok + dubbi:3}  CardTrader {nct:3}"
+                      + (f"  (confermate da CardTrader {conf}, corrette {corr})" if ct else ""))
+        report.extend(dettagli)
+    report.append(f"TOTALE versioni con prezzo Cardmarket {tot['ok']}/{tot['ok'] + tot['no']}, con prezzo CardTrader {tot['ct']}")
 
     res = {"d": guide.get("createdAt", "")[:10], "src": "Cardmarket", "sets": covered, "p": out}
-    if ctcov:
-        res["ct"] = {"d": time.strftime("%Y-%m-%d"), "sets": ctcov, "p": ctout}
-    (ROOT / "src/prices.json").write_text(json.dumps(res, ensure_ascii=False, separators=(",", ":")))
-    print("\n".join(report))
+    if ct:
+        res["ct"] = {"d": time.strftime("%Y-%m-%d"), "sets": covered, "p": ctout}
+    Path(a.out).write_text(json.dumps(res, ensure_ascii=False, separators=(",", ":")))
+    txt = "\n".join(report)
+    print(txt)
+    if a.report:
+        Path(a.report).write_text(txt)
 
 
 if __name__ == "__main__":
