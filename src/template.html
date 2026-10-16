@@ -289,7 +289,8 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .pline .pval small { font-size: .7em; font-weight: 500; color: var(--ink-2); margin-right: 3px; text-transform: lowercase; }
 .pline .pcur { color: var(--ink-2); font-weight: 500; }
 .pline.pna .pval { color: var(--ink-2); font-weight: 500; }
-.row .pline { max-width: 170px; }
+.rside { display: flex; flex-direction: column; align-items: stretch; gap: 6px; min-width: 0; }
+.rside .pline { margin-top: 0; }
 .pbox .pmain { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
 .pbox .phead { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .pbox .pshop { display: flex; align-items: center; gap: 8px; font: 600 .95rem var(--font-body); min-width: 0; }
@@ -304,6 +305,7 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .fx.pbox p.pnote { background: none; border: 0; padding: 6px 2px 0; font-size: .72rem; color: var(--ink-2); }
 .fx.pbox p.pnone { font-size: .86rem; }
 .vcard .pline { margin-top: 6px; max-width: 190px; }
+.sgrid .sl .pbox { margin-top: 14px; }
 .alt .pline { justify-self: center; width: 100%; }
 .fx h3 { font-family: var(--font-display); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 4px; }
 .fx p { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; white-space: pre-line; overflow-wrap: anywhere; }
@@ -1987,9 +1989,12 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
       r.appendChild(picBox("thumb", "t", c));
       var mid = el("div", "name"); mid.appendChild(nameFrag(c));
       listLines(c).forEach(function (x) { mid.appendChild(x); });
-      var rpl = priceLine(c); if (rpl) mid.appendChild(rpl);
       r.appendChild(mid);
-      r.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
+      // a destra: copie e, sotto, il prezzo (stessa larghezza dei pulsanti)
+      var rside = el("div", "rside"), rpl = priceLine(c);
+      rside.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
+      if (rpl) rside.appendChild(rpl);
+      r.appendChild(rside);
       function open() { st.open = c; drawSheet(); }
       r.onclick = open;
       r.onkeydown = function (e) { if (e.target === r && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); open(); } };
@@ -2636,7 +2641,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
       var sg = el("div", "sgrid"), sL = el("div", "sl"), sR = el("div", "sr");
       Array.prototype.slice.call(sh.children).forEach(function (k) {
         if (k === hint || k === head || k.classList.contains("sep")) return;
-        (k.classList.contains("art") || k.classList.contains("altsec") ? sL : sR).appendChild(k);
+        (k.classList.contains("art") || k.classList.contains("altsec") || k.classList.contains("pbox") ? sL : sR).appendChild(k);
       });
       sg.appendChild(sL); sg.appendChild(sR); sh.appendChild(sg);
     }
