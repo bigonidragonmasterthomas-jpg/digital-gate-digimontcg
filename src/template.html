@@ -286,8 +286,8 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .cmk { display: inline-block; flex: none; width: 16px; height: 16px; background: var(--cm-ink); -webkit-mask: url(/*CMMARK*/) center / contain no-repeat; mask: url(/*CMMARK*/) center / contain no-repeat; }
 .pline { display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; align-items: center; gap: 6px; margin-top: 2px; padding: 5px 8px; border-radius: 8px; background: var(--surface-2); border: 1px solid transparent; font: 600 .78rem var(--font-body); line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; }
 .pline .pval { text-align: center; white-space: nowrap; }
-.pline .pval small { font-size: .7em; font-weight: 500; color: var(--ink-2); margin-right: 3px; text-transform: lowercase; }
-.pline .pcur { color: var(--ink-2); font-weight: 500; }
+.pline .ptag { font: 700 .58rem var(--font-display); letter-spacing: .06em; color: var(--ink-2); border: 1px solid var(--line); border-radius: 4px; padding: 2px 4px; line-height: 1; }
+.pline .ptag.off { visibility: hidden; }
 .pline.pna .pval { color: var(--ink-2); font-weight: 500; }
 .rside { display: flex; flex-direction: column; align-items: stretch; gap: 6px; min-width: 0; }
 .rside .pline { margin-top: 0; }
@@ -307,6 +307,10 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .vcard .pline { margin-top: 6px; max-width: 190px; }
 .sgrid .sl .pbox { margin-top: 14px; }
 .alt .pline { justify-self: center; width: 100%; }
+body.desk .alts .alt .pline { grid-template-columns: 13px minmax(0, 1fr) auto; gap: 4px; padding: 4px 5px; font-size: .74rem; }
+body.desk .alts .alt .pline .cmk { width: 13px; height: 13px; }
+body.desk .alts .alt .pline .pval { overflow: hidden; }
+body.desk .alts .alt .pline .ptag { font-size: .5rem; padding: 2px 3px; }
 .fx h3 { font-family: var(--font-display); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 4px; }
 .fx p { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; white-space: pre-line; overflow-wrap: anywhere; }
 .own { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-top: 4px; }
@@ -1569,16 +1573,18 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
   function priceOf(c) { return (PRICES.p || {})[c.k] || null; }
   function eur(v) { return v == null ? "—" : v.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €"; }
   function eurN(v) { return v.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  // nelle righe compatte da 100 € in su niente decimali (il valore esatto è nella scheda)
+  function eurC(v) { return v >= 100 ? Math.round(v).toLocaleString("it-IT") : eurN(v); }
   function cmMark() { var m = el("span", "cmk"); m.setAttribute("role", "img"); m.setAttribute("aria-label", "Cardmarket"); m.title = "Cardmarket"; return m; }
-  // riga compatta sotto la carta: logo Cardmarket · valore · €
+  // riga compatta: logo Cardmarket · valore con € · etichetta (TR = Trend, MIN = offerta più bassa se il trend manca)
   function priceLine(c) {
     if (!priceCovered(c)) return null;
-    var p = priceOf(c), d = el("div", "pline"), v = el("span", "pval");
+    var p = priceOf(c), d = el("div", "pline"), v = el("span", "pval"), tg = "";
     d.appendChild(cmMark()); d.appendChild(v);
-    if (p && p[0] != null) { v.textContent = eurN(p[0]); d.title = "Trend Cardmarket"; }
-    else if (p && p[1] != null) { v.appendChild(el("small", "", "da")); v.appendChild(document.createTextNode(eurN(p[1]))); d.title = "Offerta più bassa su Cardmarket (trend non ancora disponibile)"; }
+    if (p && p[0] != null) { v.textContent = eurC(p[0]) + " €"; tg = "TR"; d.title = "Trend Cardmarket"; }
+    else if (p && p[1] != null) { v.textContent = eurC(p[1]) + " €"; tg = "MIN"; d.title = "Offerta più bassa su Cardmarket (trend non ancora disponibile)"; }
     else { d.classList.add("pna"); v.textContent = "N/D"; d.title = "Prezzo non disponibile"; }
-    d.appendChild(el("span", "pcur", p && (p[0] != null || p[1] != null) ? "€" : ""));
+    var t = el("span", "ptag" + (tg ? "" : " off"), tg); if (tg) t.setAttribute("aria-label", tg === "TR" ? "Trend" : "Minimo"); d.appendChild(t);
     return d;
   }
   function priceBox(c) {
@@ -1978,8 +1984,8 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
         var cl = el("div", "cline"); cl.style.background = gradient(c.colors, "to right"); t.appendChild(cl);
         var tn = el("div", "tname"); tn.appendChild(nameFrag(c)); t.appendChild(tn);
         listLines(c).forEach(function (x) { t.appendChild(x); });
-        var tpl = priceLine(c); if (tpl) t.appendChild(tpl);
         t.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
+        var tpl = priceLine(c); if (tpl) t.appendChild(tpl);
         t.onclick = function () { st.open = c; drawSheet(); };
         t.onkeydown = function (e) { if (e.target === t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); st.open = c; drawSheet(); } };
         ul.appendChild(t); return;
@@ -2544,9 +2550,9 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
         };
         it.appendChild(picBox("pic", "f", a));
         it.appendChild(listLines(a)[1]);
-        var apl = priceLine(a); if (apl) it.appendChild(apl);
         if (inDk) { var dl = el("div", "sub dlab", "Nel mazzo"); it.appendChild(dl); it.appendChild(deckQty(inDk, a, function () { render(); drawSheet(); })); }
         else it.appendChild(qtyControl(a, function () { recomputeStats(); render(); drawSheet(); }));
+        var apl = priceLine(a); if (apl) it.appendChild(apl);
         strip.appendChild(it);
       });
       at.appendChild(strip); sh.appendChild(at);
