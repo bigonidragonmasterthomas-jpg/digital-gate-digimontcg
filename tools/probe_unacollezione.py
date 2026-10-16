@@ -34,6 +34,7 @@ for s in scripts[:80]:
         print("errore", s, e); continue
     hits = list(re.finditer(r".{0,400}cardmarket.{0,400}", t, re.I | re.S))
     if hits:
+        open(f"{OUT}/" + os.path.basename(urllib.parse.urlparse(s).path), "w").write(t)
         print("trovato in", s, len(hits))
         for m in hits[:30]:
             log.write(f"\n=== {s}\n{m.group(0)}\n")
