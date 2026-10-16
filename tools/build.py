@@ -13,6 +13,11 @@ data = data.rstrip()[:-1] + ',"products":' + json.dumps(prod, ensure_ascii=False
 if (src / "prices.json").exists():
     pr = json.loads((src / "prices.json").read_text(encoding="utf-8"))
     data = data.rstrip()[:-1] + ',"prices":' + json.dumps(pr, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/") + "}"
+# logo ufficiale Cardmarket (src/brand/cardmarket-mark.png, solo forma: il colore lo dà il CSS) incorporato, così funziona anche offline
+import base64
+_cm = src / "brand" / "cardmarket-mark.png"
+if _cm.exists():
+    tpl = tpl.replace("/*CMMARK*/", "data:image/png;base64," + base64.b64encode(_cm.read_bytes()).decode())
 assert "/*DATA*/" in tpl
 head = ('<!doctype html>\n<html lang="it">\n<head>\n<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'

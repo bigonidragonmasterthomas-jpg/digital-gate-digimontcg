@@ -8,7 +8,7 @@
 :root {
   --bg: #f1f4f9; --surface: #ffffff; --surface-2: #e7ecf4; --line: #d3dbe8;
   --ink: #0f1a2e; --ink-2: #51607a; --accent: #e0531a; --accent-ink: #ffffff;
-  --blue: #1f4fd8; --blue-ink: #ffffff; --ok: #17803d; --scrim: rgba(10,16,30,.55);
+  --blue: #1f4fd8; --blue-ink: #ffffff; --ok: #17803d; --scrim: rgba(10,16,30,.55); --cm-ink: #012169;
   --c-red: #d6403a; --c-blue: #2f6fe0; --c-yellow: #e2b21a; --c-green: #2e9e57; --c-black: #2a2d36; --c-purple: #8a4fd0; --c-white: #c4cad6;
   --font-display: "Chakra Petch", "Arial Narrow", system-ui, sans-serif;
   --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -17,7 +17,7 @@
   :root:not([data-theme="light"]) {
     --bg: #0b1120; --surface: #131b2e; --surface-2: #1c2640; --line: #26324f;
     --ink: #e8edf7; --ink-2: #93a1bd; --accent: #ff7a3d; --accent-ink: #1a0b03;
-    --blue: #7fa2ff; --blue-ink: #0b1120; --ok: #4ade80; --scrim: rgba(0,0,0,.65);
+    --blue: #7fa2ff; --blue-ink: #0b1120; --ok: #4ade80; --scrim: rgba(0,0,0,.65); --cm-ink: #ffffff;
     --c-red: #ef5b55; --c-blue: #5b92f5; --c-yellow: #f0c43a; --c-green: #46bd73; --c-black: #6b7388; --c-purple: #a878e8; --c-white: #e3e7ef;
     color-scheme: dark;
   }
@@ -25,7 +25,7 @@
 :root[data-theme="dark"] {
   --bg: #0b1120; --surface: #131b2e; --surface-2: #1c2640; --line: #26324f;
   --ink: #e8edf7; --ink-2: #93a1bd; --accent: #ff7a3d; --accent-ink: #1a0b03;
-  --blue: #7fa2ff; --blue-ink: #0b1120; --ok: #4ade80; --scrim: rgba(0,0,0,.65);
+  --blue: #7fa2ff; --blue-ink: #0b1120; --ok: #4ade80; --scrim: rgba(0,0,0,.65); --cm-ink: #ffffff;
   --c-red: #ef5b55; --c-blue: #5b92f5; --c-yellow: #f0c43a; --c-green: #46bd73; --c-black: #6b7388; --c-purple: #a878e8; --c-white: #e3e7ef;
   color-scheme: dark;
 }
@@ -282,22 +282,29 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .stat > span { display: block; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
 .stat > b { font-family: var(--font-display); font-size: 1.05rem; overflow-wrap: anywhere; }
 .fx { margin-bottom: 10px; }
-/* prezzi Cardmarket */
-.pline { display: flex; align-items: baseline; gap: 5px; font-variant-numeric: tabular-nums; }
-.pline .plab { font: 600 .62rem var(--font-display); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
-.pline .pval { font: 700 .86rem var(--font-display); color: var(--ink); }
-.pline.pna { font-size: .74rem; opacity: .75; }
-.tile .pline { justify-content: center; }
-.pbox .pmain { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
-.pbox .ptop { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
-.pbox .ptop span { font: 600 .7rem var(--font-display); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
-.pbox .pbig { font: 700 1.45rem var(--font-display); color: var(--accent); font-variant-numeric: tabular-nums; }
-.pbox .pgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 12px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
-.pbox .pc { display: flex; justify-content: space-between; gap: 8px; font-size: .82rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+/* prezzi Cardmarket (stile unacollezione.it): logo ufficiale del negozio + valore + valuta */
+.cmk { display: inline-block; flex: none; width: 16px; height: 16px; background: var(--cm-ink); -webkit-mask: url(/*CMMARK*/) center / contain no-repeat; mask: url(/*CMMARK*/) center / contain no-repeat; }
+.pline { display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; align-items: center; gap: 6px; margin-top: 2px; padding: 5px 8px; border-radius: 8px; background: var(--surface-2); border: 1px solid transparent; font: 600 .78rem var(--font-body); line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; }
+.pline .pval { text-align: center; white-space: nowrap; }
+.pline .pval small { font-size: .7em; font-weight: 500; color: var(--ink-2); margin-right: 3px; text-transform: lowercase; }
+.pline .pcur { color: var(--ink-2); font-weight: 500; }
+.pline.pna .pval { color: var(--ink-2); font-weight: 500; }
+.row .pline { max-width: 170px; }
+.pbox .pmain { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+.pbox .phead { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.pbox .pshop { display: flex; align-items: center; gap: 8px; font: 600 .95rem var(--font-body); min-width: 0; }
+.pbox .pshop .cmk { width: 20px; height: 20px; }
+.pbox .ptr { text-align: right; }
+.pbox .ptr span { display: block; font-size: .66rem; color: var(--ink-2); }
+.pbox .pbig { font: 700 1.3rem var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pbox .pbig small { font-size: .7em; color: var(--ink-2); font-weight: 600; margin-left: 2px; }
+.pbox .pgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 10px; }
+.pbox .pc { display: flex; justify-content: space-between; gap: 8px; padding: 6px 8px; border-radius: 8px; background: var(--surface-2); font-size: .78rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .pbox .pc b { color: var(--ink); font-weight: 600; white-space: nowrap; }
-.fx.pbox p.pnote { background: none; border: 0; padding: 6px 2px 0; font-size: .74rem; color: var(--ink-2); }
+.fx.pbox p.pnote { background: none; border: 0; padding: 6px 2px 0; font-size: .72rem; color: var(--ink-2); }
 .fx.pbox p.pnone { font-size: .86rem; }
-.vcard .pline { margin-top: 3px; }
+.vcard .pline { margin-top: 6px; max-width: 190px; }
+.alt .pline { justify-self: center; width: 100%; }
 .fx h3 { font-family: var(--font-display); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 4px; }
 .fx p { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; white-space: pre-line; overflow-wrap: anywhere; }
 .own { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-top: 4px; }
@@ -1559,26 +1566,34 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
   function priceCovered(c) { return !!PCOV[String(c.k).split("|")[0]]; }
   function priceOf(c) { return (PRICES.p || {})[c.k] || null; }
   function eur(v) { return v == null ? "—" : v.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €"; }
+  function eurN(v) { return v.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function cmMark() { var m = el("span", "cmk"); m.setAttribute("role", "img"); m.setAttribute("aria-label", "Cardmarket"); m.title = "Cardmarket"; return m; }
+  // riga compatta sotto la carta: logo Cardmarket · valore · €
   function priceLine(c) {
     if (!priceCovered(c)) return null;
-    var p = priceOf(c), d = el("div", "sub pline");
-    if (p && p[0] != null) { d.appendChild(el("span", "plab", "Trend")); d.appendChild(el("b", "pval", eur(p[0]))); }
-    else if (p && p[1] != null) { d.appendChild(el("span", "plab", "Da")); d.appendChild(el("b", "pval", eur(p[1]))); }
-    else { d.classList.add("pna"); d.textContent = "Prezzo non disponibile"; }
+    var p = priceOf(c), d = el("div", "pline"), v = el("span", "pval");
+    d.appendChild(cmMark()); d.appendChild(v);
+    if (p && p[0] != null) { v.textContent = eurN(p[0]); d.title = "Trend Cardmarket"; }
+    else if (p && p[1] != null) { v.appendChild(el("small", "", "da")); v.appendChild(document.createTextNode(eurN(p[1]))); d.title = "Offerta più bassa su Cardmarket (trend non ancora disponibile)"; }
+    else { d.classList.add("pna"); v.textContent = "N/D"; d.title = "Prezzo non disponibile"; }
+    d.appendChild(el("span", "pcur", p && (p[0] != null || p[1] != null) ? "€" : ""));
     return d;
   }
   function priceBox(c) {
     if (!priceCovered(c)) return null;
-    var p = priceOf(c), b = el("div", "fx pbox"); b.appendChild(el("h3", "", "Prezzo Cardmarket"));
-    if (!p) { b.appendChild(el("p", "pnone", "Prezzo non disponibile: questa versione non è stata abbinata con certezza al prodotto giusto su Cardmarket.")); return b; }
-    var m = el("div", "pmain"), top = el("div", "ptop");
-    top.appendChild(el("span", "", "Trend")); top.appendChild(el("b", "pbig", eur(p[0]))); m.appendChild(top);
+    var p = priceOf(c), b = el("div", "fx pbox"); b.appendChild(el("h3", "", "Prezzo"));
+    var m = el("div", "pmain"), hd = el("div", "phead"), shop = el("div", "pshop");
+    shop.appendChild(cmMark()); shop.appendChild(el("span", "", "Cardmarket")); hd.appendChild(shop); m.appendChild(hd);
+    if (!p) { b.appendChild(m); b.appendChild(el("p", "pnone", "Prezzo non disponibile: questa versione non è stata abbinata con certezza al prodotto giusto su Cardmarket.")); return b; }
+    var tr = el("div", "ptr"), big = el("b", "pbig"), useLow = p[0] == null && p[1] != null;
+    tr.appendChild(el("span", "", useLow ? "Offerta più bassa" : "Trend Cardmarket"));
+    big.textContent = eurN(useLow ? p[1] : p[0]); big.appendChild(el("small", "", "€")); tr.appendChild(big); hd.appendChild(tr);
     var g = el("div", "pgrid");
     [["Più basso", p[1]], ["Media 1 g", p[2]], ["Media 7 g", p[3]], ["Media 30 g", p[4]]].forEach(function (x) {
       var r = el("div", "pc"); r.appendChild(el("span", "", x[0])); r.appendChild(el("b", "", eur(x[1]))); g.appendChild(r);
     });
     m.appendChild(g); b.appendChild(m);
-    b.appendChild(el("p", "pnote", "Euro, guida prezzi Cardmarket aggiornata al " + fmtDate(PRICES.d) + ". Trend = valore stimato attuale; più basso = l'offerta più economica in vendita (qualsiasi condizione e lingua)."));
+    b.appendChild(el("p", "pnote", "Guida prezzi Cardmarket del " + fmtDate(PRICES.d) + ". Dati aggregati: non distinguono lingua o condizione."));
     return b;
   }
 
