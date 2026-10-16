@@ -1577,8 +1577,32 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
 
   // ---- Prezzi Cardmarket (src/prices.json da tools/cardmarket_prices.py), per versione: [trend, più basso, media 1 g, 7 g, 30 g, idProduct].
   // Solo per i prodotti in PRICES.sets; una versione senza voce lì = abbinamento incerto, "Prezzo non disponibile".
-  var PRICES = DATA.prices || { p: {}, sets: [] }, PCOV = {};
-  (PRICES.sets || []).forEach(function (id) { PCOV[id] = 1; });
+  // Copia inclusa nell'app (build) oppure, se più recente, l'ultima scaricata (localStorage "dg-prices"); all'avvio
+  // l'app scarica i prezzi del giorno dal ramo "prezzi" (workflow prezzi.yml), così non serve un nuovo APK.
+  var PRICES = { p: {}, sets: [] }, PCOV = {}, CTP = { p: {}, sets: [] }, CTCOV = {};
+  var PRICES_URL = "https://raw.githubusercontent.com/knightofgemini/digital-gate-digimontcg/prezzi/prices.json";
+  function setPrices(o) {
+    PRICES = o && o.p ? o : { p: {}, sets: [] }; PCOV = {};
+    (PRICES.sets || []).forEach(function (id) { PCOV[id] = 1; });
+    CTP = PRICES.ct && PRICES.ct.p ? PRICES.ct : { p: {}, sets: [] }; CTCOV = {};
+    (CTP.sets || []).forEach(function (id) { CTCOV[id] = 1; });
+  }
+  function pricesStamp(o) { return o && o.p ? (o.d || "") + "|" + ((o.ct && o.ct.d) || "") : ""; }
+  (function () {
+    var emb = DATA.prices || null, sv = null;
+    try { sv = JSON.parse(localStorage.getItem("dg-prices") || "null"); } catch (e) { sv = null; }
+    setPrices(sv && pricesStamp(sv) > pricesStamp(emb) ? sv : emb);
+  })();
+  function refreshPrices() {
+    if (!window.fetch) return;
+    var day = new Date().toISOString().slice(0, 10);
+    fetch(PRICES_URL + "?d=" + day, { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (o) {
+      if (!o || !o.p || pricesStamp(o) <= pricesStamp(PRICES)) return;
+      setPrices(o);
+      try { localStorage.setItem("dg-prices", JSON.stringify(o)); } catch (e) {}
+      if (st.open == null) render();
+    }).catch(function () {});
+  }
   function priceCovered(c) { return !!PCOV[String(c.k).split("|")[0]]; }
   function priceOf(c) { return (PRICES.p || {})[c.k] || null; }
   function eur(v) { return v == null ? "—" : v.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €"; }
@@ -1600,8 +1624,6 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
     return d;
   }
   // ---- CardTrader (PRICES.ct da tools/cardmarket_prices.py): per versione [prezzo più basso EN Near Mint, n. offerte, blueprint]
-  var CTP = PRICES.ct || { p: {}, sets: [] }, CTCOV = {};
-  (CTP.sets || []).forEach(function (id) { CTCOV[id] = 1; });
   function ctCovered(c) { return !!CTCOV[String(c.k).split("|")[0]]; }
   function ctOf(c) { return (CTP.p || {})[c.k] || null; }
   // simbolo ufficiale CardTrader (due triangoli): azzurro fisso, l'altro blu notte nel tema chiaro e bianco nello scuro, come i loro loghi
@@ -3416,6 +3438,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
   var statsReady = false;
   function recomputeStatsIfNeeded() { if (!statsReady) { recomputeStats(); statsReady = true; } }
   render();
+  setTimeout(refreshPrices, 1200);
 })();
 </script>
 <script>

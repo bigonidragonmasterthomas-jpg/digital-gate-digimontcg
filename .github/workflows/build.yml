@@ -21,6 +21,8 @@ jobs:
           key: img-v1-${{ hashFiles('src/data.json', 'src/errata/*') }}
           restore-keys: img-v1-
       - run: pip install pillow
+      # prezzi più recenti (ramo "prezzi", aggiornato ogni notte da prezzi.yml); se manca resta src/prices.json
+      - run: git fetch -q --depth=1 origin prezzi && git show FETCH_HEAD:prices.json > /tmp/p.json && mv /tmp/p.json src/prices.json || echo "ramo prezzi non ancora disponibile"
       - run: python3 tools/build.py
       - run: python3 tools/fetch_images.py
       - run: python3 tools/fetch_banners.py

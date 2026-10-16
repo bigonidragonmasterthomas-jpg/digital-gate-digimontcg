@@ -1,0 +1,28 @@
+name: Prezzi
+# Ogni notte: guida prezzi Cardmarket (file pubblici) + offerte CardTrader (API, segreto CARDTRADER_TOKEN)
+# -> prices.json e report.txt sul ramo "prezzi". L'app li scarica all'avvio: niente nuovo APK.
+on:
+  schedule:
+    - cron: "17 3 * * *"   # 03:17 UTC, dopo la guida Cardmarket della notte
+  workflow_dispatch:
+permissions: { contents: write }
+concurrency: { group: prezzi, cancel-in-progress: false }
+jobs:
+  prezzi:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scarica i prezzi e abbina le carte
+        run: python3 tools/cardmarket_prices.py --scarica --ct-scarica --sets ALL --dir /tmp/cm --ct-dir /tmp/ct --out /tmp/prices.json --report /tmp/report.txt
+        env:
+          CARDTRADER_TOKEN: ${{ secrets.CARDTRADER_TOKEN }}
+      - name: Pubblica sul ramo prezzi
+        run: |
+          mkdir -p /tmp/pub && cp /tmp/prices.json /tmp/report.txt /tmp/pub/
+          cd /tmp/pub
+          git init -q -b prezzi
+          git config user.name "github-actions"; git config user.email "actions@github.com"
+          git add prices.json report.txt
+          git commit -qm "Prezzi del $(date -u +%F)"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" prezzi

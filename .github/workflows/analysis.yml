@@ -12,11 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: pip install pillow numpy scipy
-      - run: python3 ${{ inputs.script }} ${{ inputs.ids }} | tee analysis-log.txt
+      - run: python3 ${{ inputs.script }} ${{ inputs.ids }} 2>&1 | tee analysis-log.txt
         env:
           CARDTRADER_TOKEN: ${{ secrets.CARDTRADER_TOKEN }}
       - run: |
-          mkdir -p analysis && mv analysis-log.txt analysis/
+          mkdir -p analysis && mv analysis-log.txt analysis/ && git add -f analysis/* >/dev/null 2>&1 || true
           git config user.name "github-actions"; git config user.email "actions@github.com"
           git checkout --orphan analysis-out
           git rm -rf --cached . >/dev/null

@@ -247,10 +247,12 @@ def main():
     res = {"d": guide.get("createdAt", "")[:10], "src": "Cardmarket", "sets": covered, "p": out}
     if ct:
         res["ct"] = {"d": time.strftime("%Y-%m-%d"), "sets": covered, "p": ctout}
-    Path(a.out).write_text(json.dumps(res, ensure_ascii=False, separators=(",", ":")))
     txt = "\n".join(report)
     print(txt)
+    Path(a.out).parent.mkdir(parents=True, exist_ok=True)
+    Path(a.out).write_text(json.dumps(res, ensure_ascii=False, separators=(",", ":")))
     if a.report:
+        Path(a.report).parent.mkdir(parents=True, exist_ok=True)
         Path(a.report).write_text(txt)
 
 
