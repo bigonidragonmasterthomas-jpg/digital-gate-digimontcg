@@ -304,7 +304,9 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .pbox .pc b { color: var(--ink); font-weight: 600; white-space: nowrap; }
 .fx.pbox p.pnote { background: none; border: 0; padding: 6px 2px 0; font-size: .72rem; color: var(--ink-2); }
 .fx.pbox p.pnone { font-size: .86rem; }
-.vcard .pline { margin-top: 6px; max-width: 190px; }
+.pline.wide { grid-template-columns: 22px minmax(0, 1fr) auto; gap: 10px; padding: 10px 12px; border-radius: 10px; font-size: 1rem; margin-top: 8px; }
+.pline.wide .cmk { width: 22px; height: 22px; }
+.pline.wide .ptag { font-size: .7rem; padding: 4px 8px; border-radius: 6px; letter-spacing: .08em; text-transform: uppercase; }
 .sgrid .sl .pbox { margin-top: 14px; }
 .alt .pline { justify-self: center; width: 100%; }
 body.desk .alts .alt .pline { grid-template-columns: 13px minmax(0, 1fr) auto; gap: 4px; padding: 4px 5px; font-size: .74rem; }
@@ -1577,14 +1579,16 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
   function eurC(v) { return v >= 100 ? Math.round(v).toLocaleString("it-IT") : eurN(v); }
   function cmMark() { var m = el("span", "cmk"); m.setAttribute("role", "img"); m.setAttribute("aria-label", "Cardmarket"); m.title = "Cardmarket"; return m; }
   // riga compatta: logo Cardmarket · valore con € · etichetta (TR = Trend, MIN = offerta più bassa se il trend manca)
-  function priceLine(c) {
+  // wide = riga a tutta larghezza: etichetta per esteso ("Trend", "Minimo")
+  function priceLine(c, wide) {
     if (!priceCovered(c)) return null;
-    var p = priceOf(c), d = el("div", "pline"), v = el("span", "pval"), tg = "";
+    var p = priceOf(c), d = el("div", "pline" + (wide ? " wide" : "")), v = el("span", "pval"), tg = "";
     d.appendChild(cmMark()); d.appendChild(v);
     if (p && p[0] != null) { v.textContent = eurC(p[0]) + " €"; tg = "TR"; d.title = "Trend Cardmarket"; }
     else if (p && p[1] != null) { v.textContent = eurC(p[1]) + " €"; tg = "MIN"; d.title = "Offerta più bassa su Cardmarket (trend non ancora disponibile)"; }
     else { d.classList.add("pna"); v.textContent = "N/D"; d.title = "Prezzo non disponibile"; }
-    var t = el("span", "ptag" + (tg ? "" : " off"), tg); if (tg) t.setAttribute("aria-label", tg === "TR" ? "Trend" : "Minimo"); d.appendChild(t);
+    if (wide && tg) tg = tg === "TR" ? "Trend" : "Minimo";
+    var t = el("span", "ptag" + (tg ? "" : " off"), tg); if (tg) t.setAttribute("aria-label", /^(TR|Trend)$/.test(tg) ? "Trend" : "Minimo"); d.appendChild(t);
     return d;
   }
   function priceBox(c) {
@@ -2603,7 +2607,6 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
         var vt = el("div", "vt"); vt.appendChild(el("b", "", fs ? fs.code + " · " + fs.name : a.code));
         var vl = el("div", "vl"); vl.appendChild(el("span", "vk", a.suf ? (verLabel(a.ver) || "Alternative Art") : "Regular"));
         vl.appendChild(document.createTextNode(" · " + a.code + " · ")); vl.appendChild(rarBadge(a)); vt.appendChild(vl);
-        var vpl = priceLine(a); if (vpl) vt.appendChild(vpl);
         vh.appendChild(vt); if (i === 0) v.setAttribute("aria-current", "true"); v.appendChild(vh);
         var pic = picBox("pic", "f", a); v.appendChild(pic);
         if (i > 0) {
@@ -2619,7 +2622,9 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
           bt.innerHTML = LOCK; bt.classList.remove("on"); bt.classList.add("lock"); bt.setAttribute("aria-label", "Sblocca la modifica della collezione");
           bt.onclick = function (e) { e.stopPropagation(); collUnlocked = true; drawSheet(); };
         });
-        r2.appendChild(q2); vq.appendChild(r2); v.appendChild(vq);
+        r2.appendChild(q2); vq.appendChild(r2);
+        var vpl = priceLine(a, true); if (vpl) vq.appendChild(vpl);
+        v.appendChild(vq);
         p2.appendChild(v);
       });
       if (!alts.length) p2.appendChild(el("p", "hint vnone", "Questa carta non ha altre versioni (alternative art o ristampe)."));
