@@ -282,6 +282,22 @@ html.lock, html.lock body { overflow: hidden; overscroll-behavior: none; }
 .stat > span { display: block; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
 .stat > b { font-family: var(--font-display); font-size: 1.05rem; overflow-wrap: anywhere; }
 .fx { margin-bottom: 10px; }
+/* prezzi Cardmarket */
+.pline { display: flex; align-items: baseline; gap: 5px; font-variant-numeric: tabular-nums; }
+.pline .plab { font: 600 .62rem var(--font-display); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.pline .pval { font: 700 .86rem var(--font-display); color: var(--ink); }
+.pline.pna { font-size: .74rem; opacity: .75; }
+.tile .pline { justify-content: center; }
+.pbox .pmain { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.pbox .ptop { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.pbox .ptop span { font: 600 .7rem var(--font-display); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.pbox .pbig { font: 700 1.45rem var(--font-display); color: var(--accent); font-variant-numeric: tabular-nums; }
+.pbox .pgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 12px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
+.pbox .pc { display: flex; justify-content: space-between; gap: 8px; font-size: .82rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.pbox .pc b { color: var(--ink); font-weight: 600; white-space: nowrap; }
+.fx.pbox p.pnote { background: none; border: 0; padding: 6px 2px 0; font-size: .74rem; color: var(--ink-2); }
+.fx.pbox p.pnone { font-size: .86rem; }
+.vcard .pline { margin-top: 3px; }
 .fx h3 { font-family: var(--font-display); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 4px; }
 .fx p { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; white-space: pre-line; overflow-wrap: anywhere; }
 .own { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-top: 4px; }
@@ -1536,6 +1552,36 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
     return bits.join(" · ");
   }
 
+  // ---- Prezzi Cardmarket (src/prices.json da tools/cardmarket_prices.py), per versione: [trend, più basso, media 1 g, 7 g, 30 g, idProduct].
+  // Solo per i prodotti in PRICES.sets; una versione senza voce lì = abbinamento incerto, "Prezzo non disponibile".
+  var PRICES = DATA.prices || { p: {}, sets: [] }, PCOV = {};
+  (PRICES.sets || []).forEach(function (id) { PCOV[id] = 1; });
+  function priceCovered(c) { return !!PCOV[String(c.k).split("|")[0]]; }
+  function priceOf(c) { return (PRICES.p || {})[c.k] || null; }
+  function eur(v) { return v == null ? "—" : v.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €"; }
+  function priceLine(c) {
+    if (!priceCovered(c)) return null;
+    var p = priceOf(c), d = el("div", "sub pline");
+    if (p && p[0] != null) { d.appendChild(el("span", "plab", "Trend")); d.appendChild(el("b", "pval", eur(p[0]))); }
+    else if (p && p[1] != null) { d.appendChild(el("span", "plab", "Da")); d.appendChild(el("b", "pval", eur(p[1]))); }
+    else { d.classList.add("pna"); d.textContent = "Prezzo non disponibile"; }
+    return d;
+  }
+  function priceBox(c) {
+    if (!priceCovered(c)) return null;
+    var p = priceOf(c), b = el("div", "fx pbox"); b.appendChild(el("h3", "", "Prezzo Cardmarket"));
+    if (!p) { b.appendChild(el("p", "pnone", "Prezzo non disponibile: questa versione non è stata abbinata con certezza al prodotto giusto su Cardmarket.")); return b; }
+    var m = el("div", "pmain"), top = el("div", "ptop");
+    top.appendChild(el("span", "", "Trend")); top.appendChild(el("b", "pbig", eur(p[0]))); m.appendChild(top);
+    var g = el("div", "pgrid");
+    [["Più basso", p[1]], ["Media 1 g", p[2]], ["Media 7 g", p[3]], ["Media 30 g", p[4]]].forEach(function (x) {
+      var r = el("div", "pc"); r.appendChild(el("span", "", x[0])); r.appendChild(el("b", "", eur(x[1]))); g.appendChild(r);
+    });
+    m.appendChild(g); b.appendChild(m);
+    b.appendChild(el("p", "pnote", "Euro, guida prezzi Cardmarket aggiornata al " + fmtDate(PRICES.d) + ". Trend = valore stimato attuale; più basso = l'offerta più economica in vendita (qualsiasi condizione e lingua)."));
+    return b;
+  }
+
   // ---- Scheda prodotto: caratteristiche dal sito ufficiale Bandai (src/products.json, da tools/fetch_products.py)
   var PRODUCTS = DATA.products || {};
   var IMGP = IMG.replace(/img\/$/, "prod/");
@@ -1915,6 +1961,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
         var cl = el("div", "cline"); cl.style.background = gradient(c.colors, "to right"); t.appendChild(cl);
         var tn = el("div", "tname"); tn.appendChild(nameFrag(c)); t.appendChild(tn);
         listLines(c).forEach(function (x) { t.appendChild(x); });
+        var tpl = priceLine(c); if (tpl) t.appendChild(tpl);
         t.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
         t.onclick = function () { st.open = c; drawSheet(); };
         t.onkeydown = function (e) { if (e.target === t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); st.open = c; drawSheet(); } };
@@ -1925,6 +1972,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
       r.appendChild(picBox("thumb", "t", c));
       var mid = el("div", "name"); mid.appendChild(nameFrag(c));
       listLines(c).forEach(function (x) { mid.appendChild(x); });
+      var rpl = priceLine(c); if (rpl) mid.appendChild(rpl);
       r.appendChild(mid);
       r.appendChild(qtyControl(c, function () { recomputeStats(); render(); }));
       function open() { st.open = c; drawSheet(); }
@@ -2433,6 +2481,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
       d3.appendChild(rich(el("b", "l"), ex.spec.join(" • "))); stats.appendChild(d3);
     }
     if (stats.children.length) sh.appendChild(stats);
+    var pbx = priceBox(c); if (pbx) sh.appendChild(pbx);
     var ace = ex.ace.map(function (l) {
       var m = l.match(/Overflow\s*＜(-\d+)＞/);
       return m ? "⟦Overflow " + m[1] + "⟧ " + ((c.x && c.x.o) || "(As this card moves from the battle area or under a card to another area, lose " + m[1].slice(1) + " memory.)") : l;
@@ -2475,6 +2524,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
         };
         it.appendChild(picBox("pic", "f", a));
         it.appendChild(listLines(a)[1]);
+        var apl = priceLine(a); if (apl) it.appendChild(apl);
         if (inDk) { var dl = el("div", "sub dlab", "Nel mazzo"); it.appendChild(dl); it.appendChild(deckQty(inDk, a, function () { render(); drawSheet(); })); }
         else it.appendChild(qtyControl(a, function () { recomputeStats(); render(); drawSheet(); }));
         strip.appendChild(it);
@@ -2527,6 +2577,7 @@ body.mob .hrow { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
         var vt = el("div", "vt"); vt.appendChild(el("b", "", fs ? fs.code + " · " + fs.name : a.code));
         var vl = el("div", "vl"); vl.appendChild(el("span", "vk", a.suf ? (verLabel(a.ver) || "Alternative Art") : "Regular"));
         vl.appendChild(document.createTextNode(" · " + a.code + " · ")); vl.appendChild(rarBadge(a)); vt.appendChild(vl);
+        var vpl = priceLine(a); if (vpl) vt.appendChild(vpl);
         vh.appendChild(vt); if (i === 0) v.setAttribute("aria-current", "true"); v.appendChild(vh);
         var pic = picBox("pic", "f", a); v.appendChild(pic);
         if (i > 0) {

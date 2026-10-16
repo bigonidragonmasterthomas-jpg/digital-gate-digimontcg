@@ -9,6 +9,10 @@ data = (src / "data.json").read_text(encoding="utf-8")
 # caratteristiche dei prodotti (tools/fetch_products.py): aggiunte ai dati come "products"
 prod = json.loads((src / "products.json").read_text(encoding="utf-8"))
 data = data.rstrip()[:-1] + ',"products":' + json.dumps(prod, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/") + "}"
+# prezzi Cardmarket (tools/cardmarket_prices.py): aggiunti ai dati come "prices", se presenti
+if (src / "prices.json").exists():
+    pr = json.loads((src / "prices.json").read_text(encoding="utf-8"))
+    data = data.rstrip()[:-1] + ',"prices":' + json.dumps(pr, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/") + "}"
 assert "/*DATA*/" in tpl
 head = ('<!doctype html>\n<html lang="it">\n<head>\n<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
