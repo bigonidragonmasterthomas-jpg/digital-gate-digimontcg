@@ -1,0 +1,89 @@
+EX13     Chivalrous XIII                    Cardmarket 158/158  CardTrader 146  (confermate da CardTrader 77, corrette 0)
+BT26     Timeless Bonds                     Cardmarket 130/132  CardTrader 128  (confermate da CardTrader 104, corrette 0)
+-- LM08 Final Crest: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+EX12     Digital World Shambala             Cardmarket 145/146  CardTrader 134  (confermate da CardTrader 77, corrette 0)
+BT25     Dual Revolution                    Cardmarket 135/139  CardTrader 135  (confermate da CardTrader 104, corrette 0)
+ST24     Data Squad                         Cardmarket  15/ 45  CardTrader  15  (confermate da CardTrader 15, corrette 0)
+ST23     Beatbreak                          Cardmarket  15/ 46  CardTrader  15  (confermate da CardTrader 15, corrette 0)
+AD1      Digimon Generation                 Cardmarket 274/290  CardTrader 272  (confermate da CardTrader 25, corrette 0)
+-- LM07 Another Knight: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+-- PB23 Premium Heroines Set Ver.2: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+EX11     Dawn of Liberator                  Cardmarket 149/151  CardTrader 146  (confermate da CardTrader 71, corrette 0)
+-- PB22 Digimon Liberator Debuggers Set: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+BT24     Time Stranger                      Cardmarket 127/129  CardTrader 126  (confermate da CardTrader 102, corrette 0)
+ST22     Amethyst Mandala Advanced Deck Set Cardmarket  24/ 24  CardTrader  23  (confermate da CardTrader 14, corrette 0)
+-- PB21 Tamer's Evolution Box -Rise of Digimon-: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+BT23     Hackers' Slumber                   Cardmarket 128/130  CardTrader 127  (confermate da CardTrader 101, corrette 0)
+-- LM06 Billion Bullet: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+EX10     Sinister Order                     Cardmarket 136/142  CardTrader 124  (confermate da CardTrader 74, corrette 0)
+BT22     Cyber Eden                         Cardmarket 128/130  CardTrader 126  (confermate da CardTrader 102, corrette 0)
+EX9      Versus Monsters                    Cardmarket 146/149  CardTrader 136  (confermate da CardTrader 72, corrette 0)
+-- PB20 Digimon Animation Series 25th Anniversary Set: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+BT21     World Convergence                  Cardmarket 133/141  CardTrader 130  (confermate da CardTrader 102, corrette 0)
+ST21     Hero of Hope                       Cardmarket  21/ 43  CardTrader  21  (confermate da CardTrader 15, corrette 0)
+ST20     Protector of Light                 Cardmarket  21/ 43  CardTrader  21  (confermate da CardTrader 15, corrette 0)
+BT20     Special Booster Ver.2.5            Cardmarket 102/102  CardTrader 101  (confermate da CardTrader 98, corrette 0)
+-- PB19 Omnimon Binder Set: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+EX8      Chain of Liberation                Cardmarket 146/146  CardTrader 138  (confermate da CardTrader 73, corrette 0)
+-- LM01-05 Special Limited Set: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+BT19     Special Booster Ver.2.0 / 2.5      Cardmarket  60/102  CardTrader  60  (confermate da CardTrader 60, corrette 0)
+BT18     Special Booster Ver.2.0            Cardmarket 102/102  CardTrader 102  (confermate da CardTrader 101, corrette 0)
+-- PB18 Premium Heroines Set: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+EX7      Digimon Liberator                  Cardmarket 125/145  CardTrader 123  (confermate da CardTrader 70, corrette 0)
+ST19     Fable Waltz                        Cardmarket  22/ 22  CardTrader  22  (confermate da CardTrader 15, corrette 0)
+ST18     Guardian Vortex                    Cardmarket  22/ 22  CardTrader  22  (confermate da CardTrader 15, corrette 0)
+BT17     Secret Crisis                      Cardmarket 120/129  CardTrader 118  (confermate da CardTrader 100, corrette 0)
+EX6      Infernal Ascension                 Cardmarket 106/106  CardTrader 100  (confermate da CardTrader 74, corrette 0)
+-- PB17 Digimon Adventure 02: The Beginning Set: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+BT16     Beginning Observer                 Cardmarket 128/128  CardTrader 123  (confermate da CardTrader 100, corrette 0)
+ST17     Double Typhoon Advanced Deck Set   Cardmarket  33/ 33  CardTrader  32  (confermate da CardTrader 11, corrette 0)
+BT15     Exceed Apocalypse                  Cardmarket 131/131  CardTrader 124  (confermate da CardTrader 96, corrette 0)
+EX5      Animal Colosseum                   Cardmarket  94/ 96  CardTrader  93  (confermate da CardTrader 74, corrette 0)
+BT14     Blast Ace                          Cardmarket 117/125  CardTrader 114  (confermate da CardTrader 101, corrette 0)
+ST16     Wolf of Friendship                 Cardmarket  11/ 19  CardTrader  11  (confermate da CardTrader 2, corrette 0)
+ST15     Dragon of Courage                  Cardmarket  11/ 19  CardTrader  10  (confermate da CardTrader 2, corrette 0)
+RB1      Resurgence Booster                 Cardmarket 115/127  CardTrader 113  (confermate da CardTrader 26, corrette 0)
+BT13     Versus Royal Knights               Cardmarket 136/136  CardTrader 127  (confermate da CardTrader 111, corrette 0)
+-- PB16 Tamer Goods Set Diaboromon: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+EX4      Alternative Being                  Cardmarket  93/ 93  CardTrader  93  (confermate da CardTrader 73, corrette 0)
+-- PB14 Tamer Goods Set Angewomon & LadyDevimon: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+-- PB13 Royal Knights Binder Set: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+BT12     Across Time                        Cardmarket 132/132  CardTrader 129  (confermate da CardTrader 110, corrette 0)
+ST14     Beelzemon Advanced Deck Set        Cardmarket  26/ 26  CardTrader  25  (confermate da CardTrader 10, corrette 0)
+-- PB12E 2nd Anniversary Set: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+BT11     Dimensional Phase                  Cardmarket 132/143  CardTrader 130  (confermate da CardTrader 112, corrette 0)
+EX3      Draconic Roar                      Cardmarket  90/ 98  CardTrader  90  (confermate da CardTrader 74, corrette 0)
+BT10     Xros Encounter                     Cardmarket 132/139  CardTrader 131  (confermate da CardTrader 112, corrette 0)
+ST13     Ragnaloardmon                      Cardmarket  16/ 22  CardTrader  16  (confermate da CardTrader 0, corrette 0)
+ST12     Jesmon                             Cardmarket  16/ 22  CardTrader  16  (confermate da CardTrader 0, corrette 0)
+-- PB9 Playmat and Card Set 2 Floral Fun: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+BT9      X Record                           Cardmarket 129/136  CardTrader 123  (confermate da CardTrader 110, corrette 0)
+EX2      Digital Hazard                     Cardmarket 106/108  CardTrader 105  (confermate da CardTrader 74, corrette 0)
+-- PB8 Playmat and Card Set 1 Digimon Tamers: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+BT8      New Awakening                      Cardmarket 130/136  CardTrader 130  (confermate da CardTrader 111, corrette 0)
+ST10     Parallel World Tactician           Cardmarket  16/ 16  CardTrader  16  (confermate da CardTrader 15, corrette 0)
+ST9      Ultimate Ancient Dragon            Cardmarket  16/ 16  CardTrader  16  (confermate da CardTrader 15, corrette 0)
+-- PB6 Tamer's Evolution Box 2: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+BT7      Next Adventure                     Cardmarket 130/136  CardTrader 130  (confermate da CardTrader 112, corrette 0)
+EX1      Classic Collection                 Cardmarket 102/103  CardTrader  97  (confermate da CardTrader 73, corrette 0)
+BT6      Double Diamond                     Cardmarket 131/137  CardTrader 131  (confermate da CardTrader 111, corrette 0)
+ST8      Ulforce Veedramon                  Cardmarket  16/ 16  CardTrader  16  (confermate da CardTrader 12, corrette 0)
+ST7      Gallantmon                         Cardmarket  15/ 15  CardTrader  15  (confermate da CardTrader 12, corrette 0)
+BT5      Battle of Omni                     Cardmarket 120/130  CardTrader 120  (confermate da CardTrader 112, corrette 0)
+BT4      Great Legend                       Cardmarket 130/136  CardTrader 130  (confermate da CardTrader 115, corrette 0)
+ST6      Venomous Violet                    Cardmarket  16/ 16  CardTrader  16  (confermate da CardTrader 16, corrette 0)
+ST5      Machine Black                      Cardmarket  16/ 16  CardTrader  16  (confermate da CardTrader 16, corrette 0)
+ST4      Giga Green                         Cardmarket  16/ 16  CardTrader  16  (confermate da CardTrader 16, corrette 0)
+BT3      Release Special Booster Ver.1.5    Cardmarket 101/112  CardTrader 101  (confermate da CardTrader 101, corrette 0)
+BT2      Release Special Booster Ver.1.0 /  Cardmarket  68/112  CardTrader  68  (confermate da CardTrader 68, corrette 0)
+BT1      Release Special Booster Ver.1.0    Cardmarket 108/115  CardTrader 108  (confermate da CardTrader 108, corrette 0)
+-- PB1 Tamer's Evolution Box: nessuna espansione Cardmarket sicura (carte proprie 0), senza prezzi
+ST3      Heaven's Yellow                    Cardmarket  16/ 16  CardTrader  16  (confermate da CardTrader 16, corrette 0)
+ST2      Cocytus Blue                       Cardmarket  16/ 16  CardTrader  16  (confermate da CardTrader 16, corrette 0)
+ST1      Gaia Red                           Cardmarket  16/ 16  CardTrader  16  (confermate da CardTrader 16, corrette 0)
+P        Promotional Cards                  Cardmarket 221/249  CardTrader 215  (confermate da CardTrader 196, corrette 4)
+   P-117: versione Regular corretta con CardTrader (740213 -> 747253)
+   P-123: versione Regular corretta con CardTrader (740216 -> 747259)
+   P-124: versione Regular corretta con CardTrader (740215 -> 747260)
+   P-130: versione Regular corretta con CardTrader (740217 -> 747266)
+TOTALE versioni con prezzo Cardmarket 5738/6172, con prezzo CardTrader 5605
